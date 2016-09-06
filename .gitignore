@@ -1,0 +1,9 @@
+#Ide Config
+.idea
+react-watchhill.iml
+
+#Dependency directory
+node_modules
+
+
+
