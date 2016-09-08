@@ -21,8 +21,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-
-
 app.use('/', require('./server/routes/react.route'));
 
 
