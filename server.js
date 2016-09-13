@@ -58,7 +58,7 @@ app.use('/', require('./server/routes/react.route'));
 //});
 
 
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 4000;
 app.listen(PORT, function() {
   console.log('Production Express server running at localhost:' + PORT);
 });

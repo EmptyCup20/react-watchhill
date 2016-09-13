@@ -122,7 +122,7 @@
 	//});
 
 
-	var PORT = process.env.PORT || 3000;
+	var PORT = process.env.PORT || 4000;
 	app.listen(PORT, function () {
 	  console.log('Production Express server running at localhost:' + PORT);
 	});
@@ -189,19 +189,29 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
+	var _store = __webpack_require__(21);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _reducers = __webpack_require__(24);
+
+	var _reducers2 = _interopRequireDefault(_reducers);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var router = _express2.default.Router();
 	// and these to match the url to routes and then render
 
-	//import configureStore from '../views/react/store';
 	//import { LOGIN_RECEIVE } from '../views/react/actions'
-	//import reducers from '../views/react/reducers'
 
 
 	// send all requests to index.html so browserHistory works
 
 	router.get('/*', function (req, res, next) {
+
+	    var store = (0, _store2.default)(); //这里需要传入需要的state tree
+	    console.log('node  store:', store.getState()); //需要注意与客户端的store统一
+
 
 	    //match在渲染前根据location用来匹配react-router的routes路由
 	    //使用 RoutingContext 同步渲染 route 组件
@@ -227,7 +237,12 @@
 	            // get these props before rendering.
 
 	            // if we got props then we matched a route and can render
-	            var appHtml = (0, _server.renderToString)(_react2.default.createElement(_reactRouter.RouterContext, props));
+	            var appHtml = (0, _server.renderToString)(_react2.default.createElement(
+	                _reactRedux.Provider,
+	                { store: store },
+	                _react2.default.createElement(_reactRouter.RouterContext, props)
+	            ));
+
 	            res.render('index', {
 	                html: appHtml
 	            });
@@ -455,7 +470,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	                value: true
+	    value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -475,116 +490,116 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Index = function (_Component) {
-	                _inherits(Index, _Component);
+	    _inherits(Index, _Component);
 
-	                function Index() {
-	                                _classCallCheck(this, Index);
+	    function Index() {
+	        _classCallCheck(this, Index);
 
-	                                return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	                }
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
 
-	                _createClass(Index, [{
-	                                key: 'render',
-	                                value: function render() {
-	                                                return _react2.default.createElement(
-	                                                                'div',
-	                                                                null,
-	                                                                _react2.default.createElement(
-	                                                                                'h3',
-	                                                                                null,
-	                                                                                '导航部分'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                                'h1',
-	                                                                                null,
-	                                                                                'Watchhill'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                                'ul',
-	                                                                                { role: 'nav' },
-	                                                                                _react2.default.createElement(
-	                                                                                                'li',
-	                                                                                                { role: 'presentation' },
-	                                                                                                _react2.default.createElement(
-	                                                                                                                _reactRouter.Link,
-	                                                                                                                { to: '/index', activeClassName: 'active', onlyActiveOnIndex: true },
-	                                                                                                                '主页'
-	                                                                                                )
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'li',
-	                                                                                                { role: 'presentation' },
-	                                                                                                _react2.default.createElement(
-	                                                                                                                _reactRouter.Link,
-	                                                                                                                { to: '/' },
-	                                                                                                                '首页'
-	                                                                                                )
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'li',
-	                                                                                                { role: 'presentation' },
-	                                                                                                _react2.default.createElement(
-	                                                                                                                _reactRouter.Link,
-	                                                                                                                { to: '/blog' },
-	                                                                                                                '博客页'
-	                                                                                                )
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'li',
-	                                                                                                { role: 'presentation' },
-	                                                                                                _react2.default.createElement(
-	                                                                                                                _reactRouter.Link,
-	                                                                                                                { to: '/about' },
-	                                                                                                                '关于页'
-	                                                                                                )
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'h4',
-	                                                                                                null,
-	                                                                                                '未登录时显示'
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'li',
-	                                                                                                { role: 'presentation' },
-	                                                                                                _react2.default.createElement(
-	                                                                                                                _reactRouter.Link,
-	                                                                                                                { to: '/login' },
-	                                                                                                                '登录页'
-	                                                                                                )
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'li',
-	                                                                                                { role: 'presentation' },
-	                                                                                                _react2.default.createElement(
-	                                                                                                                _reactRouter.Link,
-	                                                                                                                { to: '/register' },
-	                                                                                                                '注册页'
-	                                                                                                )
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'h4',
-	                                                                                                null,
-	                                                                                                '登录时显示用户名和注销'
-	                                                                                )
-	                                                                ),
-	                                                                _react2.default.createElement('hr', null),
-	                                                                _react2.default.createElement(
-	                                                                                'h3',
-	                                                                                null,
-	                                                                                '身体部分'
-	                                                                ),
-	                                                                this.props.children,
-	                                                                _react2.default.createElement('hr', null),
-	                                                                _react2.default.createElement(
-	                                                                                'h3',
-	                                                                                null,
-	                                                                                '尾部'
-	                                                                )
-	                                                );
-	                                }
-	                }]);
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    '导航部分'
+	                ),
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'Watchhill'
+	                ),
+	                _react2.default.createElement(
+	                    'ul',
+	                    { role: 'nav' },
+	                    _react2.default.createElement(
+	                        'li',
+	                        { role: 'presentation' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/index', activeClassName: 'active', onlyActiveOnIndex: true },
+	                            '主页'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        { role: 'presentation' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/' },
+	                            '首页'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        { role: 'presentation' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/blog' },
+	                            '博客页'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        { role: 'presentation' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/about' },
+	                            '关于页'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'h4',
+	                        null,
+	                        '未登录时显示'
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        { role: 'presentation' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/login' },
+	                            '登录页'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        { role: 'presentation' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/register' },
+	                            '注册页'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'h4',
+	                        null,
+	                        '登录时显示用户名和注销'
+	                    )
+	                ),
+	                _react2.default.createElement('hr', null),
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    '身体部分'
+	                ),
+	                this.props.children,
+	                _react2.default.createElement('hr', null),
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    '尾部'
+	                )
+	            );
+	        }
+	    }]);
 
-	                return Index;
+	    return Index;
 	}(_react.Component);
 
 	exports.default = Index;
@@ -853,6 +868,114 @@
 	}(_react.Component);
 
 	exports.default = Register;
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = configureStore;
+
+	var _redux = __webpack_require__(12);
+
+	var _reduxThunk = __webpack_require__(22);
+
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+	var _reduxLogger = __webpack_require__(23);
+
+	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+
+	var _reducers = __webpack_require__(24);
+
+	var _reducers2 = _interopRequireDefault(_reducers);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var loggerMiddleware = (0, _reduxLogger2.default)();
+
+	//创建加入中间件的createStore函数
+	//它提供的是位于 action 被发起之后，到达 reducer 之前的扩展点
+	//具体详见rewatch example redux
+	// const configureStore = applyMiddleware(
+	// 	thunkMiddleware,
+	// 	loggerMiddleware
+	// )(createStore);
+
+	// export default configureStore;
+
+
+	var createStoreWithMiddleware = (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default, loggerMiddleware))(_redux.createStore);
+
+	function configureStore(initialState) {
+	    var store = createStoreWithMiddleware(_reducers2.default, initialState);
+	    return store;
+	}
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	module.exports = require("redux-thunk");
+
+/***/ },
+/* 23 */
+/***/ function(module, exports) {
+
+	module.exports = require("redux-logger");
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _redux = __webpack_require__(12);
+
+	var _login = __webpack_require__(25);
+
+	var _login2 = _interopRequireDefault(_login);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var reducer = (0, _redux.combineReducers)({
+		login: _login2.default
+	});
+
+	exports.default = reducer;
+
+/***/ },
+/* 25 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+
+	var login = function login() {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? {
+			logined: false
+		} : arguments[0];
+		var action = arguments[1];
+
+		switch (action.type) {
+			default:
+				return state;
+		}
+	};
+
+	exports.default = login;
 
 /***/ }
 /******/ ]);
