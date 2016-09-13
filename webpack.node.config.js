@@ -4,10 +4,10 @@ var path = require('path');
 
 module.exports = {
 
-    entry: path.resolve(__dirname, 'app.js'),
+    entry: path.resolve(__dirname, 'server.js'),
 
     output: {
-        filename: 'app.bundle.js'
+        filename: 'server.bundle.js'
     },
 
     target: 'node',

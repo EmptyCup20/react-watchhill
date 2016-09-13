@@ -12,6 +12,7 @@ import routes from '../../react/routes/routes';
 //import reducers from '../views/react/reducers'
 
 
+
 // send all requests to index.html so browserHistory works
 router.get('/*', (req, res,next) => {
     match({ routes, location: req.url }, (err, redirect, props) => {
