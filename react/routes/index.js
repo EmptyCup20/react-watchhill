@@ -30,10 +30,8 @@ import { Route, IndexRoute } from 'react-router';
 //容器组件
 import App from '../containers/App';
 import Home from '../containers/Home';
-
 import Blog from '../containers/Blog';
 import About from '../containers/About';
-
 import Login from '../containers/Login';
 import Register from '../containers/Register';
 
@@ -43,7 +41,6 @@ module.exports = (
         <IndexRoute component={Home}/>
         <Route path="/about" component={About}/>
         <Route path="/blog" component={Blog}/>
-
         <Route path="/login" component={Login}/>
         <Route path="/register" component={Register}/>
     </Route>
