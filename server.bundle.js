@@ -181,15 +181,18 @@
 
 	var _reactRouter = __webpack_require__(10);
 
-	var _routes = __webpack_require__(11);
+	var _reactRedux = __webpack_require__(11);
+
+	var _redux = __webpack_require__(12);
+
+	var _routes = __webpack_require__(13);
 
 	var _routes2 = _interopRequireDefault(_routes);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var router = _express2.default.Router();
-	//import { Provider } from 'react-redux';
-	//import { combineReducers } from 'redux'
+	// and these to match the url to routes and then render
 
 	//import configureStore from '../views/react/store';
 	//import { LOGIN_RECEIVE } from '../views/react/actions'
@@ -197,23 +200,48 @@
 
 
 	// send all requests to index.html so browserHistory works
+
 	router.get('/*', function (req, res, next) {
+
+	    //match在渲染前根据location用来匹配react-router的routes路由
+	    //使用 RoutingContext 同步渲染 route 组件
+	    //注意！这里的 req.url 应该是从初始请求中获得的
+	    //完整的 URL 路径，包括查询字符串
 	    (0, _reactRouter.match)({ routes: _routes2.default, location: req.url }, function (err, redirect, props) {
+
+	        //console.log('node,routes:',routes);
+	        console.log('node,req.url:', req.url);
+	        //console.log('node,props:', props);
+
 	        if (err) {
 	            res.status(500).send(err.message);
 	        } else if (redirect) {
+	            // we haven't talked about `onEnter` hooks on routes, but before a
+	            // route is entered, it can redirect. Here we handle on the server.
 	            res.redirect(redirect.pathname + redirect.search);
 	        } else if (props) {
 	            // hey we made it!
+	            // `RouterContext` is the what `Router` renders. `Router` keeps these
+	            // `props` in its state as it listens to `browserHistory`. But on the
+	            // server our app is stateless, so we need to use `match` to
+	            // get these props before rendering.
+
+	            // if we got props then we matched a route and can render
 	            var appHtml = (0, _server.renderToString)(_react2.default.createElement(_reactRouter.RouterContext, props));
 	            res.render('index', {
 	                html: appHtml
 	            });
 	        } else {
+	            // no errors, no redirect, we just didn't match anything
 	            res.status(404).send('Not Found');
 	        }
 	    });
 	});
+
+	//至于加载数据，你可以用 renderProps 去构建任何你想要的形式——
+	//例如在 route 组件中添加一个静态的 load 方法，
+	//或如在 route 中添加数据加载的方法——由你决定
+
 
 	module.exports = router;
 
@@ -237,6 +265,18 @@
 
 /***/ },
 /* 11 */
+/***/ function(module, exports) {
+
+	module.exports = require("react-redux");
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	module.exports = require("redux");
+
+/***/ },
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -245,19 +285,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(12);
-
 	var _reactRouter = __webpack_require__(10);
 
-	var _App = __webpack_require__(13);
+	var _App = __webpack_require__(14);
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _Home = __webpack_require__(14);
+	var _Home = __webpack_require__(15);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Blog = __webpack_require__(15);
+	var _Blog = __webpack_require__(17);
 
 	var _Blog2 = _interopRequireDefault(_Blog);
 
@@ -265,24 +303,54 @@
 
 	var _About2 = _interopRequireDefault(_About);
 
+	var _Login = __webpack_require__(18);
+
+	var _Login2 = _interopRequireDefault(_Login);
+
+	var _Register = __webpack_require__(19);
+
+	var _Register2 = _interopRequireDefault(_Register);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//容器组件
+
+
+	//容器组件
+	//import App from '../containers/App';
+	//import Login from '../containers/Login';
+	//import Index from '../containers/Index.jsx';
+	//import Register from '../containers/Register';
+	//import Home from '../containers/Home';
+	//import Blog from '../containers/Blog';
+	//import About from '../containers/About';
+	//
+	//
+	//const routes = (state) => {
+	//    return (
+	//        <Route path="/" component={App}>
+	//            <Route path="/index" component={Index} />
+	//            <Route path="/login" component={Login}/>
+	//            <Route path="/register" component={Register}/>
+	//        </Route>
+	//    )
+	//};
+	//
+	//export default routes;
+
 
 	module.exports = _react2.default.createElement(
 	    _reactRouter.Route,
 	    { path: '/', component: _App2.default },
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/blog', component: _Blog2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _Login2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _Register2.default })
 	);
 
 /***/ },
-/* 12 */
-/***/ function(module, exports) {
-
-	module.exports = require("react-dom");
-
-/***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -293,11 +361,11 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _reactRouter = __webpack_require__(10);
+
 	var _react = __webpack_require__(8);
 
 	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(10);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -307,8 +375,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var App = function (_React$Component) {
-	                _inherits(App, _React$Component);
+	var App = function (_Component) {
+	                _inherits(App, _Component);
 
 	                function App() {
 	                                _classCallCheck(this, App);
@@ -321,22 +389,27 @@
 	                                value: function render() {
 	                                                return _react2.default.createElement(
 	                                                                'div',
-	                                                                { className: 'row' },
+	                                                                null,
+	                                                                _react2.default.createElement(
+	                                                                                'h3',
+	                                                                                null,
+	                                                                                '导航部分'
+	                                                                ),
 	                                                                _react2.default.createElement(
 	                                                                                'h1',
 	                                                                                null,
-	                                                                                'Header'
+	                                                                                'Watchhill'
 	                                                                ),
 	                                                                _react2.default.createElement(
 	                                                                                'ul',
-	                                                                                { className: 'nav nav-tabs', role: 'nav' },
+	                                                                                { role: 'nav' },
 	                                                                                _react2.default.createElement(
 	                                                                                                'li',
 	                                                                                                { role: 'presentation' },
 	                                                                                                _react2.default.createElement(
 	                                                                                                                _reactRouter.Link,
 	                                                                                                                { to: '/', activeClassName: 'active', onlyActiveOnIndex: true },
-	                                                                                                                'Home'
+	                                                                                                                '主页'
 	                                                                                                )
 	                                                                                ),
 	                                                                                _react2.default.createElement(
@@ -344,8 +417,8 @@
 	                                                                                                { role: 'presentation' },
 	                                                                                                _react2.default.createElement(
 	                                                                                                                _reactRouter.Link,
-	                                                                                                                { to: '/index' },
-	                                                                                                                'Index'
+	                                                                                                                { to: '/blog' },
+	                                                                                                                '博客页'
 	                                                                                                )
 	                                                                                ),
 	                                                                                _react2.default.createElement(
@@ -354,78 +427,49 @@
 	                                                                                                _react2.default.createElement(
 	                                                                                                                _reactRouter.Link,
 	                                                                                                                { to: '/about' },
-	                                                                                                                'About'
+	                                                                                                                '关于页'
+	                                                                                                )
+	                                                                                ),
+	                                                                                _react2.default.createElement(
+	                                                                                                'li',
+	                                                                                                { role: 'presentation' },
+	                                                                                                _react2.default.createElement(
+	                                                                                                                _reactRouter.Link,
+	                                                                                                                { to: '/login' },
+	                                                                                                                '登录页'
+	                                                                                                )
+	                                                                                ),
+	                                                                                _react2.default.createElement(
+	                                                                                                'li',
+	                                                                                                { role: 'presentation' },
+	                                                                                                _react2.default.createElement(
+	                                                                                                                _reactRouter.Link,
+	                                                                                                                { to: '/register' },
+	                                                                                                                '注册页'
 	                                                                                                )
 	                                                                                )
 	                                                                ),
+	                                                                _react2.default.createElement('hr', null),
 	                                                                _react2.default.createElement(
-	                                                                                'h1',
+	                                                                                'h3',
 	                                                                                null,
-	                                                                                'Body'
+	                                                                                '身体部分'
 	                                                                ),
 	                                                                this.props.children,
+	                                                                _react2.default.createElement('hr', null),
 	                                                                _react2.default.createElement(
-	                                                                                'h1',
+	                                                                                'h3',
 	                                                                                null,
-	                                                                                'Footer'
+	                                                                                '尾部'
 	                                                                )
 	                                                );
 	                                }
 	                }]);
 
 	                return App;
-	}(_react2.default.Component);
+	}(_react.Component);
 
 	exports.default = App;
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(8);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Home = function (_React$Component) {
-	    _inherits(Home, _React$Component);
-
-	    function Home() {
-	        _classCallCheck(this, Home);
-
-	        return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
-	    }
-
-	    _createClass(Home, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'Hello,Home1'
-	            );
-	        }
-	    }]);
-
-	    return Home;
-	}(_react2.default.Component);
-
-	exports.default = Home;
 
 /***/ },
 /* 15 */
@@ -451,30 +495,34 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Blog = function (_React$Component) {
-	    _inherits(Blog, _React$Component);
+	var Home = function (_Component) {
+	    _inherits(Home, _Component);
 
-	    function Blog() {
-	        _classCallCheck(this, Blog);
+	    function Home() {
+	        _classCallCheck(this, Home);
 
-	        return _possibleConstructorReturn(this, (Blog.__proto__ || Object.getPrototypeOf(Blog)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
 	    }
 
-	    _createClass(Blog, [{
+	    _createClass(Home, [{
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'h1',
+	                'div',
 	                null,
-	                'Hello,Blog!'
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    '主页'
+	                )
 	            );
 	        }
 	    }]);
 
-	    return Blog;
-	}(_react2.default.Component);
+	    return Home;
+	}(_react.Component);
 
-	exports.default = Blog;
+	exports.default = Home;
 
 /***/ },
 /* 16 */
@@ -500,8 +548,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var About = function (_React$Component) {
-	    _inherits(About, _React$Component);
+	var About = function (_Component) {
+	    _inherits(About, _Component);
 
 	    function About() {
 	        _classCallCheck(this, About);
@@ -513,17 +561,180 @@
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'h1',
+	                'div',
 	                null,
-	                'Hello,About!'
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    '关于页'
+	                )
 	            );
 	        }
 	    }]);
 
 	    return About;
-	}(_react2.default.Component);
+	}(_react.Component);
 
 	exports.default = About;
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(8);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Blog = function (_Component) {
+	    _inherits(Blog, _Component);
+
+	    function Blog() {
+	        _classCallCheck(this, Blog);
+
+	        return _possibleConstructorReturn(this, (Blog.__proto__ || Object.getPrototypeOf(Blog)).apply(this, arguments));
+	    }
+
+	    _createClass(Blog, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    '博客页'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Blog;
+	}(_react.Component);
+
+	exports.default = Blog;
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(8);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Login = function (_Component) {
+	    _inherits(Login, _Component);
+
+	    function Login() {
+	        _classCallCheck(this, Login);
+
+	        return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).apply(this, arguments));
+	    }
+
+	    _createClass(Login, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    '登录页'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Login;
+	}(_react.Component);
+
+	exports.default = Login;
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(8);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Register = function (_Component) {
+	    _inherits(Register, _Component);
+
+	    function Register() {
+	        _classCallCheck(this, Register);
+
+	        return _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).apply(this, arguments));
+	    }
+
+	    _createClass(Register, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    '注册页'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Register;
+	}(_react.Component);
+
+	exports.default = Register;
 
 /***/ }
 /******/ ]);

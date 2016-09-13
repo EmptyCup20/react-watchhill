@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node server.bundle.js",
-    "webpack-browser-compress": "webpack --config ./webpack.browser.config.js --inline --content-base public/ --history-api-fallback --progress --watch --colors --optimize-minimize",
-    "webpack-browser": "webpack --config ./webpack.browser.config.js --inline --content-base public/ --history-api-fallback --progress --watch --colors",
-    "webpack-node": "webpack --config ./webpack.node.config.js --progress --watch --colors"
+    "browser-compress": "webpack --config ./webpack.browser.config.js  --optimize-minimize",
+    "browser": "webpack --config ./webpack.browser.config.js --progress --watch --colors",
+    "node": "webpack --config ./webpack.node.config.js --progress --watch --colors"
   },
   "dependencies": {
     "ansi-styles": "^2.2.1",
@@ -38,9 +38,11 @@
     "object-assign": "^4.1.0",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
+    "react-redux": "^4.4.5",
     "react-router": "^2.7.0",
     "react-tools": "^0.13.3",
     "reactify": "^1.1.1",
+    "redux": "^3.6.0",
     "serve-favicon": "^2.3.0",
     "style-loader": "^0.13.1",
     "vinyl-source-stream": "^1.1.0",
