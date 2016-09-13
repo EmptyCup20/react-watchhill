@@ -21,7 +21,7 @@ router.get('/*', (req, res,next) => {
     //使用 RoutingContext 同步渲染 route 组件
     //注意！这里的 req.url 应该是从初始请求中获得的
     //完整的 URL 路径，包括查询字符串
-    match({ routes:routes, location: req.url }, (err, redirect, props) => {
+    match({ routes:routes(), location: req.url }, (err, redirect, props) => {
 
 
         //console.log('node,routes:',routes);

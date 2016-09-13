@@ -12,7 +12,7 @@ const app = document.getElementById('app');
 
 render(
   <Router history={browserHistory} >
-      {routes}
+      {routes()}
   </Router>,
   app
 );
