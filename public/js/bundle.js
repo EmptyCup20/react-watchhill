@@ -18,24 +18,24 @@ webpackJsonp([0,1],[
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(97);
+	var _store = __webpack_require__(104);
 
 	var _store2 = _interopRequireDefault(_store);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//window.__SERVER_STATE__ = <%- serverState %>;
-	//const serverState = window.__SERVER_STATE__;
+	//路由
+	//基础库
+	var serverState = window.__SERVER_STATE__;
 
-	//import configureStore from './store';
-	var store = (0, _store2.default)(); //传入服务端请求的state,使前后端Store tree统一
-	console.log('browser index.js store:', store.getState());
+	//redux store
+
+	var store = (0, _store2.default)(serverState); //传入服务端请求的state,使前后端Store tree统一
+	console.log('browser store:', store.getState());
 
 	var app = document.getElementById('app');
 
 	//<Router routes={routes} history={browserHistory}/>, ???  https://github.com/reactjs/react-router-tutorial/tree/master/lessons/13-server-rendering
-
-
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRedux.Provider,
 	  { store: store },
@@ -3131,7 +3131,7 @@ webpackJsonp([0,1],[
 	          if (error) {
 	            listener(error);
 	          } else if (redirectLocation) {
-	            history.replace(redirectLocation);
+	            history.transitionTo(redirectLocation);
 	          } else if (nextState) {
 	            listener(null, nextState);
 	          } else {
@@ -4299,7 +4299,7 @@ webpackJsonp([0,1],[
 	  },
 
 	  propTypes: {
-	    to: oneOfType([string, object]),
+	    to: oneOfType([string, object]).isRequired,
 	    query: object,
 	    hash: string,
 	    state: object,
@@ -4360,11 +4360,6 @@ webpackJsonp([0,1],[
 
 
 	    if (router) {
-	      // If user does not specify a `to` prop, return an empty anchor tag.
-	      if (to == null) {
-	        return _react2.default.createElement('a', props);
-	      }
-
 	      var location = createLocationDescriptor(to, { query: query, hash: hash, state: state });
 	      props.href = router.createHref(location);
 
@@ -7425,56 +7420,36 @@ webpackJsonp([0,1],[
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _Login = __webpack_require__(95);
+	var _LoginContainer = __webpack_require__(95);
 
-	var _Login2 = _interopRequireDefault(_Login);
+	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _Register = __webpack_require__(96);
+	var _Register = __webpack_require__(103);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var routes = function routes(state) {
-	    return (
-	        //<Route path="/" component={App}>
-	        //    <IndexRoute component={Home}/>
-	        //    <Route path="/about" component={About}/>
-	        //    <Route path="/blog" component={Blog}/>
-	        //    <Route path="/login" component={Login}/>
-	        //    <Route path="/register" component={Register}/>
-	        //</Route>
-
-	        //这个Route标签是个坑,坑啊!
+	    return _react2.default.createElement(
+	        _reactRouter.Route,
+	        null,
+	        _react2.default.createElement(_reactRouter.Route, { path: '/', component: _App2.default }),
 	        _react2.default.createElement(
 	            _reactRouter.Route,
-	            null,
-	            _react2.default.createElement(_reactRouter.Route, { path: '/', component: _App2.default }),
-	            _react2.default.createElement(
-	                _reactRouter.Route,
-	                { path: '/index', component: _Index2.default },
-	                _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: '/blog', component: _Blog2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default })
-	            ),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _Login2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _Register2.default })
-	        )
+	            { path: '/index', component: _Index2.default },
+	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/blog', component: _Blog2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default })
+	        ),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginContainer2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _Register2.default })
 	    );
 	};
 
 	//容器组件
+	//基础库
 	exports.default = routes;
-
-	//module.exports = (
-	//    <Route path="/" component={App}>
-	//        <IndexRoute component={Home}/>
-	//        <Route path="/about" component={About}/>
-	//        <Route path="/blog" component={Blog}/>
-	//        <Route path="/login" component={Login}/>
-	//        <Route path="/register" component={Register}/>
-	//    </Route>
-	//);
 
 /***/ },
 /* 90 */
@@ -7569,7 +7544,7 @@ webpackJsonp([0,1],[
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	                value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -7589,116 +7564,117 @@ webpackJsonp([0,1],[
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Index = function (_Component) {
-	    _inherits(Index, _Component);
+	                _inherits(Index, _Component);
 
-	    function Index() {
-	        _classCallCheck(this, Index);
+	                function Index() {
+	                                _classCallCheck(this, Index);
 
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
+	                                return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	                }
 
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'h3',
-	                    null,
-	                    '导航部分'
-	                ),
-	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    'Watchhill'
-	                ),
-	                _react2.default.createElement(
-	                    'ul',
-	                    { role: 'nav' },
-	                    _react2.default.createElement(
-	                        'li',
-	                        { role: 'presentation' },
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/index', activeClassName: 'active', onlyActiveOnIndex: true },
-	                            '主页'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        { role: 'presentation' },
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/' },
-	                            '首页'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        { role: 'presentation' },
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/blog' },
-	                            '博客页'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        { role: 'presentation' },
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/about' },
-	                            '关于页'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'h4',
-	                        null,
-	                        '未登录时显示'
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        { role: 'presentation' },
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/login' },
-	                            '登录页'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        { role: 'presentation' },
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/register' },
-	                            '注册页'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'h4',
-	                        null,
-	                        '登录时显示用户名和注销'
-	                    )
-	                ),
-	                _react2.default.createElement('hr', null),
-	                _react2.default.createElement(
-	                    'h3',
-	                    null,
-	                    '身体部分'
-	                ),
-	                this.props.children,
-	                _react2.default.createElement('hr', null),
-	                _react2.default.createElement(
-	                    'h3',
-	                    null,
-	                    '尾部'
-	                )
-	            );
-	        }
-	    }]);
+	                _createClass(Index, [{
+	                                key: 'render',
+	                                value: function render() {
 
-	    return Index;
+	                                                return _react2.default.createElement(
+	                                                                'div',
+	                                                                null,
+	                                                                _react2.default.createElement(
+	                                                                                'h3',
+	                                                                                null,
+	                                                                                '导航部分'
+	                                                                ),
+	                                                                _react2.default.createElement(
+	                                                                                'h1',
+	                                                                                null,
+	                                                                                'Watchhill'
+	                                                                ),
+	                                                                _react2.default.createElement(
+	                                                                                'ul',
+	                                                                                { role: 'nav' },
+	                                                                                _react2.default.createElement(
+	                                                                                                'li',
+	                                                                                                { role: 'presentation' },
+	                                                                                                _react2.default.createElement(
+	                                                                                                                _reactRouter.Link,
+	                                                                                                                { to: '/index', activeClassName: 'active', onlyActiveOnIndex: true },
+	                                                                                                                '主页'
+	                                                                                                )
+	                                                                                ),
+	                                                                                _react2.default.createElement(
+	                                                                                                'li',
+	                                                                                                { role: 'presentation' },
+	                                                                                                _react2.default.createElement(
+	                                                                                                                _reactRouter.Link,
+	                                                                                                                { to: '/' },
+	                                                                                                                '首页'
+	                                                                                                )
+	                                                                                ),
+	                                                                                _react2.default.createElement(
+	                                                                                                'li',
+	                                                                                                { role: 'presentation' },
+	                                                                                                _react2.default.createElement(
+	                                                                                                                _reactRouter.Link,
+	                                                                                                                { to: '/blog' },
+	                                                                                                                '博客页'
+	                                                                                                )
+	                                                                                ),
+	                                                                                _react2.default.createElement(
+	                                                                                                'li',
+	                                                                                                { role: 'presentation' },
+	                                                                                                _react2.default.createElement(
+	                                                                                                                _reactRouter.Link,
+	                                                                                                                { to: '/about' },
+	                                                                                                                '关于页'
+	                                                                                                )
+	                                                                                ),
+	                                                                                _react2.default.createElement(
+	                                                                                                'h4',
+	                                                                                                null,
+	                                                                                                '未登录时显示'
+	                                                                                ),
+	                                                                                _react2.default.createElement(
+	                                                                                                'li',
+	                                                                                                { role: 'presentation' },
+	                                                                                                _react2.default.createElement(
+	                                                                                                                _reactRouter.Link,
+	                                                                                                                { to: '/login' },
+	                                                                                                                '登录页'
+	                                                                                                )
+	                                                                                ),
+	                                                                                _react2.default.createElement(
+	                                                                                                'li',
+	                                                                                                { role: 'presentation' },
+	                                                                                                _react2.default.createElement(
+	                                                                                                                _reactRouter.Link,
+	                                                                                                                { to: '/register' },
+	                                                                                                                '注册页'
+	                                                                                                )
+	                                                                                ),
+	                                                                                _react2.default.createElement(
+	                                                                                                'h4',
+	                                                                                                null,
+	                                                                                                '登录时显示用户名和注销'
+	                                                                                )
+	                                                                ),
+	                                                                _react2.default.createElement('hr', null),
+	                                                                _react2.default.createElement(
+	                                                                                'h3',
+	                                                                                null,
+	                                                                                '身体部分'
+	                                                                ),
+	                                                                this.props.children,
+	                                                                _react2.default.createElement('hr', null),
+	                                                                _react2.default.createElement(
+	                                                                                'h3',
+	                                                                                null,
+	                                                                                '尾部'
+	                                                                )
+	                                                );
+	                                }
+	                }]);
+
+	                return Index;
 	}(_react.Component);
 
 	exports.default = Index;
@@ -7872,6 +7848,208 @@ webpackJsonp([0,1],[
 	    value: true
 	});
 
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _redux = __webpack_require__(74);
+
+	var _reactRedux = __webpack_require__(67);
+
+	var _Login = __webpack_require__(96);
+
+	var _Login2 = _interopRequireDefault(_Login);
+
+	var _login = __webpack_require__(101);
+
+	var LoginActions = _interopRequireWildcard(_login);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//绑定login store到Login组件
+
+
+	//视图组件
+	function mapStateToProps(state) {
+	    return {
+	        login: state.login
+	    };
+	}
+
+	//绑定login action到Login组件
+
+
+	//action
+	//基础库
+	function mapDispatchToProps(dispatch) {
+	    return (0, _redux.bindActionCreators)(LoginActions, dispatch);
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
+
+/***/ },
+/* 96 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Input = __webpack_require__(97);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _Button = __webpack_require__(98);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	var _privateType = __webpack_require__(99);
+
+	var _httpType = __webpack_require__(100);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //基础库
+
+
+	//基础组件
+
+
+	//常量
+	//私有函数常量
+
+
+	//登录状态常量
+
+
+	var Login = function (_Component) {
+	    _inherits(Login, _Component);
+
+	    function Login() {
+	        _classCallCheck(this, Login);
+
+	        return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).apply(this, arguments));
+	    }
+
+	    _createClass(Login, [{
+	        key: '_onClick',
+	        value: function _onClick(e) {
+	            e.preventDefault();
+	            //console.log(this.refs.username.value);
+	            //console.log(this.refs.password.value);    //使用此种方式主要用于制作可控表单
+	            var username = document.getElementById('username'),
+	                password = document.getElementById('password');
+
+	            //这里还要做一个登录格式验证
+
+	            if (username.value.trim() && password.value.trim()) {
+	                //console.log(username.value);
+	                //console.log(password.value);
+	                var user = {
+	                    username: username.value.trim(),
+	                    password: password.value.trim()
+	                };
+
+	                //console.log('user:',user);
+	                this.props.login_start(user);
+	                //console.log('this.props.login:',this.props.login);
+	            } else {
+	                alert('空');
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var login = this.props.login; //注意这里应该查看容易中允许传入的state属性
+
+	            console.log(login.loginStatus);
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    '登录页'
+	                ),
+	                _react2.default.createElement(
+	                    'form',
+	                    { className: 'form-inline' },
+	                    _react2.default.createElement(_Input2.default, { type: 'text', id: 'username', className: 'form-control', placeholder: '账号' }),
+	                    _react2.default.createElement(_Input2.default, { type: 'password', id: 'password', className: 'form-control', placeholder: '密码' }),
+	                    _react2.default.createElement(
+	                        _Button2.default,
+	                        { type: 'submit', className: 'btn btn-default', onClick: this._onClick.bind(this) },
+	                        '登录'
+	                    )
+	                ),
+	                _react2.default.createElement('br', null),
+
+	                //login.logining
+	                //?
+	                //    <div className="alert alert-info" role="alert">正在登录...</div>
+	                //:
+	                //    <div className="alert alert-success" role="alert">登录提示</div>
+	                //switch(login.loginStatus) {
+	                //
+	                //}
+
+	                function () {
+	                    switch (login.loginStatus) {
+	                        case _httpType.user_no_exist:
+	                            return _react2.default.createElement(
+	                                'div',
+	                                { className: 'alert alert-danger', role: 'alert' },
+	                                '用户名不存在!'
+	                            );
+
+	                        case _httpType.password_err:
+	                            return _react2.default.createElement(
+	                                'div',
+	                                { className: 'alert alert-danger', role: 'alert' },
+	                                '密码错误!'
+	                            );
+	                        default:
+	                            break;
+	                    }
+	                }()
+	            );
+	        }
+	    }]);
+
+	    return Login;
+	}(_react.Component);
+
+	Login.propTypes = {
+	    login_start: _react.PropTypes.func.isRequired,
+	    login: _react.PropTypes.object.isRequired
+	};
+	exports.default = Login;
+
+/***/ },
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -7886,37 +8064,275 @@ webpackJsonp([0,1],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Login = function (_Component) {
-	    _inherits(Login, _Component);
+	var Input = function (_React$Component) {
+	    _inherits(Input, _React$Component);
 
-	    function Login() {
-	        _classCallCheck(this, Login);
+	    function Input() {
+	        _classCallCheck(this, Input);
 
-	        return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).apply(this, arguments));
 	    }
 
-	    _createClass(Login, [{
+	    _createClass(Input, [{
 	        key: 'render',
 	        value: function render() {
+	            var _props = this.props;
+	            var type = _props.type;
+	            var className = _props.className;
+	            var id = _props.id;
+	            var placeholder = _props.placeholder;
+	            var name = _props.name;
+	            var autocomplete = _props.autocomplete;
+	            var onChange = _props.onChange;
+
+
+	            return _react2.default.createElement('input', {
+	                type: type,
+	                className: className,
+	                id: id,
+	                placeholder: placeholder,
+	                name: name,
+	                autocomplete: autocomplete,
+	                onChange: onChange
+	            });
+	        }
+
+	        //https://facebook.github.io/react/docs/top-level-api.html
+	        //https://facebook.github.io/react/docs/reusable-components.html
+
+	    }]);
+
+	    return Input;
+	}(_react2.default.Component);
+
+	Input.propTypes = {
+	    type: _react.PropTypes.string.isRequired,
+	    className: _react.PropTypes.string.isRequired,
+	    id: _react.PropTypes.string,
+	    placeholder: _react.PropTypes.string,
+	    //value: PropTypes.string,
+	    //autoFocus: React.PropTypes.bool,
+	    //required: React.PropTypes.string,
+	    name: _react.PropTypes.string,
+	    autocomplete: _react.PropTypes.oneOf(['on', 'off']),
+	    onChange: _react.PropTypes.func
+	};
+	exports.default = Input;
+
+/***/ },
+/* 98 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Button = function (_React$Component) {
+	    _inherits(Button, _React$Component);
+
+	    function Button() {
+	        _classCallCheck(this, Button);
+
+	        return _possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).apply(this, arguments));
+	    }
+
+	    _createClass(Button, [{
+	        key: 'render',
+	        value: function render() {
+	            var _props = this.props;
+	            var type = _props.type;
+	            var className = _props.className;
+	            var onClick = _props.onClick;
+	            var dataIndex = _props.dataIndex;
+
+
 	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    '登录页'
-	                )
+	                'button',
+	                { type: type, className: className, onClick: onClick, 'data-index': dataIndex },
+	                this.props.children
 	            );
 	        }
 	    }]);
 
-	    return Login;
-	}(_react.Component);
+	    return Button;
+	}(_react2.default.Component);
 
-	exports.default = Login;
+	Button.propTypes = {
+	    className: _react.PropTypes.string.isRequired,
+	    onClick: _react.PropTypes.func.isRequired,
+	    type: _react.PropTypes.string.isRequired,
+	    dataIndex: _react.PropTypes.number
+	};
+	exports.default = Button;
 
 /***/ },
-/* 96 */
+/* 99 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	//私有函数常量
+
+	module.exports = {
+	    _onClick: Symbol('_onClick')
+	};
+
+/***/ },
+/* 100 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	//请求状态
+
+	module.exports = {
+
+	    //login
+	    login_init: 'login_init', //登录初始化
+	    user_no_exist: 'user_no_exist', //用户不存在
+	    password_err: 'password_err', //密码错误
+
+
+	    success: 'success' //请求成功
+	};
+
+/***/ },
+/* 101 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.login_start = login_start;
+
+	var _actionType = __webpack_require__(102);
+
+	/**
+	 * 准备开始登录
+	 * @param user -> 登录用户名
+	 * @param pass -> 登录密码
+	 * @returns {Function}
+	 */
+	function login_start(user) {
+	    return function (dispatch, getState) {
+	        if (login_authen(getState())) {
+	            return dispatch(login_ajax(user)); //发起一个登录http请求
+	        } else {
+	            return Promise.resolve(); //告诉thunk无需等待,从而跳过dispatch,进入reducers?
+	        }
+	    };
+	}
+
+	/**
+	 * 判断是否已经登录,以及是否正在登录
+	 * @param state
+	 * @returns {boolean} true -> 可以进行登录操作,这一步可以控制HTTP请求数,防止恶意的重复请求
+	 */
+	function login_authen(state) {
+	    return !state.login.logined && !state.login.logining;
+	}
+
+	/**
+	 * 发起登录的ajax请求
+	 * @param user
+	 * @param pass
+	 * @returns {Function}
+	 */
+	function login_ajax(user) {
+	    return function (dispatch) {
+	        dispatch(login_request(user)); //挂起登录请求,防止重复请求
+	        return ajax().login(user).then(function (data) {
+	            return dispatch(login_reveive(user, data.status));
+	        }); //接受到数据后重新更新state
+	    };
+	}
+
+	/**
+	 * 挂起请求登录
+	 * @param user
+	 * @returns {{type: string, user: *}}
+	 */
+	function login_request(user) {
+	    return {
+	        type: _actionType.LOGIN_REQUEST,
+	        user: user
+	    };
+	}
+
+	function login_reveive(user, status) {
+	    return {
+	        type: _actionType.LOGIN_RECEIVE,
+	        user: user,
+	        status: status
+	    };
+	}
+
+	/**
+	 * 这里暂时放一下ajax,最后可以独立出来
+	 */
+
+	function ajax() {
+	    function req(method, url, data) {
+	        var defered = $.Deferred();
+	        var request = {
+	            type: method,
+	            url: url,
+	            //dataType: "json"?
+	            data: data
+	        };
+
+	        $.ajax(request).done(function (data) {
+	            defered.resolve(data);
+	        }).fail(function () {
+	            defered.reject();
+	        });
+
+	        return defered.promise();
+	    }
+
+	    return {
+	        login: function login(data) {
+	            return req('POST', '/user/login', data);
+	        }
+	    };
+	}
+
+/***/ },
+/* 102 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	//action类型
+
+	module.exports = {
+
+	    //login
+	    LOGIN_REQUEST: 'LOGIN_REQUEST', //挂起登录请求
+	    LOGIN_RECEIVE: 'LOGIN_RECEIVE' //接收登录状况处理
+
+	};
+
+/***/ },
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7969,54 +8385,47 @@ webpackJsonp([0,1],[
 	exports.default = Register;
 
 /***/ },
-/* 97 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+		value: true
 	});
 	exports.default = configureStore;
 
 	var _redux = __webpack_require__(74);
 
-	var _reduxThunk = __webpack_require__(98);
+	var _reduxThunk = __webpack_require__(105);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(99);
+	var _reduxLogger = __webpack_require__(106);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(100);
+	var _reducers = __webpack_require__(107);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//基础库
 	var loggerMiddleware = (0, _reduxLogger2.default)();
 
-	//创建加入中间件的createStore函数
-	//它提供的是位于 action 被发起之后，到达 reducer 之前的扩展点
-	//具体详见rewatch example redux
-	// const configureStore = applyMiddleware(
-	// 	thunkMiddleware,
-	// 	loggerMiddleware
-	// )(createStore);
-
-	// export default configureStore;
+	//reducers -> 改变state
 
 
-	var createStoreWithMiddleware = (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default, loggerMiddleware))(_redux.createStore);
+	//中间件
+	function configureStore(preloadedState) {
+		var store = (0, _redux.createStore)(_reducers2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default, loggerMiddleware));
 
-	function configureStore(initialState) {
-	    var store = createStoreWithMiddleware(_reducers2.default, initialState);
-	    return store;
+		return store;
 	}
 
 /***/ },
-/* 98 */
+/* 105 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -8044,7 +8453,7 @@ webpackJsonp([0,1],[
 	exports['default'] = thunk;
 
 /***/ },
-/* 99 */
+/* 106 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8277,7 +8686,7 @@ webpackJsonp([0,1],[
 	module.exports = createLogger;
 
 /***/ },
-/* 100 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8288,36 +8697,60 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
-	var _login = __webpack_require__(101);
+	var _login = __webpack_require__(108);
 
 	var _login2 = _interopRequireDefault(_login);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//基础库
 	var reducer = (0, _redux.combineReducers)({
 		login: _login2.default
 	});
 
+	//登录
 	exports.default = reducer;
 
 /***/ },
-/* 101 */
-/***/ function(module, exports) {
+/* 108 */
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _actionType = __webpack_require__(102);
+
+	var _httpType = __webpack_require__(100);
 
 	var login = function login() {
 		var state = arguments.length <= 0 || arguments[0] === undefined ? {
-			logined: false
+			logined: false,
+			loginStatus: _httpType.login_init, //登录状态
+			logining: false //有没有正在登录标志
 		} : arguments[0];
 		var action = arguments[1];
 
+
 		switch (action.type) {
+
+			case _actionType.LOGIN_REQUEST:
+				//发起登录请求
+				return _extends({}, state, {
+					logining: true
+				});
+
+			case _actionType.LOGIN_RECEIVE:
+				//接受登录结果
+				return _extends({}, state, {
+					loginStatus: action.status,
+					logining: false
+				});
+
 			default:
 				return state;
 		}

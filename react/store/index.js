@@ -1,38 +1,25 @@
+//基础库
 import { createStore,applyMiddleware,compose } from 'redux';
+
+//中间件
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
+
+//reducers -> 改变state
 import reducer from '../reducers';
 
 
 const loggerMiddleware = createLogger();
 
 
+export default function configureStore(preloadedState) {
+	const store = createStore(
+		reducer,
+		preloadedState,
+		applyMiddleware(thunkMiddleware,loggerMiddleware)
+	);
 
-//创建加入中间件的createStore函数
-//它提供的是位于 action 被发起之后，到达 reducer 之前的扩展点
-//具体详见rewatch example redux
-// const configureStore = applyMiddleware(
-// 	thunkMiddleware,
-// 	loggerMiddleware
-// )(createStore);
-
-// export default configureStore;
-
-
-const createStoreWithMiddleware = compose(
-    applyMiddleware(
-        thunkMiddleware,
-        loggerMiddleware
-    )
-)(createStore);
-
-export default function configureStore(initialState) {
-	const store = createStoreWithMiddleware(reducer,initialState);
-	return store;
+	return store
 }
-
-
-
-
 
 

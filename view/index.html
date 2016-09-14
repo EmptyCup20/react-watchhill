@@ -2,6 +2,10 @@
 <html>
   <head>
     <title>watchill</title>
+
+    <!-- bootstrap css -->
+    <link href="/lib/bootstrap/bootstrap.min.css" type="text/css" rel="stylesheet">
+
   </head>
   <body>
     <div class="wrapper" id="app">
@@ -9,11 +13,15 @@
     </div>
 
 
-
     <script>
-      
+      window.__SERVER_STATE__ = <%- serverState %>;
     </script>
 
+    <!-- jquery-->
+    <script src="/lib/jquery/jquery.min.js"></script>
+
+    <!-- bootstrap js -->
+    <script src="/lib/bootstrap/bootstrap.min.js"></script>
 
     <!--react -->
     <script src="/lib/react/react.min.js"></script>
