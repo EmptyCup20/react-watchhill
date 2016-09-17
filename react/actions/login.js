@@ -15,7 +15,7 @@ export function login_start(user) {
         } else {
             return Promise.resolve();                 //告诉thunk无需等待,从而跳过dispatch,进入reducers?
         }
-    }
+    };
 }
 
 /**
@@ -39,9 +39,8 @@ function login_ajax(user) {
         dispatch(login_request(user));         //挂起登录请求,防止重复请求
         return ajax().login(user)
             .then(data => dispatch(login_reveive(user,data.status)));   //接受到数据后重新更新state
-    }
+    };
 }
-
 
 /**
  * 挂起请求登录
@@ -50,9 +49,8 @@ function login_ajax(user) {
  */
 function login_request(user) {
     return {
-        type: LOGIN_REQUEST,
-        user: user
-    }
+        type: LOGIN_REQUEST
+    };
 }
 
 
@@ -60,9 +58,9 @@ function login_request(user) {
 function login_reveive(user,status) {
     return {
         type: LOGIN_RECEIVE,
-        user: user,
+        user: {username:user.username},
         status: status
-    }
+    };
 }
 
 
@@ -99,5 +97,5 @@ function ajax(){
         login: function(data){
             return req('POST','/user/login',data);
         }
-    }
+    };
 }

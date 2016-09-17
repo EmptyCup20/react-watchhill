@@ -9,7 +9,8 @@ import Button from './elements/Button';
 import { _onClick } from '../constants/privateType';                //私有函数常量
 import { user_no_exist,password_err } from '../constants/httpType'; //登录状态常量
 
-
+//导航
+import history from '../history';
 
 export default class Login extends Component{
 
@@ -18,7 +19,15 @@ export default class Login extends Component{
         login: PropTypes.object.isRequired
     };
 
-
+    //不能修改属性和状态,在render之前接收到新的props和state进行执行
+    componentWillUpdate(nextProps,nextState) {
+        //console.log(nextProps.login);
+        if(nextProps.login.logined) {
+             history.replace({
+                pathname:'/index'
+             });   
+        }
+    }
 
 
     _onClick(e) {
@@ -52,7 +61,7 @@ export default class Login extends Component{
 
 
         const { login } = this.props;       //注意这里应该查看容易中允许传入的state属性
-        console.log(login.loginStatus);
+        //console.log(login.loginStatus);
 
         return (
             <div className="container">

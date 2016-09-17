@@ -6,6 +6,7 @@ export function loginAuthen(req,res,next) {
     //console.log(req.body.password);
     if(req.body.username === 'xx' && req.body.password === '1111') {
         //req.session.loginName = req.body.username;
+        req.session.user = req.body.username;
         res.json({status:success});
     } else if(req.body.username !== 'xx') {
         res.json({status:user_no_exist});

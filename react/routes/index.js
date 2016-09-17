@@ -4,7 +4,7 @@ import { Route, IndexRoute } from 'react-router';
 
 //容器组件
 import App from '../containers/App';
-import Index from '../containers/Index';
+import IndexContainer from '../containers/IndexContainer';
 import Home from '../containers/Home';
 import Blog from '../containers/Blog';
 import About from '../containers/About';
@@ -17,7 +17,7 @@ const routes = (state) => {
     return(
         <Route>
             <Route path="/" component={App} />
-            <Route path="/index" component={Index}>
+            <Route path="/index" component={IndexContainer}>
                 <IndexRoute component={Home} />
                 <Route path='/blog' component={Blog}  />
                 <Route path='/about' component={About}  />

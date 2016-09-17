@@ -70,11 +70,11 @@
 
 	var _ejs2 = _interopRequireDefault(_ejs);
 
-	var _expressSession = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"express-session\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _expressSession = __webpack_require__(7);
 
 	var _expressSession2 = _interopRequireDefault(_expressSession);
 
-	var _cookieParser = __webpack_require__(35);
+	var _cookieParser = __webpack_require__(8);
 
 	var _cookieParser2 = _interopRequireDefault(_cookieParser);
 
@@ -93,14 +93,21 @@
 	app.use(_bodyParser2.default.json());
 	app.use(_bodyParser2.default.urlencoded({ extended: false }));
 	app.use((0, _cookieParser2.default)('MAGICString')); //开启cookie
-	app.use((0, _expressSession2.default)()); //开启session
+	app.use((0, _expressSession2.default)({
+		secret: '12345',
+		name: 'testapp',
+		//cookie: {maxAge: 80000 },  	//设置maxAge是80000ms，即80s后session和相应的cookie失效过期
+		resave: false, //是指每次请求都重新设置session cookie，假设你的cookie是10分钟过期，每次请求都会再设置10分钟
+		saveUninitialized: true //是指无论有没有session cookie，每次请求都设置个session cookie ，默认给个标示为 connect.sid
+	})); //开启session
+
 	app.use(_express2.default.static(_path2.default.join(__dirname, 'public')));
 
 	//ajax请求路由
-	app.use('/user', __webpack_require__(7));
+	app.use('/user', __webpack_require__(9));
 
 	//react服务器渲染路由
-	app.use('/', __webpack_require__(10));
+	app.use('/', __webpack_require__(12));
 
 	//app.use('/users', users);
 
@@ -140,7 +147,7 @@
 
 	var PORT = process.env.PORT || 3000;
 	app.listen(PORT, function () {
-	  console.log('Production Express server running at localhost:' + PORT);
+		console.log('Production Express server running at localhost:' + PORT);
 	});
 
 /***/ },
@@ -181,11 +188,23 @@
 
 /***/ },
 /* 7 */
+/***/ function(module, exports) {
+
+	module.exports = require("express-session");
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	module.exports = require("cookie-parser");
+
+/***/ },
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _user = __webpack_require__(8);
+	var _user = __webpack_require__(10);
 
 	var _express = __webpack_require__(1);
 
@@ -201,7 +220,7 @@
 	module.exports = router;
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -211,13 +230,14 @@
 	});
 	exports.loginAuthen = loginAuthen;
 
-	var _httpType = __webpack_require__(9);
+	var _httpType = __webpack_require__(11);
 
 	function loginAuthen(req, res, next) {
 	    //console.log(req.body.username);
 	    //console.log(req.body.password);
 	    if (req.body.username === 'xx' && req.body.password === '1111') {
 	        //req.session.loginName = req.body.username;
+	        req.session.user = req.body.username;
 	        res.json({ status: _httpType.success });
 	    } else if (req.body.username !== 'xx') {
 	        res.json({ status: _httpType.user_no_exist });
@@ -227,7 +247,7 @@
 	}
 
 /***/ },
-/* 9 */
+/* 11 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -246,7 +266,7 @@
 	};
 
 /***/ },
-/* 10 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -255,23 +275,23 @@
 
 	var _express2 = _interopRequireDefault(_express);
 
-	var _react = __webpack_require__(11);
+	var _react = __webpack_require__(13);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _server = __webpack_require__(12);
+	var _server = __webpack_require__(14);
 
-	var _reactRouter = __webpack_require__(13);
+	var _reactRouter = __webpack_require__(15);
 
-	var _reactRedux = __webpack_require__(14);
+	var _reactRedux = __webpack_require__(16);
 
-	var _redux = __webpack_require__(15);
+	var _redux = __webpack_require__(17);
 
-	var _routes = __webpack_require__(16);
+	var _routes = __webpack_require__(18);
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(30);
+	var _store = __webpack_require__(34);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -291,7 +311,26 @@
 
 	router.get('/*', function (req, res, next) {
 
-	    var store = (0, _store2.default)(); //这里需要传入需要的state tree
+	    //暂时这么设置,同步服务端和客户端
+	    if (req.session.user) {
+	        console.log('logined');
+	        var store = (0, _store2.default)({
+	            login: {
+	                loginUser: {
+	                    username: req.session.user
+	                },
+	                logined: true
+	            }
+	        }); //这里需要传入需要的state tree
+
+	        //console.log(JSON.stringify(store.getState()));
+
+	    } else {
+	        console.log('unlogined');
+	        var store = (0, _store2.default)(); //const有块级作用域
+	    }
+
+	    //const store = configureStore();       //这里需要传入需要的state tree
 	    console.log('node  store:', store.getState()); //需要注意与客户端的store统一
 
 	    (0, _reactRouter.match)({ routes: (0, _routes2.default)(), location: req.url }, function (err, redirect, props) {
@@ -324,37 +363,37 @@
 	module.exports = router;
 
 /***/ },
-/* 11 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = require("react");
 
 /***/ },
-/* 12 */
+/* 14 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-dom/server");
 
 /***/ },
-/* 13 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-router");
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-redux");
 
 /***/ },
-/* 15 */
+/* 17 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux");
 
 /***/ },
-/* 16 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -363,37 +402,37 @@
 	    value: true
 	});
 
-	var _react = __webpack_require__(11);
+	var _react = __webpack_require__(13);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(13);
+	var _reactRouter = __webpack_require__(15);
 
-	var _App = __webpack_require__(17);
+	var _App = __webpack_require__(19);
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _Index = __webpack_require__(18);
+	var _IndexContainer = __webpack_require__(20);
 
-	var _Index2 = _interopRequireDefault(_Index);
+	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
 
-	var _Home = __webpack_require__(19);
+	var _Home = __webpack_require__(22);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Blog = __webpack_require__(20);
+	var _Blog = __webpack_require__(23);
 
 	var _Blog2 = _interopRequireDefault(_Blog);
 
-	var _About = __webpack_require__(21);
+	var _About = __webpack_require__(24);
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _LoginContainer = __webpack_require__(22);
+	var _LoginContainer = __webpack_require__(25);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _Register = __webpack_require__(29);
+	var _Register = __webpack_require__(33);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
@@ -406,7 +445,7 @@
 	        _react2.default.createElement(_reactRouter.Route, { path: '/', component: _App2.default }),
 	        _react2.default.createElement(
 	            _reactRouter.Route,
-	            { path: '/index', component: _Index2.default },
+	            { path: '/index', component: _IndexContainer2.default },
 	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/blog', component: _Blog2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default })
@@ -421,7 +460,7 @@
 	exports.default = routes;
 
 /***/ },
-/* 17 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -432,9 +471,9 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _reactRouter = __webpack_require__(13);
+	var _reactRouter = __webpack_require__(15);
 
-	var _react = __webpack_require__(11);
+	var _react = __webpack_require__(13);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -507,20 +546,54 @@
 	exports.default = App;
 
 /***/ },
-/* 18 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	                value: true
+	    value: true
+	});
+
+	var _react = __webpack_require__(13);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _redux = __webpack_require__(17);
+
+	var _reactRedux = __webpack_require__(16);
+
+	var _Index = __webpack_require__(21);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//基础库
+	function mapStateToProps(state) {
+	    return {
+	        login: state.login
+	    };
+	}
+
+	//视图组件
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Index2.default);
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _reactRouter = __webpack_require__(13);
+	var _reactRouter = __webpack_require__(15);
 
-	var _react = __webpack_require__(11);
+	var _react = __webpack_require__(13);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -533,123 +606,128 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Index = function (_Component) {
-	                _inherits(Index, _Component);
+	    _inherits(Index, _Component);
 
-	                function Index() {
-	                                _classCallCheck(this, Index);
+	    function Index() {
+	        _classCallCheck(this, Index);
 
-	                                return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	                }
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
 
-	                _createClass(Index, [{
-	                                key: 'render',
-	                                value: function render() {
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            var login = this.props.login;
 
-	                                                return _react2.default.createElement(
-	                                                                'div',
-	                                                                null,
-	                                                                _react2.default.createElement(
-	                                                                                'h3',
-	                                                                                null,
-	                                                                                '导航部分'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                                'h1',
-	                                                                                null,
-	                                                                                'Watchhill'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                                'ul',
-	                                                                                { role: 'nav' },
-	                                                                                _react2.default.createElement(
-	                                                                                                'li',
-	                                                                                                { role: 'presentation' },
-	                                                                                                _react2.default.createElement(
-	                                                                                                                _reactRouter.Link,
-	                                                                                                                { to: '/index', activeClassName: 'active', onlyActiveOnIndex: true },
-	                                                                                                                '主页'
-	                                                                                                )
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'li',
-	                                                                                                { role: 'presentation' },
-	                                                                                                _react2.default.createElement(
-	                                                                                                                _reactRouter.Link,
-	                                                                                                                { to: '/' },
-	                                                                                                                '首页'
-	                                                                                                )
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'li',
-	                                                                                                { role: 'presentation' },
-	                                                                                                _react2.default.createElement(
-	                                                                                                                _reactRouter.Link,
-	                                                                                                                { to: '/blog' },
-	                                                                                                                '博客页'
-	                                                                                                )
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'li',
-	                                                                                                { role: 'presentation' },
-	                                                                                                _react2.default.createElement(
-	                                                                                                                _reactRouter.Link,
-	                                                                                                                { to: '/about' },
-	                                                                                                                '关于页'
-	                                                                                                )
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'h4',
-	                                                                                                null,
-	                                                                                                '未登录时显示'
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'li',
-	                                                                                                { role: 'presentation' },
-	                                                                                                _react2.default.createElement(
-	                                                                                                                _reactRouter.Link,
-	                                                                                                                { to: '/login' },
-	                                                                                                                '登录页'
-	                                                                                                )
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'li',
-	                                                                                                { role: 'presentation' },
-	                                                                                                _react2.default.createElement(
-	                                                                                                                _reactRouter.Link,
-	                                                                                                                { to: '/register' },
-	                                                                                                                '注册页'
-	                                                                                                )
-	                                                                                ),
-	                                                                                _react2.default.createElement(
-	                                                                                                'h4',
-	                                                                                                null,
-	                                                                                                '登录时显示用户名和注销'
-	                                                                                )
-	                                                                ),
-	                                                                _react2.default.createElement('hr', null),
-	                                                                _react2.default.createElement(
-	                                                                                'h3',
-	                                                                                null,
-	                                                                                '身体部分'
-	                                                                ),
-	                                                                this.props.children,
-	                                                                _react2.default.createElement('hr', null),
-	                                                                _react2.default.createElement(
-	                                                                                'h3',
-	                                                                                null,
-	                                                                                '尾部'
-	                                                                )
-	                                                );
-	                                }
-	                }]);
 
-	                return Index;
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    '导航部分'
+	                ),
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'Watchhill'
+	                ),
+	                _react2.default.createElement(
+	                    'ul',
+	                    { role: 'nav' },
+	                    _react2.default.createElement(
+	                        'li',
+	                        { role: 'presentation' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/index', activeClassName: 'active', onlyActiveOnIndex: true },
+	                            '主页'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        { role: 'presentation' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/' },
+	                            '首页'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        { role: 'presentation' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/blog' },
+	                            '博客页'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        { role: 'presentation' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/about' },
+	                            '关于页'
+	                        )
+	                    ),
+	                    !login.logined ? _react2.default.createElement(
+	                        'l',
+	                        null,
+	                        _react2.default.createElement(
+	                            'li',
+	                            { role: 'presentation' },
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: '/login' },
+	                                '登录页'
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            { role: 'presentation' },
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: '/register' },
+	                                '注册页'
+	                            )
+	                        )
+	                    ) : _react2.default.createElement(
+	                        'li',
+	                        { role: 'presentation' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            null,
+	                            '登录用户名:',
+	                            login.loginUser.username
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement('hr', null),
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    '身体部分'
+	                ),
+	                this.props.children,
+	                _react2.default.createElement('hr', null),
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    '尾部'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Index;
 	}(_react.Component);
 
 	exports.default = Index;
 
 /***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -660,7 +738,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(11);
+	var _react = __webpack_require__(13);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -702,7 +780,7 @@
 	exports.default = Home;
 
 /***/ },
-/* 20 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -713,7 +791,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(11);
+	var _react = __webpack_require__(13);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -755,7 +833,7 @@
 	exports.default = Blog;
 
 /***/ },
-/* 21 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -766,7 +844,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(11);
+	var _react = __webpack_require__(13);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -808,7 +886,7 @@
 	exports.default = About;
 
 /***/ },
-/* 22 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -817,19 +895,19 @@
 	    value: true
 	});
 
-	var _react = __webpack_require__(11);
+	var _react = __webpack_require__(13);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _redux = __webpack_require__(15);
+	var _redux = __webpack_require__(17);
 
-	var _reactRedux = __webpack_require__(14);
+	var _reactRedux = __webpack_require__(16);
 
-	var _Login = __webpack_require__(23);
+	var _Login = __webpack_require__(26);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(27);
+	var _login = __webpack_require__(31);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -859,7 +937,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 23 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -870,21 +948,25 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(11);
+	var _react = __webpack_require__(13);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Input = __webpack_require__(24);
+	var _Input = __webpack_require__(27);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(25);
+	var _Button = __webpack_require__(28);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(26);
+	var _privateType = __webpack_require__(29);
 
-	var _httpType = __webpack_require__(9);
+	var _httpType = __webpack_require__(11);
+
+	var _history = __webpack_require__(30);
+
+	var _history2 = _interopRequireDefault(_history);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -900,9 +982,9 @@
 
 	//常量
 	//私有函数常量
-
-
 	//登录状态常量
+
+	//导航
 
 
 	var Login = function (_Component) {
@@ -915,6 +997,19 @@
 	    }
 
 	    _createClass(Login, [{
+	        key: 'componentWillUpdate',
+
+
+	        //不能修改属性和状态,在render之前接收到新的props和state进行执行
+	        value: function componentWillUpdate(nextProps, nextState) {
+	            //console.log(nextProps.login);
+	            if (nextProps.login.logined) {
+	                _history2.default.replace({
+	                    pathname: '/index'
+	                });
+	            }
+	        }
+	    }, {
 	        key: '_onClick',
 	        value: function _onClick(e) {
 	            e.preventDefault();
@@ -944,8 +1039,7 @@
 	        key: 'render',
 	        value: function render() {
 	            var login = this.props.login; //注意这里应该查看容易中允许传入的state属性
-
-	            console.log(login.loginStatus);
+	            //console.log(login.loginStatus);
 
 	            return _react2.default.createElement(
 	                'div',
@@ -1010,7 +1104,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 24 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1021,7 +1115,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(11);
+	var _react = __webpack_require__(13);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1089,7 +1183,7 @@
 	exports.default = Input;
 
 /***/ },
-/* 25 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1100,7 +1194,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(11);
+	var _react = __webpack_require__(13);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1151,7 +1245,7 @@
 	exports.default = Button;
 
 /***/ },
-/* 26 */
+/* 29 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1163,7 +1257,21 @@
 	};
 
 /***/ },
-/* 27 */
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactRouter = __webpack_require__(15);
+
+	exports.default = _reactRouter.browserHistory;
+
+/***/ },
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1173,7 +1281,7 @@
 	});
 	exports.login_start = login_start;
 
-	var _actionType = __webpack_require__(28);
+	var _actionType = __webpack_require__(32);
 
 	/**
 	 * 准备开始登录
@@ -1222,15 +1330,14 @@
 	 */
 	function login_request(user) {
 	    return {
-	        type: _actionType.LOGIN_REQUEST,
-	        user: user
+	        type: _actionType.LOGIN_REQUEST
 	    };
 	}
 
 	function login_reveive(user, status) {
 	    return {
 	        type: _actionType.LOGIN_RECEIVE,
-	        user: user,
+	        user: { username: user.username },
 	        status: status
 	    };
 	}
@@ -1266,7 +1373,7 @@
 	}
 
 /***/ },
-/* 28 */
+/* 32 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1282,7 +1389,7 @@
 	};
 
 /***/ },
-/* 29 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1293,7 +1400,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(11);
+	var _react = __webpack_require__(13);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1335,7 +1442,7 @@
 	exports.default = Register;
 
 /***/ },
-/* 30 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1345,17 +1452,17 @@
 	});
 	exports.default = configureStore;
 
-	var _redux = __webpack_require__(15);
+	var _redux = __webpack_require__(17);
 
-	var _reduxThunk = __webpack_require__(31);
+	var _reduxThunk = __webpack_require__(35);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(32);
+	var _reduxLogger = __webpack_require__(36);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(33);
+	var _reducers = __webpack_require__(37);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -1375,19 +1482,19 @@
 	}
 
 /***/ },
-/* 31 */
+/* 35 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 32 */
+/* 36 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-logger");
 
 /***/ },
-/* 33 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1396,9 +1503,9 @@
 		value: true
 	});
 
-	var _redux = __webpack_require__(15);
+	var _redux = __webpack_require__(17);
 
-	var _login = __webpack_require__(34);
+	var _login = __webpack_require__(38);
 
 	var _login2 = _interopRequireDefault(_login);
 
@@ -1413,7 +1520,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 34 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1424,15 +1531,50 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _actionType = __webpack_require__(28);
+	var _actionType = __webpack_require__(32);
 
-	var _httpType = __webpack_require__(9);
+	var login_status = function login_status(state, action) {
+		//console.log('action:',action);
+		switch (action.status) {
+
+			case 'user_no_exist':
+				//console.log('1');
+				return {
+					//logined:false,
+					loginStatus: 'user_no_exist',
+					logining: false
+					//loginUser:{}	
+				};
+
+			case 'password_err':
+				//console.log('2');
+				return {
+					//logined:false,
+					loginStatus: 'password_err',
+					logining: false
+					//loginUser:{}
+				};
+
+			case 'success':
+				//console.log('3');
+				return {
+					logined: true,
+					loginStatus: 'success',
+					loginUser: action.user,
+					logining: false
+				};
+
+			default:
+				return state;
+		}
+	};
 
 	var login = function login() {
 		var state = arguments.length <= 0 || arguments[0] === undefined ? {
 			logined: false,
-			loginStatus: _httpType.login_init, //登录状态
-			logining: false //有没有正在登录标志
+			loginStatus: 'login_init', //登录状态
+			logining: false, //有没有正在登录标志
+			loginUser: {}
 		} : arguments[0];
 		var action = arguments[1];
 
@@ -1447,10 +1589,10 @@
 
 			case _actionType.LOGIN_RECEIVE:
 				//接受登录结果
-				return _extends({}, state, {
-					loginStatus: action.status,
-					logining: false
-				});
+				var obj = _extends({}, state, login_status(state, action));
+				//console.log('reducers,login:',obj);
+
+				return obj;
 
 			default:
 				return state;
@@ -1458,12 +1600,6 @@
 	};
 
 	exports.default = login;
-
-/***/ },
-/* 35 */
-/***/ function(module, exports) {
-
-	module.exports = require("cookie-parser");
 
 /***/ }
 /******/ ]);
