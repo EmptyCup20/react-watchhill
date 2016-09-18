@@ -35,17 +35,21 @@ export default class Login extends Component{
         e.preventDefault();
         //console.log(this.refs.username.value);
         //console.log(this.refs.password.value);    //使用此种方式主要用于制作可控表单
-        let username = document.getElementById('username'),
-            password = document.getElementById('password');
+        //let username = document.getElementById('username'),
+        //    password = document.getElementById('password');
+
+
+        let username = $('#login_username').val(),
+            password = $('#login_password').val();
 
         //这里还要做一个登录格式验证
 
-        if(username.value.trim() && password.value.trim()) {
+        if(username.trim() && password.trim()) {
             //console.log(username.value);
             //console.log(password.value);
             let user = {
-                username: username.value.trim(),
-                password: password.value.trim()
+                username: username.trim(),
+                password: password.trim()
             };
 
             //console.log('user:',user);
@@ -67,8 +71,8 @@ export default class Login extends Component{
             <div className="container">
                 <h1>登录页</h1>
                 <form className="form-inline">
-                    <Input type="text" id="username" className="form-control" placeholder="账号" />
-                    <Input type="password" id="password" className="form-control" placeholder="密码" />
+                    <Input type="text" id="login_username" className="form-control" placeholder="账号" />
+                    <Input type="password" id="login_password" className="form-control" placeholder="密码" />
                     <Button type="submit" className="btn btn-default" onClick={this._onClick.bind(this)}>登录</Button>
                 </form>
 

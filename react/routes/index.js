@@ -10,7 +10,7 @@ import Home from '../containers/Home';
 import Blog from '../containers/Blog';
 import About from '../containers/About';
 import LoginContainer from '../containers/LoginContainer';
-import Register from '../containers/Register';
+import RegisterContainer from '../containers/RegisterContainer';
 
 
 
@@ -31,7 +31,7 @@ const routes = (state) => {
                 <Route path='/about' component={About}  />
             </Route>
             <Route path="/login" onEnter={isLogined} component={LoginContainer}/>
-            <Route path="/register" component={Register}/>
+            <Route path="/register" component={RegisterContainer}/>
         </Route>
     )
 };

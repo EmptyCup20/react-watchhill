@@ -315,7 +315,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(36);
+	var _store = __webpack_require__(37);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -431,25 +431,25 @@
 
 	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
 
-	var _Home = __webpack_require__(25);
+	var _Home = __webpack_require__(26);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Blog = __webpack_require__(26);
+	var _Blog = __webpack_require__(27);
 
 	var _Blog2 = _interopRequireDefault(_Blog);
 
-	var _About = __webpack_require__(27);
+	var _About = __webpack_require__(28);
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _LoginContainer = __webpack_require__(28);
+	var _LoginContainer = __webpack_require__(29);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _Register = __webpack_require__(35);
+	var _RegisterContainer = __webpack_require__(35);
 
-	var _Register2 = _interopRequireDefault(_Register);
+	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -472,7 +472,7 @@
 	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default })
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: isLogined, component: _LoginContainer2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _Register2.default })
+	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _RegisterContainer2.default })
 	    );
 	};
 	//import Index from '../containers/Index';
@@ -745,7 +745,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _history = __webpack_require__(33);
+	var _history = __webpack_require__(25);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -923,6 +923,20 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactRouter = __webpack_require__(15);
+
+	exports.default = _reactRouter.browserHistory;
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
@@ -970,7 +984,7 @@
 	exports.default = Home;
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1023,7 +1037,7 @@
 	exports.default = Blog;
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1076,7 +1090,7 @@
 	exports.default = About;
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1085,15 +1099,11 @@
 	    value: true
 	});
 
-	var _react = __webpack_require__(13);
-
-	var _react2 = _interopRequireDefault(_react);
-
 	var _redux = __webpack_require__(17);
 
 	var _reactRedux = __webpack_require__(16);
 
-	var _Login = __webpack_require__(29);
+	var _Login = __webpack_require__(30);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
@@ -1109,6 +1119,8 @@
 
 
 	//视图组件
+	//基础库
+	//import React,{ Component } from 'react';
 	function mapStateToProps(state) {
 	    return {
 	        login: state.login
@@ -1119,7 +1131,6 @@
 
 
 	//action
-	//基础库
 	function mapDispatchToProps(dispatch) {
 	    return (0, _redux.bindActionCreators)(LoginActions, dispatch);
 	}
@@ -1127,7 +1138,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1142,19 +1153,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Input = __webpack_require__(30);
+	var _Input = __webpack_require__(31);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(31);
+	var _Button = __webpack_require__(32);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(32);
+	var _privateType = __webpack_require__(33);
 
 	var _httpType = __webpack_require__(11);
 
-	var _history = __webpack_require__(33);
+	var _history = __webpack_require__(25);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -1205,17 +1216,21 @@
 	            e.preventDefault();
 	            //console.log(this.refs.username.value);
 	            //console.log(this.refs.password.value);    //使用此种方式主要用于制作可控表单
-	            var username = document.getElementById('username'),
-	                password = document.getElementById('password');
+	            //let username = document.getElementById('username'),
+	            //    password = document.getElementById('password');
+
+
+	            var username = $('#login_username').val(),
+	                password = $('#login_password').val();
 
 	            //这里还要做一个登录格式验证
 
-	            if (username.value.trim() && password.value.trim()) {
+	            if (username.trim() && password.trim()) {
 	                //console.log(username.value);
 	                //console.log(password.value);
 	                var user = {
-	                    username: username.value.trim(),
-	                    password: password.value.trim()
+	                    username: username.trim(),
+	                    password: password.trim()
 	                };
 
 	                //console.log('user:',user);
@@ -1242,8 +1257,8 @@
 	                _react2.default.createElement(
 	                    'form',
 	                    { className: 'form-inline' },
-	                    _react2.default.createElement(_Input2.default, { type: 'text', id: 'username', className: 'form-control', placeholder: '账号' }),
-	                    _react2.default.createElement(_Input2.default, { type: 'password', id: 'password', className: 'form-control', placeholder: '密码' }),
+	                    _react2.default.createElement(_Input2.default, { type: 'text', id: 'login_username', className: 'form-control', placeholder: '账号' }),
+	                    _react2.default.createElement(_Input2.default, { type: 'password', id: 'login_password', className: 'form-control', placeholder: '密码' }),
 	                    _react2.default.createElement(
 	                        _Button2.default,
 	                        { type: 'submit', className: 'btn btn-default', onClick: this._onClick.bind(this) },
@@ -1294,7 +1309,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1373,7 +1388,7 @@
 	exports.default = Input;
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1435,7 +1450,7 @@
 	exports.default = Button;
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1445,20 +1460,6 @@
 	module.exports = {
 	    _onClick: Symbol('_onClick')
 	};
-
-/***/ },
-/* 33 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _reactRouter = __webpack_require__(15);
-
-	exports.default = _reactRouter.browserHistory;
 
 /***/ },
 /* 34 */
@@ -1587,11 +1588,67 @@
 	    value: true
 	});
 
+	var _redux = __webpack_require__(17);
+
+	var _reactRedux = __webpack_require__(16);
+
+	var _Register = __webpack_require__(36);
+
+	var _Register2 = _interopRequireDefault(_Register);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//action
+	//import * as LoginActions from '../actions/login';
+
+
+	//绑定login store到Login组件,注册的同时也登录了,所以绑定login store
+	function mapStateToProps(state) {
+	    return {
+	        login: state.login
+	    };
+	}
+
+	//绑定login action到Login组件
+	//function mapDispatchToProps(dispatch) {
+	//    return bindActionCreators(LoginActions,dispatch);
+	//}
+
+
+	//视图组件
+	//基础库
+	//import React,{ Component } from 'react';
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Register2.default);
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(13);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _Input = __webpack_require__(31);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _Button = __webpack_require__(32);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	var _privateType = __webpack_require__(33);
+
+	var _history = __webpack_require__(25);
+
+	var _history2 = _interopRequireDefault(_history);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1599,39 +1656,147 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //基础库
 
-	var Register = function (_Component) {
-	    _inherits(Register, _Component);
 
-	    function Register() {
-	        _classCallCheck(this, Register);
+	//基础组件
 
-	        return _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).apply(this, arguments));
+
+	//常量
+	//私有函数常量
+
+
+	//导航
+
+
+	var Login = function (_Component) {
+	    _inherits(Login, _Component);
+
+	    function Login() {
+	        _classCallCheck(this, Login);
+
+	        return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).apply(this, arguments));
 	    }
 
-	    _createClass(Register, [{
+	    _createClass(Login, [{
+	        key: '_onClick',
+	        value: function _onClick(e) {
+	            e.preventDefault();
+	            //alert('1111');
+	            var username = $('#register_username').val(),
+	                pass = $('#register_pass').val(),
+	                password = $('#register_password').val(),
+	                email = $('#register_email').val(),
+	                tel = $('#register_tel').val(),
+	                team = $('#register_team').val();
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
+	                { className: 'container' },
 	                _react2.default.createElement(
 	                    'h1',
 	                    null,
-	                    '注册页'
+	                    '账号注册'
+	                ),
+	                _react2.default.createElement(
+	                    'form',
+	                    { role: 'form' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'register_username' },
+	                            '账号'
+	                        ),
+	                        _react2.default.createElement(_Input2.default, { id: 'register_username', type: 'text', className: 'form-control', placeholder: '账号' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'register_pass' },
+	                            '密码'
+	                        ),
+	                        _react2.default.createElement(_Input2.default, { id: 'register_pass', type: 'password', className: 'form-control', placeholder: '密码' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'register_password' },
+	                            '密码确认'
+	                        ),
+	                        _react2.default.createElement(_Input2.default, { id: 'register_password', type: 'password', className: 'form-control', placeholder: '密码确认' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'register_email' },
+	                            '邮箱'
+	                        ),
+	                        _react2.default.createElement(_Input2.default, { id: 'register_email', type: 'email', className: 'form-control', placeholder: '邮箱' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'register_tel' },
+	                            '电话'
+	                        ),
+	                        _react2.default.createElement(_Input2.default, { id: 'register_tel', type: 'text', className: 'form-control', placeholder: '电话' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'register_team' },
+	                            '组别'
+	                        ),
+	                        _react2.default.createElement(
+	                            'select',
+	                            { id: 'register_team', className: 'form-control' },
+	                            _react2.default.createElement(
+	                                'option',
+	                                { value: 'web前端组' },
+	                                'web前端组'
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement(
+	                                _Button2.default,
+	                                { type: 'submit', className: 'btn btn-default', onClick: this._onClick.bind(this) },
+	                                '注 册'
+	                            )
+	                        )
+	                    )
 	                )
 	            );
 	        }
 	    }]);
 
-	    return Register;
+	    return Login;
 	}(_react.Component);
 
-	exports.default = Register;
+	exports.default = Login;
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1643,15 +1808,15 @@
 
 	var _redux = __webpack_require__(17);
 
-	var _reduxThunk = __webpack_require__(37);
+	var _reduxThunk = __webpack_require__(38);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(38);
+	var _reduxLogger = __webpack_require__(39);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(39);
+	var _reducers = __webpack_require__(40);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -1671,19 +1836,19 @@
 	}
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-logger");
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1694,7 +1859,7 @@
 
 	var _redux = __webpack_require__(17);
 
-	var _login = __webpack_require__(40);
+	var _login = __webpack_require__(41);
 
 	var _login2 = _interopRequireDefault(_login);
 
@@ -1709,7 +1874,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
