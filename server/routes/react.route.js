@@ -17,12 +17,10 @@ import configureStore from '../../react/store';
 
 
 
-
 router.get('/*', (req, res,next) => {
 
     //暂时这么设置,同步服务端和客户端
     if(req.session.user) {
-        //console.log('logined');
         var store = configureStore({
             login:{
                 loginUser:{
@@ -32,22 +30,14 @@ router.get('/*', (req, res,next) => {
             }
         });       //这里需要传入需要的state tree
 
-        //console.log(JSON.stringify(store.getState()));
-
-
     } else {
-        //console.log('unlogined');
-        var store = configureStore();       //const有块级作用域
-    }
+        var store = configureStore();
+}
 
     //const store = configureStore();       //这里需要传入需要的state tree
     console.log('node  store:', store.getState());                  //需要注意与客户端的store统一
 
     match({ routes:routes(), location: req.url }, (err, redirect, props) => {
-
-        //测试用
-        //console.log('node,req.url:',req.url);
-
         if (err) {
             res.status(500).send(err.message)
         } else if (redirect) {

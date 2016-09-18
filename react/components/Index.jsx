@@ -1,7 +1,34 @@
+//基础库
 import { Link } from 'react-router';
-import React,{ Component } from 'react';
+import React,{ Component,PropTypes } from 'react';
+
+
+//导航
+import history from '../history';
 
 export default class Index extends Component{
+
+    static propTypes = {
+        login: PropTypes.object.isRequired
+    };
+
+
+    logout(e) {
+        e.preventDefault();
+        //alert('111');
+        this.props.logout();
+    }
+
+
+    componentWillUpdate(nextProps,nextState) {
+        if(!nextProps.login.logined) {
+            history.replace({
+                pathname:'/'
+            });
+        }
+    }
+
+
     render() {
 
         const { login } = this.props;
@@ -19,12 +46,12 @@ export default class Index extends Component{
                     <li role="presentation"><Link to="/blog">博客页</Link></li>
                     <li role="presentation"><Link to="/about">关于页</Link></li>
                     {
-                        (function (){
+                        (function (obj){
                             if(login.logined) {
                                 return (
                                     <l>
                                         <li role="presentation">登录用户:{login.loginUser.username}</li>
-                                        <li role="presentation">注销</li>
+                                        <li role="presentation"><a onClick={obj.logout.bind(obj)} href="#"> 注销 </a></li>
                                     </l>
                                 )
                             } else {
@@ -35,7 +62,7 @@ export default class Index extends Component{
                                     </l>
                                 )
                             }
-                        }())
+                        }(this))
                     }
 
                 </ul>

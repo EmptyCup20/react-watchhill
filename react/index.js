@@ -14,7 +14,6 @@ const serverState = window.__SERVER_STATE__;
 const store = configureStore(serverState);		//传入服务端请求的state,使前后端Store tree统一
 console.log('browser store:', store.getState());
 
-
 const app = document.getElementById('app');
 
 //<Router routes={routes} history={browserHistory}/>, ???  https://github.com/reactjs/react-router-tutorial/tree/master/lessons/13-server-rendering

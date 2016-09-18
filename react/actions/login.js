@@ -1,5 +1,5 @@
 import { LOGIN_REQUEST,LOGIN_RECEIVE } from '../constants/actionType';
-
+import ajax from '../ajax';
 
 
 /**
@@ -11,9 +11,9 @@ import { LOGIN_REQUEST,LOGIN_RECEIVE } from '../constants/actionType';
 export function login_start(user) {
     return (dispatch,getState) => {
         if(login_authen(getState())) {
-            return dispatch(login_ajax(user));   //发起一个登录http请求
+            return dispatch(login_ajax(user));          //发起一个登录http请求
         } else {
-            return Promise.resolve();                 //告诉thunk无需等待,从而跳过dispatch,进入reducers?
+            return Promise.resolve();                   //告诉thunk无需等待,从而跳过dispatch,进入reducers?
         }
     };
 }
@@ -36,7 +36,7 @@ function login_authen(state) {
  */
 function login_ajax(user) {
     return dispatch => {
-        dispatch(login_request(user));         //挂起登录请求,防止重复请求
+        dispatch(login_request(user));                                  //挂起登录请求,防止重复请求
         return ajax().login(user)
             .then(data => dispatch(login_reveive(user,data.status)));   //接受到数据后重新更新state
     };
@@ -53,7 +53,12 @@ function login_request(user) {
     };
 }
 
-
+/**
+ * ajax数据接收处理
+ * @param user
+ * @param status
+ * @returns {{type: string, user: {username: *}, status: *}}
+ */
 
 function login_reveive(user,status) {
     return {
@@ -68,34 +73,34 @@ function login_reveive(user,status) {
 
 
 
-/**
- * 这里暂时放一下ajax,最后可以独立出来
- */
-
-function ajax(){
-    function req(method,url,data) {
-        var defered = $.Deferred();
-        var request = {
-            type: method,
-            url: url,
-            //dataType: "json"?
-            data: data
-        };
-
-        $.ajax(request)
-            .done(function(data){
-                defered.resolve(data);
-            })
-            .fail(function(){
-                defered.reject();
-            });
-
-        return defered.promise();
-    }
-
-    return {
-        login: function(data){
-            return req('POST','/user/login',data);
-        }
-    };
-}
+///**
+// * 这里暂时放一下ajax,最后可以独立出来
+// */
+//
+//function ajax(){
+//    function req(method,url,data) {
+//        var defered = $.Deferred();
+//        var request = {
+//            type: method,
+//            url: url,
+//            //dataType: "json"?
+//            data: data
+//        };
+//
+//        $.ajax(request)
+//            .done(function(data){
+//                defered.resolve(data);
+//            })
+//            .fail(function(){
+//                defered.reject();
+//            });
+//
+//        return defered.promise();
+//    }
+//
+//    return {
+//        login: function(data){
+//            return req('POST','/user/login',data);
+//        }
+//    };
+//}
