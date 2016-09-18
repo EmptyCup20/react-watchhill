@@ -1,34 +1,34 @@
 
-import { LOGIN_REQUEST,LOGIN_RECEIVE } from '../constants/actionType';
-import { login_init,user_no_exist,password_err,success } from '../constants/actionType';
+import { LOGIN_REQUEST,LOGIN_RECEIVE,LOGOUT_RECEIVE } from '../constants/actionType';
+import { login_init,user_no_exist,password_err,success } from '../constants/httpType';
 
 const login_status = (state,action) => {
 	//console.log('action:',action);
 	switch(action.status) {
 
-		case 'user_no_exist':
+		case user_no_exist:
 		//console.log('1');
 			return {
 				//logined:false,
-				loginStatus:'user_no_exist',
+				loginStatus:user_no_exist,
 				logining:false
 				//loginUser:{}	
 			};
  
-		case 'password_err':
+		case password_err:
 		//console.log('2');
 			return {
 				//logined:false,
-				loginStatus:'password_err',
+				loginStatus:password_err,
 				logining:false
 				//loginUser:{}
 			};
 
-		case 'success':
+		case success:
 		//console.log('3');
 			return {
 				logined:true,
-				loginStatus:'success',
+				loginStatus:success,
 				loginUser:action.user,
 				logining:false
 			}; 
@@ -43,8 +43,8 @@ const login_status = (state,action) => {
 
 const login = (state = {
 	logined:false,
-	loginStatus:'login_init',	//登录状态
-	logining:false,			//有没有正在登录标志
+	loginStatus:login_init,	//登录状态
+	logining:false,				//有没有正在登录标志
 	loginUser:{}
 }, action) => {
 
@@ -58,17 +58,23 @@ const login = (state = {
 
 
 		case LOGIN_RECEIVE:		//接受登录结果
-			let obj = {
+			return {
 				...state,
 				// loginStatus:action.status,
 				// logining: false,
 				// logined: true
 				...(login_status(state,action))
 			};
-			//console.log('reducers,login:',obj);
 
-			return obj;
 
+		case LOGOUT_RECEIVE:
+			return {
+				...state,
+				logined:false,
+				loginUser:{},
+				loginStatus:login_init,
+				logining:false
+			};
 
 		default:
 			return state;
