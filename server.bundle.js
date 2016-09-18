@@ -783,16 +783,16 @@
 	        value: function logout(e) {
 	            e.preventDefault();
 	            //alert('111');
-	            this.props.logout();
+	            this.props.logout(); //注销
 	        }
 
-	        //componentWillUpdate(nextProps,nextState) {
+	        // componentWillUpdate(nextProps,nextState) {
 	        //    if(!nextProps.login.logined) {
 	        //        history.replace({
 	        //            pathname:'/'
 	        //        });
 	        //    }
-	        //}
+	        // }
 
 
 	    }, {
@@ -817,8 +817,8 @@
 	                                'div',
 	                                { className: 'navbar-header' },
 	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '/index', className: 'navbar-brand' },
+	                                    _reactRouter.Link,
+	                                    { to: '/', className: 'navbar-brand' },
 	                                    _react2.default.createElement(
 	                                        'b',
 	                                        null,
@@ -844,8 +844,8 @@
 	                                        null,
 	                                        _react2.default.createElement(
 	                                            _reactRouter.Link,
-	                                            { to: '/' },
-	                                            '首页'
+	                                            { to: '/index' },
+	                                            '主页'
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
@@ -868,18 +868,17 @@
 	                                    )
 	                                ),
 	                                function (obj) {
-	                                    if (obj.props.login.logined) {
+	                                    if (login.logined) {
 	                                        return _react2.default.createElement(
 	                                            'ul',
 	                                            { className: 'nav navbar-nav navbar-right' },
 	                                            _react2.default.createElement(
 	                                                'li',
-	                                                { className: 'dropdown' },
+	                                                { 'class': 'dropdown' },
 	                                                _react2.default.createElement(
-	                                                    'a',
-	                                                    { href: '#', role: 'button' },
-	                                                    ' ',
-	                                                    _react2.default.createElement('i', { className: 'fa fa-plus' })
+	                                                    _reactRouter.Link,
+	                                                    { href: '#' },
+	                                                    '新增文章'
 	                                                )
 	                                            ),
 	                                            _react2.default.createElement(
@@ -888,11 +887,11 @@
 	                                                _react2.default.createElement(
 	                                                    'a',
 	                                                    { href: '', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
-	                                                    _react2.default.createElement('img', { alt: 'User Image', className: 'user-image' }),
+	                                                    _react2.default.createElement('img', { src: '#', alt: 'User Image', className: 'user-image' }),
 	                                                    _react2.default.createElement(
 	                                                        'span',
 	                                                        { className: 'hidden-xs' },
-	                                                        obj.props.login.loginUser.username
+	                                                        login.loginUser.username
 	                                                    )
 	                                                ),
 	                                                _react2.default.createElement(
@@ -905,6 +904,21 @@
 	                                                            _reactRouter.Link,
 	                                                            { href: '#' },
 	                                                            _react2.default.createElement('img', { src: '#', className: 'img-circle', alt: 'user image' })
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'p',
+	                                                            null,
+	                                                            '人生一世',
+	                                                            _react2.default.createElement(
+	                                                                'small',
+	                                                                null,
+	                                                                '18768107826'
+	                                                            ),
+	                                                            _react2.default.createElement(
+	                                                                'small',
+	                                                                null,
+	                                                                '11@qq.com'
+	                                                            )
 	                                                        )
 	                                                    ),
 	                                                    _react2.default.createElement(
@@ -924,7 +938,7 @@
 	                                                            { className: 'pull-right' },
 	                                                            _react2.default.createElement(
 	                                                                _reactRouter.Link,
-	                                                                { href: '#', className: 'btn btn-default btn-flat' },
+	                                                                { className: 'btn btn-default btn-flat', onClick: obj.logout.bind(obj) },
 	                                                                '退出登录'
 	                                                            )
 	                                                        )
@@ -988,8 +1002,8 @@
 	                        { role: 'presentation' },
 	                        _react2.default.createElement(
 	                            _reactRouter.Link,
-	                            { to: '/' },
-	                            '首页'
+	                            { to: '/index' },
+	                            '主页'
 	                        )
 	                    ),
 	                    _react2.default.createElement(
@@ -1026,7 +1040,7 @@
 	                                    { role: 'presentation' },
 	                                    _react2.default.createElement(
 	                                        'a',
-	                                        { onClick: obj.logout.bind(obj), href: '#' },
+	                                        { onClick: obj.logout.bind(obj) },
 	                                        ' 注销 '
 	                                    )
 	                                )
@@ -1381,6 +1395,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(15);
+
 	var _Input = __webpack_require__(32);
 
 	var _Input2 = _interopRequireDefault(_Input);
@@ -1481,8 +1497,8 @@
 	                    'div',
 	                    { className: 'login-logo' },
 	                    _react2.default.createElement(
-	                        'a',
-	                        { href: '/' },
+	                        _reactRouter.Link,
+	                        { to: '/' },
 	                        _react2.default.createElement(
 	                            'strong',
 	                            null,
@@ -1838,6 +1854,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(15);
+
 	var _Input = __webpack_require__(32);
 
 	var _Input2 = _interopRequireDefault(_Input);
@@ -1897,93 +1915,137 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'container' },
+	                { className: 'login-box' },
 	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    '账号注册'
+	                    'div',
+	                    { className: 'login-logo' },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/' },
+	                        _react2.default.createElement(
+	                            'strong',
+	                            null,
+	                            'Watch'
+	                        ),
+	                        'Hill'
+	                    )
 	                ),
 	                _react2.default.createElement(
-	                    'form',
-	                    { role: 'form' },
+	                    'div',
+	                    { className: 'login-box-body' },
 	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'register_username' },
-	                            '账号'
-	                        ),
-	                        _react2.default.createElement(_Input2.default, { id: 'register_username', type: 'text', className: 'form-control', placeholder: '账号' })
+	                        'p',
+	                        { className: 'login-box-msg' },
+	                        '账号注册'
 	                    ),
 	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'register_pass' },
-	                            '密码'
-	                        ),
-	                        _react2.default.createElement(_Input2.default, { id: 'register_pass', type: 'password', className: 'form-control', placeholder: '密码' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'register_password' },
-	                            '密码确认'
-	                        ),
-	                        _react2.default.createElement(_Input2.default, { id: 'register_password', type: 'password', className: 'form-control', placeholder: '密码确认' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'register_email' },
-	                            '邮箱'
-	                        ),
-	                        _react2.default.createElement(_Input2.default, { id: 'register_email', type: 'email', className: 'form-control', placeholder: '邮箱' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'register_tel' },
-	                            '电话'
-	                        ),
-	                        _react2.default.createElement(_Input2.default, { id: 'register_tel', type: 'text', className: 'form-control', placeholder: '电话' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'register_team' },
-	                            '组别'
-	                        ),
-	                        _react2.default.createElement(
-	                            'select',
-	                            { id: 'register_team', className: 'form-control' },
-	                            _react2.default.createElement(
-	                                'option',
-	                                { value: 'web前端组' },
-	                                'web前端组'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
+	                        'form',
+	                        null,
 	                        _react2.default.createElement(
 	                            'div',
-	                            null,
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(_Input2.default, { name: 'author', type: 'text', className: 'form-control', placeholder: '账号' }),
 	                            _react2.default.createElement(
-	                                _Button2.default,
-	                                { type: 'submit', className: 'btn btn-default', onClick: this._onClick.bind(this) },
-	                                '注 册'
+	                                'span',
+	                                { className: 'form-control-feedback' },
+	                                ' ',
+	                                _react2.default.createElement('i', { className: 'fa fa-user fa-fw' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(_Input2.default, { name: 'pass', type: 'password', className: 'form-control', placeholder: '密码' }),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'form-control-feedback' },
+	                                ' ',
+	                                _react2.default.createElement('i', { className: 'fa fa-lock fa-fw' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(_Input2.default, { name: 'password', type: 'password', className: 'form-control', placeholder: '密码确认' }),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'form-control-feedback' },
+	                                ' ',
+	                                _react2.default.createElement('i', { className: 'fa fa-lock fa-fw' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(_Input2.default, { name: 'email', type: 'text', className: 'form-control', placeholder: '邮箱' }),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'form-control-feedback' },
+	                                ' ',
+	                                _react2.default.createElement('i', { className: 'fa fa-comment fa-fw' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(_Input2.default, { name: 'tel', type: 'text', className: 'form-control', placeholder: '电话' }),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'form-control-feedback' },
+	                                ' ',
+	                                _react2.default.createElement('i', { className: 'fa fa-phone fa-fw' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(
+	                                'select',
+	                                { name: 'team', className: 'form-control' },
+	                                _react2.default.createElement(
+	                                    'option',
+	                                    { value: 'Web前端组' },
+	                                    'Web前端组'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'option',
+	                                    { value: 'Web前端组' },
+	                                    'Web前端组'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'option',
+	                                    { value: 'Web前端组' },
+	                                    'Web前端组'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'option',
+	                                    { value: 'Web前端组' },
+	                                    'Web前端组'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'option',
+	                                    { value: 'Web前端组' },
+	                                    'Web前端组'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'option',
+	                                    { value: 'Web前端组' },
+	                                    'Web前端组'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement('div', { className: 'col-xs-8' }),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-4' },
+	                                _react2.default.createElement(
+	                                    _Button2.default,
+	                                    { type: 'submit', id: 'submit', className: 'btn btn-primary btn-block btn-flat' },
+	                                    '注册'
+	                                )
 	                            )
 	                        )
 	                    )

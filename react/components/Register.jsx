@@ -1,5 +1,6 @@
 //基础库
 import React,{ Component,PropTypes } from 'react';
+import { Link } from 'react-router';
 
 //基础组件
 import Input from './elements/Input';
@@ -29,42 +30,52 @@ export default class Login extends Component{
 
     render() {
         return (
-            <div className="container">
-                <h1>账号注册</h1>
-                <form role="form">
-                    <div className="form-group">
-                        <label htmlFor="register_username">账号</label>
-                        <Input id="register_username" type="text" className="form-control" placeholder="账号" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="register_pass">密码</label>
-                        <Input id="register_pass" type="password" className="form-control" placeholder="密码" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="register_password">密码确认</label>
-                        <Input id="register_password" type="password" className="form-control" placeholder="密码确认" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="register_email">邮箱</label>
-                        <Input id="register_email" type="email" className="form-control" placeholder="邮箱" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="register_tel">电话</label>
-                        <Input id="register_tel" type="text" className="form-control" placeholder="电话" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="register_team">组别</label>
-                        <select id="register_team" className="form-control">
-                            <option value="web前端组">web前端组</option>
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <div>
-                            <Button type="submit" className="btn btn-default" onClick={this._onClick.bind(this)}  >注 册</Button>
+            <div className="login-box">
+                <div className="login-logo">
+                    <Link to="/"><strong>Watch</strong>Hill</Link>
+                </div>
+                <div className="login-box-body">
+                    <p className="login-box-msg">账号注册</p>
+                    <form>
+                        <div className="form-group has-feedback">
+                            <Input name='author' type="text" className="form-control" placeholder="账号" />
+                            <span className="form-control-feedback"> <i className="fa fa-user fa-fw"></i></span>
                         </div>
-                    </div>
-                </form>
+                        <div className="form-group has-feedback">
+                            <Input name='pass' type="password" className="form-control" placeholder="密码" />
+                            <span className="form-control-feedback"> <i className="fa fa-lock fa-fw"></i></span>
+                        </div>
+                        <div className="form-group has-feedback">
+                            <Input name="password" type="password" className="form-control" placeholder="密码确认" />
+                            <span className="form-control-feedback"> <i className="fa fa-lock fa-fw"></i></span>
+                        </div>
+                        <div className="form-group has-feedback">
+                            <Input name="email" type="text" className="form-control" placeholder="邮箱" /> 
+                            <span className="form-control-feedback"> <i className="fa fa-comment fa-fw"></i></span>
+                        </div>
+                        <div className="form-group has-feedback">
+                            <Input name="tel" type="text" className="form-control" placeholder="电话" />
+                            <span className="form-control-feedback"> <i className="fa fa-phone fa-fw"></i></span>
+                        </div>
+                        <div className="form-group has-feedback">
+                            <select name="team" className="form-control">
+                                <option value="Web前端组">Web前端组</option>
+                                <option value="Web前端组">Web前端组</option>
+                                <option value="Web前端组">Web前端组</option>
+                                <option value="Web前端组">Web前端组</option>
+                                <option value="Web前端组">Web前端组</option>
+                                <option value="Web前端组">Web前端组</option>
+                            </select>
+                        </div>
+                        <div className="row">
+                            <div className="col-xs-8">
+                            </div>
+                            <div className="col-xs-4">
+                                <Button type="submit" id="submit" className="btn btn-primary btn-block btn-flat">注册</Button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }
