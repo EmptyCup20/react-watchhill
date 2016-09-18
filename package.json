@@ -36,6 +36,7 @@
     "immutable": "^3.8.1",
     "jsx-loader": "^0.13.2",
     "loader": "^2.1.1",
+    "mongoose": "^4.6.0",
     "morgan": "^1.7.0",
     "object-assign": "^4.1.0",
     "react": "^15.2.1",
