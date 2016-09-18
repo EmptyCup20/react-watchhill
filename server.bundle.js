@@ -145,7 +145,7 @@
 	//});
 
 
-	var PORT = process.env.PORT || 3000;
+	var PORT = process.env.PORT || 3030;
 	app.listen(PORT, function () {
 		console.log('Production Express server running at localhost:' + PORT);
 	});
@@ -313,7 +313,7 @@
 
 	    //暂时这么设置,同步服务端和客户端
 	    if (req.session.user) {
-	        console.log('logined');
+	        //console.log('logined');
 	        var store = (0, _store2.default)({
 	            login: {
 	                loginUser: {
@@ -326,7 +326,7 @@
 	        //console.log(JSON.stringify(store.getState()));
 
 	    } else {
-	        console.log('unlogined');
+	        //console.log('unlogined');
 	        var store = (0, _store2.default)(); //const有块级作用域
 	    }
 
@@ -336,7 +336,7 @@
 	    (0, _reactRouter.match)({ routes: (0, _routes2.default)(), location: req.url }, function (err, redirect, props) {
 
 	        //测试用
-	        console.log('node,req.url:', req.url);
+	        //console.log('node,req.url:',req.url);
 
 	        if (err) {
 	            res.status(500).send(err.message);
@@ -354,7 +354,7 @@
 	                serverState: JSON.stringify(store.getState())
 	            });
 	        } else {
-	            //路由匹配不到
+	            //路由匹配不到,这里这个提示页面暂时不做
 	            res.status(404).send('Not Found');
 	        }
 	    });
@@ -439,6 +439,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var routes = function routes(state) {
+
+	    //进入之前判断是否已经登录
+	    function isLogined() {
+	        //console.log('isLogined:',state.login.logined);
+	    }
+
 	    return _react2.default.createElement(
 	        _reactRouter.Route,
 	        null,
@@ -450,10 +456,12 @@
 	            _react2.default.createElement(_reactRouter.Route, { path: '/blog', component: _Blog2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default })
 	        ),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginContainer2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: isLogined, component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _Register2.default })
 	    );
 	};
+	//import Index from '../containers/Index';
+
 
 	//容器组件
 	//基础库
@@ -618,7 +626,7 @@
 	        key: 'render',
 	        value: function render() {
 	            var login = this.props.login;
-
+	            //console.log(login);
 
 	            return _react2.default.createElement(
 	                'div',
@@ -672,37 +680,48 @@
 	                            '关于页'
 	                        )
 	                    ),
-	                    !login.logined ? _react2.default.createElement(
-	                        'l',
-	                        null,
-	                        _react2.default.createElement(
-	                            'li',
-	                            { role: 'presentation' },
-	                            _react2.default.createElement(
-	                                _reactRouter.Link,
-	                                { to: '/login' },
-	                                '登录页'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'li',
-	                            { role: 'presentation' },
-	                            _react2.default.createElement(
-	                                _reactRouter.Link,
-	                                { to: '/register' },
-	                                '注册页'
-	                            )
-	                        )
-	                    ) : _react2.default.createElement(
-	                        'li',
-	                        { role: 'presentation' },
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            null,
-	                            '登录用户名:',
-	                            login.loginUser.username
-	                        )
-	                    )
+	                    function () {
+	                        if (login.logined) {
+	                            return _react2.default.createElement(
+	                                'l',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { role: 'presentation' },
+	                                    '登录用户:',
+	                                    login.loginUser.username
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { role: 'presentation' },
+	                                    '注销'
+	                                )
+	                            );
+	                        } else {
+	                            return _react2.default.createElement(
+	                                'l',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { role: 'presentation' },
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/login' },
+	                                        '登录'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { role: 'presentation' },
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/register' },
+	                                        '注册'
+	                                    )
+	                                )
+	                            );
+	                        }
+	                    }()
 	                ),
 	                _react2.default.createElement('hr', null),
 	                _react2.default.createElement(

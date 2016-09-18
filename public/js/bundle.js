@@ -3131,7 +3131,7 @@ webpackJsonp([0,1],[
 	          if (error) {
 	            listener(error);
 	          } else if (redirectLocation) {
-	            history.replace(redirectLocation);
+	            history.transitionTo(redirectLocation);
 	          } else if (nextState) {
 	            listener(null, nextState);
 	          } else {
@@ -4299,7 +4299,7 @@ webpackJsonp([0,1],[
 	  },
 
 	  propTypes: {
-	    to: oneOfType([string, object]),
+	    to: oneOfType([string, object]).isRequired,
 	    query: object,
 	    hash: string,
 	    state: object,
@@ -4360,11 +4360,6 @@ webpackJsonp([0,1],[
 
 
 	    if (router) {
-	      // If user does not specify a `to` prop, return an empty anchor tag.
-	      if (to == null) {
-	        return _react2.default.createElement('a', props);
-	      }
-
 	      var location = createLocationDescriptor(to, { query: query, hash: hash, state: state });
 	      props.href = router.createHref(location);
 
@@ -7436,6 +7431,12 @@ webpackJsonp([0,1],[
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var routes = function routes(state) {
+
+	    //进入之前判断是否已经登录
+	    function isLogined() {
+	        //console.log('isLogined:',state.login.logined);
+	    }
+
 	    return _react2.default.createElement(
 	        _reactRouter.Route,
 	        null,
@@ -7447,10 +7448,12 @@ webpackJsonp([0,1],[
 	            _react2.default.createElement(_reactRouter.Route, { path: '/blog', component: _Blog2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default })
 	        ),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginContainer2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: isLogined, component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _Register2.default })
 	    );
 	};
+	//import Index from '../containers/Index';
+
 
 	//容器组件
 	//基础库
@@ -7615,7 +7618,7 @@ webpackJsonp([0,1],[
 	        key: 'render',
 	        value: function render() {
 	            var login = this.props.login;
-
+	            //console.log(login);
 
 	            return _react2.default.createElement(
 	                'div',
@@ -7669,37 +7672,48 @@ webpackJsonp([0,1],[
 	                            '关于页'
 	                        )
 	                    ),
-	                    !login.logined ? _react2.default.createElement(
-	                        'l',
-	                        null,
-	                        _react2.default.createElement(
-	                            'li',
-	                            { role: 'presentation' },
-	                            _react2.default.createElement(
-	                                _reactRouter.Link,
-	                                { to: '/login' },
-	                                '登录页'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'li',
-	                            { role: 'presentation' },
-	                            _react2.default.createElement(
-	                                _reactRouter.Link,
-	                                { to: '/register' },
-	                                '注册页'
-	                            )
-	                        )
-	                    ) : _react2.default.createElement(
-	                        'li',
-	                        { role: 'presentation' },
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            null,
-	                            '登录用户名:',
-	                            login.loginUser.username
-	                        )
-	                    )
+	                    function () {
+	                        if (login.logined) {
+	                            return _react2.default.createElement(
+	                                'l',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { role: 'presentation' },
+	                                    '登录用户:',
+	                                    login.loginUser.username
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { role: 'presentation' },
+	                                    '注销'
+	                                )
+	                            );
+	                        } else {
+	                            return _react2.default.createElement(
+	                                'l',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { role: 'presentation' },
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/login' },
+	                                        '登录'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { role: 'presentation' },
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/register' },
+	                                        '注册'
+	                                    )
+	                                )
+	                            );
+	                        }
+	                    }()
 	                ),
 	                _react2.default.createElement('hr', null),
 	                _react2.default.createElement(

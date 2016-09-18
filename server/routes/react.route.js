@@ -22,7 +22,7 @@ router.get('/*', (req, res,next) => {
 
     //暂时这么设置,同步服务端和客户端
     if(req.session.user) {
-        console.log('logined');
+        //console.log('logined');
         var store = configureStore({
             login:{
                 loginUser:{
@@ -36,7 +36,7 @@ router.get('/*', (req, res,next) => {
 
 
     } else {
-        console.log('unlogined');
+        //console.log('unlogined');
         var store = configureStore();       //const有块级作用域
     }
 
@@ -46,7 +46,7 @@ router.get('/*', (req, res,next) => {
     match({ routes:routes(), location: req.url }, (err, redirect, props) => {
 
         //测试用
-        console.log('node,req.url:',req.url);
+        //console.log('node,req.url:',req.url);
 
         if (err) {
             res.status(500).send(err.message)
@@ -64,7 +64,7 @@ router.get('/*', (req, res,next) => {
                serverState:JSON.stringify(store.getState())
             });
         } else {
-            //路由匹配不到
+            //路由匹配不到,这里这个提示页面暂时不做
             res.status(404).send('Not Found')
         }
     })

@@ -5,6 +5,7 @@ export default class Index extends Component{
     render() {
 
         const { login } = this.props;
+        //console.log(login);
  
         return (
             <div>
@@ -17,23 +18,25 @@ export default class Index extends Component{
                     <li role="presentation"><Link to="/">首页</Link></li>
                     <li role="presentation"><Link to="/blog">博客页</Link></li>
                     <li role="presentation"><Link to="/about">关于页</Link></li>
-
                     {
-                        !login.logined 
-                        ?
-                        <l>
-                            <li role="presentation"><Link to="/login">登录页</Link></li>
-                            <li role="presentation"><Link to="/register">注册页</Link></li>
-                        </l>
-                        :
-                        <li role="presentation"><Link>登录用户名:{login.loginUser.username}</Link></li>
-
+                        (function (){
+                            if(login.logined) {
+                                return (
+                                    <l>
+                                        <li role="presentation">登录用户:{login.loginUser.username}</li>
+                                        <li role="presentation">注销</li>
+                                    </l>
+                                )
+                            } else {
+                                return (
+                                    <l>
+                                        <li role="presentation"><Link to="/login">登录</Link></li>
+                                        <li role="presentation"><Link to="/register">注册</Link></li>
+                                    </l>
+                                )
+                            }
+                        }())
                     }
-
-
-
-
-
 
                 </ul>
 
@@ -46,7 +49,6 @@ export default class Index extends Component{
 
 
                 <h3>尾部</h3>
-
 
             </div>
         )

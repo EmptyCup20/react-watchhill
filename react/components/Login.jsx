@@ -19,6 +19,7 @@ export default class Login extends Component{
         login: PropTypes.object.isRequired
     };
 
+
     //不能修改属性和状态,在render之前接收到新的props和state进行执行
     componentWillUpdate(nextProps,nextState) {
         //console.log(nextProps.login);
@@ -58,7 +59,6 @@ export default class Login extends Component{
 
 
     render() {
-
 
         const { login } = this.props;       //注意这里应该查看容易中允许传入的state属性
         //console.log(login.loginStatus);
