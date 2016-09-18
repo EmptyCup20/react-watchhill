@@ -27,13 +27,12 @@ app.use(expressSession({
 	resave: false,					//是指每次请求都重新设置session cookie，假设你的cookie是10分钟过期，每次请求都会再设置10分钟
 	saveUninitialized: true			//是指无论有没有session cookie，每次请求都设置个session cookie ，默认给个标示为 connect.sid
 }));                      			//开启session
-   
-app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 //ajax请求路由
 app.use('/user', require('./server/routes/user.route'));
-
 
 //react服务器渲染路由
 app.use('/', require('./server/routes/react.route'));

@@ -68,49 +68,60 @@ export default class Login extends Component{
         //console.log(login.loginStatus);
 
         return (
-            <div className="container">
-                <h1>登录页</h1>
-                <form className="form-inline">
-                    <Input type="text" id="login_username" className="form-control" placeholder="账号" />
-                    <Input type="password" id="login_password" className="form-control" placeholder="密码" />
-                    <Button type="submit" className="btn btn-default" onClick={this._onClick.bind(this)}>登录</Button>
-                </form>
+           <div className="login-box skin-login">
+               <div className="login-logo">
+                   <a href="/"><strong>Watch</strong>Hill</a>
+               </div>
 
-                <br/>
+               <div className="login-box-body">
+                   <p className="login-box-msg">
+                       账号登录
+                   </p>
 
-                {
-                    //login.logining
-                    //?
-                    //    <div className="alert alert-info" role="alert">正在登录...</div>
-                    //:
-                    //    <div className="alert alert-success" role="alert">登录提示</div>
-                    //switch(login.loginStatus) {
-                    //
-                    //}
+                   {
+                       (function (){
+                           switch(login.loginStatus) {
+                               case user_no_exist:
+                                   return (
 
-                    (function (){
-                        switch(login.loginStatus) {
-                            case user_no_exist:
-                                return (
-                                    <div className="alert alert-danger" role="alert">
-                                        用户名不存在!
-                                    </div>
-                                );
+                                       <div className="alert alert-danger" role="alert">
+                                           用户名不存在!
+                                       </div>
+                                   );
 
-                            case password_err:
-                                return (
-                                    <div className="alert alert-danger" role="alert">
-                                        密码错误!
-                                    </div>
-                                );
-                            default:
-                                break;
-                        }
-                    }())
-                }
+                               case password_err:
+                                   return (
+                                       <div className="alert alert-danger" role="alert">
+                                           密码错误!
+                                       </div>
+                                   );
+                               default:
+                                   break;
+                           }
+                       }())
+                   }
 
 
-            </div>
+                   <from>
+                       <div className="form-group has-feedback">
+                           <Input id="login_username" className="form-control" placeholder="账号"  />
+                           <span className="form-control-feedback"> <i className="fa fa-user fa-fw"></i></span>
+                       </div>
+                       <div className="form-group has-feedback">
+                           <Input  id="login_password" type="password" className="form-control" placeholder="密码" />
+                           <span className="form-control-feedback"> <i className="fa fa-lock fa-fw"></i></span>
+                       </div>
+
+                       <div className="row">
+                           <div className="col-xs-8">
+                           </div>
+                           <div className="col-xs-4">
+                               <Button type="submit"  className=" btn-primary btn-block btn-flat btn" onClick={this._onClick.bind(this)} >登录</Button>
+                           </div>
+                       </div>
+                   </from>
+               </div>
+           </div>
         )
     }
 }

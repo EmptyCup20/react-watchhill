@@ -2,6 +2,9 @@
 import { Link } from 'react-router';
 import React,{ Component,PropTypes } from 'react';
 
+//基础组件(demo)
+import Button from './elements/Button';
+
 
 //导航
 import history from '../history';
@@ -20,13 +23,13 @@ export default class Index extends Component{
     }
 
 
-    componentWillUpdate(nextProps,nextState) {
-        if(!nextProps.login.logined) {
-            history.replace({
-                pathname:'/'
-            });
-        }
-    }
+    //componentWillUpdate(nextProps,nextState) {
+    //    if(!nextProps.login.logined) {
+    //        history.replace({
+    //            pathname:'/'
+    //        });
+    //    }
+    //}
 
 
     render() {
@@ -36,6 +39,64 @@ export default class Index extends Component{
  
         return (
             <div>
+                <header className="main-header skin-header-user">
+                    <nav className="navbar navbar-static-top">
+                        <div className="container">
+                            <div className="navbar-header">
+                                <a href="/index" className="navbar-brand"><b>Watch</b>Hill</a>
+                                <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
+                                        data-target="#navbar-collapse">
+                                    <i className="fa fa-bars"></i>
+                                </button>
+                            </div>
+                            <div className="collapse navbar-collapse" id="navbar-collapse">
+                                <ul className="nav navbar-nav navbar-left">
+                                    <li>
+                                        <Link to="/">首页</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/blog">博客</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/about">关于</Link>
+                                    </li>
+
+                                </ul>
+
+                                {
+                                    (function (obj){
+                                        if(login.logined) {
+                                            return (
+                                                <ul className="nav navbar-nav navbar-right">
+                                                    <li>
+                                                        <Link to="/login">登录用户</Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link to="/register">退出登录</Link>
+                                                    </li>
+                                                </ul>
+                                            )
+                                        } else {
+                                            return (
+                                                <ul className="nav navbar-nav navbar-right">
+                                                    <li>
+                                                        <Link to="/login">登录</Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link to="/register">注册</Link>
+                                                    </li>
+                                                </ul>
+                                            )
+                                        }
+                                    }(this))
+                                }
+
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+
+
 
                 <h3>导航部分</h3>
 
