@@ -36,9 +36,14 @@ function ajax() {
         //注销
         logout: function() {
             return req('GET','/user/logout');
+        },
+
+
+        //注册
+        register: function(data) {
+            return req('POST','/user/register',data);
         }
     };
 }
-
 
 export default ajax;

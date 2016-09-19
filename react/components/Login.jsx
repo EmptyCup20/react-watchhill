@@ -1,5 +1,7 @@
 //基础库
 import React,{ Component,PropTypes } from 'react';
+import { Link } from 'react-router';
+
 
 //基础组件
 import Input from './elements/Input';
@@ -70,7 +72,7 @@ export default class Login extends Component{
         return (
            <div className="login-box skin-login">
                <div className="login-logo">
-                   <a href="/"><strong>Watch</strong>Hill</a>
+                   <Link to="/"><strong>Watch</strong>Hill</Link>
                </div>
 
                <div className="login-box-body">
@@ -83,7 +85,6 @@ export default class Login extends Component{
                            switch(login.loginStatus) {
                                case user_no_exist:
                                    return (
-
                                        <div className="alert alert-danger" role="alert">
                                            用户名不存在!
                                        </div>
@@ -100,7 +101,6 @@ export default class Login extends Component{
                            }
                        }())
                    }
-
 
                    <from>
                        <div className="form-group has-feedback">

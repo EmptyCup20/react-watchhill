@@ -2,16 +2,15 @@
 
 module.exports = {
 
+
+    init: 'init',                       //初始化
+
     //login
-    login_init: 'login_init',           //登录初始化
     user_no_exist: 'user_no_exist',     //用户不存在
     password_err: 'password_err',       //密码错误
 
-
-
-
-
-
+    //register
+    user_exist: 'user_exist',           //用户存在
 
 
 
