@@ -1,4 +1,4 @@
-var db = require('./mongo');
+var db = require('../mongo');
 var Schema = db.Schema;
 var userSchema = new Schema({
     //用户名

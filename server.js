@@ -38,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //ajax请求路由
 app.use('/user', require('./server/routes/user.route'));
+app.use('/article', require('./server/routes/article.route'));
 
 
 //react服务器渲染路由
