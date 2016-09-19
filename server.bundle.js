@@ -101,7 +101,6 @@
 		saveUninitialized: true //是指无论有没有session cookie，每次请求都设置个session cookie ，默认给个标示为 connect.sid
 	})); //开启session
 
-
 	app.use(_express2.default.static(_path2.default.join(__dirname, 'public')));
 
 	//ajax请求路由
@@ -146,7 +145,7 @@
 	//});
 
 
-	var PORT = process.env.PORT || 3000;
+	var PORT = process.env.PORT || 3030;
 	app.listen(PORT, function () {
 		console.log('Production Express server running at localhost:' + PORT);
 	});
@@ -868,67 +867,26 @@
 	                                    )
 	                                ),
 	                                function (obj) {
-	                                    if (obj.props.login.logined) {
+	                                    if (login.logined) {
 	                                        return _react2.default.createElement(
 	                                            'ul',
 	                                            { className: 'nav navbar-nav navbar-right' },
 	                                            _react2.default.createElement(
 	                                                'li',
-	                                                { className: 'dropdown' },
+	                                                null,
 	                                                _react2.default.createElement(
-	                                                    'a',
-	                                                    { href: '#', role: 'button' },
-	                                                    ' ',
-	                                                    _react2.default.createElement('i', { className: 'fa fa-plus' })
+	                                                    _reactRouter.Link,
+	                                                    { to: '/login' },
+	                                                    '登录用户'
 	                                                )
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'li',
-	                                                { className: 'dropdown user user-menu' },
+	                                                null,
 	                                                _react2.default.createElement(
-	                                                    'a',
-	                                                    { href: '', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
-	                                                    _react2.default.createElement('img', { alt: 'User Image', className: 'user-image' }),
-	                                                    _react2.default.createElement(
-	                                                        'span',
-	                                                        { className: 'hidden-xs' },
-	                                                        obj.props.login.loginUser.username
-	                                                    )
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'ul',
-	                                                    { className: 'dropdown-menu' },
-	                                                    _react2.default.createElement(
-	                                                        'li',
-	                                                        { className: 'user-header' },
-	                                                        _react2.default.createElement(
-	                                                            _reactRouter.Link,
-	                                                            { href: '#' },
-	                                                            _react2.default.createElement('img', { src: '#', className: 'img-circle', alt: 'user image' })
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'li',
-	                                                        { className: 'user-footer' },
-	                                                        _react2.default.createElement(
-	                                                            'div',
-	                                                            { className: 'pull-left' },
-	                                                            _react2.default.createElement(
-	                                                                _reactRouter.Link,
-	                                                                { href: '#', className: 'btn btn-default btn-flat' },
-	                                                                '个人中心'
-	                                                            )
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            'div',
-	                                                            { className: 'pull-right' },
-	                                                            _react2.default.createElement(
-	                                                                _reactRouter.Link,
-	                                                                { href: '#', className: 'btn btn-default btn-flat' },
-	                                                                '退出登录'
-	                                                            )
-	                                                        )
-	                                                    )
+	                                                    _reactRouter.Link,
+	                                                    { to: '/register' },
+	                                                    '退出登录'
 	                                                )
 	                                            )
 	                                        );
