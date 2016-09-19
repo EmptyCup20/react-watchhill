@@ -55,7 +55,7 @@ function register_request() {
 
 
 /**
- * ajax数据接收处理
+ * 接收状态处理
  * @param user
  * @param status
  * @returns {{type: *, user: {username: *}, status: *}}
@@ -74,6 +74,11 @@ function register_process(user,status) {
 }
 
 
+/**
+ * 发起receive请求
+ * @param status
+ * @returns {{type: string, status: *}}
+ */
 function register_recieve(status) {
     return {
         type: REGISTER_RECEIVE,
