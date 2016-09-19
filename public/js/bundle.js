@@ -3131,7 +3131,7 @@ webpackJsonp([0,1],[
 	          if (error) {
 	            listener(error);
 	          } else if (redirectLocation) {
-	            history.replace(redirectLocation);
+	            history.transitionTo(redirectLocation);
 	          } else if (nextState) {
 	            listener(null, nextState);
 	          } else {
@@ -4299,7 +4299,7 @@ webpackJsonp([0,1],[
 	  },
 
 	  propTypes: {
-	    to: oneOfType([string, object]),
+	    to: oneOfType([string, object]).isRequired,
 	    query: object,
 	    hash: string,
 	    state: object,
@@ -4360,11 +4360,6 @@ webpackJsonp([0,1],[
 
 
 	    if (router) {
-	      // If user does not specify a `to` prop, return an empty anchor tag.
-	      if (to == null) {
-	        return _react2.default.createElement('a', props);
-	      }
-
 	      var location = createLocationDescriptor(to, { query: query, hash: hash, state: state });
 	      props.href = router.createHref(location);
 
@@ -7799,6 +7794,7 @@ webpackJsonp([0,1],[
 	        key: 'render',
 	        value: function render() {
 	            var login = this.props.login;
+	            //const _this = this;
 	            //console.log(login);
 
 	            return _react2.default.createElement(
@@ -7867,17 +7863,17 @@ webpackJsonp([0,1],[
 	                                        )
 	                                    )
 	                                ),
-	                                function (obj) {
+	                                function (_this) {
 	                                    if (login.logined) {
 	                                        return _react2.default.createElement(
 	                                            'ul',
 	                                            { className: 'nav navbar-nav navbar-right' },
 	                                            _react2.default.createElement(
 	                                                'li',
-	                                                { 'class': 'dropdown' },
+	                                                { className: 'dropdown' },
 	                                                _react2.default.createElement(
 	                                                    _reactRouter.Link,
-	                                                    { href: '#' },
+	                                                    { to: '#' },
 	                                                    '新增文章'
 	                                                )
 	                                            ),
@@ -7902,7 +7898,7 @@ webpackJsonp([0,1],[
 	                                                        { className: 'user-header' },
 	                                                        _react2.default.createElement(
 	                                                            _reactRouter.Link,
-	                                                            { href: '#' },
+	                                                            { to: '#' },
 	                                                            _react2.default.createElement('img', { src: '#', className: 'img-circle', alt: 'user image' })
 	                                                        ),
 	                                                        _react2.default.createElement(
@@ -7928,8 +7924,8 @@ webpackJsonp([0,1],[
 	                                                            'div',
 	                                                            { className: 'pull-left' },
 	                                                            _react2.default.createElement(
-	                                                                _reactRouter.Link,
-	                                                                { href: '#', className: 'btn btn-default btn-flat' },
+	                                                                'a',
+	                                                                { className: 'btn btn-default btn-flat' },
 	                                                                '个人中心'
 	                                                            )
 	                                                        ),
@@ -7937,8 +7933,8 @@ webpackJsonp([0,1],[
 	                                                            'div',
 	                                                            { className: 'pull-right' },
 	                                                            _react2.default.createElement(
-	                                                                _reactRouter.Link,
-	                                                                { className: 'btn btn-default btn-flat', onClick: obj.logout.bind(obj) },
+	                                                                'a',
+	                                                                { className: 'btn btn-default btn-flat', onClick: _this.logout.bind(_this) },
 	                                                                '退出登录'
 	                                                            )
 	                                                        )
@@ -8023,53 +8019,7 @@ webpackJsonp([0,1],[
 	                            { to: '/about' },
 	                            '关于页'
 	                        )
-	                    ),
-	                    function (obj) {
-	                        if (login.logined) {
-	                            return _react2.default.createElement(
-	                                'l',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { role: 'presentation' },
-	                                    '登录用户:',
-	                                    login.loginUser.username
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { role: 'presentation' },
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { onClick: obj.logout.bind(obj) },
-	                                        ' 注销 '
-	                                    )
-	                                )
-	                            );
-	                        } else {
-	                            return _react2.default.createElement(
-	                                'l',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { role: 'presentation' },
-	                                    _react2.default.createElement(
-	                                        _reactRouter.Link,
-	                                        { to: '/login' },
-	                                        '登录'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { role: 'presentation' },
-	                                    _react2.default.createElement(
-	                                        _reactRouter.Link,
-	                                        { to: '/register' },
-	                                        '注册'
-	                                    )
-	                                )
-	                            );
-	                        }
-	                    }(this)
+	                    )
 	                ),
 	                _react2.default.createElement('hr', null),
 	                _react2.default.createElement(
@@ -9002,31 +8952,6 @@ webpackJsonp([0,1],[
 	                            _react2.default.createElement(
 	                                'select',
 	                                { name: 'team', className: 'form-control' },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'Web前端组' },
-	                                    'Web前端组'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'Web前端组' },
-	                                    'Web前端组'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'Web前端组' },
-	                                    'Web前端组'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'Web前端组' },
-	                                    'Web前端组'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'Web前端组' },
-	                                    'Web前端组'
-	                                ),
 	                                _react2.default.createElement(
 	                                    'option',
 	                                    { value: 'Web前端组' },

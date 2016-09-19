@@ -35,6 +35,7 @@ export default class Index extends Component{
     render() {
 
         const { login } = this.props;
+        //const _this = this;
         //console.log(login);
  
         return (
@@ -61,41 +62,43 @@ export default class Index extends Component{
                                         <Link to="/about">关于</Link>
                                     </li>
                                 </ul>
-                                
+
                                 {
-                                    (function (obj){
-                                        if(login.logined) {
+
+                                    (function (_this) {
+                                        if (login.logined) {
                                             return (
                                                 <ul className="nav navbar-nav navbar-right">
-                                                    <li class="dropdown">
-                                                        <Link href="#">新增文章</Link>
+                                                    <li className="dropdown">
+                                                        <Link to="#">新增文章</Link>
                                                     </li>
-
                                                      <li className="dropdown user user-menu">
                                                         <a href="" className="dropdown-togglt" data-toggle="dropdown" aria-expanded="false">
                                                             <img src="#" alt="User Image" className="user-image" />
                                                             <span className="hidden-xs">{login.loginUser.username}</span>
                                                         </a>
-                                                        <ul className="dropdown-menu">
-                                                            <li className="user-header">
-                                                                <Link href="#">
-                                                                    <img src="#" className="img-circle" alt="user image" />
-                                                                </Link>
-                                                                <p>
-                                                                    人生一世
-                                                                    <small>18768107826</small>
-                                                                    <small>11@qq.com</small>
-                                                                </p> 
-                                                            </li>
-                                                            <li className="user-footer">
-                                                                <div className="pull-left">
-                                                                    <Link href="#" className="btn btn-default btn-flat">个人中心</Link>
-                                                                </div>
-                                                                <div className="pull-right">
-                                                                    <Link  className="btn btn-default btn-flat" onClick={obj.logout.bind(obj)}>退出登录</Link>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
+                                                         <ul className="dropdown-menu">
+                                                             <li className="user-header">
+                                                                 <Link to="#">
+                                                                     <img src="#" className="img-circle" alt="user image" />
+                                                                 </Link>
+                                                                 <p>
+                                                                     人生一世
+                                                                     <small>18768107826</small>
+                                                                     <small>11@qq.com</small>
+                                                                 </p>
+                                                             </li>
+
+                                                             <li className="user-footer">
+                                                                 <div className="pull-left">
+                                                                     <a className="btn btn-default btn-flat">个人中心</a>
+                                                                 </div>
+                                                                 <div className="pull-right">
+                                                                     <a className="btn btn-default btn-flat" onClick={_this.logout.bind(_this)}>退出登录</a>
+                                                                 </div>
+                                                             </li>
+
+                                                         </ul>
                                                     </li>
                                                 </ul>
                                             )
@@ -130,23 +133,23 @@ export default class Index extends Component{
                     <li role="presentation"><Link to="/blog">博客页</Link></li>
                     <li role="presentation"><Link to="/about">关于页</Link></li>
                     {
-                        (function (obj){
-                            if(login.logined) {
-                                return (
-                                    <l>
-                                        <li role="presentation">登录用户:{login.loginUser.username}</li>
-                                        <li role="presentation"><a onClick={obj.logout.bind(obj)} > 注销 </a></li>
-                                    </l>
-                                )
-                            } else {
-                                return (
-                                    <l>
-                                        <li role="presentation"><Link to="/login">登录</Link></li>
-                                        <li role="presentation"><Link to="/register">注册</Link></li>
-                                    </l>
-                                )
-                            }
-                        }(this))
+                        //(function (obj){
+                        //    if(login.logined) {
+                        //        return (
+                        //            <l>
+                        //                <li role="presentation">登录用户:{login.loginUser.username}</li>
+                        //                <li role="presentation"><a onClick={obj.logout.bind(obj)} > 注销 </a></li>
+                        //            </l>
+                        //        )
+                        //    } else {
+                        //        return (
+                        //            <l>
+                        //                <li role="presentation"><Link to="/login">登录</Link></li>
+                        //                <li role="presentation"><Link to="/register">注册</Link></li>
+                        //            </l>
+                        //        )
+                        //    }
+                        //}(this))
                     }
 
                 </ul>

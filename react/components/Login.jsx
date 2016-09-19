@@ -81,6 +81,9 @@ export default class Login extends Component{
                    </p>
 
                    {
+
+
+
                        (function (){
                            switch(login.loginStatus) {
                                case user_no_exist:

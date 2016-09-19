@@ -799,6 +799,7 @@
 	        key: 'render',
 	        value: function render() {
 	            var login = this.props.login;
+	            //const _this = this;
 	            //console.log(login);
 
 	            return _react2.default.createElement(
@@ -867,17 +868,17 @@
 	                                        )
 	                                    )
 	                                ),
-	                                function (obj) {
+	                                function (_this) {
 	                                    if (login.logined) {
 	                                        return _react2.default.createElement(
 	                                            'ul',
 	                                            { className: 'nav navbar-nav navbar-right' },
 	                                            _react2.default.createElement(
 	                                                'li',
-	                                                { 'class': 'dropdown' },
+	                                                { className: 'dropdown' },
 	                                                _react2.default.createElement(
 	                                                    _reactRouter.Link,
-	                                                    { href: '#' },
+	                                                    { to: '#' },
 	                                                    '新增文章'
 	                                                )
 	                                            ),
@@ -902,7 +903,7 @@
 	                                                        { className: 'user-header' },
 	                                                        _react2.default.createElement(
 	                                                            _reactRouter.Link,
-	                                                            { href: '#' },
+	                                                            { to: '#' },
 	                                                            _react2.default.createElement('img', { src: '#', className: 'img-circle', alt: 'user image' })
 	                                                        ),
 	                                                        _react2.default.createElement(
@@ -928,8 +929,8 @@
 	                                                            'div',
 	                                                            { className: 'pull-left' },
 	                                                            _react2.default.createElement(
-	                                                                _reactRouter.Link,
-	                                                                { href: '#', className: 'btn btn-default btn-flat' },
+	                                                                'a',
+	                                                                { className: 'btn btn-default btn-flat' },
 	                                                                '个人中心'
 	                                                            )
 	                                                        ),
@@ -937,8 +938,8 @@
 	                                                            'div',
 	                                                            { className: 'pull-right' },
 	                                                            _react2.default.createElement(
-	                                                                _reactRouter.Link,
-	                                                                { className: 'btn btn-default btn-flat', onClick: obj.logout.bind(obj) },
+	                                                                'a',
+	                                                                { className: 'btn btn-default btn-flat', onClick: _this.logout.bind(_this) },
 	                                                                '退出登录'
 	                                                            )
 	                                                        )
@@ -1023,53 +1024,7 @@
 	                            { to: '/about' },
 	                            '关于页'
 	                        )
-	                    ),
-	                    function (obj) {
-	                        if (login.logined) {
-	                            return _react2.default.createElement(
-	                                'l',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { role: 'presentation' },
-	                                    '登录用户:',
-	                                    login.loginUser.username
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { role: 'presentation' },
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { onClick: obj.logout.bind(obj) },
-	                                        ' 注销 '
-	                                    )
-	                                )
-	                            );
-	                        } else {
-	                            return _react2.default.createElement(
-	                                'l',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { role: 'presentation' },
-	                                    _react2.default.createElement(
-	                                        _reactRouter.Link,
-	                                        { to: '/login' },
-	                                        '登录'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { role: 'presentation' },
-	                                    _react2.default.createElement(
-	                                        _reactRouter.Link,
-	                                        { to: '/register' },
-	                                        '注册'
-	                                    )
-	                                )
-	                            );
-	                        }
-	                    }(this)
+	                    )
 	                ),
 	                _react2.default.createElement('hr', null),
 	                _react2.default.createElement(
@@ -2002,31 +1957,6 @@
 	                            _react2.default.createElement(
 	                                'select',
 	                                { name: 'team', className: 'form-control' },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'Web前端组' },
-	                                    'Web前端组'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'Web前端组' },
-	                                    'Web前端组'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'Web前端组' },
-	                                    'Web前端组'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'Web前端组' },
-	                                    'Web前端组'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'Web前端组' },
-	                                    'Web前端组'
-	                                ),
 	                                _react2.default.createElement(
 	                                    'option',
 	                                    { value: 'Web前端组' },

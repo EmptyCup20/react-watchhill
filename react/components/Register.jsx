@@ -60,11 +60,6 @@ export default class Login extends Component{
                         <div className="form-group has-feedback">
                             <select name="team" className="form-control">
                                 <option value="Web前端组">Web前端组</option>
-                                <option value="Web前端组">Web前端组</option>
-                                <option value="Web前端组">Web前端组</option>
-                                <option value="Web前端组">Web前端组</option>
-                                <option value="Web前端组">Web前端组</option>
-                                <option value="Web前端组">Web前端组</option>
                             </select>
                         </div>
                         <div className="row">
