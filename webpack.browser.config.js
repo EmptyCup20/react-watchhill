@@ -39,7 +39,7 @@ module.exports = {
                 loader: 'babel-loader',
                 query: {
                     //plugins: ['babel-plugin-transform-runtime'],
-                    presets: ['es2015', 'stage-0', 'react']
+                    presets: ['es2015', 'stage-2', 'react']
                 }
             }
         ]

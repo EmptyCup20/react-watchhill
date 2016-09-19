@@ -4,8 +4,7 @@ import ajax from '../ajax';
 
 /**
  * 准备开始登录
- * @param user -> 登录用户名
- * @param pass -> 登录密码
+ * @param user -> 登录用户
  * @returns {Function}
  */
 export function login_start(user) {
@@ -36,7 +35,7 @@ function login_authen(state) {
  */
 function login_ajax(user) {
     return dispatch => {
-        dispatch(login_request(user));                                  //挂起登录请求,防止重复请求
+        dispatch(login_request());                                  //挂起登录请求,防止重复请求
         return ajax().login(user)
             .then(data => dispatch(login_reveive(user,data.status)));   //接受到数据后重新更新state
     };
@@ -47,7 +46,7 @@ function login_ajax(user) {
  * @param user
  * @returns {{type: string, user: *}}
  */
-function login_request(user) {
+function login_request() {
     return {
         type: LOGIN_REQUEST
     };
@@ -60,7 +59,7 @@ function login_request(user) {
  * @returns {{type: string, user: {username: *}, status: *}}
  */
 
-function login_reveive(user,status) {
+export function login_reveive(user,status) {
     return {
         type: LOGIN_RECEIVE,
         user: {username:user.username},

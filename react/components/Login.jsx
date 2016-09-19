@@ -81,14 +81,10 @@ export default class Login extends Component{
                    </p>
 
                    {
-
-
-
                        (function (){
                            switch(login.loginStatus) {
                                case user_no_exist:
                                    return (
-
                                        <div className="alert alert-danger" role="alert">
                                            用户名不存在!
                                        </div>
@@ -105,7 +101,6 @@ export default class Login extends Component{
                            }
                        }())
                    }
-
 
                    <from>
                        <div className="form-group has-feedback">

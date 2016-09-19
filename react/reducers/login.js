@@ -1,22 +1,19 @@
 
 import { LOGIN_REQUEST,LOGIN_RECEIVE,LOGOUT_RECEIVE } from '../constants/actionType';
-import { login_init,user_no_exist,password_err,success } from '../constants/httpType';
+import { init,user_no_exist,password_err,success } from '../constants/httpType';
 
 const login_status = (state,action) => {
-	//console.log('action:',action);
 	switch(action.status) {
 
 		case user_no_exist:
-		//console.log('1');
 			return {
 				//logined:false,
 				loginStatus:user_no_exist,
 				logining:false
-				//loginUser:{}	
+				//loginUser:{}
 			};
  
 		case password_err:
-		//console.log('2');
 			return {
 				//logined:false,
 				loginStatus:password_err,
@@ -25,7 +22,6 @@ const login_status = (state,action) => {
 			};
 
 		case success:
-		//console.log('3');
 			return {
 				logined:true,
 				loginStatus:success,
@@ -43,7 +39,7 @@ const login_status = (state,action) => {
 
 const login = (state = {
 	logined:false,
-	loginStatus:login_init,	//登录状态
+	loginStatus:init,			//登录状态
 	logining:false,				//有没有正在登录标志
 	loginUser:{}
 }, action) => {
@@ -72,7 +68,7 @@ const login = (state = {
 				...state,
 				logined:false,
 				loginUser:{},
-				loginStatus:login_init,
+				loginStatus:init,
 				logining:false
 			};
 

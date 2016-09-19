@@ -1,5 +1,4 @@
 //基础库
-//import React,{ Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -7,21 +6,21 @@ import { connect } from 'react-redux';
 import Register from '../components/Register';
 
 //action
-//import * as LoginActions from '../actions/login';
+import * as RegisterActions from '../actions/register';
 
 
 //绑定login store到Login组件,注册的同时也登录了,所以绑定login store
 function mapStateToProps(state) {
     return {
-        login: state.login
+        register: state.register,
+        login:state.login
     }
 }
 
 
-//绑定login action到Login组件
-//function mapDispatchToProps(dispatch) {
-//    return bindActionCreators(LoginActions,dispatch);
-//}
+//绑定register action到Login组件
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(RegisterActions,dispatch);
+}
 
-
-export default connect(mapStateToProps)(Register);
+export default connect(mapStateToProps,mapDispatchToProps)(Register);

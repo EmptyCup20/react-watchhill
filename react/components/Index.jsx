@@ -132,26 +132,6 @@ export default class Index extends Component{
                     <li role="presentation"><Link to="/index">主页</Link></li>
                     <li role="presentation"><Link to="/blog">博客页</Link></li>
                     <li role="presentation"><Link to="/about">关于页</Link></li>
-                    {
-                        //(function (obj){
-                        //    if(login.logined) {
-                        //        return (
-                        //            <l>
-                        //                <li role="presentation">登录用户:{login.loginUser.username}</li>
-                        //                <li role="presentation"><a onClick={obj.logout.bind(obj)} > 注销 </a></li>
-                        //            </l>
-                        //        )
-                        //    } else {
-                        //        return (
-                        //            <l>
-                        //                <li role="presentation"><Link to="/login">登录</Link></li>
-                        //                <li role="presentation"><Link to="/register">注册</Link></li>
-                        //            </l>
-                        //        )
-                        //    }
-                        //}(this))
-                    }
-
                 </ul>
 
                 <hr/>

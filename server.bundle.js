@@ -110,9 +110,6 @@
 	//react服务器渲染路由
 	app.use('/', __webpack_require__(12));
 
-	//app.use('/users', users);
-
-
 	//传统的express捕捉异常用不到
 	// catch 404 and forward to error handler
 	//app.use(function(req, res, next) {
@@ -218,6 +215,9 @@
 	//登录认证
 	router.post('/login', _user.loginAuthen);
 
+	//注册
+	router.post('/register', _user.register);
+
 	//注销
 	router.get('/logout', _user.logout);
 
@@ -233,6 +233,7 @@
 	    value: true
 	});
 	exports.loginAuthen = loginAuthen;
+	exports.register = register;
 	exports.logout = logout;
 
 	var _httpType = __webpack_require__(11);
@@ -258,12 +259,26 @@
 	}
 
 	/**
+	 * 账号注册
+	 * @param req
+	 * @param res
+	 * @param next
+	 */
+	function register(req, res, next) {
+	    if (req.body.username === 'xx') {
+	        res.json({ status: _httpType.user_exist });
+	    } else {
+	        req.session.user = req.body.username;
+	        res.json({ status: _httpType.success });
+	    }
+	}
+
+	/**
 	 * 注销
 	 * @param req
 	 * @param res
 	 * @param next
 	 */
-
 	function logout(req, res, next) {
 	    req.session.destroy(function () {
 	        //移除会话
@@ -281,10 +296,14 @@
 
 	module.exports = {
 
+	    init: 'init', //初始化
+
 	    //login
-	    login_init: 'login_init', //登录初始化
 	    user_no_exist: 'user_no_exist', //用户不存在
 	    password_err: 'password_err', //密码错误
+
+	    //register
+	    user_exist: 'user_exist', //用户存在
 
 
 	    success: 'success' //请求成功
@@ -316,7 +335,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(37);
+	var _store = __webpack_require__(38);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -673,6 +692,10 @@
 	    LOGIN_REQUEST: 'LOGIN_REQUEST', //挂起登录请求
 	    LOGIN_RECEIVE: 'LOGIN_RECEIVE', //接收登录状况处理
 
+	    //register
+	    REGISTER_REQUEST: 'REGISTER_REQUEST', //挂起注册请求
+	    REGISTER_RECEIVE: 'REGISTER_RECEIVE', //接收注册状况处理
+
 	    //logout
 	    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE' //注销
 	};
@@ -722,6 +745,11 @@
 	        //注销
 	        logout: function logout() {
 	            return req('GET', '/user/logout');
+	        },
+
+	        //注册
+	        register: function register(data) {
+	            return req('POST', '/user/register', data);
 	        }
 	    };
 	}
@@ -1644,6 +1672,7 @@
 	    value: true
 	});
 	exports.login_start = login_start;
+	exports.login_reveive = login_reveive;
 
 	var _actionType = __webpack_require__(22);
 
@@ -1655,8 +1684,7 @@
 
 	/**
 	 * 准备开始登录
-	 * @param user -> 登录用户名
-	 * @param pass -> 登录密码
+	 * @param user -> 登录用户
 	 * @returns {Function}
 	 */
 	function login_start(user) {
@@ -1686,7 +1714,7 @@
 	 */
 	function login_ajax(user) {
 	    return function (dispatch) {
-	        dispatch(login_request(user)); //挂起登录请求,防止重复请求
+	        dispatch(login_request()); //挂起登录请求,防止重复请求
 	        return (0, _ajax2.default)().login(user).then(function (data) {
 	            return dispatch(login_reveive(user, data.status));
 	        }); //接受到数据后重新更新state
@@ -1698,7 +1726,7 @@
 	 * @param user
 	 * @returns {{type: string, user: *}}
 	 */
-	function login_request(user) {
+	function login_request() {
 	    return {
 	        type: _actionType.LOGIN_REQUEST
 	    };
@@ -1769,29 +1797,35 @@
 
 	var _Register2 = _interopRequireDefault(_Register);
 
+	var _register = __webpack_require__(37);
+
+	var RegisterActions = _interopRequireWildcard(_register);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//action
-	//import * as LoginActions from '../actions/login';
-
-
 	//绑定login store到Login组件,注册的同时也登录了,所以绑定login store
-	function mapStateToProps(state) {
-	    return {
-	        login: state.login
-	    };
-	}
-
-	//绑定login action到Login组件
-	//function mapDispatchToProps(dispatch) {
-	//    return bindActionCreators(LoginActions,dispatch);
-	//}
 
 
 	//视图组件
 	//基础库
-	//import React,{ Component } from 'react';
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Register2.default);
+	function mapStateToProps(state) {
+	    return {
+	        register: state.register,
+	        login: state.login
+	    };
+	}
+
+	//绑定register action到Login组件
+
+
+	//action
+	function mapDispatchToProps(dispatch) {
+	    return (0, _redux.bindActionCreators)(RegisterActions, dispatch);
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
 /* 36 */
@@ -1821,6 +1855,8 @@
 
 	var _privateType = __webpack_require__(33);
 
+	var _httpType = __webpack_require__(11);
+
 	var _history = __webpack_require__(26);
 
 	var _history2 = _interopRequireDefault(_history);
@@ -1839,7 +1875,7 @@
 
 	//常量
 	//私有函数常量
-
+	//注册状态常量
 
 	//导航
 
@@ -1854,20 +1890,48 @@
 	    }
 
 	    _createClass(Login, [{
+	        key: 'componentWillUpdate',
+	        value: function componentWillUpdate(nextProps, nextState) {
+	            if (nextProps.login.logined) {
+	                _history2.default.replace({
+	                    pathname: '/index'
+	                });
+	            }
+	        }
+	    }, {
 	        key: '_onClick',
 	        value: function _onClick(e) {
 	            e.preventDefault();
-	            //alert('1111');
-	            var username = $('#register_username').val(),
-	                pass = $('#register_pass').val(),
-	                password = $('#register_password').val(),
-	                email = $('#register_email').val(),
-	                tel = $('#register_tel').val(),
-	                team = $('#register_team').val();
+
+	            var username = $('#register_username').val().trim(),
+	                pass = $('#register_pass').val().trim(),
+	                password = $('#register_password').val().trim(),
+	                email = $('#register_email').val().trim(),
+	                tel = $('#register_tel').val().trim(),
+	                team = $('#register_team').val().trim();
+
+	            //这里先暂时不检测
+	            if (username && pass && password && email && tel && team) {
+	                var user = {
+	                    username: username,
+	                    pass: pass,
+	                    password: password,
+	                    email: email,
+	                    tel: tel,
+	                    team: team
+	                };
+
+	                this.props.register_start(user);
+	            } else {
+	                alert('请填写完整!');
+	            }
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var register = this.props.register;
+
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'login-box' },
@@ -1893,13 +1957,22 @@
 	                        { className: 'login-box-msg' },
 	                        '账号注册'
 	                    ),
+	                    function () {
+	                        if (register.registerStatus === _httpType.user_exist) {
+	                            return _react2.default.createElement(
+	                                'div',
+	                                { className: 'alert alert-danger', role: 'alert' },
+	                                '用户名已经存在!'
+	                            );
+	                        }
+	                    }(),
 	                    _react2.default.createElement(
 	                        'form',
 	                        null,
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { name: 'author', type: 'text', className: 'form-control', placeholder: '账号' }),
+	                            _react2.default.createElement(_Input2.default, { id: 'register_username', name: 'author', type: 'text', className: 'form-control', placeholder: '账号' }),
 	                            _react2.default.createElement(
 	                                'span',
 	                                { className: 'form-control-feedback' },
@@ -1910,7 +1983,7 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { name: 'pass', type: 'password', className: 'form-control', placeholder: '密码' }),
+	                            _react2.default.createElement(_Input2.default, { id: 'register_pass', name: 'pass', type: 'password', className: 'form-control', placeholder: '密码' }),
 	                            _react2.default.createElement(
 	                                'span',
 	                                { className: 'form-control-feedback' },
@@ -1921,7 +1994,7 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { name: 'password', type: 'password', className: 'form-control', placeholder: '密码确认' }),
+	                            _react2.default.createElement(_Input2.default, { id: 'register_password', name: 'password', type: 'password', className: 'form-control', placeholder: '密码确认' }),
 	                            _react2.default.createElement(
 	                                'span',
 	                                { className: 'form-control-feedback' },
@@ -1932,7 +2005,7 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { name: 'email', type: 'text', className: 'form-control', placeholder: '邮箱' }),
+	                            _react2.default.createElement(_Input2.default, { id: 'register_email', name: 'email', type: 'email', className: 'form-control', placeholder: '邮箱' }),
 	                            _react2.default.createElement(
 	                                'span',
 	                                { className: 'form-control-feedback' },
@@ -1943,7 +2016,7 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { name: 'tel', type: 'text', className: 'form-control', placeholder: '电话' }),
+	                            _react2.default.createElement(_Input2.default, { id: 'register_tel', name: 'tel', type: 'text', className: 'form-control', placeholder: '电话' }),
 	                            _react2.default.createElement(
 	                                'span',
 	                                { className: 'form-control-feedback' },
@@ -1956,7 +2029,7 @@
 	                            { className: 'form-group has-feedback' },
 	                            _react2.default.createElement(
 	                                'select',
-	                                { name: 'team', className: 'form-control' },
+	                                { id: 'register_team', name: 'team', className: 'form-control' },
 	                                _react2.default.createElement(
 	                                    'option',
 	                                    { value: 'Web前端组' },
@@ -1973,7 +2046,7 @@
 	                                { className: 'col-xs-4' },
 	                                _react2.default.createElement(
 	                                    _Button2.default,
-	                                    { type: 'submit', id: 'submit', className: 'btn btn-primary btn-block btn-flat' },
+	                                    { type: 'submit', id: 'submit', className: 'btn btn-primary btn-block btn-flat', onClick: this._onClick.bind(this) },
 	                                    '注册'
 	                                )
 	                            )
@@ -1987,10 +2060,112 @@
 	    return Login;
 	}(_react.Component);
 
+	Login.propTypes = {
+	    register: _react.PropTypes.object.isRequired
+	};
 	exports.default = Login;
 
 /***/ },
 /* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.register_start = register_start;
+
+	var _actionType = __webpack_require__(22);
+
+	var _ajax = __webpack_require__(23);
+
+	var _ajax2 = _interopRequireDefault(_ajax);
+
+	var _httpType = __webpack_require__(11);
+
+	var _login = __webpack_require__(34);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * 准备开始注册
+	 * @param user -> 注册用户
+	 * @returns {Function}
+	 */
+	function register_start(user) {
+	    return function (dispatch, getState) {
+	        if (register_authen(getState())) {
+	            return dispatch(register_ajax(user)); //发起一个登录http请求
+	        } else {
+	            return Promise.resolve(); //告诉thunk无需等待,从而跳过dispatch,进入reducers?
+	        }
+	    };
+	}
+
+	/**
+	 * 判断是否正在注册
+	 * @param state
+	 * @returns {boolean}
+	 */
+
+	function register_authen(state) {
+	    return !state.register.registering;
+	}
+
+	/**
+	 * 发起注册的ajax请求
+	 * @param user
+	 */
+	function register_ajax(user) {
+	    return function (dispatch) {
+	        dispatch(register_request()); //挂起注册请求,防止重复请求
+	        return (0, _ajax2.default)().register(user).then(function (data) {
+	            return dispatch(register_process(user, data.status));
+	        }); //接受到数据后重新更新state
+	    };
+	}
+
+	/**
+	 * 挂起注册请求
+	 * @returns {{type: string}}
+	 */
+
+	function register_request() {
+	    return {
+	        type: _actionType.REGISTER_REQUEST
+	    };
+	}
+
+	/**
+	 * ajax数据接收处理
+	 * @param user
+	 * @param status
+	 * @returns {{type: *, user: {username: *}, status: *}}
+	 */
+	function register_process(user, status) {
+
+	    if (status === _httpType.user_exist) {
+	        //注册失败
+	        return register_recieve(status);
+	    } else {
+	        //注册成功
+	        return function (dispatch) {
+	            dispatch((0, _login.login_reveive)(user, status)); //登录state tree
+	            return dispatch(register_recieve(status));
+	        };
+	    }
+	}
+
+	function register_recieve(status) {
+	    return {
+	        type: _actionType.REGISTER_RECEIVE,
+	        status: status
+	    };
+	}
+
+/***/ },
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2002,15 +2177,15 @@
 
 	var _redux = __webpack_require__(17);
 
-	var _reduxThunk = __webpack_require__(38);
+	var _reduxThunk = __webpack_require__(39);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(39);
+	var _reduxLogger = __webpack_require__(40);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(40);
+	var _reducers = __webpack_require__(41);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -2030,19 +2205,19 @@
 	}
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-logger");
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2053,22 +2228,27 @@
 
 	var _redux = __webpack_require__(17);
 
-	var _login = __webpack_require__(41);
+	var _login = __webpack_require__(42);
 
 	var _login2 = _interopRequireDefault(_login);
 
+	var _register = __webpack_require__(43);
+
+	var _register2 = _interopRequireDefault(_register);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//基础库
-	var reducer = (0, _redux.combineReducers)({
-		login: _login2.default
-	});
-
 	//登录
+	var reducer = (0, _redux.combineReducers)({
+		login: _login2.default,
+		register: _register2.default
+	});
+	//注册
+	//基础库
 	exports.default = reducer;
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2084,20 +2264,17 @@
 	var _httpType = __webpack_require__(11);
 
 	var login_status = function login_status(state, action) {
-		//console.log('action:',action);
 		switch (action.status) {
 
 			case _httpType.user_no_exist:
-				//console.log('1');
 				return {
 					//logined:false,
 					loginStatus: _httpType.user_no_exist,
 					logining: false
-					//loginUser:{}	
+					//loginUser:{}
 				};
 
 			case _httpType.password_err:
-				//console.log('2');
 				return {
 					//logined:false,
 					loginStatus: _httpType.password_err,
@@ -2106,7 +2283,6 @@
 				};
 
 			case _httpType.success:
-				//console.log('3');
 				return {
 					logined: true,
 					loginStatus: _httpType.success,
@@ -2122,7 +2298,7 @@
 	var login = function login() {
 		var state = arguments.length <= 0 || arguments[0] === undefined ? {
 			logined: false,
-			loginStatus: _httpType.login_init, //登录状态
+			loginStatus: _httpType.init, //登录状态
 			logining: false, //有没有正在登录标志
 			loginUser: {}
 		} : arguments[0];
@@ -2145,7 +2321,7 @@
 				return _extends({}, state, {
 					logined: false,
 					loginUser: {},
-					loginStatus: _httpType.login_init,
+					loginStatus: _httpType.init,
 					logining: false
 				});
 
@@ -2155,6 +2331,50 @@
 	};
 
 	exports.default = login;
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _httpType = __webpack_require__(11);
+
+	var _actionType = __webpack_require__(22);
+
+	var register = function register() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
+	        registering: false, //正在注册
+	        registerStatus: _httpType.init //注册状态
+	    } : arguments[0];
+	    var action = arguments[1];
+
+
+	    switch (action.type) {
+	        case _actionType.REGISTER_REQUEST:
+	            return _extends({}, state, {
+
+	                registering: true
+	            });
+
+	        case _actionType.REGISTER_RECEIVE:
+	            return _extends({}, state, {
+	                registering: false,
+	                registerStatus: action.status
+	            });
+
+	        default:
+	            return state;
+	    }
+	};
+
+	exports.default = register;
 
 /***/ }
 /******/ ]);
