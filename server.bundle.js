@@ -261,7 +261,7 @@
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -283,12 +283,21 @@
 	 * @param next
 	 */
 	function loginAuthen(req, res, next) {
-	    var query = req.body;
-	    _user2.default.login(query).then(function (data) {
-	        res.send(data);
-	    }, function (data) {
-	        console.log(data);
-	    });
+	    //var query = req.body;
+	    //user.login(query).then(function (data) {
+	    //    res.send(data);
+	    //}, function (data) {
+	    //    console.log(data);
+	    //});
+
+	    if (req.body.author !== 'xxx') {
+	        res.json({ status: "user_no_exist" });
+	    } else if (req.body.password !== '1111') {
+	        res.json({ status: "password_err" });
+	    } else {
+	        req.session.user = req.body.author;
+	        res.json({ status: "success" });
+	    }
 	}
 
 	/**
@@ -784,7 +793,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(51);
+	var _store = __webpack_require__(52);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -847,20 +856,20 @@
 	    }
 
 	    //暂时这么设置,同步服务端和客户端
-	    //if(req.session.user) {
-	    //    var store = configureStore({
-	    //        login:{
-	    //            loginUser:{
-	    //                username:req.session.user
-	    //            },
-	    //            logined:true
-	    //        }
-	    //    });       //这里需要传入需要的state tree
-	    //
-	    //} else {
-	    //    var store = configureStore({});
-	    //}
+	    if (req.session.user) {
+	        var store = (0, _store2.default)({
+	            login: {
+	                loginUser: {
+	                    username: req.session.user
+	                },
+	                logined: true
+	            }
+	        }); //这里需要传入需要的state tree
+	    } else {
+	        var store = (0, _store2.default)({});
+	    }
 
+	    console.log('node  store:', store.getState()); //需要注意与客户端的store统一
 	    //const store = configureStore();       //这里需要传入需要的state tree
 
 	    (0, _reactRouter.match)({ routes: (0, _routes2.default)(), location: req.url }, function (err, redirect, props) {
@@ -871,22 +880,28 @@
 	            res.redirect(redirect.pathname + redirect.search);
 	        } else if (props) {
 
-	            Promise.all([getLoginStatus(), getArticleList()]).then(function () {
+	            //Promise.all([
+	            //    getLoginStatus(),
+	            //    getArticleList()
+	            //])
+	            //.then(() => {
+	            //
+	            //    let store = configureStore(req.session.stateTree);
+	            //    console.log('node  store:', store.getState());  //需要注意与客户端的store统一
 
-	                var store = (0, _store2.default)(req.session.stateTree);
-	                console.log('node  store:', store.getState()); //需要注意与客户端的store统一
 
+	            var appHtml = (0, _server.renderToString)(_react2.default.createElement(
+	                _reactRedux.Provider,
+	                { store: store },
+	                _react2.default.createElement(_reactRouter.RouterContext, props)
+	            ));
+	            res.render('index', {
+	                html: appHtml,
+	                serverState: JSON.stringify(store.getState())
+	            });
+	            //})
+	            //.catch();
 
-	                var appHtml = (0, _server.renderToString)(_react2.default.createElement(
-	                    _reactRedux.Provider,
-	                    { store: store },
-	                    _react2.default.createElement(_reactRouter.RouterContext, props)
-	                ));
-	                res.render('index', {
-	                    html: appHtml,
-	                    serverState: JSON.stringify(store.getState())
-	                });
-	            }).catch();
 	        } else {
 	            //路由匹配不到,这里这个提示页面暂时不做
 	            res.status(404).send('Not Found');
@@ -966,11 +981,11 @@
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _LoginContainer = __webpack_require__(43);
+	var _LoginContainer = __webpack_require__(44);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _RegisterContainer = __webpack_require__(48);
+	var _RegisterContainer = __webpack_require__(49);
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
@@ -1451,7 +1466,7 @@
 	                                                { className: 'dropdown user user-menu' },
 	                                                _react2.default.createElement(
 	                                                    'a',
-	                                                    { href: '', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
+	                                                    { className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
 	                                                    _react2.default.createElement('img', { src: '#', alt: 'User Image', className: 'user-image' }),
 	                                                    _react2.default.createElement(
 	                                                        'span',
@@ -1878,6 +1893,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	__webpack_require__(43);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1900,11 +1917,166 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
+	                { className: 'content-wrapper' },
 	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    '关于页'
+	                    'div',
+	                    { className: 'jumbotron masthead head head-response' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'container head-title' },
+	                        _react2.default.createElement(
+	                            'h1',
+	                            null,
+	                            'HIK FED'
+	                        ),
+	                        _react2.default.createElement(
+	                            'h2',
+	                            null,
+	                            'HIK FED (Hikvision The Front-End Development Community) 海康前端开发社区'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { id: 'actives', className: 'container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box head-response-first' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '我们是谁'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    'HIK FED是一个海康威视web前端开发社区，其中 FE 是 Front End 的缩写，D 是开发的意思:'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '我们的成员'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'ul',
+	                                    { className: 'users-list clearfix' },
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement('img', { className: 'member-img', src: '/images/default/avatar.jpg', alt: '' }),
+	                                        _react2.default.createElement(
+	                                            'a',
+	                                            { className: 'users-list-name', href: '#' },
+	                                            'liumeng'
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '我们的理念'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        'strong',
+	                                        null,
+	                                        'EmptyCup，'
+	                                    ),
+	                                    '不仅仅是需要保持谦逊，更多的是需要打开你的思维，发掘新的前端世界.'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '我们要做什么'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    '前端的世界一直在变化着，在各种熟悉的语言进化中迅速的化学反应。也许你和我们一样，对前端的理解也在不断刷新。'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    '不变的永远是变化，专业，无论什么时刻，我们用专业的态度，专业的技术，开发专业的产品，分享专业的知识。'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    '我们必须专业，必须严谨，必须乐于分享！为了保持与时代并行的脚步！'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '加入我们'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    '如果您对web前端有足够的热情，又乐于分享，请加入我们！'
+	                                )
+	                            )
+	                        )
+	                    )
 	                )
 	            );
 	        }
@@ -1917,6 +2089,12 @@
 
 /***/ },
 /* 43 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1929,11 +2107,11 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Login = __webpack_require__(44);
+	var _Login = __webpack_require__(45);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(47);
+	var _login = __webpack_require__(48);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -1964,7 +2142,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1981,7 +2159,7 @@
 
 	var _reactRouter = __webpack_require__(25);
 
-	var _Input = __webpack_require__(45);
+	var _Input = __webpack_require__(46);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
@@ -1989,7 +2167,7 @@
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(46);
+	var _privateType = __webpack_require__(47);
 
 	var _httpType = __webpack_require__(33);
 
@@ -2057,7 +2235,7 @@
 	                //console.log(username.value);
 	                //console.log(password.value);
 	                var user = {
-	                    auhtor: username.trim(),
+	                    author: username.trim(),
 	                    password: password.trim()
 	                };
 
@@ -2173,7 +2351,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2252,7 +2430,7 @@
 	exports.default = Input;
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2264,7 +2442,7 @@
 	};
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2381,7 +2559,7 @@
 	//}
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2394,11 +2572,11 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Register = __webpack_require__(49);
+	var _Register = __webpack_require__(50);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
-	var _register = __webpack_require__(50);
+	var _register = __webpack_require__(51);
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -2429,7 +2607,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2446,7 +2624,7 @@
 
 	var _reactRouter = __webpack_require__(25);
 
-	var _Input = __webpack_require__(45);
+	var _Input = __webpack_require__(46);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
@@ -2454,7 +2632,7 @@
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(46);
+	var _privateType = __webpack_require__(47);
 
 	var _httpType = __webpack_require__(33);
 
@@ -2666,7 +2844,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2684,7 +2862,7 @@
 
 	var _httpType = __webpack_require__(33);
 
-	var _login = __webpack_require__(47);
+	var _login = __webpack_require__(48);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2770,7 +2948,7 @@
 	}
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2782,15 +2960,15 @@
 
 	var _redux = __webpack_require__(27);
 
-	var _reduxThunk = __webpack_require__(52);
+	var _reduxThunk = __webpack_require__(53);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(53);
+	var _reduxLogger = __webpack_require__(54);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(54);
+	var _reducers = __webpack_require__(55);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -2810,19 +2988,19 @@
 	}
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-logger");
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2833,15 +3011,15 @@
 
 	var _redux = __webpack_require__(27);
 
-	var _login = __webpack_require__(55);
+	var _login = __webpack_require__(56);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(56);
+	var _register = __webpack_require__(57);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _article = __webpack_require__(57);
+	var _article = __webpack_require__(58);
 
 	var _article2 = _interopRequireDefault(_article);
 
@@ -2861,7 +3039,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2946,7 +3124,7 @@
 	exports.default = login;
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2990,7 +3168,7 @@
 	exports.default = register;
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports) {
 
 	"use strict";

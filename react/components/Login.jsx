@@ -50,7 +50,7 @@ export default class Login extends Component{
             //console.log(username.value);
             //console.log(password.value);
             let user = {
-                auhtor: username.trim(),
+                author: username.trim(),
                 password: password.trim()
             };
 

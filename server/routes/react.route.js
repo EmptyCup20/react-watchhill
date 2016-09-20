@@ -62,20 +62,22 @@ router.get('/*', (req, res,next) => {
 
 
     //暂时这么设置,同步服务端和客户端
-    //if(req.session.user) {
-    //    var store = configureStore({
-    //        login:{
-    //            loginUser:{
-    //                username:req.session.user
-    //            },
-    //            logined:true
-    //        }
-    //    });       //这里需要传入需要的state tree
-    //
-    //} else {
-    //    var store = configureStore({});
-    //}
+    if(req.session.user) {
+        var store = configureStore({
+            login:{
+                loginUser:{
+                    username:req.session.user
+                },
+                logined:true
+            }
+        });       //这里需要传入需要的state tree
 
+    } else {
+        var store = configureStore({});
+    }
+
+
+    console.log('node  store:', store.getState());  //需要注意与客户端的store统一
     //const store = configureStore();       //这里需要传入需要的state tree
 
     match({ routes:routes(), location: req.url }, (err, redirect, props) => {
@@ -86,14 +88,14 @@ router.get('/*', (req, res,next) => {
             res.redirect(redirect.pathname + redirect.search)
         } else if (props) {
 
-            Promise.all([
-                getLoginStatus(),
-                getArticleList()
-            ])
-            .then(() => {
-
-                let store = configureStore(req.session.stateTree);
-                console.log('node  store:', store.getState());  //需要注意与客户端的store统一
+            //Promise.all([
+            //    getLoginStatus(),
+            //    getArticleList()
+            //])
+            //.then(() => {
+            //
+            //    let store = configureStore(req.session.stateTree);
+            //    console.log('node  store:', store.getState());  //需要注意与客户端的store统一
 
 
                 const appHtml = renderToString(
@@ -105,8 +107,8 @@ router.get('/*', (req, res,next) => {
                     html:appHtml,
                     serverState:JSON.stringify(store.getState())
                 });
-            })
-            .catch();
+            //})
+            //.catch();
 
 
 

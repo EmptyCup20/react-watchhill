@@ -76,7 +76,7 @@ export default class Index extends Component{
                                                         <Link to="#">新增文章</Link>
                                                     </li>
                                                      <li className="dropdown user user-menu">
-                                                        <a href="" className="dropdown-togglt" data-toggle="dropdown" aria-expanded="false">
+                                                        <a className="dropdown-togglt" data-toggle="dropdown" aria-expanded="false">
                                                             <img src="#" alt="User Image" className="user-image" />
                                                             <span className="hidden-xs">{login.loginUser.username}</span>
                                                         </a>
