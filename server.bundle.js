@@ -112,7 +112,7 @@
 	app.use('/article', __webpack_require__(14));
 
 	//react服务器渲染路由
-	app.use('/', __webpack_require__(22));
+	app.use('/', __webpack_require__(21));
 
 	//传统的express捕捉异常用不到
 	// catch 404 and forward to error handler
@@ -659,8 +659,7 @@
 	module.exports = comment;
 
 /***/ },
-/* 21 */,
-/* 22 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -669,19 +668,19 @@
 
 	var _express2 = _interopRequireDefault(_express);
 
-	var _react = __webpack_require__(23);
+	var _react = __webpack_require__(22);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _server = __webpack_require__(24);
+	var _server = __webpack_require__(23);
 
-	var _reactRouter = __webpack_require__(25);
+	var _reactRouter = __webpack_require__(24);
 
-	var _reactRedux = __webpack_require__(26);
+	var _reactRedux = __webpack_require__(25);
 
-	var _redux = __webpack_require__(27);
+	var _redux = __webpack_require__(26);
 
-	var _routes = __webpack_require__(28);
+	var _routes = __webpack_require__(27);
 
 	var _routes2 = _interopRequireDefault(_routes);
 
@@ -748,37 +747,37 @@
 	module.exports = router;
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports) {
 
 	module.exports = require("react");
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-dom/server");
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-router");
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-redux");
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux");
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -787,29 +786,29 @@
 	    value: true
 	});
 
-	var _react = __webpack_require__(23);
+	var _react = __webpack_require__(22);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(25);
+	var _reactRouter = __webpack_require__(24);
 
-	var _App = __webpack_require__(29);
+	var _App = __webpack_require__(28);
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _IndexContainer = __webpack_require__(30);
+	var _IndexContainer = __webpack_require__(29);
 
 	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
 
-	var _HomeContainer = __webpack_require__(37);
+	var _HomeContainer = __webpack_require__(36);
 
 	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
 
-	var _Blog = __webpack_require__(39);
+	var _Blog = __webpack_require__(38);
 
 	var _Blog2 = _interopRequireDefault(_Blog);
 
-	var _About = __webpack_require__(40);
+	var _About = __webpack_require__(39);
 
 	var _About2 = _interopRequireDefault(_About);
 
@@ -853,7 +852,7 @@
 	exports.default = routes;
 
 /***/ },
-/* 29 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -864,9 +863,9 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _reactRouter = __webpack_require__(25);
+	var _reactRouter = __webpack_require__(24);
 
-	var _react = __webpack_require__(23);
+	var _react = __webpack_require__(22);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -939,7 +938,7 @@
 	exports.default = App;
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -948,15 +947,15 @@
 	    value: true
 	});
 
-	var _redux = __webpack_require__(27);
+	var _redux = __webpack_require__(26);
 
-	var _reactRedux = __webpack_require__(26);
+	var _reactRedux = __webpack_require__(25);
 
-	var _logout = __webpack_require__(31);
+	var _logout = __webpack_require__(30);
 
 	var LogoutActions = _interopRequireWildcard(_logout);
 
-	var _Index = __webpack_require__(34);
+	var _Index = __webpack_require__(33);
 
 	var _Index2 = _interopRequireDefault(_Index);
 
@@ -983,7 +982,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Index2.default);
 
 /***/ },
-/* 31 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -993,11 +992,11 @@
 	});
 	exports.logout = logout;
 
-	var _actionType = __webpack_require__(32);
+	var _actionType = __webpack_require__(31);
 
 	var _httpType = __webpack_require__(13);
 
-	var _ajax = __webpack_require__(33);
+	var _ajax = __webpack_require__(32);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -1028,7 +1027,7 @@
 	}
 
 /***/ },
-/* 32 */
+/* 31 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1050,7 +1049,7 @@
 	};
 
 /***/ },
-/* 33 */
+/* 32 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1106,7 +1105,7 @@
 	exports.default = ajax;
 
 /***/ },
-/* 34 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1117,17 +1116,17 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _reactRouter = __webpack_require__(25);
+	var _reactRouter = __webpack_require__(24);
 
-	var _react = __webpack_require__(23);
+	var _react = __webpack_require__(22);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Button = __webpack_require__(35);
+	var _Button = __webpack_require__(34);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _history = __webpack_require__(36);
+	var _history = __webpack_require__(35);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -1372,7 +1371,7 @@
 	exports.default = Index;
 
 /***/ },
-/* 35 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1383,7 +1382,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(23);
+	var _react = __webpack_require__(22);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1434,6 +1433,20 @@
 	exports.default = Button;
 
 /***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactRouter = __webpack_require__(24);
+
+	exports.default = _reactRouter.browserHistory;
+
+/***/ },
 /* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1443,25 +1456,11 @@
 	  value: true
 	});
 
-	var _reactRouter = __webpack_require__(25);
+	var _redux = __webpack_require__(26);
 
-	exports.default = _reactRouter.browserHistory;
+	var _reactRedux = __webpack_require__(25);
 
-/***/ },
-/* 37 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _redux = __webpack_require__(27);
-
-	var _reactRedux = __webpack_require__(26);
-
-	var _Home = __webpack_require__(38);
+	var _Home = __webpack_require__(37);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
@@ -1486,7 +1485,7 @@
 	//基础库
 
 /***/ },
-/* 38 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1497,7 +1496,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(23);
+	var _react = __webpack_require__(22);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1570,7 +1569,7 @@
 	exports.default = Home;
 
 /***/ },
-/* 39 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1581,7 +1580,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(23);
+	var _react = __webpack_require__(22);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1623,7 +1622,7 @@
 	exports.default = Blog;
 
 /***/ },
-/* 40 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1634,9 +1633,11 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(23);
+	var _react = __webpack_require__(22);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	__webpack_require__(40);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1660,11 +1661,166 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
+	                { className: 'content-wrapper' },
 	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    '关于页'
+	                    'div',
+	                    { className: 'jumbotron masthead head head-response' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'container head-title' },
+	                        _react2.default.createElement(
+	                            'h1',
+	                            null,
+	                            'HIK FED'
+	                        ),
+	                        _react2.default.createElement(
+	                            'h2',
+	                            null,
+	                            'HIK FED (Hikvision The Front-End Development Community) 海康前端开发社区'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { id: 'actives', className: 'container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box head-response-first' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '我们是谁'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    'HIK FED是一个海康威视web前端开发社区，其中 FE 是 Front End 的缩写，D 是开发的意思:'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '我们的成员'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'ul',
+	                                    { className: 'users-list clearfix' },
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement('img', { className: 'member-img', src: '/images/default/avatar.jpg', alt: '' }),
+	                                        _react2.default.createElement(
+	                                            'a',
+	                                            { className: 'users-list-name', href: '#' },
+	                                            'liumeng'
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '我们的理念'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        'strong',
+	                                        null,
+	                                        'EmptyCup，'
+	                                    ),
+	                                    '不仅仅是需要保持谦逊，更多的是需要打开你的思维，发掘新的前端世界.'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '我们要做什么'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    '前端的世界一直在变化着，在各种熟悉的语言进化中迅速的化学反应。也许你和我们一样，对前端的理解也在不断刷新。'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    '不变的永远是变化，专业，无论什么时刻，我们用专业的态度，专业的技术，开发专业的产品，分享专业的知识。'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    '我们必须专业，必须严谨，必须乐于分享！为了保持与时代并行的脚步！'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '加入我们'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    '如果您对web前端有足够的热情，又乐于分享，请加入我们！'
+	                                )
+	                            )
+	                        )
+	                    )
 	                )
 	            );
 	        }
@@ -1676,6 +1832,12 @@
 	exports.default = About;
 
 /***/ },
+/* 40 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
 /* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1685,9 +1847,9 @@
 	    value: true
 	});
 
-	var _redux = __webpack_require__(27);
+	var _redux = __webpack_require__(26);
 
-	var _reactRedux = __webpack_require__(26);
+	var _reactRedux = __webpack_require__(25);
 
 	var _Login = __webpack_require__(42);
 
@@ -1735,17 +1897,17 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(23);
+	var _react = __webpack_require__(22);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(25);
+	var _reactRouter = __webpack_require__(24);
 
 	var _Input = __webpack_require__(43);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(35);
+	var _Button = __webpack_require__(34);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
@@ -1753,7 +1915,7 @@
 
 	var _httpType = __webpack_require__(13);
 
-	var _history = __webpack_require__(36);
+	var _history = __webpack_require__(35);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -1944,7 +2106,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(23);
+	var _react = __webpack_require__(22);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -2035,9 +2197,9 @@
 	exports.login_start = login_start;
 	exports.login_reveive = login_reveive;
 
-	var _actionType = __webpack_require__(32);
+	var _actionType = __webpack_require__(31);
 
-	var _ajax = __webpack_require__(33);
+	var _ajax = __webpack_require__(32);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -2150,9 +2312,9 @@
 	    value: true
 	});
 
-	var _redux = __webpack_require__(27);
+	var _redux = __webpack_require__(26);
 
-	var _reactRedux = __webpack_require__(26);
+	var _reactRedux = __webpack_require__(25);
 
 	var _Register = __webpack_require__(47);
 
@@ -2200,17 +2362,17 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(23);
+	var _react = __webpack_require__(22);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(25);
+	var _reactRouter = __webpack_require__(24);
 
 	var _Input = __webpack_require__(43);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(35);
+	var _Button = __webpack_require__(34);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
@@ -2218,7 +2380,7 @@
 
 	var _httpType = __webpack_require__(13);
 
-	var _history = __webpack_require__(36);
+	var _history = __webpack_require__(35);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -2437,9 +2599,9 @@
 	});
 	exports.register_start = register_start;
 
-	var _actionType = __webpack_require__(32);
+	var _actionType = __webpack_require__(31);
 
-	var _ajax = __webpack_require__(33);
+	var _ajax = __webpack_require__(32);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -2541,7 +2703,7 @@
 	});
 	exports.default = configureStore;
 
-	var _redux = __webpack_require__(27);
+	var _redux = __webpack_require__(26);
 
 	var _reduxThunk = __webpack_require__(50);
 
@@ -2592,7 +2754,7 @@
 		value: true
 	});
 
-	var _redux = __webpack_require__(27);
+	var _redux = __webpack_require__(26);
 
 	var _login = __webpack_require__(53);
 
@@ -2625,7 +2787,7 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _actionType = __webpack_require__(32);
+	var _actionType = __webpack_require__(31);
 
 	var _httpType = __webpack_require__(13);
 
@@ -2712,7 +2874,7 @@
 
 	var _httpType = __webpack_require__(13);
 
-	var _actionType = __webpack_require__(32);
+	var _actionType = __webpack_require__(31);
 
 	var register = function register() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
