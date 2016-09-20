@@ -14,11 +14,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _routes = __webpack_require__(94);
+	var _routes = __webpack_require__(89);
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(117);
+	var _store = __webpack_require__(113);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -2857,6 +2857,8 @@ webpackJsonp([0,1],[
 
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 
+	var _Actions = __webpack_require__(16);
+
 	var _computeChangedRoutes2 = __webpack_require__(34);
 
 	var _computeChangedRoutes3 = _interopRequireDefault(_computeChangedRoutes2);
@@ -2903,6 +2905,10 @@ webpackJsonp([0,1],[
 	    }
 
 	    return (0, _isActive3.default)(location, indexOnly, state.location, state.routes, state.params);
+	  }
+
+	  function createLocationFromRedirectInfo(location) {
+	    return history.createLocation(location, _Actions.REPLACE);
 	  }
 
 	  var partialNextState = void 0;
@@ -2962,7 +2968,7 @@ webpackJsonp([0,1],[
 	    }
 
 	    function handleErrorOrRedirect(error, redirectInfo) {
-	      if (error) callback(error);else callback(null, redirectInfo);
+	      if (error) callback(error);else callback(null, createLocationFromRedirectInfo(redirectInfo));
 	    }
 	  }
 
@@ -3125,7 +3131,7 @@ webpackJsonp([0,1],[
 	          if (error) {
 	            listener(error);
 	          } else if (redirectLocation) {
-	            history.replace(redirectLocation);
+	            history.transitionTo(redirectLocation);
 	          } else if (nextState) {
 	            listener(null, nextState);
 	          } else {
@@ -4293,7 +4299,7 @@ webpackJsonp([0,1],[
 	  },
 
 	  propTypes: {
-	    to: oneOfType([string, object]),
+	    to: oneOfType([string, object]).isRequired,
 	    query: object,
 	    hash: string,
 	    state: object,
@@ -4354,11 +4360,6 @@ webpackJsonp([0,1],[
 
 
 	    if (router) {
-	      // If user does not specify a `to` prop, return an empty anchor tag.
-	      if (to == null) {
-	        return _react2.default.createElement('a', props);
-	      }
-
 	      var location = createLocationDescriptor(to, { query: query, hash: hash, state: state });
 	      props.href = router.createHref(location);
 
@@ -5113,8 +5114,6 @@ webpackJsonp([0,1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _Actions = __webpack_require__(16);
-
 	var _invariant = __webpack_require__(12);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
@@ -5173,7 +5172,7 @@ webpackJsonp([0,1],[
 	  history = (0, _RouterUtils.createRoutingHistory)(history, transitionManager);
 
 	  transitionManager.match(location, function (error, redirectLocation, nextState) {
-	    callback(error, redirectLocation && router.createLocation(redirectLocation, _Actions.REPLACE), nextState && _extends({}, nextState, {
+	    callback(error, redirectLocation, nextState && _extends({}, nextState, {
 	      history: history,
 	      router: router,
 	      matchContext: { history: history, transitionManager: transitionManager, router: router }
@@ -6076,15 +6075,15 @@ webpackJsonp([0,1],[
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _isPlainObject = __webpack_require__(88);
+	var _isPlainObject = __webpack_require__(76);
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _hoistNonReactStatics = __webpack_require__(92);
+	var _hoistNonReactStatics = __webpack_require__(47);
 
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-	var _invariant = __webpack_require__(93);
+	var _invariant = __webpack_require__(12);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -6507,23 +6506,23 @@ webpackJsonp([0,1],[
 
 	var _createStore2 = _interopRequireDefault(_createStore);
 
-	var _combineReducers = __webpack_require__(83);
+	var _combineReducers = __webpack_require__(84);
 
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 
-	var _bindActionCreators = __webpack_require__(85);
+	var _bindActionCreators = __webpack_require__(86);
 
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 
-	var _applyMiddleware = __webpack_require__(86);
+	var _applyMiddleware = __webpack_require__(87);
 
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 
-	var _compose = __webpack_require__(87);
+	var _compose = __webpack_require__(88);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
-	var _warning = __webpack_require__(84);
+	var _warning = __webpack_require__(85);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -6560,7 +6559,7 @@ webpackJsonp([0,1],[
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _symbolObservable = __webpack_require__(80);
+	var _symbolObservable = __webpack_require__(81);
 
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 
@@ -6817,7 +6816,8 @@ webpackJsonp([0,1],[
 /***/ function(module, exports, __webpack_require__) {
 
 	var getPrototype = __webpack_require__(77),
-	    isObjectLike = __webpack_require__(79);
+	    isHostObject = __webpack_require__(79),
+	    isObjectLike = __webpack_require__(80);
 
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -6871,7 +6871,8 @@ webpackJsonp([0,1],[
 	 * // => true
 	 */
 	function isPlainObject(value) {
-	  if (!isObjectLike(value) || objectToString.call(value) != objectTag) {
+	  if (!isObjectLike(value) ||
+	      objectToString.call(value) != objectTag || isHostObject(value)) {
 	    return false;
 	  }
 	  var proto = getPrototype(value);
@@ -6924,6 +6925,32 @@ webpackJsonp([0,1],[
 /***/ function(module, exports) {
 
 	/**
+	 * Checks if `value` is a host object in IE < 9.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+	 */
+	function isHostObject(value) {
+	  // Many host objects are `Object` objects that can coerce to strings
+	  // despite having improperly defined `toString` methods.
+	  var result = false;
+	  if (value != null && typeof value.toString != 'function') {
+	    try {
+	      result = !!(value + '');
+	    } catch (e) {}
+	  }
+	  return result;
+	}
+
+	module.exports = isHostObject;
+
+
+/***/ },
+/* 80 */
+/***/ function(module, exports) {
+
+	/**
 	 * Checks if `value` is object-like. A value is object-like if it's not `null`
 	 * and has a `typeof` result of "object".
 	 *
@@ -6948,21 +6975,21 @@ webpackJsonp([0,1],[
 	 * // => false
 	 */
 	function isObjectLike(value) {
-	  return value != null && typeof value == 'object';
+	  return !!value && typeof value == 'object';
 	}
 
 	module.exports = isObjectLike;
 
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(81);
+	module.exports = __webpack_require__(82);
 
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -6971,7 +6998,7 @@ webpackJsonp([0,1],[
 		value: true
 	});
 
-	var _ponyfill = __webpack_require__(82);
+	var _ponyfill = __webpack_require__(83);
 
 	var _ponyfill2 = _interopRequireDefault(_ponyfill);
 
@@ -6990,7 +7017,7 @@ webpackJsonp([0,1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7018,7 +7045,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -7032,7 +7059,7 @@ webpackJsonp([0,1],[
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _warning = __webpack_require__(84);
+	var _warning = __webpack_require__(85);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -7166,7 +7193,7 @@ webpackJsonp([0,1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 84 */
+/* 85 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7196,7 +7223,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 85 */
+/* 86 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7252,7 +7279,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 86 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7263,7 +7290,7 @@ webpackJsonp([0,1],[
 
 	exports['default'] = applyMiddleware;
 
-	var _compose = __webpack_require__(87);
+	var _compose = __webpack_require__(88);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
@@ -7315,7 +7342,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 87 */
+/* 88 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7358,263 +7385,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 88 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var getPrototype = __webpack_require__(89),
-	    isObjectLike = __webpack_require__(91);
-
-	/** `Object#toString` result references. */
-	var objectTag = '[object Object]';
-
-	/** Used for built-in method references. */
-	var funcProto = Function.prototype,
-	    objectProto = Object.prototype;
-
-	/** Used to resolve the decompiled source of functions. */
-	var funcToString = funcProto.toString;
-
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-
-	/** Used to infer the `Object` constructor. */
-	var objectCtorString = funcToString.call(Object);
-
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objectToString = objectProto.toString;
-
-	/**
-	 * Checks if `value` is a plain object, that is, an object created by the
-	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.8.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
-	 * @example
-	 *
-	 * function Foo() {
-	 *   this.a = 1;
-	 * }
-	 *
-	 * _.isPlainObject(new Foo);
-	 * // => false
-	 *
-	 * _.isPlainObject([1, 2, 3]);
-	 * // => false
-	 *
-	 * _.isPlainObject({ 'x': 0, 'y': 0 });
-	 * // => true
-	 *
-	 * _.isPlainObject(Object.create(null));
-	 * // => true
-	 */
-	function isPlainObject(value) {
-	  if (!isObjectLike(value) || objectToString.call(value) != objectTag) {
-	    return false;
-	  }
-	  var proto = getPrototype(value);
-	  if (proto === null) {
-	    return true;
-	  }
-	  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-	  return (typeof Ctor == 'function' &&
-	    Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString);
-	}
-
-	module.exports = isPlainObject;
-
-
-/***/ },
 /* 89 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var overArg = __webpack_require__(90);
-
-	/** Built-in value references. */
-	var getPrototype = overArg(Object.getPrototypeOf, Object);
-
-	module.exports = getPrototype;
-
-
-/***/ },
-/* 90 */
-/***/ function(module, exports) {
-
-	/**
-	 * Creates a unary function that invokes `func` with its argument transformed.
-	 *
-	 * @private
-	 * @param {Function} func The function to wrap.
-	 * @param {Function} transform The argument transform.
-	 * @returns {Function} Returns the new function.
-	 */
-	function overArg(func, transform) {
-	  return function(arg) {
-	    return func(transform(arg));
-	  };
-	}
-
-	module.exports = overArg;
-
-
-/***/ },
-/* 91 */
-/***/ function(module, exports) {
-
-	/**
-	 * Checks if `value` is object-like. A value is object-like if it's not `null`
-	 * and has a `typeof` result of "object".
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-	 * @example
-	 *
-	 * _.isObjectLike({});
-	 * // => true
-	 *
-	 * _.isObjectLike([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isObjectLike(_.noop);
-	 * // => false
-	 *
-	 * _.isObjectLike(null);
-	 * // => false
-	 */
-	function isObjectLike(value) {
-	  return value != null && typeof value == 'object';
-	}
-
-	module.exports = isObjectLike;
-
-
-/***/ },
-/* 92 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2015, Yahoo! Inc.
-	 * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
-	 */
-	'use strict';
-
-	var REACT_STATICS = {
-	    childContextTypes: true,
-	    contextTypes: true,
-	    defaultProps: true,
-	    displayName: true,
-	    getDefaultProps: true,
-	    mixins: true,
-	    propTypes: true,
-	    type: true
-	};
-
-	var KNOWN_STATICS = {
-	    name: true,
-	    length: true,
-	    prototype: true,
-	    caller: true,
-	    arguments: true,
-	    arity: true
-	};
-
-	var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
-
-	module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
-	    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
-	        var keys = Object.getOwnPropertyNames(sourceComponent);
-
-	        /* istanbul ignore else */
-	        if (isGetOwnPropertySymbolsAvailable) {
-	            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
-	        }
-
-	        for (var i = 0; i < keys.length; ++i) {
-	            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
-	                try {
-	                    targetComponent[keys[i]] = sourceComponent[keys[i]];
-	                } catch (error) {
-
-	                }
-	            }
-	        }
-	    }
-
-	    return targetComponent;
-	};
-
-
-/***/ },
-/* 93 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-
-	'use strict';
-
-	/**
-	 * Use invariant() to assert state which your program assumes to be true.
-	 *
-	 * Provide sprintf-style format (only %s is supported) and arguments
-	 * to provide information about what broke and what you were
-	 * expecting.
-	 *
-	 * The invariant message will be stripped in production, but the invariant
-	 * will remain to ensure logic does not differ in production.
-	 */
-
-	var invariant = function(condition, format, a, b, c, d, e, f) {
-	  if (process.env.NODE_ENV !== 'production') {
-	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
-	    }
-	  }
-
-	  if (!condition) {
-	    var error;
-	    if (format === undefined) {
-	      error = new Error(
-	        'Minified exception occurred; use the non-minified dev environment ' +
-	        'for the full error message and additional helpful warnings.'
-	      );
-	    } else {
-	      var args = [a, b, c, d, e, f];
-	      var argIndex = 0;
-	      error = new Error(
-	        format.replace(/%s/g, function() { return args[argIndex++]; })
-	      );
-	      error.name = 'Invariant Violation';
-	    }
-
-	    error.framesToPop = 1; // we don't care about invariant's own frame
-	    throw error;
-	  }
-	};
-
-	module.exports = invariant;
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
-
-/***/ },
-/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7629,36 +7400,45 @@ webpackJsonp([0,1],[
 
 	var _reactRouter = __webpack_require__(3);
 
-	var _App = __webpack_require__(95);
+	var _App = __webpack_require__(90);
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _IndexContainer = __webpack_require__(96);
+	var _IndexContainer = __webpack_require__(91);
 
 	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
 
-	var _HomeContainer = __webpack_require__(104);
+	var _HomeContainer = __webpack_require__(99);
 
 	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
 
-	var _Blog = __webpack_require__(106);
+	var _Web = __webpack_require__(101);
 
-	var _Blog2 = _interopRequireDefault(_Blog);
+	var _Web2 = _interopRequireDefault(_Web);
 
-	var _About = __webpack_require__(107);
+	var _Node = __webpack_require__(102);
+
+	var _Node2 = _interopRequireDefault(_Node);
+
+	var _About = __webpack_require__(103);
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _LoginContainer = __webpack_require__(109);
+	var _LoginContainer = __webpack_require__(105);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _RegisterContainer = __webpack_require__(114);
+	var _RegisterContainer = __webpack_require__(110);
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//import Index from '../containers/Index';
+
+
+	//容器组件
+	//基础库
 	var routes = function routes(state) {
 
 	    //进入之前判断是否已经登录
@@ -7674,22 +7454,19 @@ webpackJsonp([0,1],[
 	            _reactRouter.Route,
 	            { path: '/index', component: _IndexContainer2.default },
 	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _HomeContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/blog', component: _Blog2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/web', component: _Web2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/node', component: _Node2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default })
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: isLogined, component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _RegisterContainer2.default })
 	    );
 	};
-	//import Index from '../containers/Index';
 
-
-	//容器组件
-	//基础库
 	exports.default = routes;
 
 /***/ },
-/* 95 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7775,7 +7552,7 @@ webpackJsonp([0,1],[
 	exports.default = App;
 
 /***/ },
-/* 96 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7788,11 +7565,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _logout = __webpack_require__(97);
+	var _logout = __webpack_require__(92);
 
 	var LogoutActions = _interopRequireWildcard(_logout);
 
-	var _Index = __webpack_require__(101);
+	var _Index = __webpack_require__(96);
 
 	var _Index2 = _interopRequireDefault(_Index);
 
@@ -7819,7 +7596,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Index2.default);
 
 /***/ },
-/* 97 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7829,11 +7606,11 @@ webpackJsonp([0,1],[
 	});
 	exports.logout = logout;
 
-	var _actionType = __webpack_require__(98);
+	var _actionType = __webpack_require__(93);
 
-	var _httpType = __webpack_require__(99);
+	var _httpType = __webpack_require__(94);
 
-	var _ajax = __webpack_require__(100);
+	var _ajax = __webpack_require__(95);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -7864,7 +7641,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 98 */
+/* 93 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7886,7 +7663,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-/* 99 */
+/* 94 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7909,7 +7686,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-/* 100 */
+/* 95 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7965,7 +7742,7 @@ webpackJsonp([0,1],[
 	exports.default = ajax;
 
 /***/ },
-/* 101 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7982,11 +7759,11 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Button = __webpack_require__(102);
+	var _Button = __webpack_require__(97);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _history = __webpack_require__(103);
+	var _history = __webpack_require__(98);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -8090,8 +7867,17 @@ webpackJsonp([0,1],[
 	                                        null,
 	                                        _react2.default.createElement(
 	                                            _reactRouter.Link,
-	                                            { to: '/blog' },
-	                                            '博客'
+	                                            { to: '/web' },
+	                                            'web前端'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            _reactRouter.Link,
+	                                            { to: '/node' },
+	                                            'Nodejs'
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
@@ -8123,7 +7909,7 @@ webpackJsonp([0,1],[
 	                                                { className: 'dropdown user user-menu' },
 	                                                _react2.default.createElement(
 	                                                    'a',
-	                                                    { href: '', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
+	                                                    { className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
 	                                                    _react2.default.createElement('img', { src: '#', alt: 'User Image', className: 'user-image' }),
 	                                                    _react2.default.createElement(
 	                                                        'span',
@@ -8231,7 +8017,7 @@ webpackJsonp([0,1],[
 	exports.default = Index;
 
 /***/ },
-/* 102 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8293,7 +8079,7 @@ webpackJsonp([0,1],[
 	exports.default = Button;
 
 /***/ },
-/* 103 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8307,7 +8093,7 @@ webpackJsonp([0,1],[
 	exports.default = _reactRouter.browserHistory;
 
 /***/ },
-/* 104 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8320,7 +8106,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Home = __webpack_require__(105);
+	var _Home = __webpack_require__(100);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
@@ -8345,7 +8131,7 @@ webpackJsonp([0,1],[
 	//基础库
 
 /***/ },
-/* 105 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8429,7 +8215,7 @@ webpackJsonp([0,1],[
 	exports.default = Home;
 
 /***/ },
-/* 106 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8452,16 +8238,16 @@ webpackJsonp([0,1],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Blog = function (_Component) {
-	    _inherits(Blog, _Component);
+	var Web = function (_Component) {
+	    _inherits(Web, _Component);
 
-	    function Blog() {
-	        _classCallCheck(this, Blog);
+	    function Web() {
+	        _classCallCheck(this, Web);
 
-	        return _possibleConstructorReturn(this, (Blog.__proto__ || Object.getPrototypeOf(Blog)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (Web.__proto__ || Object.getPrototypeOf(Web)).apply(this, arguments));
 	    }
 
-	    _createClass(Blog, [{
+	    _createClass(Web, [{
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -8470,19 +8256,19 @@ webpackJsonp([0,1],[
 	                _react2.default.createElement(
 	                    'h1',
 	                    null,
-	                    '博客页'
+	                    '前端文章'
 	                )
 	            );
 	        }
 	    }]);
 
-	    return Blog;
+	    return Web;
 	}(_react.Component);
 
-	exports.default = Blog;
+	exports.default = Web;
 
 /***/ },
-/* 107 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8497,7 +8283,60 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(108);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Nodejs = function (_Component) {
+	    _inherits(Nodejs, _Component);
+
+	    function Nodejs() {
+	        _classCallCheck(this, Nodejs);
+
+	        return _possibleConstructorReturn(this, (Nodejs.__proto__ || Object.getPrototypeOf(Nodejs)).apply(this, arguments));
+	    }
+
+	    _createClass(Nodejs, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'Nodejs文章'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Nodejs;
+	}(_react.Component);
+
+	exports.default = Nodejs;
+
+/***/ },
+/* 103 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	__webpack_require__(104);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8692,13 +8531,13 @@ webpackJsonp([0,1],[
 	exports.default = About;
 
 /***/ },
-/* 108 */
+/* 104 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 109 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8711,11 +8550,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Login = __webpack_require__(110);
+	var _Login = __webpack_require__(106);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(113);
+	var _login = __webpack_require__(109);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -8746,7 +8585,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 110 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8763,19 +8602,19 @@ webpackJsonp([0,1],[
 
 	var _reactRouter = __webpack_require__(3);
 
-	var _Input = __webpack_require__(111);
+	var _Input = __webpack_require__(107);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(102);
+	var _Button = __webpack_require__(97);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(112);
+	var _privateType = __webpack_require__(108);
 
-	var _httpType = __webpack_require__(99);
+	var _httpType = __webpack_require__(94);
 
-	var _history = __webpack_require__(103);
+	var _history = __webpack_require__(98);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -8839,7 +8678,7 @@ webpackJsonp([0,1],[
 	                //console.log(username.value);
 	                //console.log(password.value);
 	                var user = {
-	                    username: username.trim(),
+	                    author: username.trim(),
 	                    password: password.trim()
 	                };
 
@@ -8906,7 +8745,7 @@ webpackJsonp([0,1],[
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { id: 'login_username', className: 'form-control', placeholder: '账号' }),
+	                            _react2.default.createElement(_Input2.default, { id: 'login_username', type: 'text', className: 'form-control', placeholder: '账号' }),
 	                            _react2.default.createElement(
 	                                'span',
 	                                { className: 'form-control-feedback' },
@@ -8955,7 +8794,7 @@ webpackJsonp([0,1],[
 	exports.default = Login;
 
 /***/ },
-/* 111 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9034,7 +8873,7 @@ webpackJsonp([0,1],[
 	exports.default = Input;
 
 /***/ },
-/* 112 */
+/* 108 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9046,7 +8885,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-/* 113 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9057,9 +8896,9 @@ webpackJsonp([0,1],[
 	exports.login_start = login_start;
 	exports.login_reveive = login_reveive;
 
-	var _actionType = __webpack_require__(98);
+	var _actionType = __webpack_require__(93);
 
-	var _ajax = __webpack_require__(100);
+	var _ajax = __webpack_require__(95);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -9163,7 +9002,7 @@ webpackJsonp([0,1],[
 	//}
 
 /***/ },
-/* 114 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9176,11 +9015,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Register = __webpack_require__(115);
+	var _Register = __webpack_require__(111);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
-	var _register = __webpack_require__(116);
+	var _register = __webpack_require__(112);
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -9211,7 +9050,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
-/* 115 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9228,19 +9067,19 @@ webpackJsonp([0,1],[
 
 	var _reactRouter = __webpack_require__(3);
 
-	var _Input = __webpack_require__(111);
+	var _Input = __webpack_require__(107);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(102);
+	var _Button = __webpack_require__(97);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(112);
+	var _privateType = __webpack_require__(108);
 
-	var _httpType = __webpack_require__(99);
+	var _httpType = __webpack_require__(94);
 
-	var _history = __webpack_require__(103);
+	var _history = __webpack_require__(98);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -9294,10 +9133,9 @@ webpackJsonp([0,1],[
 	                team = $('#register_team').val().trim();
 
 	            //这里先暂时不检测
-	            if (username && pass && password && email && tel && team) {
+	            if (username && password && email && tel && team) {
 	                var user = {
-	                    username: username,
-	                    pass: pass,
+	                    author: username,
 	                    password: password,
 	                    email: email,
 	                    tel: tel,
@@ -9449,7 +9287,7 @@ webpackJsonp([0,1],[
 	exports.default = Login;
 
 /***/ },
-/* 116 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9459,15 +9297,15 @@ webpackJsonp([0,1],[
 	});
 	exports.register_start = register_start;
 
-	var _actionType = __webpack_require__(98);
+	var _actionType = __webpack_require__(93);
 
-	var _ajax = __webpack_require__(100);
+	var _ajax = __webpack_require__(95);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
-	var _httpType = __webpack_require__(99);
+	var _httpType = __webpack_require__(94);
 
-	var _login = __webpack_require__(113);
+	var _login = __webpack_require__(109);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9553,7 +9391,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 117 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9565,15 +9403,15 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
-	var _reduxThunk = __webpack_require__(118);
+	var _reduxThunk = __webpack_require__(114);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(119);
+	var _reduxLogger = __webpack_require__(115);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(120);
+	var _reducers = __webpack_require__(116);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -9593,7 +9431,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 118 */
+/* 114 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9621,7 +9459,7 @@ webpackJsonp([0,1],[
 	exports['default'] = thunk;
 
 /***/ },
-/* 119 */
+/* 115 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9854,7 +9692,7 @@ webpackJsonp([0,1],[
 	module.exports = createLogger;
 
 /***/ },
-/* 120 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9865,27 +9703,35 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
-	var _login = __webpack_require__(121);
+	var _login = __webpack_require__(117);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(122);
+	var _register = __webpack_require__(118);
 
 	var _register2 = _interopRequireDefault(_register);
 
+	var _article = __webpack_require__(119);
+
+	var _article2 = _interopRequireDefault(_article);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//登录
-	var reducer = (0, _redux.combineReducers)({
-		login: _login2.default,
-		register: _register2.default
-	});
 	//注册
 	//基础库
+	var reducer = (0, _redux.combineReducers)({
+		login: _login2.default,
+		register: _register2.default,
+		article: _article2.default
+	});
+	//文章
+
+
+	//登录
 	exports.default = reducer;
 
 /***/ },
-/* 121 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9896,9 +9742,9 @@ webpackJsonp([0,1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _actionType = __webpack_require__(98);
+	var _actionType = __webpack_require__(93);
 
-	var _httpType = __webpack_require__(99);
+	var _httpType = __webpack_require__(94);
 
 	var login_status = function login_status(state, action) {
 		switch (action.status) {
@@ -9970,7 +9816,7 @@ webpackJsonp([0,1],[
 	exports.default = login;
 
 /***/ },
-/* 122 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9981,9 +9827,9 @@ webpackJsonp([0,1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _httpType = __webpack_require__(99);
+	var _httpType = __webpack_require__(94);
 
-	var _actionType = __webpack_require__(98);
+	var _actionType = __webpack_require__(93);
 
 	var register = function register() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
@@ -10012,6 +9858,31 @@ webpackJsonp([0,1],[
 	};
 
 	exports.default = register;
+
+/***/ },
+/* 119 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var article = function article() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
+	        a: 0
+	    } : arguments[0];
+	    var action = arguments[1];
+
+
+	    switch (action.type) {
+	        default:
+	            return state;
+	    }
+	};
+
+	exports.default = article;
 
 /***/ }
 ]);

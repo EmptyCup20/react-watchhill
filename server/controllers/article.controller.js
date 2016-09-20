@@ -1,6 +1,5 @@
 var article = require('../proxy/article')
 var express = require('express');
-//var co = require('co');
 var router = express.Router();
 
 

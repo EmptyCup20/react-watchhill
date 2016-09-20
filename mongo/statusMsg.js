@@ -15,21 +15,21 @@ module.exports = {
 
     /* 注册失败(用户名已存在) */
     registerErr: {
-        "code": 0,
+        "code": 11,
         "data": null,
         "status": 'user_exist'
     },
 
     /* 登录失败(用户名不存在) */
     loginNoExistErr:{
-        "code": 0,
+        "code": 21,
         "data": null,
         "status": 'user_no_exist'
     },
     
     /* 登录失败(密码错误) */
     loginPwdErr:{
-        "code": 0,
+        "code": 22,
         "data": null,
         "status": 'password_err'
     },

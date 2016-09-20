@@ -9,11 +9,14 @@ import user from '../proxy/user';
 export function loginAuthen(req, res, next) {
     var query = req.body;
     user.login(query).then(function (data) {
-        res.send(data);
+       res.send(data);
     }, function (data) {
-        console.log(data);
-    })
+       console.log(data);
+    });
+
 }
+
+
 
 
 /**
