@@ -18,11 +18,7 @@ webpackJsonp([0,1],[
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-<<<<<<< HEAD
 	var _store = __webpack_require__(112);
-=======
-	var _store = __webpack_require__(111);
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -7416,15 +7412,10 @@ webpackJsonp([0,1],[
 
 	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
 
-<<<<<<< HEAD
 	var _Web = __webpack_require__(101);
-=======
-	var _Blog = __webpack_require__(101);
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 
 	var _Web2 = _interopRequireDefault(_Web);
 
-<<<<<<< HEAD
 	var _Node = __webpack_require__(102);
 
 	var _Node2 = _interopRequireDefault(_Node);
@@ -7438,17 +7429,6 @@ webpackJsonp([0,1],[
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
 	var _RegisterContainer = __webpack_require__(109);
-=======
-	var _About = __webpack_require__(102);
-
-	var _About2 = _interopRequireDefault(_About);
-
-	var _LoginContainer = __webpack_require__(103);
-
-	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
-
-	var _RegisterContainer = __webpack_require__(108);
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
@@ -8289,7 +8269,6 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 102 */
-<<<<<<< HEAD
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8343,8 +8322,6 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 103 */
-=======
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8397,11 +8374,7 @@ webpackJsonp([0,1],[
 	exports.default = About;
 
 /***/ },
-<<<<<<< HEAD
 /* 104 */
-=======
-/* 103 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8414,19 +8387,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
 	var _Login = __webpack_require__(105);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
 	var _login = __webpack_require__(108);
-=======
-	var _Login = __webpack_require__(104);
-
-	var _Login2 = _interopRequireDefault(_Login);
-
-	var _login = __webpack_require__(107);
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -8457,11 +8422,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-<<<<<<< HEAD
 /* 105 */
-=======
-/* 104 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8478,11 +8439,7 @@ webpackJsonp([0,1],[
 
 	var _reactRouter = __webpack_require__(3);
 
-<<<<<<< HEAD
 	var _Input = __webpack_require__(106);
-=======
-	var _Input = __webpack_require__(105);
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 
 	var _Input2 = _interopRequireDefault(_Input);
 
@@ -8490,11 +8447,7 @@ webpackJsonp([0,1],[
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-<<<<<<< HEAD
 	var _privateType = __webpack_require__(107);
-=======
-	var _privateType = __webpack_require__(106);
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 
 	var _httpType = __webpack_require__(94);
 
@@ -8629,7 +8582,7 @@ webpackJsonp([0,1],[
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { id: 'login_username', className: 'form-control', placeholder: '账号' }),
+	                            _react2.default.createElement(_Input2.default, { id: 'login_username', type: 'text', className: 'form-control', placeholder: '账号' }),
 	                            _react2.default.createElement(
 	                                'span',
 	                                { className: 'form-control-feedback' },
@@ -8678,11 +8631,7 @@ webpackJsonp([0,1],[
 	exports.default = Login;
 
 /***/ },
-<<<<<<< HEAD
 /* 106 */
-=======
-/* 105 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8761,11 +8710,7 @@ webpackJsonp([0,1],[
 	exports.default = Input;
 
 /***/ },
-<<<<<<< HEAD
 /* 107 */
-=======
-/* 106 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports) {
 
 	'use strict';
@@ -8777,11 +8722,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-<<<<<<< HEAD
 /* 108 */
-=======
-/* 107 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8898,11 +8839,7 @@ webpackJsonp([0,1],[
 	//}
 
 /***/ },
-<<<<<<< HEAD
 /* 109 */
-=======
-/* 108 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8915,19 +8852,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
 	var _Register = __webpack_require__(110);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
 	var _register = __webpack_require__(111);
-=======
-	var _Register = __webpack_require__(109);
-
-	var _Register2 = _interopRequireDefault(_Register);
-
-	var _register = __webpack_require__(110);
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -8958,11 +8887,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
-<<<<<<< HEAD
 /* 110 */
-=======
-/* 109 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8979,11 +8904,7 @@ webpackJsonp([0,1],[
 
 	var _reactRouter = __webpack_require__(3);
 
-<<<<<<< HEAD
 	var _Input = __webpack_require__(106);
-=======
-	var _Input = __webpack_require__(105);
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 
 	var _Input2 = _interopRequireDefault(_Input);
 
@@ -8991,11 +8912,7 @@ webpackJsonp([0,1],[
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-<<<<<<< HEAD
 	var _privateType = __webpack_require__(107);
-=======
-	var _privateType = __webpack_require__(106);
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 
 	var _httpType = __webpack_require__(94);
 
@@ -9207,11 +9124,7 @@ webpackJsonp([0,1],[
 	exports.default = Login;
 
 /***/ },
-<<<<<<< HEAD
 /* 111 */
-=======
-/* 110 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9229,11 +9142,7 @@ webpackJsonp([0,1],[
 
 	var _httpType = __webpack_require__(94);
 
-<<<<<<< HEAD
 	var _login = __webpack_require__(108);
-=======
-	var _login = __webpack_require__(107);
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9319,11 +9228,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-<<<<<<< HEAD
 /* 112 */
-=======
-/* 111 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9335,7 +9240,6 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
-<<<<<<< HEAD
 	var _reduxThunk = __webpack_require__(113);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
@@ -9345,17 +9249,6 @@ webpackJsonp([0,1],[
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
 	var _reducers = __webpack_require__(115);
-=======
-	var _reduxThunk = __webpack_require__(112);
-
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-	var _reduxLogger = __webpack_require__(113);
-
-	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
-
-	var _reducers = __webpack_require__(114);
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -9375,11 +9268,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-<<<<<<< HEAD
 /* 113 */
-=======
-/* 112 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9407,11 +9296,7 @@ webpackJsonp([0,1],[
 	exports['default'] = thunk;
 
 /***/ },
-<<<<<<< HEAD
 /* 114 */
-=======
-/* 113 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9644,11 +9529,7 @@ webpackJsonp([0,1],[
 	module.exports = createLogger;
 
 /***/ },
-<<<<<<< HEAD
 /* 115 */
-=======
-/* 114 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9659,39 +9540,35 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
-<<<<<<< HEAD
 	var _login = __webpack_require__(116);
 
 	var _login2 = _interopRequireDefault(_login);
 
 	var _register = __webpack_require__(117);
-=======
-	var _login = __webpack_require__(115);
-
-	var _login2 = _interopRequireDefault(_login);
-
-	var _register = __webpack_require__(116);
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 
 	var _register2 = _interopRequireDefault(_register);
 
+	var _article = __webpack_require__(118);
+
+	var _article2 = _interopRequireDefault(_article);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//登录
-	var reducer = (0, _redux.combineReducers)({
-		login: _login2.default,
-		register: _register2.default
-	});
 	//注册
 	//基础库
+	var reducer = (0, _redux.combineReducers)({
+		login: _login2.default,
+		register: _register2.default,
+		article: _article2.default
+	});
+	//文章
+
+
+	//登录
 	exports.default = reducer;
 
 /***/ },
-<<<<<<< HEAD
 /* 116 */
-=======
-/* 115 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9776,11 +9653,7 @@ webpackJsonp([0,1],[
 	exports.default = login;
 
 /***/ },
-<<<<<<< HEAD
 /* 117 */
-=======
-/* 116 */
->>>>>>> 701debd4003dc213a805e47bce392c82f287d758
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9822,6 +9695,31 @@ webpackJsonp([0,1],[
 	};
 
 	exports.default = register;
+
+/***/ },
+/* 118 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var article = function article() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
+	        a: 0
+	    } : arguments[0];
+	    var action = arguments[1];
+
+
+	    switch (action.type) {
+	        default:
+	            return state;
+	    }
+	};
+
+	exports.default = article;
 
 /***/ }
 ]);

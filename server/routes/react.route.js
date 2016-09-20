@@ -30,51 +30,51 @@ router.get('/*', (req, res,next) => {
     /**
      * 获取登录状态
      */
-    //function getLoginStatus() {
-    //    if(req.session.user) {
-    //        req.session.stateTree.login = {
-    //            loginUser:{
-    //                username:req.session.user
-    //            },
-    //            logined:true
-    //        }
-    //    }
-    //}
-
-
-    /**
-     * 获取文章列表
-     */
-    //function getArticleList() {
-    //    if(!req.session.browse) {             //如果网页没有浏览过,则获取文章列表
-    //        req.session.browse = true;
-    //        article.getArticleList({}).then(function(data){
-    //            //console.log('获取文章列表');
-    //            req.session.stateTree.article = {
-    //                a:1
-    //            }
-    //
-    //        },function(err){
-    //            console.log('出错了');
-    //        });
-    //    }
-    //}
-
-
-    //暂时这么设置,同步服务端和客户端
-    if(req.session.user) {
-        var store = configureStore({
-            login:{
+    function getLoginStatus() {
+        if(req.session.user) {
+            req.session.stateTree.login = {
                 loginUser:{
                     username:req.session.user
                 },
                 logined:true
             }
-        });       //这里需要传入需要的state tree
-
-    } else {
-        var store = configureStore({});
+        }
     }
+
+
+    /**
+     * 获取文章列表
+     */
+    function getArticleList() {
+        if(!req.session.browse) {             //如果网页没有浏览过,则获取文章列表
+            req.session.browse = true;
+            article.getArticleList({}).then(function(data){
+                console.log('获取文章列表');
+                req.session.stateTree.article = {
+                    a:1
+                }
+
+            },function(err){
+                console.log('出错了');
+            });
+        }
+    }
+
+
+    //暂时这么设置,同步服务端和客户端
+    //if(req.session.user) {
+    //    var store = configureStore({
+    //        login:{
+    //            loginUser:{
+    //                username:req.session.user
+    //            },
+    //            logined:true
+    //        }
+    //    });       //这里需要传入需要的state tree
+    //
+    //} else {
+    //    var store = configureStore({});
+    //}
 
     //const store = configureStore();       //这里需要传入需要的state tree
 
@@ -86,14 +86,14 @@ router.get('/*', (req, res,next) => {
             res.redirect(redirect.pathname + redirect.search)
         } else if (props) {
 
-            //Promise.all([
-            //    getLoginStatus(),
-            //    getArticleList()
-            //])
-            //.then(() => {
+            Promise.all([
+                getLoginStatus(),
+                getArticleList()
+            ])
+            .then(() => {
 
-                //let store = configureStore(req.session.stateTree);
-                //console.log('node  store:', store.getState());  //需要注意与客户端的store统一
+                let store = configureStore(req.session.stateTree);
+                console.log('node  store:', store.getState());  //需要注意与客户端的store统一
 
 
                 const appHtml = renderToString(
@@ -105,8 +105,8 @@ router.get('/*', (req, res,next) => {
                     html:appHtml,
                     serverState:JSON.stringify(store.getState())
                 });
-            //})
-            //.catch();
+            })
+            .catch();
 
 
 
