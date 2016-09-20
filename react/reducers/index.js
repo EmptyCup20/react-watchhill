@@ -5,12 +5,15 @@ import { combineReducers } from 'redux';
 import login from './login';
 //注册
 import register from './register';
+//文章
+import article from './article';
 
 
 
 const reducer = combineReducers({
 	login,
-	register
+	register,
+	article
 });
 
 export default reducer;

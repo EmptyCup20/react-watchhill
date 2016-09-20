@@ -1,10 +1,10 @@
 import React,{ Component } from 'react'
 
-export default class Blog extends Component{
+export default class Web extends Component{
     render() {
         return (
             <div>
-                <h1>博客页</h1>
+                <h1>前端文章</h1>
             </div>
         )
     }

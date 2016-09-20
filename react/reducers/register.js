@@ -5,7 +5,7 @@ import { REGISTER_REQUEST,REGISTER_RECEIVE } from '../constants/actionType';
 
 const register = (state = {
     registering:false,          //正在注册
-    registerStatus:init            //注册状态
+    registerStatus:init         //注册状态
 }, action) => {
 
     switch(action.type) {

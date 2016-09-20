@@ -50,7 +50,7 @@ export default class Login extends Component{
             //console.log(username.value);
             //console.log(password.value);
             let user = {
-                username: username.trim(),
+                author: username.trim(),
                 password: password.trim()
             };
 
@@ -104,7 +104,7 @@ export default class Login extends Component{
 
                    <from>
                        <div className="form-group has-feedback">
-                           <Input id="login_username" className="form-control" placeholder="账号"  />
+                           <Input id="login_username" type="text" className="form-control" placeholder="账号"  />
                            <span className="form-control-feedback"> <i className="fa fa-user fa-fw"></i></span>
                        </div>
                        <div className="form-group has-feedback">

@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var fs = require('fs');
 var path = require('path');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
 
@@ -35,12 +36,18 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {
-                    presets:['es2015','stage-2','react']
+                    presets:['es2015','stage-0','react']
                 }
+            },
+            {
+                test: /\.less$/,
+                loader: ExtractTextPlugin.extract('style', 'css!less')
             }
         ]
 
-    }
+    },
+    plugins: [
+        new ExtractTextPlugin('./public/css/style.css',{allChunks: true})
+    ]
 
 };
-

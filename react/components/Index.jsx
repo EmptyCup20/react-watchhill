@@ -56,7 +56,10 @@ export default class Index extends Component{
                                         <Link to="/index">主页</Link>
                                     </li>
                                     <li>
-                                        <Link to="/blog">博客</Link>
+                                        <Link to="/web">web前端</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/node">Nodejs</Link>
                                     </li>
                                     <li>
                                         <Link to="/about">关于</Link>
@@ -73,7 +76,7 @@ export default class Index extends Component{
                                                         <Link to="#">新增文章</Link>
                                                     </li>
                                                      <li className="dropdown user user-menu">
-                                                        <a href="" className="dropdown-togglt" data-toggle="dropdown" aria-expanded="false">
+                                                        <a className="dropdown-togglt" data-toggle="dropdown" aria-expanded="false">
                                                             <img src="#" alt="User Image" className="user-image" />
                                                             <span className="hidden-xs">{login.loginUser.username}</span>
                                                         </a>

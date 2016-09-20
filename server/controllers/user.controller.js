@@ -7,13 +7,24 @@ import user from '../proxy/user';
  * @param next
  */
 export function loginAuthen(req, res, next) {
-    var query = req.body;
-    user.login(query).then(function (data) {
-        res.send(data);
-    }, function (data) {
-        console.log(data);
-    })
+    //var query = req.body;
+    //user.login(query).then(function (data) {
+    //    res.send(data);
+    //}, function (data) {
+    //    console.log(data);
+    //});
+
+    if(req.body.author !== 'xxx') {
+        res.json({status:"user_no_exist"});
+    } else if(req.body.password !== '1111') {
+        res.json({status:"password_err"});
+    }  else {
+        req.session.user = req.body.author;
+        res.json({status:"success"});
+    }
 }
+
+
 
 
 /**
