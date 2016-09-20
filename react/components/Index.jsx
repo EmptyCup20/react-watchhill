@@ -5,6 +5,9 @@ import React,{ Component,PropTypes } from 'react';
 //基础组件(demo)
 import Button from './elements/Button';
 
+//主要组件
+import Header from './Header';
+import Footer from './Footer';
 
 //导航
 import history from '../history';
@@ -37,7 +40,7 @@ export default class Index extends Component{
         const { login } = this.props;
         //const _this = this;
         //console.log(login);
- 
+
         return (
             <div>
                 <header className="main-header skin-header-user">
@@ -125,11 +128,10 @@ export default class Index extends Component{
                     </nav>
                 </header>
 
-
                 {this.props.children}
 
 
-                <h3>尾部</h3>
+                <Footer>尾部</Footer>
 
             </div>
         )

@@ -261,7 +261,7 @@
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -283,21 +283,12 @@
 	 * @param next
 	 */
 	function loginAuthen(req, res, next) {
-	    //var query = req.body;
-	    //user.login(query).then(function (data) {
-	    //    res.send(data);
-	    //}, function (data) {
-	    //    console.log(data);
-	    //});
-
-	    if (req.body.author !== 'xxx') {
-	        res.json({ status: "user_no_exist" });
-	    } else if (req.body.password !== '1111') {
-	        res.json({ status: "password_err" });
-	    } else {
-	        req.session.user = req.body.author;
-	        res.json({ status: "success" });
-	    }
+	    var query = req.body;
+	    _user2.default.login(query).then(function (data) {
+	        res.send(data);
+	    }, function (data) {
+	        console.log(data);
+	    });
 	}
 
 	/**
@@ -382,13 +373,14 @@
 	                return;
 	            }
 	            //查询用户的密码是否错误
-	            _db_tools2.default.queryByCondition('user', { author: obj.author, password: obj.password }).then(function (data) {
+	            _db_tools2.default.queryByCondition('user', { author: obj.author, password: obj.password }, '-password').then(function (data) {
 	                if (data.length === 0) {
 	                    //返回密码错误信息
 	                    resolve(_statusMsg2.default.loginPwdErr);
 	                    return;
 	                }
 	                //返回登录成功
+	                _statusMsg2.default.successMsg.data = data;
 	                resolve(_statusMsg2.default.successMsg);
 	            }, function (data) {
 	                reject(err);
@@ -676,21 +668,21 @@
 
 	    /* 注册失败(用户名已存在) */
 	    registerErr: {
-	        "code": 0,
+	        "code": 11,
 	        "data": null,
 	        "status": 'user_exist'
 	    },
 
 	    /* 登录失败(用户名不存在) */
 	    loginNoExistErr: {
-	        "code": 0,
+	        "code": 21,
 	        "data": null,
 	        "status": 'user_no_exist'
 	    },
 
 	    /* 登录失败(密码错误) */
 	    loginPwdErr: {
-	        "code": 0,
+	        "code": 22,
 	        "data": null,
 	        "status": 'password_err'
 	    }
@@ -728,7 +720,6 @@
 	exports.getArticleList = getArticleList;
 	var article = __webpack_require__(21);
 	var express = __webpack_require__(1);
-	//var co = require('co');
 	var router = express.Router();
 
 	function getArticleList(req, res, next) {
@@ -757,7 +748,7 @@
 	//获取文章列表
 	Article.getArticleList = function (obj) {
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.query('article', obj).then(function (data) {
+	        _db_tools2.default.query('article', obj, '-content -_id -__v').then(function (data) {
 	            resolve(data);
 	        }, function (err) {
 	            reject(err);
@@ -765,6 +756,16 @@
 	    });
 	};
 
+	//获取文章内容
+	Article.getArticle = function (obj) {
+	    return new Promise(function (resolve, reject) {
+	        _db_tools2.default.queryByCondition('article', obj, 'content').then(function (data) {
+	            resolve(data);
+	        }, function (err) {
+	            reject(err);
+	        });
+	    });
+	};
 	module.exports = Article;
 
 /***/ },
@@ -793,7 +794,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(52);
+	var _store = __webpack_require__(54);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -968,27 +969,27 @@
 
 	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
 
-	var _HomeContainer = __webpack_require__(38);
+	var _HomeContainer = __webpack_require__(40);
 
 	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
 
-	var _Web = __webpack_require__(40);
+	var _Web = __webpack_require__(42);
 
 	var _Web2 = _interopRequireDefault(_Web);
 
-	var _Node = __webpack_require__(41);
+	var _Node = __webpack_require__(43);
 
 	var _Node2 = _interopRequireDefault(_Node);
 
-	var _About = __webpack_require__(42);
+	var _About = __webpack_require__(44);
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _LoginContainer = __webpack_require__(44);
+	var _LoginContainer = __webpack_require__(46);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _RegisterContainer = __webpack_require__(49);
+	var _RegisterContainer = __webpack_require__(51);
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
@@ -1323,7 +1324,15 @@
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _history = __webpack_require__(37);
+	var _Header = __webpack_require__(37);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
+	var _Footer = __webpack_require__(39);
+
+	var _Footer2 = _interopRequireDefault(_Footer);
+
+	var _history = __webpack_require__(38);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -1337,6 +1346,9 @@
 
 
 	//基础组件(demo)
+
+
+	//主要组件
 
 
 	//导航
@@ -1560,7 +1572,7 @@
 	                ),
 	                this.props.children,
 	                _react2.default.createElement(
-	                    'h3',
+	                    _Footer2.default,
 	                    null,
 	                    '尾部'
 	                )
@@ -1645,6 +1657,260 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _reactRouter = __webpack_require__(25);
+
+	var _react = __webpack_require__(23);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Button = __webpack_require__(36);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	var _history = __webpack_require__(38);
+
+	var _history2 = _interopRequireDefault(_history);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //基础库
+
+
+	//基础组件(demo)
+
+
+	//导航
+
+
+	var Header = function (_Component) {
+	    _inherits(Header, _Component);
+
+	    function Header() {
+	        _classCallCheck(this, Header);
+
+	        return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+	    }
+
+	    _createClass(Header, [{
+	        key: 'logout',
+	        value: function logout(e) {
+	            e.preventDefault();
+	            //alert('111');
+	            this.props.logout(); //注销
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var login = this.props.login;
+
+
+	            return _react2.default.createElement(
+	                'header',
+	                { className: 'main-header skin-header-user' },
+	                _react2.default.createElement(
+	                    'nav',
+	                    { className: 'navbar navbar-static-top' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'container' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'navbar-header' },
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: '/', className: 'navbar-brand' },
+	                                _react2.default.createElement(
+	                                    'b',
+	                                    null,
+	                                    'Watch'
+	                                ),
+	                                'Hill'
+	                            ),
+	                            _react2.default.createElement(
+	                                'button',
+	                                { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse',
+	                                    'data-target': '#navbar-collapse' },
+	                                _react2.default.createElement('i', { className: 'fa fa-bars' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'collapse navbar-collapse', id: 'navbar-collapse' },
+	                            _react2.default.createElement(
+	                                'ul',
+	                                { className: 'nav navbar-nav navbar-left' },
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/index' },
+	                                        '主页'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/web' },
+	                                        'web前端'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/node' },
+	                                        'Nodejs'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/about' },
+	                                        '关于'
+	                                    )
+	                                )
+	                            ),
+	                            function (_this) {
+	                                if (login.logined) {
+	                                    return _react2.default.createElement(
+	                                        'ul',
+	                                        { className: 'nav navbar-nav navbar-right' },
+	                                        _react2.default.createElement(
+	                                            'li',
+	                                            { className: 'dropdown' },
+	                                            _react2.default.createElement(
+	                                                _reactRouter.Link,
+	                                                { to: '#' },
+	                                                '新增文章'
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'li',
+	                                            { className: 'dropdown user user-menu' },
+	                                            _react2.default.createElement(
+	                                                'a',
+	                                                { href: '', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
+	                                                _react2.default.createElement('img', { src: '#', alt: 'User Image', className: 'user-image' }),
+	                                                _react2.default.createElement(
+	                                                    'span',
+	                                                    { className: 'hidden-xs' },
+	                                                    login.loginUser.username
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'ul',
+	                                                { className: 'dropdown-menu' },
+	                                                _react2.default.createElement(
+	                                                    'li',
+	                                                    { className: 'user-header' },
+	                                                    _react2.default.createElement(
+	                                                        _reactRouter.Link,
+	                                                        { to: '#' },
+	                                                        _react2.default.createElement('img', { src: '#', className: 'img-circle', alt: 'user image' })
+	                                                    ),
+	                                                    _react2.default.createElement(
+	                                                        'p',
+	                                                        null,
+	                                                        '人生一世',
+	                                                        _react2.default.createElement(
+	                                                            'small',
+	                                                            null,
+	                                                            '18768107826'
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'small',
+	                                                            null,
+	                                                            '11@qq.com'
+	                                                        )
+	                                                    )
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'li',
+	                                                    { className: 'user-footer' },
+	                                                    _react2.default.createElement(
+	                                                        'div',
+	                                                        { className: 'pull-left' },
+	                                                        _react2.default.createElement(
+	                                                            'a',
+	                                                            { className: 'btn btn-default btn-flat' },
+	                                                            '个人中心'
+	                                                        )
+	                                                    ),
+	                                                    _react2.default.createElement(
+	                                                        'div',
+	                                                        { className: 'pull-right' },
+	                                                        _react2.default.createElement(
+	                                                            'a',
+	                                                            { className: 'btn btn-default btn-flat', onClick: _this.logout.bind(_this) },
+	                                                            '退出登录'
+	                                                        )
+	                                                    )
+	                                                )
+	                                            )
+	                                        )
+	                                    );
+	                                } else {
+	                                    return _react2.default.createElement(
+	                                        'ul',
+	                                        { className: 'nav navbar-nav navbar-right' },
+	                                        _react2.default.createElement(
+	                                            'li',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                _reactRouter.Link,
+	                                                { to: '/login' },
+	                                                '登录'
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'li',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                _reactRouter.Link,
+	                                                { to: '/register' },
+	                                                '注册'
+	                                            )
+	                                        )
+	                                    );
+	                                }
+	                            }(this)
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Header;
+	}(_react.Component);
+
+	Header.propTypes = {
+	    login: _react.PropTypes.object.isRequired
+	};
+	exports.default = Header;
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
@@ -1653,7 +1919,57 @@
 	exports.default = _reactRouter.browserHistory;
 
 /***/ },
-/* 38 */
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(23);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //基础库
+
+
+	var Footer = function (_Component) {
+	    _inherits(Footer, _Component);
+
+	    function Footer() {
+	        _classCallCheck(this, Footer);
+
+	        return _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).apply(this, arguments));
+	    }
+
+	    _createClass(Footer, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h3',
+	                null,
+	                '尾部'
+	            );
+	        }
+	    }]);
+
+	    return Footer;
+	}(_react.Component);
+
+	exports.default = Footer;
+
+/***/ },
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1666,7 +1982,7 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Home = __webpack_require__(39);
+	var _Home = __webpack_require__(41);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
@@ -1691,7 +2007,7 @@
 	//基础库
 
 /***/ },
-/* 39 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1775,7 +2091,7 @@
 	exports.default = Home;
 
 /***/ },
-/* 40 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1828,7 +2144,7 @@
 	exports.default = Web;
 
 /***/ },
-/* 41 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1881,7 +2197,7 @@
 	exports.default = Nodejs;
 
 /***/ },
-/* 42 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1896,7 +2212,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(43);
+	__webpack_require__(45);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2091,13 +2407,13 @@
 	exports.default = About;
 
 /***/ },
-/* 43 */
+/* 45 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 44 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2110,11 +2426,11 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Login = __webpack_require__(45);
+	var _Login = __webpack_require__(47);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(48);
+	var _login = __webpack_require__(50);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -2145,7 +2461,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 45 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2162,7 +2478,7 @@
 
 	var _reactRouter = __webpack_require__(25);
 
-	var _Input = __webpack_require__(46);
+	var _Input = __webpack_require__(48);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
@@ -2170,11 +2486,11 @@
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(47);
+	var _privateType = __webpack_require__(49);
 
 	var _httpType = __webpack_require__(33);
 
-	var _history = __webpack_require__(37);
+	var _history = __webpack_require__(38);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -2354,7 +2670,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 46 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2433,7 +2749,7 @@
 	exports.default = Input;
 
 /***/ },
-/* 47 */
+/* 49 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2445,7 +2761,7 @@
 	};
 
 /***/ },
-/* 48 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2562,7 +2878,7 @@
 	//}
 
 /***/ },
-/* 49 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2575,11 +2891,11 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Register = __webpack_require__(50);
+	var _Register = __webpack_require__(52);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
-	var _register = __webpack_require__(51);
+	var _register = __webpack_require__(53);
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -2610,7 +2926,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
-/* 50 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2627,7 +2943,7 @@
 
 	var _reactRouter = __webpack_require__(25);
 
-	var _Input = __webpack_require__(46);
+	var _Input = __webpack_require__(48);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
@@ -2635,11 +2951,11 @@
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(47);
+	var _privateType = __webpack_require__(49);
 
 	var _httpType = __webpack_require__(33);
 
-	var _history = __webpack_require__(37);
+	var _history = __webpack_require__(38);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -2847,7 +3163,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 51 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2865,7 +3181,7 @@
 
 	var _httpType = __webpack_require__(33);
 
-	var _login = __webpack_require__(48);
+	var _login = __webpack_require__(50);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2951,7 +3267,7 @@
 	}
 
 /***/ },
-/* 52 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2963,15 +3279,15 @@
 
 	var _redux = __webpack_require__(27);
 
-	var _reduxThunk = __webpack_require__(53);
+	var _reduxThunk = __webpack_require__(55);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(54);
+	var _reduxLogger = __webpack_require__(56);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(55);
+	var _reducers = __webpack_require__(57);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -2991,19 +3307,19 @@
 	}
 
 /***/ },
-/* 53 */
+/* 55 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 54 */
+/* 56 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-logger");
 
 /***/ },
-/* 55 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3014,15 +3330,15 @@
 
 	var _redux = __webpack_require__(27);
 
-	var _login = __webpack_require__(56);
+	var _login = __webpack_require__(58);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(57);
+	var _register = __webpack_require__(59);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(59);
+	var _articles = __webpack_require__(60);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
@@ -3033,7 +3349,7 @@
 	var reducer = (0, _redux.combineReducers)({
 		login: _login2.default,
 		register: _register2.default,
-		articles: articles
+		articles: _articles2.default
 	});
 	//文章
 
@@ -3042,7 +3358,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 56 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3127,7 +3443,7 @@
 	exports.default = login;
 
 /***/ },
-/* 57 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3171,8 +3487,7 @@
 	exports.default = register;
 
 /***/ },
-/* 58 */,
-/* 59 */
+/* 60 */
 /***/ function(module, exports) {
 
 	"use strict";

@@ -7763,6 +7763,14 @@ webpackJsonp([0,1],[
 
 	var _Button2 = _interopRequireDefault(_Button);
 
+	var _Header = __webpack_require__(121);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
+	var _Footer = __webpack_require__(122);
+
+	var _Footer2 = _interopRequireDefault(_Footer);
+
 	var _history = __webpack_require__(98);
 
 	var _history2 = _interopRequireDefault(_history);
@@ -7777,6 +7785,9 @@ webpackJsonp([0,1],[
 
 
 	//基础组件(demo)
+
+
+	//主要组件
 
 
 	//导航
@@ -8000,7 +8011,7 @@ webpackJsonp([0,1],[
 	                ),
 	                this.props.children,
 	                _react2.default.createElement(
-	                    'h3',
+	                    _Footer2.default,
 	                    null,
 	                    '尾部'
 	                )
@@ -9722,7 +9733,7 @@ webpackJsonp([0,1],[
 	var reducer = (0, _redux.combineReducers)({
 		login: _login2.default,
 		register: _register2.default,
-		articles: articles
+		articles: _articles2.default
 	});
 	//文章
 
@@ -9884,6 +9895,310 @@ webpackJsonp([0,1],[
 	};
 
 	exports.default = article;
+
+/***/ },
+/* 121 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _reactRouter = __webpack_require__(3);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Button = __webpack_require__(97);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	var _history = __webpack_require__(98);
+
+	var _history2 = _interopRequireDefault(_history);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //基础库
+
+
+	//基础组件(demo)
+
+
+	//导航
+
+
+	var Header = function (_Component) {
+	    _inherits(Header, _Component);
+
+	    function Header() {
+	        _classCallCheck(this, Header);
+
+	        return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+	    }
+
+	    _createClass(Header, [{
+	        key: 'logout',
+	        value: function logout(e) {
+	            e.preventDefault();
+	            //alert('111');
+	            this.props.logout(); //注销
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var login = this.props.login;
+
+
+	            return _react2.default.createElement(
+	                'header',
+	                { className: 'main-header skin-header-user' },
+	                _react2.default.createElement(
+	                    'nav',
+	                    { className: 'navbar navbar-static-top' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'container' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'navbar-header' },
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: '/', className: 'navbar-brand' },
+	                                _react2.default.createElement(
+	                                    'b',
+	                                    null,
+	                                    'Watch'
+	                                ),
+	                                'Hill'
+	                            ),
+	                            _react2.default.createElement(
+	                                'button',
+	                                { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse',
+	                                    'data-target': '#navbar-collapse' },
+	                                _react2.default.createElement('i', { className: 'fa fa-bars' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'collapse navbar-collapse', id: 'navbar-collapse' },
+	                            _react2.default.createElement(
+	                                'ul',
+	                                { className: 'nav navbar-nav navbar-left' },
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/index' },
+	                                        '主页'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/web' },
+	                                        'web前端'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/node' },
+	                                        'Nodejs'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/about' },
+	                                        '关于'
+	                                    )
+	                                )
+	                            ),
+	                            function (_this) {
+	                                if (login.logined) {
+	                                    return _react2.default.createElement(
+	                                        'ul',
+	                                        { className: 'nav navbar-nav navbar-right' },
+	                                        _react2.default.createElement(
+	                                            'li',
+	                                            { className: 'dropdown' },
+	                                            _react2.default.createElement(
+	                                                _reactRouter.Link,
+	                                                { to: '#' },
+	                                                '新增文章'
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'li',
+	                                            { className: 'dropdown user user-menu' },
+	                                            _react2.default.createElement(
+	                                                'a',
+	                                                { href: '', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
+	                                                _react2.default.createElement('img', { src: '#', alt: 'User Image', className: 'user-image' }),
+	                                                _react2.default.createElement(
+	                                                    'span',
+	                                                    { className: 'hidden-xs' },
+	                                                    login.loginUser.username
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'ul',
+	                                                { className: 'dropdown-menu' },
+	                                                _react2.default.createElement(
+	                                                    'li',
+	                                                    { className: 'user-header' },
+	                                                    _react2.default.createElement(
+	                                                        _reactRouter.Link,
+	                                                        { to: '#' },
+	                                                        _react2.default.createElement('img', { src: '#', className: 'img-circle', alt: 'user image' })
+	                                                    ),
+	                                                    _react2.default.createElement(
+	                                                        'p',
+	                                                        null,
+	                                                        '人生一世',
+	                                                        _react2.default.createElement(
+	                                                            'small',
+	                                                            null,
+	                                                            '18768107826'
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'small',
+	                                                            null,
+	                                                            '11@qq.com'
+	                                                        )
+	                                                    )
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'li',
+	                                                    { className: 'user-footer' },
+	                                                    _react2.default.createElement(
+	                                                        'div',
+	                                                        { className: 'pull-left' },
+	                                                        _react2.default.createElement(
+	                                                            'a',
+	                                                            { className: 'btn btn-default btn-flat' },
+	                                                            '个人中心'
+	                                                        )
+	                                                    ),
+	                                                    _react2.default.createElement(
+	                                                        'div',
+	                                                        { className: 'pull-right' },
+	                                                        _react2.default.createElement(
+	                                                            'a',
+	                                                            { className: 'btn btn-default btn-flat', onClick: _this.logout.bind(_this) },
+	                                                            '退出登录'
+	                                                        )
+	                                                    )
+	                                                )
+	                                            )
+	                                        )
+	                                    );
+	                                } else {
+	                                    return _react2.default.createElement(
+	                                        'ul',
+	                                        { className: 'nav navbar-nav navbar-right' },
+	                                        _react2.default.createElement(
+	                                            'li',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                _reactRouter.Link,
+	                                                { to: '/login' },
+	                                                '登录'
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'li',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                _reactRouter.Link,
+	                                                { to: '/register' },
+	                                                '注册'
+	                                            )
+	                                        )
+	                                    );
+	                                }
+	                            }(this)
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Header;
+	}(_react.Component);
+
+	Header.propTypes = {
+	    login: _react.PropTypes.object.isRequired
+	};
+	exports.default = Header;
+
+/***/ },
+/* 122 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //基础库
+
+
+	var Footer = function (_Component) {
+	    _inherits(Footer, _Component);
+
+	    function Footer() {
+	        _classCallCheck(this, Footer);
+
+	        return _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).apply(this, arguments));
+	    }
+
+	    _createClass(Footer, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h3',
+	                null,
+	                '尾部'
+	            );
+	        }
+	    }]);
+
+	    return Footer;
+	}(_react.Component);
+
+	exports.default = Footer;
 
 /***/ }
 ]);

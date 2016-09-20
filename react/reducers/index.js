@@ -6,7 +6,7 @@ import login from './login';
 //注册
 import register from './register';
 //文章
-import article from './articles';
+import articles from './articles';
 
 
 
