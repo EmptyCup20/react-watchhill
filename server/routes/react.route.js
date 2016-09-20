@@ -38,6 +38,7 @@ router.get('/*', (req, res,next) => {
     console.log('node  store:', store.getState());                  //需要注意与客户端的store统一
 
     match({ routes:routes(), location: req.url }, (err, redirect, props) => {
+
         if (err) {
             res.status(500).send(err.message)
         } else if (redirect) {

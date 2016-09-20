@@ -407,6 +407,7 @@
 	    console.log('node  store:', store.getState()); //需要注意与客户端的store统一
 
 	    (0, _reactRouter.match)({ routes: (0, _routes2.default)(), location: req.url }, function (err, redirect, props) {
+
 	        if (err) {
 	            res.status(500).send(err.message);
 	        } else if (redirect) {
