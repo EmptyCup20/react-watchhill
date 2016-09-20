@@ -109,6 +109,7 @@ router.get('/*', (req, res,next) => {
             //.catch();
 
 
+
         } else {
             //路由匹配不到,这里这个提示页面暂时不做
             res.status(404).send('Not Found')
@@ -125,5 +126,4 @@ router.get('/*', (req, res,next) => {
 
 
 module.exports = router;
-
 

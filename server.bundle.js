@@ -261,7 +261,7 @@
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -270,7 +270,11 @@
 	exports.register = register;
 	exports.logout = logout;
 
-	var _httpType = __webpack_require__(13);
+	var _user = __webpack_require__(55);
+
+	var _user2 = _interopRequireDefault(_user);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/**
 	 * 登录验证
@@ -279,17 +283,12 @@
 	 * @param next
 	 */
 	function loginAuthen(req, res, next) {
-	    //console.log(req.body.username);
-	    //console.log(req.body.password);
-	    if (req.body.username === 'xx' && req.body.password === '1111') {
-	        //req.session.loginName = req.body.username;
-	        req.session.user = req.body.username;
-	        res.json({ status: _httpType.success });
-	    } else if (req.body.username !== 'xx') {
-	        res.json({ status: _httpType.user_no_exist });
-	    } else if (req.body.password !== '1111') {
-	        res.json({ status: _httpType.password_err });
-	    }
+	    var query = req.body;
+	    _user2.default.login(query).then(function (data) {
+	        res.send(data);
+	    }, function (data) {
+	        console.log(data);
+	    });
 	}
 
 	/**
@@ -298,13 +297,14 @@
 	 * @param res
 	 * @param next
 	 */
+	// import { user_no_exist,password_err,user_exist,success } from '../../react/constants/httpType';
 	function register(req, res, next) {
-	    if (req.body.username === 'xx') {
-	        res.json({ status: _httpType.user_exist });
-	    } else {
-	        req.session.user = req.body.username;
-	        res.json({ status: _httpType.success });
-	    }
+	    var query = req.body;
+	    _user2.default.addUser(query).then(function (data) {
+	        res.send(data);
+	    }, function (data) {
+	        console.log(data);
+	    });
 	}
 
 	/**
@@ -316,7 +316,11 @@
 	function logout(req, res, next) {
 	    req.session.destroy(function () {
 	        //移除会话
-	        res.json({ status: _httpType.success });
+	        res.json({
+	            "code": 0,
+	            "data": null,
+	            "status": 'success'
+	        });
 	    });
 	}
 
@@ -380,13 +384,11 @@
 
 	function getArticleList(req, res, next) {
 	    var query = req.query;
-	    //co(function*() {
 	    article.getArticleList(query).then(function (data) {
-	        console.log(data);
+	        res.send(data);
 	    }, function (data) {
 	        console.log(data);
 	    });
-	    //})
 	}
 
 /***/ },
@@ -403,6 +405,7 @@
 
 	var Article = function Article() {};
 
+	//获取文章列表
 	Article.getArticleList = function (obj) {
 	    return new Promise(function (resolve, reject) {
 	        _db_tools2.default.query('article', obj).then(function (data) {
@@ -432,14 +435,23 @@
 	var user = __webpack_require__(18);
 	var article = __webpack_require__(19);
 	var comment = __webpack_require__(20);
+	var statusMsg = __webpack_require__(56);
 
 	var Db_tools = function Db_tools() {};
 
-	var successMsg = {
-	    "code": 0,
-	    "message": null,
-	    "data": null,
-	    "success": true
+	//初始化model
+	function init(model) {
+	    var modelList = {
+	        'user': user,
+	        'article': article,
+	        'comment': comment
+	    };
+	    for (var item in modelList) {
+	        if (item === model) {
+	            model = modelList[item];
+	            return model;
+	        }
+	    }
 	};
 
 	/**
@@ -453,12 +465,13 @@
 	 */
 
 	Db_tools.add = function (model, addObj) {
+	    model = init(model);
 	    return new Promise(function (resolve, reject) {
 	        model.create(addObj, function (err, doc) {
 	            if (err) {
 	                reject(err);
 	            } else {
-	                resolve(successMsg);
+	                resolve(statusMsg.successMsg);
 	            }
 	        });
 	    });
@@ -473,9 +486,9 @@
 	 * @param  {Function} callback   回调函数
 	 */
 	Db_tools.edit = function (model, editObj) {
-	    // var model = this.init(model);
 	    var id = editObj.id;
 	    delete editObj.id;
+	    model = init(model);
 	    return new Promise(function (resolve, reject) {
 	        model.findOneAndUpdate({ _id: id }, {
 	            $set: editObj
@@ -483,7 +496,7 @@
 	            if (err) {
 	                reject(err);
 	            } else {
-	                resolve(successMsg);
+	                resolve(statusMsg.successMsg);
 	            }
 	        });
 	    });
@@ -498,13 +511,13 @@
 	 * @return {[type]}              [description]
 	 */
 	Db_tools.remove = function (model, removeId) {
-	    // var model = this.init(model);
+	    model = init(model);
 	    return new Promise(function (resolve, reject) {
 	        model.remove({ _id: removeId }, function (err) {
 	            if (err) {
 	                reject(err);
 	            } else {
-	                resolve(successMsg);
+	                resolve(statusMsg.successMsg);
 	            }
 	        });
 	    });
@@ -519,10 +532,10 @@
 	 * @return {[type]}              [description]
 	 */
 	Db_tools.query = function (model, queryObj) {
-	    // var model = this.init(model);
 	    var pageSize = Number(queryObj.pageSize);
 	    var pageNo = Number(queryObj.pageNo);
-	    var query = eval(model).find({});
+	    model = init(model);
+	    var query = model.find({});
 	    //开头跳过查询的调试
 	    query.skip((pageNo - 1) * pageSize);
 	    //最多显示条数
@@ -534,7 +547,7 @@
 	                reject(err);
 	            } else {
 	                //计算数据总数
-	                eval(model).find(function (err, result) {
+	                model.find(function (err, result) {
 	                    var jsonArray = { code: 0, rows: doc, message: null, total: result.length, success: true };
 	                    resole(jsonArray);
 	                });
@@ -551,7 +564,7 @@
 	 * @return {[type]}              [description]
 	 */
 	Db_tools.queryByCondition = function (model, queryObj) {
-	    // var model = this.init(model);
+	    model = init(model);
 	    var query = model.find(queryObj);
 	    return new Promise(function (resolve, reject) {
 	        query.exec(queryObj, function (err, doc) {
@@ -2864,6 +2877,116 @@
 	};
 
 	exports.default = register;
+
+/***/ },
+/* 55 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _db_tools = __webpack_require__(17);
+
+	var _db_tools2 = _interopRequireDefault(_db_tools);
+
+	var _statusMsg = __webpack_require__(56);
+
+	var _statusMsg2 = _interopRequireDefault(_statusMsg);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var User = function User() {};
+
+	//用户注册
+	User.addUser = function (obj) {
+	    return new Promise(function (resolve, reject) {
+	        _db_tools2.default.queryByCondition('user', { author: obj.author }).then(function (data) {
+	            //用户存在
+	            if (data.length !== 0) {
+	                resolve(_statusMsg2.default.registerErr);
+	                return;
+	            }
+	            _db_tools2.default.add('user', obj).then(function (data) {
+	                resolve(data);
+	            }, function (err) {
+	                reject(err);
+	            });
+	        }, function (data) {
+	            reject(err);
+	        });
+	    });
+	};
+
+	//登录
+	User.login = function (obj) {
+	    return new Promise(function (resolve, reject) {
+	        //查询用户是否存在
+	        _db_tools2.default.queryByCondition('user', { author: obj.author }).then(function (data) {
+	            if (data.length === 0) {
+	                //返回用户不存在信息
+	                resolve(_statusMsg2.default.loginNoExistErr);
+	                return;
+	            }
+	            //查询用户的密码是否错误
+	            _db_tools2.default.queryByCondition('user', { author: obj.author, password: obj.password }).then(function (data) {
+	                if (data.length === 0) {
+	                    //返回密码错误信息
+	                    resolve(_statusMsg2.default.loginPwdErr);
+	                    return;
+	                }
+	                //返回登录成功
+	                resolve(_statusMsg2.default.successMsg);
+	            }, function (data) {
+	                reject(err);
+	            });
+	        }, function (data) {
+	            reject(err);
+	        });
+	    });
+	};
+	module.exports = User;
+
+/***/ },
+/* 56 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	/**
+	 * 请求的返回信息
+	 * @Author zhangxin14
+	 * @Date   2016/9/20
+	 *
+	 */
+
+	module.exports = {
+	    /* 成功信息 */
+	    successMsg: {
+	        "code": 0,
+	        "data": null,
+	        "status": 'success'
+	    },
+
+	    /* 注册失败(用户名已存在) */
+	    registerErr: {
+	        "code": 0,
+	        "data": null,
+	        "status": 'user_exist'
+	    },
+
+	    /* 登录失败(用户名不存在) */
+	    loginNoExistErr: {
+	        "code": 0,
+	        "data": null,
+	        "status": 'user_no_exist'
+	    },
+
+	    /* 登录失败(密码错误) */
+	    loginPwdErr: {
+	        "code": 0,
+	        "data": null,
+	        "status": 'password_err'
+	    }
+	};
 
 /***/ }
 /******/ ]);
