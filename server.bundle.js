@@ -109,7 +109,7 @@
 
 	//ajax请求路由
 	app.use('/user', __webpack_require__(11));
-	app.use('/article', __webpack_require__(14));
+	app.use('/article', __webpack_require__(19));
 
 	//react服务器渲染路由
 	app.use('/', __webpack_require__(22));
@@ -261,7 +261,7 @@
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -270,7 +270,11 @@
 	exports.register = register;
 	exports.logout = logout;
 
-	var _httpType = __webpack_require__(13);
+	var _user = __webpack_require__(13);
+
+	var _user2 = _interopRequireDefault(_user);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/**
 	 * 登录验证
@@ -279,17 +283,12 @@
 	 * @param next
 	 */
 	function loginAuthen(req, res, next) {
-	    //console.log(req.body.username);
-	    //console.log(req.body.password);
-	    if (req.body.username === 'xx' && req.body.password === '1111') {
-	        //req.session.loginName = req.body.username;
-	        req.session.user = req.body.username;
-	        res.json({ status: _httpType.success });
-	    } else if (req.body.username !== 'xx') {
-	        res.json({ status: _httpType.user_no_exist });
-	    } else if (req.body.password !== '1111') {
-	        res.json({ status: _httpType.password_err });
-	    }
+	    var query = req.body;
+	    _user2.default.login(query).then(function (data) {
+	        res.send(data);
+	    }, function (data) {
+	        console.log(data);
+	    });
 	}
 
 	/**
@@ -298,13 +297,14 @@
 	 * @param res
 	 * @param next
 	 */
+	// import { user_no_exist,password_err,user_exist,success } from '../../react/constants/httpType';
 	function register(req, res, next) {
-	    if (req.body.username === 'xx') {
-	        res.json({ status: _httpType.user_exist });
-	    } else {
-	        req.session.user = req.body.username;
-	        res.json({ status: _httpType.success });
-	    }
+	    var query = req.body;
+	    _user2.default.addUser(query).then(function (data) {
+	        res.send(data);
+	    }, function (data) {
+	        console.log(data);
+	    });
 	}
 
 	/**
@@ -316,107 +316,83 @@
 	function logout(req, res, next) {
 	    req.session.destroy(function () {
 	        //移除会话
-	        res.json({ status: _httpType.success });
+	        res.json({
+	            "code": 0,
+	            "data": null,
+	            "status": 'success'
+	        });
 	    });
 	}
 
 /***/ },
 /* 13 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	//请求状态
-
-	module.exports = {
-
-	    init: 'init', //初始化
-
-	    //login
-	    user_no_exist: 'user_no_exist', //用户不存在
-	    password_err: 'password_err', //密码错误
-
-	    //register
-	    user_exist: 'user_exist', //用户存在
-
-
-	    success: 'success' //请求成功
-	};
-
-/***/ },
-/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _article = __webpack_require__(15);
-
-	var _express = __webpack_require__(1);
-
-	var _express2 = _interopRequireDefault(_express);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var router = _express2.default.Router();
-
-	router.get('/getArticleList', _article.getArticleList);
-
-	module.exports = router;
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.getArticleList = getArticleList;
-	var article = __webpack_require__(16);
-	var express = __webpack_require__(1);
-	//var co = require('co');
-	var router = express.Router();
-
-	function getArticleList(req, res, next) {
-	    var query = req.query;
-	    //co(function*() {
-	    article.getArticleList(query).then(function (data) {
-	        console.log(data);
-	    }, function (data) {
-	        console.log(data);
-	    });
-	    //})
-	}
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _db_tools = __webpack_require__(17);
+	var _db_tools = __webpack_require__(14);
 
 	var _db_tools2 = _interopRequireDefault(_db_tools);
 
+	var _statusMsg = __webpack_require__(18);
+
+	var _statusMsg2 = _interopRequireDefault(_statusMsg);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Article = function Article() {};
+	var User = function User() {};
 
-	Article.getArticleList = function (obj) {
+	//用户注册
+	User.addUser = function (obj) {
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.query('article', obj).then(function (data) {
-	            resolve(data);
-	        }, function (err) {
+	        _db_tools2.default.queryByCondition('user', { author: obj.username }).then(function (data) {
+	            //用户存在
+	            if (data.length !== 0) {
+	                resolve(_statusMsg2.default.registerErr);
+	                return;
+	            }
+	            _db_tools2.default.add('user', obj).then(function (data) {
+	                resolve(data);
+	            }, function (err) {
+	                reject(err);
+	            });
+	        }, function (data) {
 	            reject(err);
 	        });
 	    });
 	};
 
-	module.exports = Article;
+	//登录
+	User.login = function (obj) {
+	    return new Promise(function (resolve, reject) {
+	        //查询用户是否存在
+	        _db_tools2.default.queryByCondition('user', { author: obj.username }).then(function (data) {
+	            if (data.length === 0) {
+	                //返回用户不存在信息
+	                resolve(_statusMsg2.default.loginNoExistErr);
+	                return;
+	            }
+	            //查询用户的密码是否错误
+	            _db_tools2.default.queryByCondition('user', { author: obj.username, password: obj.password }).then(function (data) {
+	                if (data.length === 0) {
+	                    //返回密码错误信息
+	                    resolve(_statusMsg2.default.loginPwdErr);
+	                    return;
+	                }
+	                //返回登录成功
+	                resolve(_statusMsg2.default.successMsg);
+	            }, function (data) {
+	                reject(err);
+	            });
+	        }, function (data) {
+	            reject(err);
+	        });
+	    });
+	};
+	module.exports = User;
 
 /***/ },
-/* 17 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -429,17 +405,26 @@
 	 */
 
 	var db = __webpack_require__(9);
-	var user = __webpack_require__(18);
-	var article = __webpack_require__(19);
-	var comment = __webpack_require__(20);
+	var user = __webpack_require__(15);
+	var article = __webpack_require__(16);
+	var comment = __webpack_require__(17);
+	var statusMsg = __webpack_require__(18);
 
 	var Db_tools = function Db_tools() {};
 
-	var successMsg = {
-	    "code": 0,
-	    "message": null,
-	    "data": null,
-	    "success": true
+	//初始化model
+	function init(model) {
+	    var modelList = {
+	        'user': user,
+	        'article': article,
+	        'comment': comment
+	    };
+	    for (var item in modelList) {
+	        if (item === model) {
+	            model = modelList[item];
+	            return model;
+	        }
+	    }
 	};
 
 	/**
@@ -453,12 +438,13 @@
 	 */
 
 	Db_tools.add = function (model, addObj) {
+	    model = init(model);
 	    return new Promise(function (resolve, reject) {
 	        model.create(addObj, function (err, doc) {
 	            if (err) {
 	                reject(err);
 	            } else {
-	                resolve(successMsg);
+	                resolve(statusMsg.successMsg);
 	            }
 	        });
 	    });
@@ -473,9 +459,9 @@
 	 * @param  {Function} callback   回调函数
 	 */
 	Db_tools.edit = function (model, editObj) {
-	    // var model = this.init(model);
 	    var id = editObj.id;
 	    delete editObj.id;
+	    model = init(model);
 	    return new Promise(function (resolve, reject) {
 	        model.findOneAndUpdate({ _id: id }, {
 	            $set: editObj
@@ -483,7 +469,7 @@
 	            if (err) {
 	                reject(err);
 	            } else {
-	                resolve(successMsg);
+	                resolve(statusMsg.successMsg);
 	            }
 	        });
 	    });
@@ -498,13 +484,13 @@
 	 * @return {[type]}              [description]
 	 */
 	Db_tools.remove = function (model, removeId) {
-	    // var model = this.init(model);
+	    model = init(model);
 	    return new Promise(function (resolve, reject) {
 	        model.remove({ _id: removeId }, function (err) {
 	            if (err) {
 	                reject(err);
 	            } else {
-	                resolve(successMsg);
+	                resolve(statusMsg.successMsg);
 	            }
 	        });
 	    });
@@ -519,10 +505,10 @@
 	 * @return {[type]}              [description]
 	 */
 	Db_tools.query = function (model, queryObj) {
-	    // var model = this.init(model);
 	    var pageSize = Number(queryObj.pageSize);
 	    var pageNo = Number(queryObj.pageNo);
-	    var query = eval(model).find({});
+	    model = init(model);
+	    var query = model.find({});
 	    //开头跳过查询的调试
 	    query.skip((pageNo - 1) * pageSize);
 	    //最多显示条数
@@ -534,7 +520,7 @@
 	                reject(err);
 	            } else {
 	                //计算数据总数
-	                eval(model).find(function (err, result) {
+	                model.find(function (err, result) {
 	                    var jsonArray = { code: 0, rows: doc, message: null, total: result.length, success: true };
 	                    resole(jsonArray);
 	                });
@@ -551,7 +537,7 @@
 	 * @return {[type]}              [description]
 	 */
 	Db_tools.queryByCondition = function (model, queryObj) {
-	    // var model = this.init(model);
+	    model = init(model);
 	    var query = model.find(queryObj);
 	    return new Promise(function (resolve, reject) {
 	        query.exec(queryObj, function (err, doc) {
@@ -566,7 +552,7 @@
 	module.exports = Db_tools;
 
 /***/ },
-/* 18 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -609,7 +595,7 @@
 	module.exports = user;
 
 /***/ },
-/* 19 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -636,7 +622,7 @@
 	module.exports = article;
 
 /***/ },
-/* 20 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -659,7 +645,120 @@
 	module.exports = comment;
 
 /***/ },
-/* 21 */,
+/* 18 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	/**
+	 * 请求的返回信息
+	 * @Author zhangxin14
+	 * @Date   2016/9/20
+	 *
+	 */
+
+	module.exports = {
+	    /* 成功信息 */
+	    successMsg: {
+	        "code": 0,
+	        "data": null,
+	        "status": 'success'
+	    },
+
+	    /* 注册失败(用户名已存在) */
+	    registerErr: {
+	        "code": 0,
+	        "data": null,
+	        "status": 'user_exist'
+	    },
+
+	    /* 登录失败(用户名不存在) */
+	    loginNoExistErr: {
+	        "code": 0,
+	        "data": null,
+	        "status": 'user_no_exist'
+	    },
+
+	    /* 登录失败(密码错误) */
+	    loginPwdErr: {
+	        "code": 0,
+	        "data": null,
+	        "status": 'password_err'
+	    }
+	};
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _article = __webpack_require__(20);
+
+	var _express = __webpack_require__(1);
+
+	var _express2 = _interopRequireDefault(_express);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var router = _express2.default.Router();
+
+	router.get('/getArticleList', _article.getArticleList);
+
+	module.exports = router;
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.getArticleList = getArticleList;
+	var article = __webpack_require__(21);
+	var express = __webpack_require__(1);
+	//var co = require('co');
+	var router = express.Router();
+
+	function getArticleList(req, res, next) {
+	    var query = req.query;
+	    article.getArticleList(query).then(function (data) {
+	        res.send(data);
+	    }, function (data) {
+	        console.log(data);
+	    });
+	}
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _db_tools = __webpack_require__(14);
+
+	var _db_tools2 = _interopRequireDefault(_db_tools);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Article = function Article() {};
+
+	//获取文章列表
+	Article.getArticleList = function (obj) {
+	    return new Promise(function (resolve, reject) {
+	        _db_tools2.default.query('article', obj).then(function (data) {
+	            resolve(data);
+	        }, function (err) {
+	            reject(err);
+	        });
+	    });
+	};
+
+	module.exports = Article;
+
+/***/ },
 /* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -685,7 +784,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(49);
+	var _store = __webpack_require__(50);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -801,23 +900,23 @@
 
 	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
 
-	var _HomeContainer = __webpack_require__(37);
+	var _HomeContainer = __webpack_require__(38);
 
 	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
 
-	var _Blog = __webpack_require__(39);
+	var _Blog = __webpack_require__(40);
 
 	var _Blog2 = _interopRequireDefault(_Blog);
 
-	var _About = __webpack_require__(40);
+	var _About = __webpack_require__(41);
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _LoginContainer = __webpack_require__(41);
+	var _LoginContainer = __webpack_require__(42);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _RegisterContainer = __webpack_require__(46);
+	var _RegisterContainer = __webpack_require__(47);
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
@@ -956,7 +1055,7 @@
 
 	var LogoutActions = _interopRequireWildcard(_logout);
 
-	var _Index = __webpack_require__(34);
+	var _Index = __webpack_require__(35);
 
 	var _Index2 = _interopRequireDefault(_Index);
 
@@ -995,9 +1094,9 @@
 
 	var _actionType = __webpack_require__(32);
 
-	var _httpType = __webpack_require__(13);
+	var _httpType = __webpack_require__(33);
 
-	var _ajax = __webpack_require__(33);
+	var _ajax = __webpack_require__(34);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -1055,6 +1154,29 @@
 
 	'use strict';
 
+	//请求状态
+
+	module.exports = {
+
+	    init: 'init', //初始化
+
+	    //login
+	    user_no_exist: 'user_no_exist', //用户不存在
+	    password_err: 'password_err', //密码错误
+
+	    //register
+	    user_exist: 'user_exist', //用户存在
+
+
+	    success: 'success' //请求成功
+	};
+
+/***/ },
+/* 34 */
+/***/ function(module, exports) {
+
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -1106,7 +1228,7 @@
 	exports.default = ajax;
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1123,11 +1245,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Button = __webpack_require__(35);
+	var _Button = __webpack_require__(36);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _history = __webpack_require__(36);
+	var _history = __webpack_require__(37);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -1372,7 +1494,7 @@
 	exports.default = Index;
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1434,7 +1556,7 @@
 	exports.default = Button;
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1448,7 +1570,7 @@
 	exports.default = _reactRouter.browserHistory;
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1461,7 +1583,7 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Home = __webpack_require__(38);
+	var _Home = __webpack_require__(39);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
@@ -1486,7 +1608,7 @@
 	//基础库
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1570,7 +1692,7 @@
 	exports.default = Home;
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1623,7 +1745,7 @@
 	exports.default = Blog;
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1676,7 +1798,7 @@
 	exports.default = About;
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1689,11 +1811,11 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Login = __webpack_require__(42);
+	var _Login = __webpack_require__(43);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(45);
+	var _login = __webpack_require__(46);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -1724,7 +1846,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1741,19 +1863,19 @@
 
 	var _reactRouter = __webpack_require__(25);
 
-	var _Input = __webpack_require__(43);
+	var _Input = __webpack_require__(44);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(35);
+	var _Button = __webpack_require__(36);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(44);
+	var _privateType = __webpack_require__(45);
 
-	var _httpType = __webpack_require__(13);
+	var _httpType = __webpack_require__(33);
 
-	var _history = __webpack_require__(36);
+	var _history = __webpack_require__(37);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -1933,7 +2055,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2012,7 +2134,7 @@
 	exports.default = Input;
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2024,7 +2146,7 @@
 	};
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2037,7 +2159,7 @@
 
 	var _actionType = __webpack_require__(32);
 
-	var _ajax = __webpack_require__(33);
+	var _ajax = __webpack_require__(34);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -2141,7 +2263,7 @@
 	//}
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2154,11 +2276,11 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Register = __webpack_require__(47);
+	var _Register = __webpack_require__(48);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
-	var _register = __webpack_require__(48);
+	var _register = __webpack_require__(49);
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -2189,7 +2311,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2206,19 +2328,19 @@
 
 	var _reactRouter = __webpack_require__(25);
 
-	var _Input = __webpack_require__(43);
+	var _Input = __webpack_require__(44);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(35);
+	var _Button = __webpack_require__(36);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(44);
+	var _privateType = __webpack_require__(45);
 
-	var _httpType = __webpack_require__(13);
+	var _httpType = __webpack_require__(33);
 
-	var _history = __webpack_require__(36);
+	var _history = __webpack_require__(37);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -2427,7 +2549,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2439,13 +2561,13 @@
 
 	var _actionType = __webpack_require__(32);
 
-	var _ajax = __webpack_require__(33);
+	var _ajax = __webpack_require__(34);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
-	var _httpType = __webpack_require__(13);
+	var _httpType = __webpack_require__(33);
 
-	var _login = __webpack_require__(45);
+	var _login = __webpack_require__(46);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2531,7 +2653,7 @@
 	}
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2543,15 +2665,15 @@
 
 	var _redux = __webpack_require__(27);
 
-	var _reduxThunk = __webpack_require__(50);
+	var _reduxThunk = __webpack_require__(51);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(51);
+	var _reduxLogger = __webpack_require__(52);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(52);
+	var _reducers = __webpack_require__(53);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -2571,19 +2693,19 @@
 	}
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-logger");
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2594,11 +2716,11 @@
 
 	var _redux = __webpack_require__(27);
 
-	var _login = __webpack_require__(53);
+	var _login = __webpack_require__(54);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(54);
+	var _register = __webpack_require__(55);
 
 	var _register2 = _interopRequireDefault(_register);
 
@@ -2614,7 +2736,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2627,7 +2749,7 @@
 
 	var _actionType = __webpack_require__(32);
 
-	var _httpType = __webpack_require__(13);
+	var _httpType = __webpack_require__(33);
 
 	var login_status = function login_status(state, action) {
 		switch (action.status) {
@@ -2699,7 +2821,7 @@
 	exports.default = login;
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2710,7 +2832,7 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _httpType = __webpack_require__(13);
+	var _httpType = __webpack_require__(33);
 
 	var _actionType = __webpack_require__(32);
 

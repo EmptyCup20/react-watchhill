@@ -32,7 +32,7 @@ router.get('/*', (req, res,next) => {
 
     } else {
         var store = configureStore();
-}
+    }
 
     //const store = configureStore();       //这里需要传入需要的state tree
     console.log('node  store:', store.getState());                  //需要注意与客户端的store统一
@@ -47,11 +47,11 @@ router.get('/*', (req, res,next) => {
                 <Provider store={store}>
                     <RouterContext {...props}/>
                 </Provider>
-            );
+        );
 
             res.render('index',{
-               html:appHtml,
-               serverState:JSON.stringify(store.getState())
+                html:appHtml,
+                serverState:JSON.stringify(store.getState())
             });
         } else {
             //路由匹配不到,这里这个提示页面暂时不做
@@ -62,5 +62,4 @@ router.get('/*', (req, res,next) => {
 
 
 module.exports = router;
-
 

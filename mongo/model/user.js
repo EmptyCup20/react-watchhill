@@ -30,7 +30,7 @@ var userSchema = new Schema({
         default: ' '
     },
     //部门
-    team: String
+    team: String,
 });
 var user = db.model('User',userSchema);
 module.exports = user;

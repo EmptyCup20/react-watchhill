@@ -6,12 +6,9 @@ var router = express.Router();
 
 export function getArticleList(req, res, next) {
     var query = req.query;
-    //co(function*() {
-        article.getArticleList(query).then(function(data){
-            console.log(data);
-        },function(data){
-            console.log(data);
-        });
-    //})
+    article.getArticleList(query).then(function(data) {
+        res.send(data)
+    }, function(data) {
+        console.log(data);
+    });
 }
-
