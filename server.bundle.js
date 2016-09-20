@@ -505,11 +505,11 @@
 	 * @param  {Function} callback   回调函数
 	 * @return {[type]}              [description]
 	 */
-	Db_tools.query = function (model, queryObj) {
+	Db_tools.query = function (model, queryObj, fields, options, callback) {
 	    var pageSize = Number(queryObj.pageSize);
 	    var pageNo = Number(queryObj.pageNo);
 	    model = init(model);
-	    var query = model.find({});
+	    var query = model.find({}, fields, options, callback);
 	    //开头跳过查询的调试
 	    query.skip((pageNo - 1) * pageSize);
 	    //最多显示条数
@@ -537,9 +537,9 @@
 	 * @param  {查询主键}   queryObj   string
 	 * @return {[type]}              [description]
 	 */
-	Db_tools.queryByCondition = function (model, queryObj) {
+	Db_tools.queryByCondition = function (model, queryObj, fields, options, callback) {
 	    model = init(model);
-	    var query = model.find(queryObj);
+	    var query = model.find(queryObj, fields, options, callback);
 	    return new Promise(function (resolve, reject) {
 	        query.exec(queryObj, function (err, doc) {
 	            if (err) {
@@ -610,6 +610,7 @@
 	        require: true,
 	        unique: true
 	    },
+	    tag: String,
 	    author: String,
 	    createTime: String,
 	    content: String,
@@ -845,8 +846,13 @@
 	        if (!req.session.browse) {
 	            //如果网页没有浏览过,则获取文章列表
 	            req.session.browse = true;
-	            return _article2.default.getArticleList({});
-	        }
+	            return _article2.default.getArticleList({
+	                pageSize: 9,
+	                pageNo: 1
+	            });
+	        } else {
+
+			}
 	    }
 
 	    //暂时这么设置,同步服务端和客户端
@@ -879,7 +885,7 @@
 	            Promise.all([getArticleList()]).then(function (datas) {
 	                //如果网页没有浏览过,则获取文章列表
 
-	                if (datas[0]) {
+	                if (datas) {
 	                    req.session.stateTree.articles = {
 	                        list: []
 	                    };

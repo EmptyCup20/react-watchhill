@@ -18,7 +18,7 @@ webpackJsonp([0,1],[
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(113);
+	var _store = __webpack_require__(115);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -7408,27 +7408,27 @@ webpackJsonp([0,1],[
 
 	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
 
-	var _HomeContainer = __webpack_require__(99);
+	var _HomeContainer = __webpack_require__(101);
 
 	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
 
-	var _Web = __webpack_require__(101);
+	var _Web = __webpack_require__(103);
 
 	var _Web2 = _interopRequireDefault(_Web);
 
-	var _Node = __webpack_require__(102);
+	var _Node = __webpack_require__(104);
 
 	var _Node2 = _interopRequireDefault(_Node);
 
-	var _About = __webpack_require__(103);
+	var _About = __webpack_require__(105);
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _LoginContainer = __webpack_require__(105);
+	var _LoginContainer = __webpack_require__(107);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _RegisterContainer = __webpack_require__(110);
+	var _RegisterContainer = __webpack_require__(112);
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
@@ -7763,15 +7763,15 @@ webpackJsonp([0,1],[
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _Header = __webpack_require__(121);
+	var _Header = __webpack_require__(98);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _Footer = __webpack_require__(122);
+	var _Footer = __webpack_require__(100);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _history = __webpack_require__(98);
+	var _history = __webpack_require__(99);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -8096,1813 +8096,6 @@ webpackJsonp([0,1],[
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _reactRouter = __webpack_require__(3);
-
-	exports.default = _reactRouter.browserHistory;
-
-/***/ },
-/* 99 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _redux = __webpack_require__(74);
-
-	var _reactRedux = __webpack_require__(67);
-
-	var _Home = __webpack_require__(100);
-
-	var _Home2 = _interopRequireDefault(_Home);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//function mapStateToProps(state) {
-	//    return {
-	//        login: state.login
-	//    }
-	//}
-
-
-	//绑定logout action到Logout组件
-	//function mapDispatchToProps(dispatch) {
-	//    return bindActionCreators(LogoutActions,dispatch);
-	//}
-
-
-	exports.default = (0, _reactRedux.connect)()(_Home2.default);
-
-	//视图组件
-	//基础库
-
-/***/ },
-/* 100 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Home = function (_Component) {
-	    _inherits(Home, _Component);
-
-	    function Home() {
-	        _classCallCheck(this, Home);
-
-	        return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
-	    }
-
-	    _createClass(Home, [{
-	        key: "render",
-	        value: function render() {
-	            return _react2.default.createElement(
-	                "div",
-	                { className: "content-wrapped" },
-	                _react2.default.createElement(
-	                    "div",
-	                    { className: "info-box head-response" },
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "info-box-content" },
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "container" },
-	                            _react2.default.createElement(
-	                                "blockquote",
-	                                null,
-	                                _react2.default.createElement(
-	                                    "h1",
-	                                    null,
-	                                    "我们始终秉持着emptyCup的精神，追求艺术与技术的完美融合"
-	                                ),
-	                                _react2.default.createElement(
-	                                    "h2",
-	                                    null,
-	                                    "一步一个脚印，一天一个开始"
-	                                ),
-	                                _react2.default.createElement(
-	                                    "footer",
-	                                    null,
-	                                    "楼宇WEB前端组 ",
-	                                    _react2.default.createElement(
-	                                        "cite",
-	                                        { title: "Source Title" },
-	                                        "一群有志向的青年、一个欢乐又不失严肃的团队"
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Home;
-	}(_react.Component);
-
-	exports.default = Home;
-
-/***/ },
-/* 101 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Web = function (_Component) {
-	    _inherits(Web, _Component);
-
-	    function Web() {
-	        _classCallCheck(this, Web);
-
-	        return _possibleConstructorReturn(this, (Web.__proto__ || Object.getPrototypeOf(Web)).apply(this, arguments));
-	    }
-
-	    _createClass(Web, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    '前端文章'
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Web;
-	}(_react.Component);
-
-	exports.default = Web;
-
-/***/ },
-/* 102 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Nodejs = function (_Component) {
-	    _inherits(Nodejs, _Component);
-
-	    function Nodejs() {
-	        _classCallCheck(this, Nodejs);
-
-	        return _possibleConstructorReturn(this, (Nodejs.__proto__ || Object.getPrototypeOf(Nodejs)).apply(this, arguments));
-	    }
-
-	    _createClass(Nodejs, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    'Nodejs文章'
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Nodejs;
-	}(_react.Component);
-
-	exports.default = Nodejs;
-
-/***/ },
-/* 103 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	__webpack_require__(104);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var About = function (_Component) {
-	    _inherits(About, _Component);
-
-	    function About() {
-	        _classCallCheck(this, About);
-
-	        return _possibleConstructorReturn(this, (About.__proto__ || Object.getPrototypeOf(About)).apply(this, arguments));
-	    }
-
-	    _createClass(About, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'content-wrapper' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'jumbotron masthead head head-response' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'container head-title' },
-	                        _react2.default.createElement(
-	                            'h1',
-	                            null,
-	                            'HIK FED'
-	                        ),
-	                        _react2.default.createElement(
-	                            'h2',
-	                            null,
-	                            'HIK FED (Hikvision The Front-End Development Community) 海康前端开发社区'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { id: 'actives', className: 'container' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'box head-response-first' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'box-header' },
-	                                _react2.default.createElement(
-	                                    'h3',
-	                                    { className: 'box-title' },
-	                                    '我们是谁'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'box-body' },
-	                                _react2.default.createElement(
-	                                    'p',
-	                                    null,
-	                                    'HIK FED是一个海康威视web前端开发社区，其中 FE 是 Front End 的缩写，D 是开发的意思:'
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'box' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'box-header' },
-	                                _react2.default.createElement(
-	                                    'h3',
-	                                    { className: 'box-title' },
-	                                    '我们的成员'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'box-body' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    { className: 'users-list clearfix' },
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        null,
-	                                        _react2.default.createElement('img', { className: 'member-img', src: '/images/default/avatar.jpg', alt: '' }),
-	                                        _react2.default.createElement(
-	                                            'a',
-	                                            { className: 'users-list-name', href: '#' },
-	                                            'liumeng'
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'box' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'box-header' },
-	                                _react2.default.createElement(
-	                                    'h3',
-	                                    { className: 'box-title' },
-	                                    '我们的理念'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'box-body' },
-	                                _react2.default.createElement(
-	                                    'p',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        null,
-	                                        'EmptyCup，'
-	                                    ),
-	                                    '不仅仅是需要保持谦逊，更多的是需要打开你的思维，发掘新的前端世界.'
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'box' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'box-header' },
-	                                _react2.default.createElement(
-	                                    'h3',
-	                                    { className: 'box-title' },
-	                                    '我们要做什么'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'box-body' },
-	                                _react2.default.createElement(
-	                                    'p',
-	                                    null,
-	                                    '前端的世界一直在变化着，在各种熟悉的语言进化中迅速的化学反应。也许你和我们一样，对前端的理解也在不断刷新。'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'p',
-	                                    null,
-	                                    '不变的永远是变化，专业，无论什么时刻，我们用专业的态度，专业的技术，开发专业的产品，分享专业的知识。'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'p',
-	                                    null,
-	                                    '我们必须专业，必须严谨，必须乐于分享！为了保持与时代并行的脚步！'
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'box' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'box-header' },
-	                                _react2.default.createElement(
-	                                    'h3',
-	                                    { className: 'box-title' },
-	                                    '加入我们'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'box-body' },
-	                                _react2.default.createElement(
-	                                    'p',
-	                                    null,
-	                                    '如果您对web前端有足够的热情，又乐于分享，请加入我们！'
-	                                )
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return About;
-	}(_react.Component);
-
-	exports.default = About;
-
-/***/ },
-/* 104 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 105 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _redux = __webpack_require__(74);
-
-	var _reactRedux = __webpack_require__(67);
-
-	var _Login = __webpack_require__(106);
-
-	var _Login2 = _interopRequireDefault(_Login);
-
-	var _login = __webpack_require__(109);
-
-	var LoginActions = _interopRequireWildcard(_login);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//绑定login store到Login组件
-
-
-	//视图组件
-	//基础库
-	//import React,{ Component } from 'react';
-	function mapStateToProps(state) {
-	    return {
-	        login: state.login
-	    };
-	}
-
-	//绑定login action到Login组件
-
-
-	//action
-	function mapDispatchToProps(dispatch) {
-	    return (0, _redux.bindActionCreators)(LoginActions, dispatch);
-	}
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
-
-/***/ },
-/* 106 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(3);
-
-	var _Input = __webpack_require__(107);
-
-	var _Input2 = _interopRequireDefault(_Input);
-
-	var _Button = __webpack_require__(97);
-
-	var _Button2 = _interopRequireDefault(_Button);
-
-	var _privateType = __webpack_require__(108);
-
-	var _httpType = __webpack_require__(94);
-
-	var _history = __webpack_require__(98);
-
-	var _history2 = _interopRequireDefault(_history);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //基础库
-
-
-	//基础组件
-
-
-	//常量
-	//私有函数常量
-	//登录状态常量
-
-	//导航
-
-
-	var Login = function (_Component) {
-	    _inherits(Login, _Component);
-
-	    function Login() {
-	        _classCallCheck(this, Login);
-
-	        return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).apply(this, arguments));
-	    }
-
-	    _createClass(Login, [{
-	        key: 'componentWillUpdate',
-
-
-	        //不能修改属性和状态,在render之前接收到新的props和state进行执行
-	        value: function componentWillUpdate(nextProps, nextState) {
-	            //console.log(nextProps.login);
-	            if (nextProps.login.logined) {
-	                _history2.default.replace({
-	                    pathname: '/index'
-	                });
-	            }
-	        }
-	    }, {
-	        key: '_onClick',
-	        value: function _onClick(e) {
-	            e.preventDefault();
-	            //console.log(this.refs.username.value);
-	            //console.log(this.refs.password.value);    //使用此种方式主要用于制作可控表单
-	            //let username = document.getElementById('username'),
-	            //    password = document.getElementById('password');
-
-
-	            var username = $('#login_username').val(),
-	                password = $('#login_password').val();
-
-	            //这里还要做一个登录格式验证
-
-	            if (username.trim() && password.trim()) {
-	                //console.log(username.value);
-	                //console.log(password.value);
-	                var user = {
-	                    author: username.trim(),
-	                    password: password.trim()
-	                };
-
-	                //console.log('user:',user);
-	                this.props.login_start(user);
-	                //console.log('this.props.login:',this.props.login);
-	            } else {
-	                alert('空');
-	            }
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var login = this.props.login; //注意这里应该查看容易中允许传入的state属性
-	            //console.log(login.loginStatus);
-
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'login-box skin-login' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'login-logo' },
-	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: '/' },
-	                        _react2.default.createElement(
-	                            'strong',
-	                            null,
-	                            'Watch'
-	                        ),
-	                        'Hill'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'login-box-body' },
-	                    _react2.default.createElement(
-	                        'p',
-	                        { className: 'login-box-msg' },
-	                        '账号登录'
-	                    ),
-	                    function () {
-	                        switch (login.loginStatus) {
-	                            case _httpType.user_no_exist:
-	                                return _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'alert alert-danger', role: 'alert' },
-	                                    '用户名不存在!'
-	                                );
-
-	                            case _httpType.password_err:
-	                                return _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'alert alert-danger', role: 'alert' },
-	                                    '密码错误!'
-	                                );
-	                            default:
-	                                break;
-	                        }
-	                    }(),
-	                    _react2.default.createElement(
-	                        'from',
-	                        null,
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { id: 'login_username', type: 'text', className: 'form-control', placeholder: '账号' }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'form-control-feedback' },
-	                                ' ',
-	                                _react2.default.createElement('i', { className: 'fa fa-user fa-fw' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { id: 'login_password', type: 'password', className: 'form-control', placeholder: '密码' }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'form-control-feedback' },
-	                                ' ',
-	                                _react2.default.createElement('i', { className: 'fa fa-lock fa-fw' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement('div', { className: 'col-xs-8' }),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-xs-4' },
-	                                _react2.default.createElement(
-	                                    _Button2.default,
-	                                    { type: 'submit', className: ' btn-primary btn-block btn-flat btn', onClick: this._onClick.bind(this) },
-	                                    '登录'
-	                                )
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Login;
-	}(_react.Component);
-
-	Login.propTypes = {
-	    login_start: _react.PropTypes.func.isRequired,
-	    login: _react.PropTypes.object.isRequired
-	};
-	exports.default = Login;
-
-/***/ },
-/* 107 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Input = function (_React$Component) {
-	    _inherits(Input, _React$Component);
-
-	    function Input() {
-	        _classCallCheck(this, Input);
-
-	        return _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).apply(this, arguments));
-	    }
-
-	    _createClass(Input, [{
-	        key: 'render',
-	        value: function render() {
-	            var _props = this.props;
-	            var type = _props.type;
-	            var className = _props.className;
-	            var id = _props.id;
-	            var placeholder = _props.placeholder;
-	            var name = _props.name;
-	            var autocomplete = _props.autocomplete;
-	            var onChange = _props.onChange;
-
-
-	            return _react2.default.createElement('input', {
-	                type: type,
-	                className: className,
-	                id: id,
-	                placeholder: placeholder,
-	                name: name,
-	                autocomplete: autocomplete,
-	                onChange: onChange
-	            });
-	        }
-
-	        //https://facebook.github.io/react/docs/top-level-api.html
-	        //https://facebook.github.io/react/docs/reusable-components.html
-
-	    }]);
-
-	    return Input;
-	}(_react2.default.Component);
-
-	Input.propTypes = {
-	    type: _react.PropTypes.string.isRequired,
-	    className: _react.PropTypes.string.isRequired,
-	    id: _react.PropTypes.string,
-	    placeholder: _react.PropTypes.string,
-	    //value: PropTypes.string,
-	    //autoFocus: React.PropTypes.bool,
-	    //required: React.PropTypes.string,
-	    name: _react.PropTypes.string,
-	    autocomplete: _react.PropTypes.oneOf(['on', 'off']),
-	    onChange: _react.PropTypes.func
-	};
-	exports.default = Input;
-
-/***/ },
-/* 108 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	//私有函数常量
-
-	module.exports = {
-	    _onClick: Symbol('_onClick')
-	};
-
-/***/ },
-/* 109 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.login_start = login_start;
-	exports.login_reveive = login_reveive;
-
-	var _actionType = __webpack_require__(93);
-
-	var _ajax = __webpack_require__(95);
-
-	var _ajax2 = _interopRequireDefault(_ajax);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * 准备开始登录
-	 * @param user -> 登录用户
-	 * @returns {Function}
-	 */
-	function login_start(user) {
-	    return function (dispatch, getState) {
-	        if (login_authen(getState())) {
-	            return dispatch(login_ajax(user)); //发起一个登录http请求
-	        } else {
-	            return Promise.resolve(); //告诉thunk无需等待,从而跳过dispatch,进入reducers?
-	        }
-	    };
-	}
-
-	/**
-	 * 判断是否已经登录,以及是否正在登录
-	 * @param state
-	 * @returns {boolean} true -> 可以进行登录操作,这一步可以控制HTTP请求数,防止恶意的重复请求
-	 */
-	function login_authen(state) {
-	    return !state.login.logined && !state.login.logining;
-	}
-
-	/**
-	 * 发起登录的ajax请求
-	 * @param user
-	 * @param pass
-	 * @returns {Function}
-	 */
-	function login_ajax(user) {
-	    return function (dispatch) {
-	        dispatch(login_request()); //挂起登录请求,防止重复请求
-	        return (0, _ajax2.default)().login(user).then(function (data) {
-	            return dispatch(login_reveive(user, data.status));
-	        }); //接受到数据后重新更新state
-	    };
-	}
-
-	/**
-	 * 挂起请求登录
-	 * @param user
-	 * @returns {{type: string, user: *}}
-	 */
-	function login_request() {
-	    return {
-	        type: _actionType.LOGIN_REQUEST
-	    };
-	}
-
-	/**
-	 * ajax数据接收处理
-	 * @param user
-	 * @param status
-	 * @returns {{type: string, user: {username: *}, status: *}}
-	 */
-
-	function login_reveive(user, status) {
-	    return {
-	        type: _actionType.LOGIN_RECEIVE,
-	        user: { username: user.username },
-	        status: status
-	    };
-	}
-
-	///**
-	// * 这里暂时放一下ajax,最后可以独立出来
-	// */
-	//
-	//function ajax(){
-	//    function req(method,url,data) {
-	//        var defered = $.Deferred();
-	//        var request = {
-	//            type: method,
-	//            url: url,
-	//            //dataType: "json"?
-	//            data: data
-	//        };
-	//
-	//        $.ajax(request)
-	//            .done(function(data){
-	//                defered.resolve(data);
-	//            })
-	//            .fail(function(){
-	//                defered.reject();
-	//            });
-	//
-	//        return defered.promise();
-	//    }
-	//
-	//    return {
-	//        login: function(data){
-	//            return req('POST','/user/login',data);
-	//        }
-	//    };
-	//}
-
-/***/ },
-/* 110 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _redux = __webpack_require__(74);
-
-	var _reactRedux = __webpack_require__(67);
-
-	var _Register = __webpack_require__(111);
-
-	var _Register2 = _interopRequireDefault(_Register);
-
-	var _register = __webpack_require__(112);
-
-	var RegisterActions = _interopRequireWildcard(_register);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//绑定login store到Login组件,注册的同时也登录了,所以绑定login store
-
-
-	//视图组件
-	//基础库
-	function mapStateToProps(state) {
-	    return {
-	        register: state.register,
-	        login: state.login
-	    };
-	}
-
-	//绑定register action到Login组件
-
-
-	//action
-	function mapDispatchToProps(dispatch) {
-	    return (0, _redux.bindActionCreators)(RegisterActions, dispatch);
-	}
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
-
-/***/ },
-/* 111 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(3);
-
-	var _Input = __webpack_require__(107);
-
-	var _Input2 = _interopRequireDefault(_Input);
-
-	var _Button = __webpack_require__(97);
-
-	var _Button2 = _interopRequireDefault(_Button);
-
-	var _privateType = __webpack_require__(108);
-
-	var _httpType = __webpack_require__(94);
-
-	var _history = __webpack_require__(98);
-
-	var _history2 = _interopRequireDefault(_history);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //基础库
-
-
-	//基础组件
-
-
-	//常量
-	//私有函数常量
-	//注册状态常量
-
-	//导航
-
-
-	var Login = function (_Component) {
-	    _inherits(Login, _Component);
-
-	    function Login() {
-	        _classCallCheck(this, Login);
-
-	        return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).apply(this, arguments));
-	    }
-
-	    _createClass(Login, [{
-	        key: 'componentWillUpdate',
-	        value: function componentWillUpdate(nextProps, nextState) {
-	            if (nextProps.login.logined) {
-	                _history2.default.replace({
-	                    pathname: '/index'
-	                });
-	            }
-	        }
-	    }, {
-	        key: '_onClick',
-	        value: function _onClick(e) {
-	            e.preventDefault();
-
-	            var username = $('#register_username').val().trim(),
-	                pass = $('#register_pass').val().trim(),
-	                password = $('#register_password').val().trim(),
-	                email = $('#register_email').val().trim(),
-	                tel = $('#register_tel').val().trim(),
-	                team = $('#register_team').val().trim();
-
-	            //这里先暂时不检测
-	            if (username && password && email && tel && team) {
-	                var user = {
-	                    author: username,
-	                    password: password,
-	                    email: email,
-	                    tel: tel,
-	                    team: team
-	                };
-
-	                this.props.register_start(user);
-	            } else {
-	                alert('请填写完整!');
-	            }
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var register = this.props.register;
-
-
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'login-box' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'login-logo' },
-	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: '/' },
-	                        _react2.default.createElement(
-	                            'strong',
-	                            null,
-	                            'Watch'
-	                        ),
-	                        'Hill'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'login-box-body' },
-	                    _react2.default.createElement(
-	                        'p',
-	                        { className: 'login-box-msg' },
-	                        '账号注册'
-	                    ),
-	                    function () {
-	                        if (register.registerStatus === _httpType.user_exist) {
-	                            return _react2.default.createElement(
-	                                'div',
-	                                { className: 'alert alert-danger', role: 'alert' },
-	                                '用户名已经存在!'
-	                            );
-	                        }
-	                    }(),
-	                    _react2.default.createElement(
-	                        'form',
-	                        null,
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { id: 'register_username', name: 'author', type: 'text', className: 'form-control', placeholder: '账号' }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'form-control-feedback' },
-	                                ' ',
-	                                _react2.default.createElement('i', { className: 'fa fa-user fa-fw' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { id: 'register_pass', name: 'pass', type: 'password', className: 'form-control', placeholder: '密码' }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'form-control-feedback' },
-	                                ' ',
-	                                _react2.default.createElement('i', { className: 'fa fa-lock fa-fw' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { id: 'register_password', name: 'password', type: 'password', className: 'form-control', placeholder: '密码确认' }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'form-control-feedback' },
-	                                ' ',
-	                                _react2.default.createElement('i', { className: 'fa fa-lock fa-fw' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { id: 'register_email', name: 'email', type: 'email', className: 'form-control', placeholder: '邮箱' }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'form-control-feedback' },
-	                                ' ',
-	                                _react2.default.createElement('i', { className: 'fa fa-comment fa-fw' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(_Input2.default, { id: 'register_tel', name: 'tel', type: 'text', className: 'form-control', placeholder: '电话' }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'form-control-feedback' },
-	                                ' ',
-	                                _react2.default.createElement('i', { className: 'fa fa-phone fa-fw' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group has-feedback' },
-	                            _react2.default.createElement(
-	                                'select',
-	                                { id: 'register_team', name: 'team', className: 'form-control' },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'Web前端组' },
-	                                    'Web前端组'
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement('div', { className: 'col-xs-8' }),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-xs-4' },
-	                                _react2.default.createElement(
-	                                    _Button2.default,
-	                                    { type: 'submit', id: 'submit', className: 'btn btn-primary btn-block btn-flat', onClick: this._onClick.bind(this) },
-	                                    '注册'
-	                                )
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Login;
-	}(_react.Component);
-
-	Login.propTypes = {
-	    register: _react.PropTypes.object.isRequired
-	};
-	exports.default = Login;
-
-/***/ },
-/* 112 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.register_start = register_start;
-
-	var _actionType = __webpack_require__(93);
-
-	var _ajax = __webpack_require__(95);
-
-	var _ajax2 = _interopRequireDefault(_ajax);
-
-	var _httpType = __webpack_require__(94);
-
-	var _login = __webpack_require__(109);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * 准备开始注册
-	 * @param user -> 注册用户
-	 * @returns {Function}
-	 */
-	function register_start(user) {
-	    return function (dispatch, getState) {
-	        if (register_authen(getState())) {
-	            return dispatch(register_ajax(user)); //发起一个登录http请求
-	        } else {
-	            return Promise.resolve(); //告诉thunk无需等待,从而跳过dispatch,进入reducers?
-	        }
-	    };
-	}
-
-	/**
-	 * 判断是否正在注册
-	 * @param state
-	 * @returns {boolean}
-	 */
-
-	function register_authen(state) {
-	    return !state.register.registering;
-	}
-
-	/**
-	 * 发起注册的ajax请求
-	 * @param user
-	 */
-	function register_ajax(user) {
-	    return function (dispatch) {
-	        dispatch(register_request()); //挂起注册请求,防止重复请求
-	        return (0, _ajax2.default)().register(user).then(function (data) {
-	            return dispatch(register_process(user, data.status));
-	        }); //接受到数据后重新更新state
-	    };
-	}
-
-	/**
-	 * 挂起注册请求
-	 * @returns {{type: string}}
-	 */
-
-	function register_request() {
-	    return {
-	        type: _actionType.REGISTER_REQUEST
-	    };
-	}
-
-	/**
-	 * 接收状态处理
-	 * @param user
-	 * @param status
-	 * @returns {{type: *, user: {username: *}, status: *}}
-	 */
-	function register_process(user, status) {
-
-	    if (status === _httpType.user_exist) {
-	        //注册失败
-	        return register_recieve(status);
-	    } else {
-	        //注册成功
-	        return function (dispatch) {
-	            dispatch((0, _login.login_reveive)(user, status)); //登录state tree
-	            return dispatch(register_recieve(status));
-	        };
-	    }
-	}
-
-	/**
-	 * 发起receive请求
-	 * @param status
-	 * @returns {{type: string, status: *}}
-	 */
-	function register_recieve(status) {
-	    return {
-	        type: _actionType.REGISTER_RECEIVE,
-	        status: status
-	    };
-	}
-
-/***/ },
-/* 113 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.default = configureStore;
-
-	var _redux = __webpack_require__(74);
-
-	var _reduxThunk = __webpack_require__(114);
-
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-	var _reduxLogger = __webpack_require__(115);
-
-	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
-
-	var _reducers = __webpack_require__(116);
-
-	var _reducers2 = _interopRequireDefault(_reducers);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//基础库
-	var loggerMiddleware = (0, _reduxLogger2.default)();
-
-	//reducers -> 改变state
-
-
-	//中间件
-	function configureStore(preloadedState) {
-		var store = (0, _redux.createStore)(_reducers2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default, loggerMiddleware));
-
-		return store;
-	}
-
-/***/ },
-/* 114 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	exports.__esModule = true;
-	function createThunkMiddleware(extraArgument) {
-	  return function (_ref) {
-	    var dispatch = _ref.dispatch;
-	    var getState = _ref.getState;
-	    return function (next) {
-	      return function (action) {
-	        if (typeof action === 'function') {
-	          return action(dispatch, getState, extraArgument);
-	        }
-
-	        return next(action);
-	      };
-	    };
-	  };
-	}
-
-	var thunk = createThunkMiddleware();
-	thunk.withExtraArgument = createThunkMiddleware;
-
-	exports['default'] = thunk;
-
-/***/ },
-/* 115 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-	function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
-
-	var repeat = function repeat(str, times) {
-	  return new Array(times + 1).join(str);
-	};
-	var pad = function pad(num, maxLength) {
-	  return repeat("0", maxLength - num.toString().length) + num;
-	};
-	var formatTime = function formatTime(time) {
-	  return "@ " + pad(time.getHours(), 2) + ":" + pad(time.getMinutes(), 2) + ":" + pad(time.getSeconds(), 2) + "." + pad(time.getMilliseconds(), 3);
-	};
-
-	// Use the new performance api to get better precision if available
-	var timer = typeof performance !== "undefined" && typeof performance.now === "function" ? performance : Date;
-
-	/**
-	 * parse the level option of createLogger
-	 *
-	 * @property {string | function | object} level - console[level]
-	 * @property {object} action
-	 * @property {array} payload
-	 * @property {string} type
-	 */
-
-	function getLogLevel(level, action, payload, type) {
-	  switch (typeof level === "undefined" ? "undefined" : _typeof(level)) {
-	    case "object":
-	      return typeof level[type] === "function" ? level[type].apply(level, _toConsumableArray(payload)) : level[type];
-	    case "function":
-	      return level(action);
-	    default:
-	      return level;
-	  }
-	}
-
-	/**
-	 * Creates logger with followed options
-	 *
-	 * @namespace
-	 * @property {object} options - options for logger
-	 * @property {string | function | object} options.level - console[level]
-	 * @property {boolean} options.duration - print duration of each action?
-	 * @property {boolean} options.timestamp - print timestamp with each action?
-	 * @property {object} options.colors - custom colors
-	 * @property {object} options.logger - implementation of the `console` API
-	 * @property {boolean} options.logErrors - should errors in action execution be caught, logged, and re-thrown?
-	 * @property {boolean} options.collapsed - is group collapsed?
-	 * @property {boolean} options.predicate - condition which resolves logger behavior
-	 * @property {function} options.stateTransformer - transform state before print
-	 * @property {function} options.actionTransformer - transform action before print
-	 * @property {function} options.errorTransformer - transform error before print
-	 */
-
-	function createLogger() {
-	  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-	  var _options$level = options.level;
-	  var level = _options$level === undefined ? "log" : _options$level;
-	  var _options$logger = options.logger;
-	  var logger = _options$logger === undefined ? console : _options$logger;
-	  var _options$logErrors = options.logErrors;
-	  var logErrors = _options$logErrors === undefined ? true : _options$logErrors;
-	  var collapsed = options.collapsed;
-	  var predicate = options.predicate;
-	  var _options$duration = options.duration;
-	  var duration = _options$duration === undefined ? false : _options$duration;
-	  var _options$timestamp = options.timestamp;
-	  var timestamp = _options$timestamp === undefined ? true : _options$timestamp;
-	  var transformer = options.transformer;
-	  var _options$stateTransfo = options.stateTransformer;
-	  var // deprecated
-	  stateTransformer = _options$stateTransfo === undefined ? function (state) {
-	    return state;
-	  } : _options$stateTransfo;
-	  var _options$actionTransf = options.actionTransformer;
-	  var actionTransformer = _options$actionTransf === undefined ? function (actn) {
-	    return actn;
-	  } : _options$actionTransf;
-	  var _options$errorTransfo = options.errorTransformer;
-	  var errorTransformer = _options$errorTransfo === undefined ? function (error) {
-	    return error;
-	  } : _options$errorTransfo;
-	  var _options$colors = options.colors;
-	  var colors = _options$colors === undefined ? {
-	    title: function title() {
-	      return "#000000";
-	    },
-	    prevState: function prevState() {
-	      return "#9E9E9E";
-	    },
-	    action: function action() {
-	      return "#03A9F4";
-	    },
-	    nextState: function nextState() {
-	      return "#4CAF50";
-	    },
-	    error: function error() {
-	      return "#F20404";
-	    }
-	  } : _options$colors;
-
-	  // exit if console undefined
-
-	  if (typeof logger === "undefined") {
-	    return function () {
-	      return function (next) {
-	        return function (action) {
-	          return next(action);
-	        };
-	      };
-	    };
-	  }
-
-	  if (transformer) {
-	    console.error("Option 'transformer' is deprecated, use stateTransformer instead");
-	  }
-
-	  var logBuffer = [];
-	  function printBuffer() {
-	    logBuffer.forEach(function (logEntry, key) {
-	      var started = logEntry.started;
-	      var startedTime = logEntry.startedTime;
-	      var action = logEntry.action;
-	      var prevState = logEntry.prevState;
-	      var error = logEntry.error;
-	      var took = logEntry.took;
-	      var nextState = logEntry.nextState;
-
-	      var nextEntry = logBuffer[key + 1];
-	      if (nextEntry) {
-	        nextState = nextEntry.prevState;
-	        took = nextEntry.started - started;
-	      }
-	      // message
-	      var formattedAction = actionTransformer(action);
-	      var isCollapsed = typeof collapsed === "function" ? collapsed(function () {
-	        return nextState;
-	      }, action) : collapsed;
-
-	      var formattedTime = formatTime(startedTime);
-	      var titleCSS = colors.title ? "color: " + colors.title(formattedAction) + ";" : null;
-	      var title = "action " + (timestamp ? formattedTime : "") + " " + formattedAction.type + " " + (duration ? "(in " + took.toFixed(2) + " ms)" : "");
-
-	      // render
-	      try {
-	        if (isCollapsed) {
-	          if (colors.title) logger.groupCollapsed("%c " + title, titleCSS);else logger.groupCollapsed(title);
-	        } else {
-	          if (colors.title) logger.group("%c " + title, titleCSS);else logger.group(title);
-	        }
-	      } catch (e) {
-	        logger.log(title);
-	      }
-
-	      var prevStateLevel = getLogLevel(level, formattedAction, [prevState], "prevState");
-	      var actionLevel = getLogLevel(level, formattedAction, [formattedAction], "action");
-	      var errorLevel = getLogLevel(level, formattedAction, [error, prevState], "error");
-	      var nextStateLevel = getLogLevel(level, formattedAction, [nextState], "nextState");
-
-	      if (prevStateLevel) {
-	        if (colors.prevState) logger[prevStateLevel]("%c prev state", "color: " + colors.prevState(prevState) + "; font-weight: bold", prevState);else logger[prevStateLevel]("prev state", prevState);
-	      }
-
-	      if (actionLevel) {
-	        if (colors.action) logger[actionLevel]("%c action", "color: " + colors.action(formattedAction) + "; font-weight: bold", formattedAction);else logger[actionLevel]("action", formattedAction);
-	      }
-
-	      if (error && errorLevel) {
-	        if (colors.error) logger[errorLevel]("%c error", "color: " + colors.error(error, prevState) + "; font-weight: bold", error);else logger[errorLevel]("error", error);
-	      }
-
-	      if (nextStateLevel) {
-	        if (colors.nextState) logger[nextStateLevel]("%c next state", "color: " + colors.nextState(nextState) + "; font-weight: bold", nextState);else logger[nextStateLevel]("next state", nextState);
-	      }
-
-	      try {
-	        logger.groupEnd();
-	      } catch (e) {
-	        logger.log("—— log end ——");
-	      }
-	    });
-	    logBuffer.length = 0;
-	  }
-
-	  return function (_ref) {
-	    var getState = _ref.getState;
-	    return function (next) {
-	      return function (action) {
-	        // exit early if predicate function returns false
-	        if (typeof predicate === "function" && !predicate(getState, action)) {
-	          return next(action);
-	        }
-
-	        var logEntry = {};
-	        logBuffer.push(logEntry);
-
-	        logEntry.started = timer.now();
-	        logEntry.startedTime = new Date();
-	        logEntry.prevState = stateTransformer(getState());
-	        logEntry.action = action;
-
-	        var returnedValue = undefined;
-	        if (logErrors) {
-	          try {
-	            returnedValue = next(action);
-	          } catch (e) {
-	            logEntry.error = errorTransformer(e);
-	          }
-	        } else {
-	          returnedValue = next(action);
-	        }
-
-	        logEntry.took = timer.now() - logEntry.started;
-	        logEntry.nextState = stateTransformer(getState());
-
-	        printBuffer();
-
-	        if (logEntry.error) throw logEntry.error;
-	        return returnedValue;
-	      };
-	    };
-	  };
-	}
-
-	module.exports = createLogger;
-
-/***/ },
-/* 116 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _redux = __webpack_require__(74);
-
-	var _login = __webpack_require__(117);
-
-	var _login2 = _interopRequireDefault(_login);
-
-	var _register = __webpack_require__(118);
-
-	var _register2 = _interopRequireDefault(_register);
-
-	var _articles = __webpack_require__(120);
-
-	var _articles2 = _interopRequireDefault(_articles);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//注册
-	//基础库
-	var reducer = (0, _redux.combineReducers)({
-		login: _login2.default,
-		register: _register2.default,
-		articles: _articles2.default
-	});
-	//文章
-
-
-	//登录
-	exports.default = reducer;
-
-/***/ },
-/* 117 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _actionType = __webpack_require__(93);
-
-	var _httpType = __webpack_require__(94);
-
-	var login_status = function login_status(state, action) {
-		switch (action.status) {
-
-			case _httpType.user_no_exist:
-				return {
-					//logined:false,
-					loginStatus: _httpType.user_no_exist,
-					logining: false
-					//loginUser:{}
-				};
-
-			case _httpType.password_err:
-				return {
-					//logined:false,
-					loginStatus: _httpType.password_err,
-					logining: false
-					//loginUser:{}
-				};
-
-			case _httpType.success:
-				return {
-					logined: true,
-					loginStatus: _httpType.success,
-					loginUser: action.user,
-					logining: false
-				};
-
-			default:
-				return state;
-		}
-	};
-
-	var login = function login() {
-		var state = arguments.length <= 0 || arguments[0] === undefined ? {
-			logined: false,
-			loginStatus: _httpType.init, //登录状态
-			logining: false, //有没有正在登录标志
-			loginUser: {}
-		} : arguments[0];
-		var action = arguments[1];
-
-
-		switch (action.type) {
-
-			case _actionType.LOGIN_REQUEST:
-				//发起登录请求
-				return _extends({}, state, {
-					logining: true
-				});
-
-			case _actionType.LOGIN_RECEIVE:
-				//接受登录结果
-				return _extends({}, state, login_status(state, action));
-
-			case _actionType.LOGOUT_RECEIVE:
-				return _extends({}, state, {
-					logined: false,
-					loginUser: {},
-					loginStatus: _httpType.init,
-					logining: false
-				});
-
-			default:
-				return state;
-		}
-	};
-
-	exports.default = login;
-
-/***/ },
-/* 118 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _httpType = __webpack_require__(94);
-
-	var _actionType = __webpack_require__(93);
-
-	var register = function register() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
-	        registering: false, //正在注册
-	        registerStatus: _httpType.init //注册状态
-	    } : arguments[0];
-	    var action = arguments[1];
-
-
-	    switch (action.type) {
-	        case _actionType.REGISTER_REQUEST:
-	            return _extends({}, state, {
-
-	                registering: true
-	            });
-
-	        case _actionType.REGISTER_RECEIVE:
-	            return _extends({}, state, {
-	                registering: false,
-	                registerStatus: action.status
-	            });
-
-	        default:
-	            return state;
-	    }
-	};
-
-	exports.default = register;
-
-/***/ },
-/* 119 */,
-/* 120 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var article = function article() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
-	        list: []
-	    } : arguments[0];
-	    var action = arguments[1];
-
-
-	    switch (action.type) {
-	        default:
-	            return state;
-	    }
-	};
-
-	exports.default = article;
-
-/***/ },
-/* 121 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
@@ -9918,7 +8111,7 @@ webpackJsonp([0,1],[
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _history = __webpack_require__(98);
+	var _history = __webpack_require__(99);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -10151,7 +8344,21 @@ webpackJsonp([0,1],[
 	exports.default = Header;
 
 /***/ },
-/* 122 */
+/* 99 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactRouter = __webpack_require__(3);
+
+	exports.default = _reactRouter.browserHistory;
+
+/***/ },
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10199,6 +8406,1798 @@ webpackJsonp([0,1],[
 	}(_react.Component);
 
 	exports.default = Footer;
+
+/***/ },
+/* 101 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(74);
+
+	var _reactRedux = __webpack_require__(67);
+
+	var _Home = __webpack_require__(102);
+
+	var _Home2 = _interopRequireDefault(_Home);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//function mapStateToProps(state) {
+	//    return {
+	//        login: state.login
+	//    }
+	//}
+
+
+	//绑定logout action到Logout组件
+	//function mapDispatchToProps(dispatch) {
+	//    return bindActionCreators(LogoutActions,dispatch);
+	//}
+
+
+	exports.default = (0, _reactRedux.connect)()(_Home2.default);
+
+	//视图组件
+	//基础库
+
+/***/ },
+/* 102 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Home = function (_Component) {
+	    _inherits(Home, _Component);
+
+	    function Home() {
+	        _classCallCheck(this, Home);
+
+	        return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
+	    }
+
+	    _createClass(Home, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "content-wrapped" },
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "info-box head-response" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "info-box-content" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "container" },
+	                            _react2.default.createElement(
+	                                "blockquote",
+	                                null,
+	                                _react2.default.createElement(
+	                                    "h1",
+	                                    null,
+	                                    "我们始终秉持着emptyCup的精神，追求艺术与技术的完美融合"
+	                                ),
+	                                _react2.default.createElement(
+	                                    "h2",
+	                                    null,
+	                                    "一步一个脚印，一天一个开始"
+	                                ),
+	                                _react2.default.createElement(
+	                                    "footer",
+	                                    null,
+	                                    "楼宇WEB前端组 ",
+	                                    _react2.default.createElement(
+	                                        "cite",
+	                                        { title: "Source Title" },
+	                                        "一群有志向的青年、一个欢乐又不失严肃的团队"
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Home;
+	}(_react.Component);
+
+	exports.default = Home;
+
+/***/ },
+/* 103 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Web = function (_Component) {
+	    _inherits(Web, _Component);
+
+	    function Web() {
+	        _classCallCheck(this, Web);
+
+	        return _possibleConstructorReturn(this, (Web.__proto__ || Object.getPrototypeOf(Web)).apply(this, arguments));
+	    }
+
+	    _createClass(Web, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    '前端文章'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Web;
+	}(_react.Component);
+
+	exports.default = Web;
+
+/***/ },
+/* 104 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Nodejs = function (_Component) {
+	    _inherits(Nodejs, _Component);
+
+	    function Nodejs() {
+	        _classCallCheck(this, Nodejs);
+
+	        return _possibleConstructorReturn(this, (Nodejs.__proto__ || Object.getPrototypeOf(Nodejs)).apply(this, arguments));
+	    }
+
+	    _createClass(Nodejs, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'Nodejs文章'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Nodejs;
+	}(_react.Component);
+
+	exports.default = Nodejs;
+
+/***/ },
+/* 105 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	__webpack_require__(106);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var About = function (_Component) {
+	    _inherits(About, _Component);
+
+	    function About() {
+	        _classCallCheck(this, About);
+
+	        return _possibleConstructorReturn(this, (About.__proto__ || Object.getPrototypeOf(About)).apply(this, arguments));
+	    }
+
+	    _createClass(About, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'content-wrapper' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'jumbotron masthead head head-response' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'container head-title' },
+	                        _react2.default.createElement(
+	                            'h1',
+	                            null,
+	                            'HIK FED'
+	                        ),
+	                        _react2.default.createElement(
+	                            'h2',
+	                            null,
+	                            'HIK FED (Hikvision The Front-End Development Community) 海康前端开发社区'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { id: 'actives', className: 'container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box head-response-first' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '我们是谁'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    'HIK FED是一个海康威视web前端开发社区，其中 FE 是 Front End 的缩写，D 是开发的意思:'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '我们的成员'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'ul',
+	                                    { className: 'users-list clearfix' },
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement('img', { className: 'member-img', src: '/images/default/avatar.jpg', alt: '' }),
+	                                        _react2.default.createElement(
+	                                            'a',
+	                                            { className: 'users-list-name', href: '#' },
+	                                            'liumeng'
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '我们的理念'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        'strong',
+	                                        null,
+	                                        'EmptyCup，'
+	                                    ),
+	                                    '不仅仅是需要保持谦逊，更多的是需要打开你的思维，发掘新的前端世界.'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '我们要做什么'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    '前端的世界一直在变化着，在各种熟悉的语言进化中迅速的化学反应。也许你和我们一样，对前端的理解也在不断刷新。'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    '不变的永远是变化，专业，无论什么时刻，我们用专业的态度，专业的技术，开发专业的产品，分享专业的知识。'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    '我们必须专业，必须严谨，必须乐于分享！为了保持与时代并行的脚步！'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-header' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'box-title' },
+	                                    '加入我们'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'box-body' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    '如果您对web前端有足够的热情，又乐于分享，请加入我们！'
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return About;
+	}(_react.Component);
+
+	exports.default = About;
+
+/***/ },
+/* 106 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 107 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _redux = __webpack_require__(74);
+
+	var _reactRedux = __webpack_require__(67);
+
+	var _Login = __webpack_require__(108);
+
+	var _Login2 = _interopRequireDefault(_Login);
+
+	var _login = __webpack_require__(111);
+
+	var LoginActions = _interopRequireWildcard(_login);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//绑定login store到Login组件
+
+
+	//视图组件
+	//基础库
+	//import React,{ Component } from 'react';
+	function mapStateToProps(state) {
+	    return {
+	        login: state.login
+	    };
+	}
+
+	//绑定login action到Login组件
+
+
+	//action
+	function mapDispatchToProps(dispatch) {
+	    return (0, _redux.bindActionCreators)(LoginActions, dispatch);
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
+
+/***/ },
+/* 108 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(3);
+
+	var _Input = __webpack_require__(109);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _Button = __webpack_require__(97);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	var _privateType = __webpack_require__(110);
+
+	var _httpType = __webpack_require__(94);
+
+	var _history = __webpack_require__(99);
+
+	var _history2 = _interopRequireDefault(_history);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //基础库
+
+
+	//基础组件
+
+
+	//常量
+	//私有函数常量
+	//登录状态常量
+
+	//导航
+
+
+	var Login = function (_Component) {
+	    _inherits(Login, _Component);
+
+	    function Login() {
+	        _classCallCheck(this, Login);
+
+	        return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).apply(this, arguments));
+	    }
+
+	    _createClass(Login, [{
+	        key: 'componentWillUpdate',
+
+
+	        //不能修改属性和状态,在render之前接收到新的props和state进行执行
+	        value: function componentWillUpdate(nextProps, nextState) {
+	            //console.log(nextProps.login);
+	            if (nextProps.login.logined) {
+	                _history2.default.replace({
+	                    pathname: '/index'
+	                });
+	            }
+	        }
+	    }, {
+	        key: '_onClick',
+	        value: function _onClick(e) {
+	            e.preventDefault();
+	            //console.log(this.refs.username.value);
+	            //console.log(this.refs.password.value);    //使用此种方式主要用于制作可控表单
+	            //let username = document.getElementById('username'),
+	            //    password = document.getElementById('password');
+
+
+	            var username = $('#login_username').val(),
+	                password = $('#login_password').val();
+
+	            //这里还要做一个登录格式验证
+
+	            if (username.trim() && password.trim()) {
+	                //console.log(username.value);
+	                //console.log(password.value);
+	                var user = {
+	                    author: username.trim(),
+	                    password: password.trim()
+	                };
+
+	                //console.log('user:',user);
+	                this.props.login_start(user);
+	                //console.log('this.props.login:',this.props.login);
+	            } else {
+	                alert('空');
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var login = this.props.login; //注意这里应该查看容易中允许传入的state属性
+	            //console.log(login.loginStatus);
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'login-box skin-login' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'login-logo' },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/' },
+	                        _react2.default.createElement(
+	                            'strong',
+	                            null,
+	                            'Watch'
+	                        ),
+	                        'Hill'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'login-box-body' },
+	                    _react2.default.createElement(
+	                        'p',
+	                        { className: 'login-box-msg' },
+	                        '账号登录'
+	                    ),
+	                    function () {
+	                        switch (login.loginStatus) {
+	                            case _httpType.user_no_exist:
+	                                return _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'alert alert-danger', role: 'alert' },
+	                                    '用户名不存在!'
+	                                );
+
+	                            case _httpType.password_err:
+	                                return _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'alert alert-danger', role: 'alert' },
+	                                    '密码错误!'
+	                                );
+	                            default:
+	                                break;
+	                        }
+	                    }(),
+	                    _react2.default.createElement(
+	                        'from',
+	                        null,
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(_Input2.default, { id: 'login_username', type: 'text', className: 'form-control', placeholder: '账号' }),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'form-control-feedback' },
+	                                ' ',
+	                                _react2.default.createElement('i', { className: 'fa fa-user fa-fw' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(_Input2.default, { id: 'login_password', type: 'password', className: 'form-control', placeholder: '密码' }),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'form-control-feedback' },
+	                                ' ',
+	                                _react2.default.createElement('i', { className: 'fa fa-lock fa-fw' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement('div', { className: 'col-xs-8' }),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-4' },
+	                                _react2.default.createElement(
+	                                    _Button2.default,
+	                                    { type: 'submit', className: ' btn-primary btn-block btn-flat btn', onClick: this._onClick.bind(this) },
+	                                    '登录'
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Login;
+	}(_react.Component);
+
+	Login.propTypes = {
+	    login_start: _react.PropTypes.func.isRequired,
+	    login: _react.PropTypes.object.isRequired
+	};
+	exports.default = Login;
+
+/***/ },
+/* 109 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Input = function (_React$Component) {
+	    _inherits(Input, _React$Component);
+
+	    function Input() {
+	        _classCallCheck(this, Input);
+
+	        return _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).apply(this, arguments));
+	    }
+
+	    _createClass(Input, [{
+	        key: 'render',
+	        value: function render() {
+	            var _props = this.props;
+	            var type = _props.type;
+	            var className = _props.className;
+	            var id = _props.id;
+	            var placeholder = _props.placeholder;
+	            var name = _props.name;
+	            var autocomplete = _props.autocomplete;
+	            var onChange = _props.onChange;
+
+
+	            return _react2.default.createElement('input', {
+	                type: type,
+	                className: className,
+	                id: id,
+	                placeholder: placeholder,
+	                name: name,
+	                autocomplete: autocomplete,
+	                onChange: onChange
+	            });
+	        }
+
+	        //https://facebook.github.io/react/docs/top-level-api.html
+	        //https://facebook.github.io/react/docs/reusable-components.html
+
+	    }]);
+
+	    return Input;
+	}(_react2.default.Component);
+
+	Input.propTypes = {
+	    type: _react.PropTypes.string.isRequired,
+	    className: _react.PropTypes.string.isRequired,
+	    id: _react.PropTypes.string,
+	    placeholder: _react.PropTypes.string,
+	    //value: PropTypes.string,
+	    //autoFocus: React.PropTypes.bool,
+	    //required: React.PropTypes.string,
+	    name: _react.PropTypes.string,
+	    autocomplete: _react.PropTypes.oneOf(['on', 'off']),
+	    onChange: _react.PropTypes.func
+	};
+	exports.default = Input;
+
+/***/ },
+/* 110 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	//私有函数常量
+
+	module.exports = {
+	    _onClick: Symbol('_onClick')
+	};
+
+/***/ },
+/* 111 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.login_start = login_start;
+	exports.login_reveive = login_reveive;
+
+	var _actionType = __webpack_require__(93);
+
+	var _ajax = __webpack_require__(95);
+
+	var _ajax2 = _interopRequireDefault(_ajax);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * 准备开始登录
+	 * @param user -> 登录用户
+	 * @returns {Function}
+	 */
+	function login_start(user) {
+	    return function (dispatch, getState) {
+	        if (login_authen(getState())) {
+	            return dispatch(login_ajax(user)); //发起一个登录http请求
+	        } else {
+	            return Promise.resolve(); //告诉thunk无需等待,从而跳过dispatch,进入reducers?
+	        }
+	    };
+	}
+
+	/**
+	 * 判断是否已经登录,以及是否正在登录
+	 * @param state
+	 * @returns {boolean} true -> 可以进行登录操作,这一步可以控制HTTP请求数,防止恶意的重复请求
+	 */
+	function login_authen(state) {
+	    return !state.login.logined && !state.login.logining;
+	}
+
+	/**
+	 * 发起登录的ajax请求
+	 * @param user
+	 * @param pass
+	 * @returns {Function}
+	 */
+	function login_ajax(user) {
+	    return function (dispatch) {
+	        dispatch(login_request()); //挂起登录请求,防止重复请求
+	        return (0, _ajax2.default)().login(user).then(function (data) {
+	            return dispatch(login_reveive(user, data.status));
+	        }); //接受到数据后重新更新state
+	    };
+	}
+
+	/**
+	 * 挂起请求登录
+	 * @param user
+	 * @returns {{type: string, user: *}}
+	 */
+	function login_request() {
+	    return {
+	        type: _actionType.LOGIN_REQUEST
+	    };
+	}
+
+	/**
+	 * ajax数据接收处理
+	 * @param user
+	 * @param status
+	 * @returns {{type: string, user: {username: *}, status: *}}
+	 */
+
+	function login_reveive(user, status) {
+	    return {
+	        type: _actionType.LOGIN_RECEIVE,
+	        user: { username: user.username },
+	        status: status
+	    };
+	}
+
+	///**
+	// * 这里暂时放一下ajax,最后可以独立出来
+	// */
+	//
+	//function ajax(){
+	//    function req(method,url,data) {
+	//        var defered = $.Deferred();
+	//        var request = {
+	//            type: method,
+	//            url: url,
+	//            //dataType: "json"?
+	//            data: data
+	//        };
+	//
+	//        $.ajax(request)
+	//            .done(function(data){
+	//                defered.resolve(data);
+	//            })
+	//            .fail(function(){
+	//                defered.reject();
+	//            });
+	//
+	//        return defered.promise();
+	//    }
+	//
+	//    return {
+	//        login: function(data){
+	//            return req('POST','/user/login',data);
+	//        }
+	//    };
+	//}
+
+/***/ },
+/* 112 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _redux = __webpack_require__(74);
+
+	var _reactRedux = __webpack_require__(67);
+
+	var _Register = __webpack_require__(113);
+
+	var _Register2 = _interopRequireDefault(_Register);
+
+	var _register = __webpack_require__(114);
+
+	var RegisterActions = _interopRequireWildcard(_register);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//绑定login store到Login组件,注册的同时也登录了,所以绑定login store
+
+
+	//视图组件
+	//基础库
+	function mapStateToProps(state) {
+	    return {
+	        register: state.register,
+	        login: state.login
+	    };
+	}
+
+	//绑定register action到Login组件
+
+
+	//action
+	function mapDispatchToProps(dispatch) {
+	    return (0, _redux.bindActionCreators)(RegisterActions, dispatch);
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
+
+/***/ },
+/* 113 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(3);
+
+	var _Input = __webpack_require__(109);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _Button = __webpack_require__(97);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	var _privateType = __webpack_require__(110);
+
+	var _httpType = __webpack_require__(94);
+
+	var _history = __webpack_require__(99);
+
+	var _history2 = _interopRequireDefault(_history);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //基础库
+
+
+	//基础组件
+
+
+	//常量
+	//私有函数常量
+	//注册状态常量
+
+	//导航
+
+
+	var Login = function (_Component) {
+	    _inherits(Login, _Component);
+
+	    function Login() {
+	        _classCallCheck(this, Login);
+
+	        return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).apply(this, arguments));
+	    }
+
+	    _createClass(Login, [{
+	        key: 'componentWillUpdate',
+	        value: function componentWillUpdate(nextProps, nextState) {
+	            if (nextProps.login.logined) {
+	                _history2.default.replace({
+	                    pathname: '/index'
+	                });
+	            }
+	        }
+	    }, {
+	        key: '_onClick',
+	        value: function _onClick(e) {
+	            e.preventDefault();
+
+	            var username = $('#register_username').val().trim(),
+	                pass = $('#register_pass').val().trim(),
+	                password = $('#register_password').val().trim(),
+	                email = $('#register_email').val().trim(),
+	                tel = $('#register_tel').val().trim(),
+	                team = $('#register_team').val().trim();
+
+	            //这里先暂时不检测
+	            if (username && password && email && tel && team) {
+	                var user = {
+	                    author: username,
+	                    password: password,
+	                    email: email,
+	                    tel: tel,
+	                    team: team
+	                };
+
+	                this.props.register_start(user);
+	            } else {
+	                alert('请填写完整!');
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var register = this.props.register;
+
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'login-box' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'login-logo' },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/' },
+	                        _react2.default.createElement(
+	                            'strong',
+	                            null,
+	                            'Watch'
+	                        ),
+	                        'Hill'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'login-box-body' },
+	                    _react2.default.createElement(
+	                        'p',
+	                        { className: 'login-box-msg' },
+	                        '账号注册'
+	                    ),
+	                    function () {
+	                        if (register.registerStatus === _httpType.user_exist) {
+	                            return _react2.default.createElement(
+	                                'div',
+	                                { className: 'alert alert-danger', role: 'alert' },
+	                                '用户名已经存在!'
+	                            );
+	                        }
+	                    }(),
+	                    _react2.default.createElement(
+	                        'form',
+	                        null,
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(_Input2.default, { id: 'register_username', name: 'author', type: 'text', className: 'form-control', placeholder: '账号' }),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'form-control-feedback' },
+	                                ' ',
+	                                _react2.default.createElement('i', { className: 'fa fa-user fa-fw' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(_Input2.default, { id: 'register_pass', name: 'pass', type: 'password', className: 'form-control', placeholder: '密码' }),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'form-control-feedback' },
+	                                ' ',
+	                                _react2.default.createElement('i', { className: 'fa fa-lock fa-fw' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(_Input2.default, { id: 'register_password', name: 'password', type: 'password', className: 'form-control', placeholder: '密码确认' }),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'form-control-feedback' },
+	                                ' ',
+	                                _react2.default.createElement('i', { className: 'fa fa-lock fa-fw' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(_Input2.default, { id: 'register_email', name: 'email', type: 'email', className: 'form-control', placeholder: '邮箱' }),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'form-control-feedback' },
+	                                ' ',
+	                                _react2.default.createElement('i', { className: 'fa fa-comment fa-fw' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(_Input2.default, { id: 'register_tel', name: 'tel', type: 'text', className: 'form-control', placeholder: '电话' }),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'form-control-feedback' },
+	                                ' ',
+	                                _react2.default.createElement('i', { className: 'fa fa-phone fa-fw' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group has-feedback' },
+	                            _react2.default.createElement(
+	                                'select',
+	                                { id: 'register_team', name: 'team', className: 'form-control' },
+	                                _react2.default.createElement(
+	                                    'option',
+	                                    { value: 'Web前端组' },
+	                                    'Web前端组'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement('div', { className: 'col-xs-8' }),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-xs-4' },
+	                                _react2.default.createElement(
+	                                    _Button2.default,
+	                                    { type: 'submit', id: 'submit', className: 'btn btn-primary btn-block btn-flat', onClick: this._onClick.bind(this) },
+	                                    '注册'
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Login;
+	}(_react.Component);
+
+	Login.propTypes = {
+	    register: _react.PropTypes.object.isRequired
+	};
+	exports.default = Login;
+
+/***/ },
+/* 114 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.register_start = register_start;
+
+	var _actionType = __webpack_require__(93);
+
+	var _ajax = __webpack_require__(95);
+
+	var _ajax2 = _interopRequireDefault(_ajax);
+
+	var _httpType = __webpack_require__(94);
+
+	var _login = __webpack_require__(111);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * 准备开始注册
+	 * @param user -> 注册用户
+	 * @returns {Function}
+	 */
+	function register_start(user) {
+	    return function (dispatch, getState) {
+	        if (register_authen(getState())) {
+	            return dispatch(register_ajax(user)); //发起一个登录http请求
+	        } else {
+	            return Promise.resolve(); //告诉thunk无需等待,从而跳过dispatch,进入reducers?
+	        }
+	    };
+	}
+
+	/**
+	 * 判断是否正在注册
+	 * @param state
+	 * @returns {boolean}
+	 */
+
+	function register_authen(state) {
+	    return !state.register.registering;
+	}
+
+	/**
+	 * 发起注册的ajax请求
+	 * @param user
+	 */
+	function register_ajax(user) {
+	    return function (dispatch) {
+	        dispatch(register_request()); //挂起注册请求,防止重复请求
+	        return (0, _ajax2.default)().register(user).then(function (data) {
+	            return dispatch(register_process(user, data.status));
+	        }); //接受到数据后重新更新state
+	    };
+	}
+
+	/**
+	 * 挂起注册请求
+	 * @returns {{type: string}}
+	 */
+
+	function register_request() {
+	    return {
+	        type: _actionType.REGISTER_REQUEST
+	    };
+	}
+
+	/**
+	 * 接收状态处理
+	 * @param user
+	 * @param status
+	 * @returns {{type: *, user: {username: *}, status: *}}
+	 */
+	function register_process(user, status) {
+
+	    if (status === _httpType.user_exist) {
+	        //注册失败
+	        return register_recieve(status);
+	    } else {
+	        //注册成功
+	        return function (dispatch) {
+	            dispatch((0, _login.login_reveive)(user, status)); //登录state tree
+	            return dispatch(register_recieve(status));
+	        };
+	    }
+	}
+
+	/**
+	 * 发起receive请求
+	 * @param status
+	 * @returns {{type: string, status: *}}
+	 */
+	function register_recieve(status) {
+	    return {
+	        type: _actionType.REGISTER_RECEIVE,
+	        status: status
+	    };
+	}
+
+/***/ },
+/* 115 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = configureStore;
+
+	var _redux = __webpack_require__(74);
+
+	var _reduxThunk = __webpack_require__(116);
+
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+	var _reduxLogger = __webpack_require__(117);
+
+	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+
+	var _reducers = __webpack_require__(118);
+
+	var _reducers2 = _interopRequireDefault(_reducers);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//基础库
+	var loggerMiddleware = (0, _reduxLogger2.default)();
+
+	//reducers -> 改变state
+
+
+	//中间件
+	function configureStore(preloadedState) {
+		var store = (0, _redux.createStore)(_reducers2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default, loggerMiddleware));
+
+		return store;
+	}
+
+/***/ },
+/* 116 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	function createThunkMiddleware(extraArgument) {
+	  return function (_ref) {
+	    var dispatch = _ref.dispatch;
+	    var getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        if (typeof action === 'function') {
+	          return action(dispatch, getState, extraArgument);
+	        }
+
+	        return next(action);
+	      };
+	    };
+	  };
+	}
+
+	var thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+
+	exports['default'] = thunk;
+
+/***/ },
+/* 117 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
+	var repeat = function repeat(str, times) {
+	  return new Array(times + 1).join(str);
+	};
+	var pad = function pad(num, maxLength) {
+	  return repeat("0", maxLength - num.toString().length) + num;
+	};
+	var formatTime = function formatTime(time) {
+	  return "@ " + pad(time.getHours(), 2) + ":" + pad(time.getMinutes(), 2) + ":" + pad(time.getSeconds(), 2) + "." + pad(time.getMilliseconds(), 3);
+	};
+
+	// Use the new performance api to get better precision if available
+	var timer = typeof performance !== "undefined" && typeof performance.now === "function" ? performance : Date;
+
+	/**
+	 * parse the level option of createLogger
+	 *
+	 * @property {string | function | object} level - console[level]
+	 * @property {object} action
+	 * @property {array} payload
+	 * @property {string} type
+	 */
+
+	function getLogLevel(level, action, payload, type) {
+	  switch (typeof level === "undefined" ? "undefined" : _typeof(level)) {
+	    case "object":
+	      return typeof level[type] === "function" ? level[type].apply(level, _toConsumableArray(payload)) : level[type];
+	    case "function":
+	      return level(action);
+	    default:
+	      return level;
+	  }
+	}
+
+	/**
+	 * Creates logger with followed options
+	 *
+	 * @namespace
+	 * @property {object} options - options for logger
+	 * @property {string | function | object} options.level - console[level]
+	 * @property {boolean} options.duration - print duration of each action?
+	 * @property {boolean} options.timestamp - print timestamp with each action?
+	 * @property {object} options.colors - custom colors
+	 * @property {object} options.logger - implementation of the `console` API
+	 * @property {boolean} options.logErrors - should errors in action execution be caught, logged, and re-thrown?
+	 * @property {boolean} options.collapsed - is group collapsed?
+	 * @property {boolean} options.predicate - condition which resolves logger behavior
+	 * @property {function} options.stateTransformer - transform state before print
+	 * @property {function} options.actionTransformer - transform action before print
+	 * @property {function} options.errorTransformer - transform error before print
+	 */
+
+	function createLogger() {
+	  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	  var _options$level = options.level;
+	  var level = _options$level === undefined ? "log" : _options$level;
+	  var _options$logger = options.logger;
+	  var logger = _options$logger === undefined ? console : _options$logger;
+	  var _options$logErrors = options.logErrors;
+	  var logErrors = _options$logErrors === undefined ? true : _options$logErrors;
+	  var collapsed = options.collapsed;
+	  var predicate = options.predicate;
+	  var _options$duration = options.duration;
+	  var duration = _options$duration === undefined ? false : _options$duration;
+	  var _options$timestamp = options.timestamp;
+	  var timestamp = _options$timestamp === undefined ? true : _options$timestamp;
+	  var transformer = options.transformer;
+	  var _options$stateTransfo = options.stateTransformer;
+	  var // deprecated
+	  stateTransformer = _options$stateTransfo === undefined ? function (state) {
+	    return state;
+	  } : _options$stateTransfo;
+	  var _options$actionTransf = options.actionTransformer;
+	  var actionTransformer = _options$actionTransf === undefined ? function (actn) {
+	    return actn;
+	  } : _options$actionTransf;
+	  var _options$errorTransfo = options.errorTransformer;
+	  var errorTransformer = _options$errorTransfo === undefined ? function (error) {
+	    return error;
+	  } : _options$errorTransfo;
+	  var _options$colors = options.colors;
+	  var colors = _options$colors === undefined ? {
+	    title: function title() {
+	      return "#000000";
+	    },
+	    prevState: function prevState() {
+	      return "#9E9E9E";
+	    },
+	    action: function action() {
+	      return "#03A9F4";
+	    },
+	    nextState: function nextState() {
+	      return "#4CAF50";
+	    },
+	    error: function error() {
+	      return "#F20404";
+	    }
+	  } : _options$colors;
+
+	  // exit if console undefined
+
+	  if (typeof logger === "undefined") {
+	    return function () {
+	      return function (next) {
+	        return function (action) {
+	          return next(action);
+	        };
+	      };
+	    };
+	  }
+
+	  if (transformer) {
+	    console.error("Option 'transformer' is deprecated, use stateTransformer instead");
+	  }
+
+	  var logBuffer = [];
+	  function printBuffer() {
+	    logBuffer.forEach(function (logEntry, key) {
+	      var started = logEntry.started;
+	      var startedTime = logEntry.startedTime;
+	      var action = logEntry.action;
+	      var prevState = logEntry.prevState;
+	      var error = logEntry.error;
+	      var took = logEntry.took;
+	      var nextState = logEntry.nextState;
+
+	      var nextEntry = logBuffer[key + 1];
+	      if (nextEntry) {
+	        nextState = nextEntry.prevState;
+	        took = nextEntry.started - started;
+	      }
+	      // message
+	      var formattedAction = actionTransformer(action);
+	      var isCollapsed = typeof collapsed === "function" ? collapsed(function () {
+	        return nextState;
+	      }, action) : collapsed;
+
+	      var formattedTime = formatTime(startedTime);
+	      var titleCSS = colors.title ? "color: " + colors.title(formattedAction) + ";" : null;
+	      var title = "action " + (timestamp ? formattedTime : "") + " " + formattedAction.type + " " + (duration ? "(in " + took.toFixed(2) + " ms)" : "");
+
+	      // render
+	      try {
+	        if (isCollapsed) {
+	          if (colors.title) logger.groupCollapsed("%c " + title, titleCSS);else logger.groupCollapsed(title);
+	        } else {
+	          if (colors.title) logger.group("%c " + title, titleCSS);else logger.group(title);
+	        }
+	      } catch (e) {
+	        logger.log(title);
+	      }
+
+	      var prevStateLevel = getLogLevel(level, formattedAction, [prevState], "prevState");
+	      var actionLevel = getLogLevel(level, formattedAction, [formattedAction], "action");
+	      var errorLevel = getLogLevel(level, formattedAction, [error, prevState], "error");
+	      var nextStateLevel = getLogLevel(level, formattedAction, [nextState], "nextState");
+
+	      if (prevStateLevel) {
+	        if (colors.prevState) logger[prevStateLevel]("%c prev state", "color: " + colors.prevState(prevState) + "; font-weight: bold", prevState);else logger[prevStateLevel]("prev state", prevState);
+	      }
+
+	      if (actionLevel) {
+	        if (colors.action) logger[actionLevel]("%c action", "color: " + colors.action(formattedAction) + "; font-weight: bold", formattedAction);else logger[actionLevel]("action", formattedAction);
+	      }
+
+	      if (error && errorLevel) {
+	        if (colors.error) logger[errorLevel]("%c error", "color: " + colors.error(error, prevState) + "; font-weight: bold", error);else logger[errorLevel]("error", error);
+	      }
+
+	      if (nextStateLevel) {
+	        if (colors.nextState) logger[nextStateLevel]("%c next state", "color: " + colors.nextState(nextState) + "; font-weight: bold", nextState);else logger[nextStateLevel]("next state", nextState);
+	      }
+
+	      try {
+	        logger.groupEnd();
+	      } catch (e) {
+	        logger.log("—— log end ——");
+	      }
+	    });
+	    logBuffer.length = 0;
+	  }
+
+	  return function (_ref) {
+	    var getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        // exit early if predicate function returns false
+	        if (typeof predicate === "function" && !predicate(getState, action)) {
+	          return next(action);
+	        }
+
+	        var logEntry = {};
+	        logBuffer.push(logEntry);
+
+	        logEntry.started = timer.now();
+	        logEntry.startedTime = new Date();
+	        logEntry.prevState = stateTransformer(getState());
+	        logEntry.action = action;
+
+	        var returnedValue = undefined;
+	        if (logErrors) {
+	          try {
+	            returnedValue = next(action);
+	          } catch (e) {
+	            logEntry.error = errorTransformer(e);
+	          }
+	        } else {
+	          returnedValue = next(action);
+	        }
+
+	        logEntry.took = timer.now() - logEntry.started;
+	        logEntry.nextState = stateTransformer(getState());
+
+	        printBuffer();
+
+	        if (logEntry.error) throw logEntry.error;
+	        return returnedValue;
+	      };
+	    };
+	  };
+	}
+
+	module.exports = createLogger;
+
+/***/ },
+/* 118 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _redux = __webpack_require__(74);
+
+	var _login = __webpack_require__(119);
+
+	var _login2 = _interopRequireDefault(_login);
+
+	var _register = __webpack_require__(120);
+
+	var _register2 = _interopRequireDefault(_register);
+
+	var _articles = __webpack_require__(121);
+
+	var _articles2 = _interopRequireDefault(_articles);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//注册
+	//基础库
+	var reducer = (0, _redux.combineReducers)({
+		login: _login2.default,
+		register: _register2.default,
+		articles: _articles2.default
+	});
+	//文章
+
+
+	//登录
+	exports.default = reducer;
+
+/***/ },
+/* 119 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _actionType = __webpack_require__(93);
+
+	var _httpType = __webpack_require__(94);
+
+	var login_status = function login_status(state, action) {
+		switch (action.status) {
+
+			case _httpType.user_no_exist:
+				return {
+					//logined:false,
+					loginStatus: _httpType.user_no_exist,
+					logining: false
+					//loginUser:{}
+				};
+
+			case _httpType.password_err:
+				return {
+					//logined:false,
+					loginStatus: _httpType.password_err,
+					logining: false
+					//loginUser:{}
+				};
+
+			case _httpType.success:
+				return {
+					logined: true,
+					loginStatus: _httpType.success,
+					loginUser: action.user,
+					logining: false
+				};
+
+			default:
+				return state;
+		}
+	};
+
+	var login = function login() {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? {
+			logined: false,
+			loginStatus: _httpType.init, //登录状态
+			logining: false, //有没有正在登录标志
+			loginUser: {}
+		} : arguments[0];
+		var action = arguments[1];
+
+
+		switch (action.type) {
+
+			case _actionType.LOGIN_REQUEST:
+				//发起登录请求
+				return _extends({}, state, {
+					logining: true
+				});
+
+			case _actionType.LOGIN_RECEIVE:
+				//接受登录结果
+				return _extends({}, state, login_status(state, action));
+
+			case _actionType.LOGOUT_RECEIVE:
+				return _extends({}, state, {
+					logined: false,
+					loginUser: {},
+					loginStatus: _httpType.init,
+					logining: false
+				});
+
+			default:
+				return state;
+		}
+	};
+
+	exports.default = login;
+
+/***/ },
+/* 120 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _httpType = __webpack_require__(94);
+
+	var _actionType = __webpack_require__(93);
+
+	var register = function register() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
+	        registering: false, //正在注册
+	        registerStatus: _httpType.init //注册状态
+	    } : arguments[0];
+	    var action = arguments[1];
+
+
+	    switch (action.type) {
+	        case _actionType.REGISTER_REQUEST:
+	            return _extends({}, state, {
+
+	                registering: true
+	            });
+
+	        case _actionType.REGISTER_RECEIVE:
+	            return _extends({}, state, {
+	                registering: false,
+	                registerStatus: action.status
+	            });
+
+	        default:
+	            return state;
+	    }
+	};
+
+	exports.default = register;
+
+/***/ },
+/* 121 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var article = function article() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
+	        list: []
+	    } : arguments[0];
+	    var action = arguments[1];
+
+
+	    switch (action.type) {
+	        default:
+	            return state;
+	    }
+	};
+
+	exports.default = article;
 
 /***/ }
 ]);
