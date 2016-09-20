@@ -100,7 +100,7 @@ Db_tools.query = function(model, queryObj) {
     // var model = this.init(model);
     var pageSize = Number(queryObj.pageSize);
     var pageNo = Number(queryObj.pageNo);
-    var query = model.find({});
+    var query = eval(model).find({});
     //开头跳过查询的调试
     query.skip((pageNo - 1) * pageSize);
     //最多显示条数
@@ -112,7 +112,7 @@ Db_tools.query = function(model, queryObj) {
                 reject(err);
             } else {
                 //计算数据总数
-                model.find(function(err, result) {
+                eval(model).find(function(err, result) {
                     var jsonArray = { code: 0, rows: doc, message: null, total: result.length, success: true };
                     resole(jsonArray);
                 });
