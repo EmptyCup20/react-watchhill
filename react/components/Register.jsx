@@ -42,10 +42,9 @@ export default class Login extends Component{
 
 
         //这里先暂时不检测
-        if(username && pass && password && email && tel && team) {
+        if(username && password && email && tel && team) {
             let user = {
-                username:username,
-                pass:pass,
+                author:username,
                 password:password,
                 email:email,
                 tel:tel,

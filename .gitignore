@@ -9,4 +9,7 @@ node_modules
 npm-debug.log
 npm-debug.log.*
 
+
+#Webpack bundle
+public/js
 server.bundle.js

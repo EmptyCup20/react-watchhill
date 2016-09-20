@@ -56,7 +56,10 @@ export default class Index extends Component{
                                         <Link to="/index">主页</Link>
                                     </li>
                                     <li>
-                                        <Link to="/blog">博客</Link>
+                                        <Link to="/web">web前端</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/node">Nodejs</Link>
                                     </li>
                                     <li>
                                         <Link to="/about">关于</Link>

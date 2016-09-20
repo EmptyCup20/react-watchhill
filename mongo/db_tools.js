@@ -10,14 +10,23 @@ var db = require('./mongo');
 var user = require('./model/user');
 var article = require('./model/article');
 var comment = require('./model/comment');
+var statusMsg = require('./statusMsg');
 
 var Db_tools = function() {};
 
-var successMsg = {
-    "code": 0,
-    "message": null,
-    "data": null,
-    "success": true
+//初始化model
+function init(model) {
+    var modelList = {
+        'user': user,
+        'article': article,
+        'comment': comment
+    };
+    for (let item in modelList) {
+        if (item === model) {
+            model = modelList[item];
+            return model;
+        }
+    }
 };
 
 /**
@@ -31,12 +40,13 @@ var successMsg = {
  */
 
 Db_tools.add = function(model, addObj) {
+    model = init(model);
     return new Promise((resolve, reject) => {
         model.create(addObj, function(err, doc) {
             if (err) {
                 reject(err);
             } else {
-                resolve(successMsg);
+                resolve(statusMsg.successMsg);
             }
         });
     })
@@ -51,9 +61,9 @@ Db_tools.add = function(model, addObj) {
  * @param  {Function} callback   回调函数
  */
 Db_tools.edit = function(model, editObj) {
-    // var model = this.init(model);
     var id = editObj.id;
     delete editObj.id;
+    model = init(model);
     return new Promise((resolve, reject) => {
         model.findOneAndUpdate({ _id: id }, {
             $set: editObj
@@ -61,7 +71,7 @@ Db_tools.edit = function(model, editObj) {
             if (err) {
                 reject(err);
             } else {
-                resolve(successMsg);
+                resolve(statusMsg.successMsg);
             }
         })
     })
@@ -76,31 +86,31 @@ Db_tools.edit = function(model, editObj) {
  * @return {[type]}              [description]
  */
 Db_tools.remove = function(model, removeId) {
-        // var model = this.init(model);
-        return new Promise((resolve, reject) => {
-            model.remove({ _id: removeId }, function(err) {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(successMsg);
-                }
-            });
-        })
-    }
-    /**
-     * [query description]
-     * @author zhangxin14
-     * @date   2016-07-19
-     * @param  {string}   model [新增的类型]
-     * @param  {object}   queryObj   [查询的pageSize和pageNo]
-     * @param  {Function} callback   回调函数
-     * @return {[type]}              [description]
-     */
+    model = init(model);
+    return new Promise((resolve, reject) => {
+        model.remove({ _id: removeId }, function(err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(statusMsg.successMsg);
+            }
+        });
+    })
+};
+/**
+ * [query description]
+ * @author zhangxin14
+ * @date   2016-07-19
+ * @param  {string}   model [新增的类型]
+ * @param  {object}   queryObj   [查询的pageSize和pageNo]
+ * @param  {Function} callback   回调函数
+ * @return {[type]}              [description]
+ */
 Db_tools.query = function(model, queryObj) {
-    // var model = this.init(model);
     var pageSize = Number(queryObj.pageSize);
     var pageNo = Number(queryObj.pageNo);
-    var query = eval(model).find({});
+    model = init(model);
+    var query = model.find({});
     //开头跳过查询的调试
     query.skip((pageNo - 1) * pageSize);
     //最多显示条数
@@ -112,7 +122,7 @@ Db_tools.query = function(model, queryObj) {
                 reject(err);
             } else {
                 //计算数据总数
-                eval(model).find(function(err, result) {
+                model.find(function(err, result) {
                     var jsonArray = { code: 0, rows: doc, message: null, total: result.length, success: true };
                     resole(jsonArray);
                 });
@@ -129,7 +139,7 @@ Db_tools.query = function(model, queryObj) {
  * @return {[type]}              [description]
  */
 Db_tools.queryByCondition = function(model, queryObj) {
-    // var model = this.init(model);
+    model = init(model);
     var query = model.find(queryObj);
     return new Promise((resolve, reject) => {
         query.exec(queryObj, (err, doc) => {
