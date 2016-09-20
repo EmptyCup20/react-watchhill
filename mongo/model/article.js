@@ -7,6 +7,7 @@ var articleSchema = new Schema({
         require: true,
         unique: true
     },
+    tag: String,
     author: String,
     createTime: String,
     content: String,

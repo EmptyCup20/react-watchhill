@@ -106,11 +106,11 @@ Db_tools.remove = function(model, removeId) {
  * @param  {Function} callback   回调函数
  * @return {[type]}              [description]
  */
-Db_tools.query = function(model, queryObj) {
+Db_tools.query = function(model, queryObj, fields, options, callback) {
     var pageSize = Number(queryObj.pageSize);
     var pageNo = Number(queryObj.pageNo);
     model = init(model);
-    var query = model.find({});
+    var query = model.find({}, fields, options, callback);
     //开头跳过查询的调试
     query.skip((pageNo - 1) * pageSize);
     //最多显示条数
@@ -138,9 +138,9 @@ Db_tools.query = function(model, queryObj) {
  * @param  {查询主键}   queryObj   string
  * @return {[type]}              [description]
  */
-Db_tools.queryByCondition = function(model, queryObj) {
+Db_tools.queryByCondition = function(model, queryObj, fields, options, callback) {
     model = init(model);
-    var query = model.find(queryObj);
+    var query = model.find(queryObj, fields, options, callback);
     return new Promise((resolve, reject) => {
         query.exec(queryObj, (err, doc) => {
             if (err) {
