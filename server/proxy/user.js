@@ -38,13 +38,14 @@ User.login = function(obj) {
                 return;
             }
             //查询用户的密码是否错误
-            db_tools.queryByCondition('user', { author: obj.author, password: obj.password }).then(function(data) {
+            db_tools.queryByCondition('user', { author: obj.author, password: obj.password }, '-password').then(function(data) {
                 if (data.length === 0) {
                     //返回密码错误信息
                     resolve(statusMsg.loginPwdErr);
                     return;
                 }
                 //返回登录成功
+                statusMsg.successMsg.data = data;
                 resolve(statusMsg.successMsg);
             }, function(data) {
                 reject(err);
