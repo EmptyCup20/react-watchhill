@@ -7909,7 +7909,7 @@ webpackJsonp([0,1],[
 	                                                { className: 'dropdown user user-menu' },
 	                                                _react2.default.createElement(
 	                                                    'a',
-	                                                    { className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
+	                                                    { href: '#', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
 	                                                    _react2.default.createElement('img', { src: '#', alt: 'User Image', className: 'user-image' }),
 	                                                    _react2.default.createElement(
 	                                                        'span',
@@ -9711,9 +9711,9 @@ webpackJsonp([0,1],[
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _article = __webpack_require__(119);
+	var _articles = __webpack_require__(120);
 
-	var _article2 = _interopRequireDefault(_article);
+	var _articles2 = _interopRequireDefault(_articles);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9722,7 +9722,7 @@ webpackJsonp([0,1],[
 	var reducer = (0, _redux.combineReducers)({
 		login: _login2.default,
 		register: _register2.default,
-		article: _article2.default
+		articles: articles
 	});
 	//文章
 
@@ -9860,7 +9860,8 @@ webpackJsonp([0,1],[
 	exports.default = register;
 
 /***/ },
-/* 119 */
+/* 119 */,
+/* 120 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9871,7 +9872,7 @@ webpackJsonp([0,1],[
 
 	var article = function article() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
-	        a: 0
+	        list: []
 	    } : arguments[0];
 	    var action = arguments[1];
 

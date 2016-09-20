@@ -6,14 +6,14 @@ import login from './login';
 //注册
 import register from './register';
 //文章
-import article from './article';
+import article from './articles';
 
 
 
 const reducer = combineReducers({
 	login,
 	register,
-	article
+	articles
 });
 
 export default reducer;

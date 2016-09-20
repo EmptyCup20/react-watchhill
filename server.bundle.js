@@ -844,32 +844,27 @@
 	        if (!req.session.browse) {
 	            //如果网页没有浏览过,则获取文章列表
 	            req.session.browse = true;
-	            _article2.default.getArticleList({}).then(function (data) {
-	                console.log('获取文章列表');
-	                req.session.stateTree.article = {
-	                    a: 1
-	                };
-	            }, function (err) {
-	                console.log('出错了');
-	            });
+	            return _article2.default.getArticleList({});
 	        }
 	    }
 
 	    //暂时这么设置,同步服务端和客户端
-	    if (req.session.user) {
-	        var store = (0, _store2.default)({
-	            login: {
-	                loginUser: {
-	                    username: req.session.user
-	                },
-	                logined: true
-	            }
-	        }); //这里需要传入需要的state tree
-	    } else {
-	        var store = (0, _store2.default)({});
-	    }
+	    //if(req.session.user) {
+	    //    var store = configureStore({
+	    //        login:{
+	    //            loginUser:{
+	    //                username:req.session.user
+	    //            },
+	    //            logined:true
+	    //        }
+	    //    });       //这里需要传入需要的state tree
+	    //
+	    //} else {
+	    //    var store = configureStore({});
+	    //}
 
-	    console.log('node  store:', store.getState()); //需要注意与客户端的store统一
+
+	    //console.log('node  store:', store.getState());  //需要注意与客户端的store统一
 	    //const store = configureStore();       //这里需要传入需要的state tree
 
 	    (0, _reactRouter.match)({ routes: (0, _routes2.default)(), location: req.url }, function (err, redirect, props) {
@@ -880,28 +875,36 @@
 	            res.redirect(redirect.pathname + redirect.search);
 	        } else if (props) {
 
-	            //Promise.all([
-	            //    getLoginStatus(),
-	            //    getArticleList()
-	            //])
-	            //.then(() => {
-	            //
-	            //    let store = configureStore(req.session.stateTree);
-	            //    console.log('node  store:', store.getState());  //需要注意与客户端的store统一
+	            Promise.all([getArticleList()]).then(function (datas) {
+	                //如果网页没有浏览过,则获取文章列表
+
+	                if (datas[0]) {
+	                    req.session.stateTree.articles = {
+	                        list: []
+	                    };
+
+	                    datas[0].forEach(function (item) {
+	                        req.session.stateTree.articles.list.push(item._doc);
+	                    });
+	                }
+
+	                getLoginStatus(); //获取登录state tree
 
 
-	            var appHtml = (0, _server.renderToString)(_react2.default.createElement(
-	                _reactRedux.Provider,
-	                { store: store },
-	                _react2.default.createElement(_reactRouter.RouterContext, props)
-	            ));
-	            res.render('index', {
-	                html: appHtml,
-	                serverState: JSON.stringify(store.getState())
-	            });
-	            //})
-	            //.catch();
+	                var store = (0, _store2.default)(req.session.stateTree);
+	                console.log('node  store:', store.getState()); //需要注意与客户端的store统一
 
+
+	                var appHtml = (0, _server.renderToString)(_react2.default.createElement(
+	                    _reactRedux.Provider,
+	                    { store: store },
+	                    _react2.default.createElement(_reactRouter.RouterContext, props)
+	                ));
+	                res.render('index', {
+	                    html: appHtml,
+	                    serverState: JSON.stringify(store.getState())
+	                });
+	            }).catch();
 	        } else {
 	            //路由匹配不到,这里这个提示页面暂时不做
 	            res.status(404).send('Not Found');
@@ -1466,7 +1469,7 @@
 	                                                { className: 'dropdown user user-menu' },
 	                                                _react2.default.createElement(
 	                                                    'a',
-	                                                    { className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
+	                                                    { href: '#', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
 	                                                    _react2.default.createElement('img', { src: '#', alt: 'User Image', className: 'user-image' }),
 	                                                    _react2.default.createElement(
 	                                                        'span',
@@ -3019,9 +3022,9 @@
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _article = __webpack_require__(58);
+	var _articles = __webpack_require__(59);
 
-	var _article2 = _interopRequireDefault(_article);
+	var _articles2 = _interopRequireDefault(_articles);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3030,7 +3033,7 @@
 	var reducer = (0, _redux.combineReducers)({
 		login: _login2.default,
 		register: _register2.default,
-		article: _article2.default
+		articles: articles
 	});
 	//文章
 
@@ -3168,7 +3171,8 @@
 	exports.default = register;
 
 /***/ },
-/* 58 */
+/* 58 */,
+/* 59 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -3179,7 +3183,7 @@
 
 	var article = function article() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
-	        a: 0
+	        list: []
 	    } : arguments[0];
 	    var action = arguments[1];
 

@@ -48,36 +48,28 @@ router.get('/*', (req, res,next) => {
     function getArticleList() {
         if(!req.session.browse) {             //如果网页没有浏览过,则获取文章列表
             req.session.browse = true;
-            article.getArticleList({}).then(function(data){
-                console.log('获取文章列表');
-                req.session.stateTree.article = {
-                    a:1
-                }
-
-            },function(err){
-                console.log('出错了');
-            });
+            return article.getArticleList({});
         }
     }
 
 
     //暂时这么设置,同步服务端和客户端
-    if(req.session.user) {
-        var store = configureStore({
-            login:{
-                loginUser:{
-                    username:req.session.user
-                },
-                logined:true
-            }
-        });       //这里需要传入需要的state tree
+    //if(req.session.user) {
+    //    var store = configureStore({
+    //        login:{
+    //            loginUser:{
+    //                username:req.session.user
+    //            },
+    //            logined:true
+    //        }
+    //    });       //这里需要传入需要的state tree
+    //
+    //} else {
+    //    var store = configureStore({});
+    //}
 
-    } else {
-        var store = configureStore({});
-    }
 
-
-    console.log('node  store:', store.getState());  //需要注意与客户端的store统一
+    //console.log('node  store:', store.getState());  //需要注意与客户端的store统一
     //const store = configureStore();       //这里需要传入需要的state tree
 
     match({ routes:routes(), location: req.url }, (err, redirect, props) => {
@@ -88,14 +80,28 @@ router.get('/*', (req, res,next) => {
             res.redirect(redirect.pathname + redirect.search)
         } else if (props) {
 
-            //Promise.all([
-            //    getLoginStatus(),
-            //    getArticleList()
-            //])
-            //.then(() => {
-            //
-            //    let store = configureStore(req.session.stateTree);
-            //    console.log('node  store:', store.getState());  //需要注意与客户端的store统一
+            Promise.all([
+                getArticleList()
+            ])
+            .then( (datas) => {             //如果网页没有浏览过,则获取文章列表
+
+                if(datas[0]) {
+                    req.session.stateTree.articles = {
+                        list:[]
+                    };
+
+                    datas[0].forEach(function(item){
+                        req.session.stateTree.articles.list.push(item._doc);
+                    })
+                }
+
+
+
+                getLoginStatus();       //获取登录state tree
+
+
+                let store = configureStore(req.session.stateTree);
+                console.log('node  store:', store.getState());  //需要注意与客户端的store统一
 
 
                 const appHtml = renderToString(
@@ -107,8 +113,8 @@ router.get('/*', (req, res,next) => {
                     html:appHtml,
                     serverState:JSON.stringify(store.getState())
                 });
-            //})
-            //.catch();
+            })
+            .catch();
 
 
 
