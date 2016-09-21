@@ -1,6 +1,6 @@
 
 const article = (state = {
-   a:0
+   list:[]
 }, action) => {
 
     switch(action.type) {

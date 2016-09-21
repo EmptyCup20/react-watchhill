@@ -9,11 +9,6 @@ import cookieParser from 'cookie-parser';
 
 const app = express();
 
-import db from './mongo/mongo';
-
-
-
-
 // view engine setup
 app.set('views', path.join(__dirname, 'view'));
 app.engine('.html',ejs.__express);
