@@ -40,7 +40,7 @@ export function register(req, res, next) {
     var query = req.body;
     user.addUser(query).then(function (data) {
         if(data.code === 0) {
-            let login = data.data[0];    //数据库给的是数组
+            let login = data.data;    //数据库给的是数组
             req.session.author = login.author;
             req.session.avatarUrl = login.avatarUrl;
             req.session.email =  login.email;

@@ -14,7 +14,10 @@ User.addUser = function(obj) {
             }
             db_tools.add('user', obj).then(
                 function(data) {
-                    statusMsg.successMsg.data = data;
+                    statusMsg.successMsg.data = data.toObject();
+                    if(statusMsg.successMsg.data.password){
+                        delete statusMsg.successMsg.data.password;
+                    }
                     resolve(statusMsg.successMsg);
                 },
                 function(err) {
