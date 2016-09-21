@@ -25,7 +25,7 @@ const login_status = (state,action) => {
 			return {
 				logined:true,
 				loginStatus:success,
-				loginUser:action.user[0],		//数据库里传的是数组
+				loginUser:action.user,		//数据库里传的是数组
 				logining:false
 			}; 
 

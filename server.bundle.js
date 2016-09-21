@@ -104,7 +104,7 @@
 	app.use(_express2.default.static(_path2.default.join(__dirname, 'public')));
 
 	//ajax请求路由
-	app.use('/user', __webpack_require__(11));
+	app.use('/user', __webpack_require__(9));
 	app.use('/article', __webpack_require__(19));
 
 	//react服务器渲染路由
@@ -202,37 +202,7 @@
 
 	'use strict';
 
-	/**
-	 * 数据库连接
-	 * @Author zhangxin14
-	 * @Date   2016/7/19
-	 *
-	 */
-	var mongoose = __webpack_require__(10);
-	//连接数据库
-	var db = mongoose.connect('mongodb://10.33.31.234/watchhill', function (err) {
-	    if (err) {
-	        console.log(err);
-	    }
-
-	    console.log("Connect to mongoDB success!");
-	});
-
-	module.exports = db;
-
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	module.exports = require("mongoose");
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _user = __webpack_require__(12);
+	var _user = __webpack_require__(10);
 
 	var _express = __webpack_require__(1);
 
@@ -254,7 +224,7 @@
 	module.exports = router;
 
 /***/ },
-/* 12 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -266,7 +236,7 @@
 	exports.register = register;
 	exports.logout = logout;
 
-	var _user = __webpack_require__(13);
+	var _user = __webpack_require__(11);
 
 	var _user2 = _interopRequireDefault(_user);
 
@@ -279,10 +249,11 @@
 	 * @param next
 	 */
 	function loginAuthen(req, res, next) {
+
 	    var query = req.body;
 	    _user2.default.login(query).then(function (data) {
 	        if (data.code === 0) {
-	            var login = data.data[0]; //数据库给的是数组
+	            var login = data.data; //数据库给的是数组
 	            req.session.author = login.author;
 	            req.session.avatarUrl = login.avatarUrl;
 	            req.session.email = login.email;
@@ -309,7 +280,7 @@
 	    var query = req.body;
 	    _user2.default.addUser(query).then(function (data) {
 	        if (data.code === 0) {
-	            var login = data.data[0]; //数据库给的是数组
+	            var login = data.data; //数据库给的是数组
 	            req.session.author = login.author;
 	            req.session.avatarUrl = login.avatarUrl;
 	            req.session.email = login.email;
@@ -342,12 +313,12 @@
 	}
 
 /***/ },
-/* 13 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _db_tools = __webpack_require__(14);
+	var _db_tools = __webpack_require__(12);
 
 	var _db_tools2 = _interopRequireDefault(_db_tools);
 
@@ -369,7 +340,10 @@
 	                return;
 	            }
 	            _db_tools2.default.add('user', obj).then(function (data) {
-	                _statusMsg2.default.successMsg.data = data;
+	                _statusMsg2.default.successMsg.data = data.toObject();
+	                if (_statusMsg2.default.successMsg.data.password) {
+	                    delete _statusMsg2.default.successMsg.data.password;
+	                }
 	                resolve(_statusMsg2.default.successMsg);
 	            }, function (err) {
 	                reject(err);
@@ -398,7 +372,7 @@
 	                    return;
 	                }
 	                //返回登录成功
-	                _statusMsg2.default.successMsg.data = data;
+	                _statusMsg2.default.successMsg.data = data.toObject();
 	                resolve(_statusMsg2.default.successMsg);
 	            }, function (data) {
 	                reject(err);
@@ -411,7 +385,7 @@
 	module.exports = User;
 
 /***/ },
-/* 14 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -423,7 +397,7 @@
 	 *
 	 */
 
-	var db = __webpack_require__(9);
+	var db = __webpack_require__(13);
 	var user = __webpack_require__(15);
 	var article = __webpack_require__(16);
 	var comment = __webpack_require__(17);
@@ -571,12 +545,42 @@
 	module.exports = Db_tools;
 
 /***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * 数据库连接
+	 * @Author zhangxin14
+	 * @Date   2016/7/19
+	 *
+	 */
+	var mongoose = __webpack_require__(14);
+	//连接数据库
+	var db = mongoose.connect('mongodb://10.33.31.234/watchhill', function (err) {
+	    if (err) {
+	        console.log(err);
+	    }
+
+	    console.log("Connect to mongoDB success!");
+	});
+
+	module.exports = db;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	module.exports = require("mongoose");
+
+/***/ },
 /* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(9);
+	var db = __webpack_require__(13);
 	var Schema = db.Schema;
 	var userSchema = new Schema({
 	    //用户名
@@ -619,7 +623,7 @@
 
 	'use strict';
 
-	var db = __webpack_require__(9);
+	var db = __webpack_require__(13);
 	var Schema = db.Schema;
 	var articleSchema = new Schema({
 	    title: {
@@ -647,7 +651,7 @@
 
 	'use strict';
 
-	var db = __webpack_require__(9);
+	var db = __webpack_require__(13);
 	var Schema = db.Schema;
 
 	var commentSchema = new Schema({
@@ -756,7 +760,7 @@
 
 	'use strict';
 
-	var _db_tools = __webpack_require__(14);
+	var _db_tools = __webpack_require__(12);
 
 	var _db_tools2 = _interopRequireDefault(_db_tools);
 
@@ -3640,7 +3644,7 @@
 				return {
 					logined: true,
 					loginStatus: _httpType.success,
-					loginUser: action.user[0], //数据库里传的是数组
+					loginUser: action.user, //数据库里传的是数组
 					logining: false
 				};
 
