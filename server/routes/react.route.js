@@ -31,10 +31,16 @@ router.get('/*', (req, res,next) => {
      * 获取登录状态
      */
     function getLoginStatus() {
-        if(req.session.user) {
+        if(req.session.author) {
             req.session.stateTree.login = {
                 loginUser:{
-                    username:req.session.user
+                    author:req.session.author,
+                    avatarUrl:req.session.avatarUrl,
+                    email:req.session.email,
+                    team:req.session.team,
+                    brief:req.session.brief,
+                    codeUrl:req.session.codeUrl,
+                    tel:req.session.tel
                 },
                 logined:true
             }
@@ -51,7 +57,7 @@ router.get('/*', (req, res,next) => {
             return article.getArticleList({
                 pageSize:9,
                 pageNo:1
-    });
+            });
         //}
     }
 
@@ -87,7 +93,7 @@ router.get('/*', (req, res,next) => {
                 //getLoginStatus()
                 getArticleList()
             ])
-            .then( (datas) => {             //如果网页没有浏览过,则获取文章列表
+            .then( (datas) => {
 
 
                 /*1. state tree 获取登录状态*/
@@ -104,7 +110,6 @@ router.get('/*', (req, res,next) => {
                         req.session.stateTree.articles.list.push(item._doc);
                     })
                 }
-
 
 
                 let store = configureStore(req.session.stateTree);

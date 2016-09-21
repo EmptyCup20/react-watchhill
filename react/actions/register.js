@@ -38,7 +38,7 @@ function register_ajax(user) {
     return dispatch => {
         dispatch(register_request());                                   //挂起注册请求,防止重复请求
         return ajax().register(user)
-            .then(data => dispatch(register_process(user,data.status)));   //接受到数据后重新更新state
+            .then(data => dispatch(register_process(data)));   //接受到数据后重新更新state
     };
 }
 
@@ -57,20 +57,19 @@ function register_request() {
 /**
  * 接收状态处理
  * @param user
- * @param status
+ * @param data
  * @returns {{type: *, user: {username: *}, status: *}}
  */
-function register_process(user,status) {
+function register_process(data) {
 
     if(status === user_exist) {     //注册失败
-        return register_recieve(status);
+        return register_recieve(data.status);
     } else {                        //注册成功
         return dispatch => {
-            dispatch(login_reveive(user,status));       //登录state tree
-            return dispatch(register_recieve(status));
+            dispatch(login_reveive(data));       //登录state tree
+            return dispatch(register_recieve(data.status));
         }
     }
-
 }
 
 

@@ -7432,13 +7432,12 @@ webpackJsonp([0,1],[
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
+	var _AddArticleContainer = __webpack_require__(122);
+
+	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//import Index from '../containers/Index';
-
-
-	//容器组件
-	//基础库
 	var routes = function routes(state) {
 
 	    //进入之前判断是否已经登录
@@ -7456,13 +7455,18 @@ webpackJsonp([0,1],[
 	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _HomeContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/web', component: _Web2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/node', component: _Node2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', component: _AddArticleContainer2.default })
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: isLogined, component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _RegisterContainer2.default })
 	    );
 	};
+	//import Index from '../containers/Index';
 
+
+	//容器组件
+	//基础库
 	exports.default = routes;
 
 /***/ },
@@ -7822,199 +7826,18 @@ webpackJsonp([0,1],[
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var login = this.props.login;
+	            var _props = this.props;
+	            var login = _props.login;
+	            var logout = _props.logout;
 	            //const _this = this;
 	            //console.log(login);
 
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(
-	                    'header',
-	                    { className: 'main-header skin-header-user' },
-	                    _react2.default.createElement(
-	                        'nav',
-	                        { className: 'navbar navbar-static-top' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'container' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'navbar-header' },
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/', className: 'navbar-brand' },
-	                                    _react2.default.createElement(
-	                                        'b',
-	                                        null,
-	                                        'Watch'
-	                                    ),
-	                                    'Hill'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse',
-	                                        'data-target': '#navbar-collapse' },
-	                                    _react2.default.createElement('i', { className: 'fa fa-bars' })
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'collapse navbar-collapse', id: 'navbar-collapse' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    { className: 'nav navbar-nav navbar-left' },
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            _reactRouter.Link,
-	                                            { to: '/index' },
-	                                            '主页'
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            _reactRouter.Link,
-	                                            { to: '/web' },
-	                                            'web前端'
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            _reactRouter.Link,
-	                                            { to: '/node' },
-	                                            'Nodejs'
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            _reactRouter.Link,
-	                                            { to: '/about' },
-	                                            '关于'
-	                                        )
-	                                    )
-	                                ),
-	                                function (_this) {
-	                                    if (login.logined) {
-	                                        return _react2.default.createElement(
-	                                            'ul',
-	                                            { className: 'nav navbar-nav navbar-right' },
-	                                            _react2.default.createElement(
-	                                                'li',
-	                                                { className: 'dropdown' },
-	                                                _react2.default.createElement(
-	                                                    _reactRouter.Link,
-	                                                    { to: '#' },
-	                                                    '新增文章'
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'li',
-	                                                { className: 'dropdown user user-menu' },
-	                                                _react2.default.createElement(
-	                                                    'a',
-	                                                    { href: '#', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
-	                                                    _react2.default.createElement('img', { src: '#', alt: 'User Image', className: 'user-image' }),
-	                                                    _react2.default.createElement(
-	                                                        'span',
-	                                                        { className: 'hidden-xs' },
-	                                                        login.loginUser.username
-	                                                    )
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'ul',
-	                                                    { className: 'dropdown-menu' },
-	                                                    _react2.default.createElement(
-	                                                        'li',
-	                                                        { className: 'user-header' },
-	                                                        _react2.default.createElement(
-	                                                            _reactRouter.Link,
-	                                                            { to: '#' },
-	                                                            _react2.default.createElement('img', { src: '#', className: 'img-circle', alt: 'user image' })
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            'p',
-	                                                            null,
-	                                                            '人生一世',
-	                                                            _react2.default.createElement(
-	                                                                'small',
-	                                                                null,
-	                                                                '18768107826'
-	                                                            ),
-	                                                            _react2.default.createElement(
-	                                                                'small',
-	                                                                null,
-	                                                                '11@qq.com'
-	                                                            )
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'li',
-	                                                        { className: 'user-footer' },
-	                                                        _react2.default.createElement(
-	                                                            'div',
-	                                                            { className: 'pull-left' },
-	                                                            _react2.default.createElement(
-	                                                                'a',
-	                                                                { className: 'btn btn-default btn-flat' },
-	                                                                '个人中心'
-	                                                            )
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            'div',
-	                                                            { className: 'pull-right' },
-	                                                            _react2.default.createElement(
-	                                                                'a',
-	                                                                { className: 'btn btn-default btn-flat', onClick: _this.logout.bind(_this) },
-	                                                                '退出登录'
-	                                                            )
-	                                                        )
-	                                                    )
-	                                                )
-	                                            )
-	                                        );
-	                                    } else {
-	                                        return _react2.default.createElement(
-	                                            'ul',
-	                                            { className: 'nav navbar-nav navbar-right' },
-	                                            _react2.default.createElement(
-	                                                'li',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    _reactRouter.Link,
-	                                                    { to: '/login' },
-	                                                    '登录'
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'li',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    _reactRouter.Link,
-	                                                    { to: '/register' },
-	                                                    '注册'
-	                                                )
-	                                            )
-	                                        );
-	                                    }
-	                                }(this)
-	                            )
-	                        )
-	                    )
-	                ),
+	                _react2.default.createElement(_Header2.default, { login: login, logout: logout }),
 	                this.props.children,
-	                _react2.default.createElement(
-	                    _Footer2.default,
-	                    null,
-	                    '尾部'
-	                )
+	                _react2.default.createElement(_Footer2.default, null)
 	            );
 	        }
 	    }]);
@@ -8234,7 +8057,7 @@ webpackJsonp([0,1],[
 	                                            { className: 'dropdown' },
 	                                            _react2.default.createElement(
 	                                                _reactRouter.Link,
-	                                                { to: '#' },
+	                                                { to: '/add_article' },
 	                                                '新增文章'
 	                                            )
 	                                        ),
@@ -8414,7 +8237,7 @@ webpackJsonp([0,1],[
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _redux = __webpack_require__(74);
@@ -8427,12 +8250,11 @@ webpackJsonp([0,1],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//function mapStateToProps(state) {
-	//    return {
-	//        login: state.login
-	//    }
-	//}
-
+	function mapStateToProps(state) {
+	    return {
+	        articles: state.articles
+	    };
+	}
 
 	//绑定logout action到Logout组件
 	//function mapDispatchToProps(dispatch) {
@@ -8440,10 +8262,9 @@ webpackJsonp([0,1],[
 	//}
 
 
-	exports.default = (0, _reactRedux.connect)()(_Home2.default);
-
 	//视图组件
 	//基础库
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Home2.default);
 
 /***/ },
 /* 102 */
@@ -8481,6 +8302,9 @@ webpackJsonp([0,1],[
 	    _createClass(Home, [{
 	        key: "render",
 	        value: function render() {
+	            var articles = this.props.articles;
+
+
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "content-wrapped" },
@@ -8518,6 +8342,59 @@ webpackJsonp([0,1],[
 	                                )
 	                            )
 	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "container", id: "actives" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "row head-response-article" },
+	                        articles.list.map(function (article, index, articles) {
+	                            return _react2.default.createElement(
+	                                "div",
+	                                { key: article.title, className: "col-sm-6 col-md-4 col-lg-4" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "thumbnail article-body" },
+	                                    _react2.default.createElement(
+	                                        "a",
+	                                        { href: "#", title: "none" },
+	                                        _react2.default.createElement("img", { className: "lazy artical-image", src: article.image, alt: article.title })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "div",
+	                                        { className: "caption" },
+	                                        _react2.default.createElement(
+	                                            "h3",
+	                                            { className: "artical-title" },
+	                                            _react2.default.createElement(
+	                                                "a",
+	                                                { href: "#" },
+	                                                article.title
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "small",
+	                                                null,
+	                                                "作者:",
+	                                                article.author
+	                                            ),
+	                                            _react2.default.createElement("br", null),
+	                                            _react2.default.createElement(
+	                                                "small",
+	                                                null,
+	                                                article.createTime
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                { className: "artical-describe" },
+	                                                article.describe
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            );
+	                        })
 	                    )
 	                )
 	            );
@@ -9253,7 +9130,7 @@ webpackJsonp([0,1],[
 	    return function (dispatch) {
 	        dispatch(login_request()); //挂起登录请求,防止重复请求
 	        return (0, _ajax2.default)().login(user).then(function (data) {
-	            return dispatch(login_reveive(user, data.status));
+	            return dispatch(login_reveive(data));
 	        }); //接受到数据后重新更新state
 	    };
 	}
@@ -9276,11 +9153,11 @@ webpackJsonp([0,1],[
 	 * @returns {{type: string, user: {username: *}, status: *}}
 	 */
 
-	function login_reveive(user, status) {
+	function login_reveive(data) {
 	    return {
 	        type: _actionType.LOGIN_RECEIVE,
-	        user: { username: user.username },
-	        status: status
+	        user: data.data,
+	        status: data.status
 	    };
 	}
 
@@ -9657,7 +9534,7 @@ webpackJsonp([0,1],[
 	    return function (dispatch) {
 	        dispatch(register_request()); //挂起注册请求,防止重复请求
 	        return (0, _ajax2.default)().register(user).then(function (data) {
-	            return dispatch(register_process(user, data.status));
+	            return dispatch(register_process(data));
 	        }); //接受到数据后重新更新state
 	    };
 	}
@@ -9676,19 +9553,19 @@ webpackJsonp([0,1],[
 	/**
 	 * 接收状态处理
 	 * @param user
-	 * @param status
+	 * @param data
 	 * @returns {{type: *, user: {username: *}, status: *}}
 	 */
-	function register_process(user, status) {
+	function register_process(data) {
 
 	    if (status === _httpType.user_exist) {
 	        //注册失败
-	        return register_recieve(status);
+	        return register_recieve(data.status);
 	    } else {
 	        //注册成功
 	        return function (dispatch) {
-	            dispatch((0, _login.login_reveive)(user, status)); //登录state tree
-	            return dispatch(register_recieve(status));
+	            dispatch((0, _login.login_reveive)(data)); //登录state tree
+	            return dispatch(register_recieve(data.status));
 	        };
 	    }
 	}
@@ -10084,7 +9961,7 @@ webpackJsonp([0,1],[
 				return {
 					logined: true,
 					loginStatus: _httpType.success,
-					loginUser: action.user,
+					loginUser: action.user[0], //数据库里传的是数组
 					logining: false
 				};
 
@@ -10198,6 +10075,261 @@ webpackJsonp([0,1],[
 	};
 
 	exports.default = article;
+
+/***/ },
+/* 122 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(74);
+
+	var _reactRedux = __webpack_require__(67);
+
+	var _AddArticle = __webpack_require__(123);
+
+	var _AddArticle2 = _interopRequireDefault(_AddArticle);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = (0, _reactRedux.connect)()(_AddArticle2.default);
+
+	//action
+
+
+	//视图组件
+	//基础库
+
+/***/ },
+/* 123 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	__webpack_require__(124);
+
+	var _Input = __webpack_require__(109);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _Button = __webpack_require__(97);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	//基础组件
+
+
+	var AddArticle = function (_Component) {
+	    _inherits(AddArticle, _Component);
+
+	    function AddArticle() {
+	        _classCallCheck(this, AddArticle);
+
+	        return _possibleConstructorReturn(this, (AddArticle.__proto__ || Object.getPrototypeOf(AddArticle)).apply(this, arguments));
+	    }
+
+	    _createClass(AddArticle, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            $('#imgUrl').fileinput({
+	                language: "zh",
+	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+	                uploadAsync: true,
+	                maxFileCount: 1
+	            });
+	            //初始化文章的表单
+	            $('#articleFile').fileinput({
+	                language: "zh",
+	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+	                uploadAsync: true,
+	                maxFileSize: 200
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'content-wrapper add-article' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { id: 'container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-xs-10  col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'page-header' },
+	                                _react2.default.createElement(
+	                                    'h1',
+	                                    null,
+	                                    '新增文章'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'form',
+	                                { id: 'articleForm' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { htmlFor: 'atricleTitle' },
+	                                        '标题'
+	                                    ),
+	                                    _react2.default.createElement(_Input2.default, { type: 'text', className: 'form-control', id: 'atricleTitle', name: 'atricleTitle' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { htmlFor: 'atricleDescribe' },
+	                                        '简介'
+	                                    ),
+	                                    _react2.default.createElement('textarea', { id: 'atricleDescribe', className: 'form-control', rows: '3', placeholder: '简介...' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { htmlFor: 'imgUrl' },
+	                                        '封面'
+	                                    ),
+	                                    _react2.default.createElement(_Input2.default, { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading', 'data-upload-url': '/article/add' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { htmlFor: 'articleFile' },
+	                                        '文章图片'
+	                                    ),
+	                                    _react2.default.createElement(_Input2.default, { id: 'articleFile', name: 'articleFile', type: 'file', className: 'file-loading', multiple: true, 'data-upload-url': '/article/add' }),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'help-block' },
+	                                        '请选择.jpg.jpeg.png.gif格式的文件上传'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'btn-group' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'btn btn-primary' },
+	                                                '获取图片的url路径'
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement('ul', null)
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { htmlFor: 'text-input' },
+	                                        '文章'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'nav-tabs-custom' },
+	                                        _react2.default.createElement(
+	                                            'ul',
+	                                            { className: 'nav nav-tabs' },
+	                                            _react2.default.createElement(
+	                                                'li',
+	                                                { className: 'active' },
+	                                                _react2.default.createElement(
+	                                                    'a',
+	                                                    { href: '#edit', 'data-toggle': 'tab' },
+	                                                    _react2.default.createElement('i', { className: 'fa fa-pencil fa-fw' }),
+	                                                    '编辑'
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    'a',
+	                                                    { href: '#preview', 'data-toggle': 'tab' },
+	                                                    _react2.default.createElement('i', { className: 'fa fa-eye fa-fw' }),
+	                                                    '预览'
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'tab-content' },
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'active tab-pane', id: 'edit' },
+	                                                _react2.default.createElement(
+	                                                    'div',
+	                                                    { className: 'form-group' },
+	                                                    _react2.default.createElement('textarea', { className: 'form-control', id: 'text-input', oninput: 'this.editor.update()', rows: '3', placeholder: '请在此输入文本 ...' })
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'tab-pane', id: 'preview' },
+	                                                _react2.default.createElement('div', { id: 'preview' })
+	                                            )
+	                                        )
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'button',
+	                                    { type: 'button', id: 'article-upload', className: 'btn-primary btn-block btn-flat btn button' },
+	                                    '上传'
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return AddArticle;
+	}(_react.Component);
+
+	exports.default = AddArticle;
+
+/***/ },
+/* 124 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 ]);

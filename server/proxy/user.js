@@ -14,7 +14,8 @@ User.addUser = function(obj) {
             }
             db_tools.add('user', obj).then(
                 function(data) {
-                    resolve(data);
+                    statusMsg.successMsg.data = data;
+                    resolve(statusMsg.successMsg);
                 },
                 function(err) {
                     reject(err);
