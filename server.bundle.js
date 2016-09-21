@@ -843,19 +843,16 @@
 	     * 获取文章列表
 	     */
 	    function getArticleList() {
-	        if (!req.session.browse) {
-	            //如果网页没有浏览过,则获取文章列表
-	            req.session.browse = true;
-	            return _article2.default.getArticleList({
-	                pageSize: 9,
-	                pageNo: 1
-	            });
-	        } else {
-
-			}
+	        //if(!req.session.browse) {             //如果网页没有浏览过,则获取文章列表
+	        //req.session.browse = true;
+	        return _article2.default.getArticleList({
+	            pageSize: 9,
+	            pageNo: 1
+	        });
+	        //}
 	    }
 
-	    //暂时这么设置,同步服务端和客户端
+	    ////暂时这么设置,同步服务端和客户端
 	    //if(req.session.user) {
 	    //    var store = configureStore({
 	    //        login:{
@@ -871,7 +868,7 @@
 	    //}
 
 
-	    //console.log('node  store:', store.getState());  //需要注意与客户端的store统一
+	    //console.log('node init store:', store.getState());  //需要注意与客户端的store统一
 	    //const store = configureStore();       //这里需要传入需要的state tree
 
 	    (0, _reactRouter.match)({ routes: (0, _routes2.default)(), location: req.url }, function (err, redirect, props) {
@@ -882,24 +879,28 @@
 	            res.redirect(redirect.pathname + redirect.search);
 	        } else if (props) {
 
-	            Promise.all([getArticleList()]).then(function (datas) {
+	            Promise.all([
+	            //getLoginStatus()
+	            getArticleList()]).then(function (datas) {
 	                //如果网页没有浏览过,则获取文章列表
 
-	                if (datas) {
+
+	                /*1. state tree 获取登录状态*/
+	                getLoginStatus();
+
+	                /*2. state tree 获取文章列表*/
+	                if (datas && datas[0] && datas[0].rows) {
 	                    req.session.stateTree.articles = {
 	                        list: []
 	                    };
 
-	                    datas[0].forEach(function (item) {
+	                    datas[0].rows.forEach(function (item) {
 	                        req.session.stateTree.articles.list.push(item._doc);
 	                    });
 	                }
 
-	                getLoginStatus(); //获取登录state tree
-
-
 	                var store = (0, _store2.default)(req.session.stateTree);
-	                console.log('node  store:', store.getState()); //需要注意与客户端的store统一
+	                console.log('node finally store:', store.getState()); //需要注意与客户端的store统一
 
 
 	                var appHtml = (0, _server.renderToString)(_react2.default.createElement(
