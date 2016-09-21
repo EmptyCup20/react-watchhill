@@ -78,10 +78,6 @@
 
 	var _cookieParser2 = _interopRequireDefault(_cookieParser);
 
-	var _mongo = __webpack_require__(9);
-
-	var _mongo2 = _interopRequireDefault(_mongo);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var app = (0, _express2.default)();
