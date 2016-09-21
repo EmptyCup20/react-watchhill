@@ -12,6 +12,7 @@ import Node from '../containers/Node';
 import About from '../containers/About';
 import LoginContainer from '../containers/LoginContainer';
 import RegisterContainer from '../containers/RegisterContainer';
+import AddArticleContainer from '../containers/AddArticleContainer'
 
 
 
@@ -31,6 +32,7 @@ const routes = (state) => {
                 <Route path='/web' component={Web}  />
                 <Route path='/node' component={Node}  />
                 <Route path='/about' component={About}  />
+                <Route path='/add_article' component={AddArticleContainer}  />
             </Route>
             <Route path="/login" onEnter={isLogined} component={LoginContainer}/>
             <Route path="/register" component={RegisterContainer}/>
@@ -40,59 +42,3 @@ const routes = (state) => {
 
 
 export default routes;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
