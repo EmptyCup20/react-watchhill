@@ -18,7 +18,7 @@ webpackJsonp([0,1],[
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(115);
+	var _store = __webpack_require__(118);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -7432,7 +7432,7 @@ webpackJsonp([0,1],[
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
-	var _AddArticleContainer = __webpack_require__(122);
+	var _AddArticleContainer = __webpack_require__(115);
 
 	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
 
@@ -8067,11 +8067,11 @@ webpackJsonp([0,1],[
 	                                            _react2.default.createElement(
 	                                                'a',
 	                                                { href: '', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
-	                                                _react2.default.createElement('img', { src: '#', alt: 'User Image', className: 'user-image' }),
+	                                                _react2.default.createElement('img', { src: login.loginUser.avatarUrl, alt: 'User Image', className: 'user-image' }),
 	                                                _react2.default.createElement(
 	                                                    'span',
 	                                                    { className: 'hidden-xs' },
-	                                                    login.loginUser.username
+	                                                    login.loginUser.author
 	                                                )
 	                                            ),
 	                                            _react2.default.createElement(
@@ -8083,21 +8083,21 @@ webpackJsonp([0,1],[
 	                                                    _react2.default.createElement(
 	                                                        _reactRouter.Link,
 	                                                        { to: '#' },
-	                                                        _react2.default.createElement('img', { src: '#', className: 'img-circle', alt: 'user image' })
+	                                                        _react2.default.createElement('img', { src: login.loginUser.avatarUrl, className: 'img-circle', alt: 'user image' })
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'p',
 	                                                        null,
-	                                                        '人生一世',
+	                                                        login.loginUser.brief,
 	                                                        _react2.default.createElement(
 	                                                            'small',
 	                                                            null,
-	                                                            '18768107826'
+	                                                            login.loginUser.tel
 	                                                        ),
 	                                                        _react2.default.createElement(
 	                                                            'small',
 	                                                            null,
-	                                                            '11@qq.com'
+	                                                            login.loginUser.email
 	                                                        )
 	                                                    )
 	                                                ),
@@ -9589,21 +9589,276 @@ webpackJsonp([0,1],[
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(74);
+
+	var _reactRedux = __webpack_require__(67);
+
+	var _AddArticle = __webpack_require__(116);
+
+	var _AddArticle2 = _interopRequireDefault(_AddArticle);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = (0, _reactRedux.connect)()(_AddArticle2.default);
+
+	//action
+
+
+	//视图组件
+	//基础库
+
+/***/ },
+/* 116 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	__webpack_require__(117);
+
+	var _Input = __webpack_require__(109);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _Button = __webpack_require__(97);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	//基础组件
+
+
+	var AddArticle = function (_Component) {
+	    _inherits(AddArticle, _Component);
+
+	    function AddArticle() {
+	        _classCallCheck(this, AddArticle);
+
+	        return _possibleConstructorReturn(this, (AddArticle.__proto__ || Object.getPrototypeOf(AddArticle)).apply(this, arguments));
+	    }
+
+	    _createClass(AddArticle, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            $('#imgUrl').fileinput({
+	                language: "zh",
+	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+	                uploadAsync: true,
+	                maxFileCount: 1
+	            });
+	            //初始化文章的表单
+	            $('#articleFile').fileinput({
+	                language: "zh",
+	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+	                uploadAsync: true,
+	                maxFileSize: 200
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'content-wrapper add-article' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { id: 'container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-xs-10  col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'page-header' },
+	                                _react2.default.createElement(
+	                                    'h1',
+	                                    null,
+	                                    '新增文章'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'form',
+	                                { id: 'articleForm' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { htmlFor: 'atricleTitle' },
+	                                        '标题'
+	                                    ),
+	                                    _react2.default.createElement(_Input2.default, { type: 'text', className: 'form-control', id: 'atricleTitle', name: 'atricleTitle' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { htmlFor: 'atricleDescribe' },
+	                                        '简介'
+	                                    ),
+	                                    _react2.default.createElement('textarea', { id: 'atricleDescribe', className: 'form-control', rows: '3', placeholder: '简介...' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { htmlFor: 'imgUrl' },
+	                                        '封面'
+	                                    ),
+	                                    _react2.default.createElement(_Input2.default, { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading', 'data-upload-url': '/article/add' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { htmlFor: 'articleFile' },
+	                                        '文章图片'
+	                                    ),
+	                                    _react2.default.createElement(_Input2.default, { id: 'articleFile', name: 'articleFile', type: 'file', className: 'file-loading', multiple: true, 'data-upload-url': '/article/add' }),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'help-block' },
+	                                        '请选择.jpg.jpeg.png.gif格式的文件上传'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'btn-group' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'btn btn-primary' },
+	                                                '获取图片的url路径'
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement('ul', null)
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { htmlFor: 'text-input' },
+	                                        '文章'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'nav-tabs-custom' },
+	                                        _react2.default.createElement(
+	                                            'ul',
+	                                            { className: 'nav nav-tabs' },
+	                                            _react2.default.createElement(
+	                                                'li',
+	                                                { className: 'active' },
+	                                                _react2.default.createElement(
+	                                                    'a',
+	                                                    { href: '#edit', 'data-toggle': 'tab' },
+	                                                    _react2.default.createElement('i', { className: 'fa fa-pencil fa-fw' }),
+	                                                    '编辑'
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    'a',
+	                                                    { href: '#preview', 'data-toggle': 'tab' },
+	                                                    _react2.default.createElement('i', { className: 'fa fa-eye fa-fw' }),
+	                                                    '预览'
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'tab-content' },
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'active tab-pane', id: 'edit' },
+	                                                _react2.default.createElement(
+	                                                    'div',
+	                                                    { className: 'form-group' },
+	                                                    _react2.default.createElement('textarea', { className: 'form-control', id: 'text-input', oninput: 'this.editor.update()', rows: '3', placeholder: '请在此输入文本 ...' })
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'tab-pane', id: 'preview' },
+	                                                _react2.default.createElement('div', { id: 'preview' })
+	                                            )
+	                                        )
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'button',
+	                                    { type: 'button', id: 'article-upload', className: 'btn-primary btn-block btn-flat btn button' },
+	                                    '上传'
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return AddArticle;
+	}(_react.Component);
+
+	exports.default = AddArticle;
+
+/***/ },
+/* 117 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 118 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 	exports.default = configureStore;
 
 	var _redux = __webpack_require__(74);
 
-	var _reduxThunk = __webpack_require__(116);
+	var _reduxThunk = __webpack_require__(119);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(117);
+	var _reduxLogger = __webpack_require__(120);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(118);
+	var _reducers = __webpack_require__(121);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -9623,7 +9878,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 116 */
+/* 119 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9651,7 +9906,7 @@ webpackJsonp([0,1],[
 	exports['default'] = thunk;
 
 /***/ },
-/* 117 */
+/* 120 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9884,7 +10139,7 @@ webpackJsonp([0,1],[
 	module.exports = createLogger;
 
 /***/ },
-/* 118 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9895,15 +10150,15 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
-	var _login = __webpack_require__(119);
+	var _login = __webpack_require__(122);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(120);
+	var _register = __webpack_require__(123);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(121);
+	var _articles = __webpack_require__(124);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
@@ -9923,7 +10178,7 @@ webpackJsonp([0,1],[
 	exports.default = reducer;
 
 /***/ },
-/* 119 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10008,7 +10263,7 @@ webpackJsonp([0,1],[
 	exports.default = login;
 
 /***/ },
-/* 120 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10052,7 +10307,7 @@ webpackJsonp([0,1],[
 	exports.default = register;
 
 /***/ },
-/* 121 */
+/* 124 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -10075,261 +10330,6 @@ webpackJsonp([0,1],[
 	};
 
 	exports.default = article;
-
-/***/ },
-/* 122 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _redux = __webpack_require__(74);
-
-	var _reactRedux = __webpack_require__(67);
-
-	var _AddArticle = __webpack_require__(123);
-
-	var _AddArticle2 = _interopRequireDefault(_AddArticle);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = (0, _reactRedux.connect)()(_AddArticle2.default);
-
-	//action
-
-
-	//视图组件
-	//基础库
-
-/***/ },
-/* 123 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	__webpack_require__(124);
-
-	var _Input = __webpack_require__(109);
-
-	var _Input2 = _interopRequireDefault(_Input);
-
-	var _Button = __webpack_require__(97);
-
-	var _Button2 = _interopRequireDefault(_Button);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	//基础组件
-
-
-	var AddArticle = function (_Component) {
-	    _inherits(AddArticle, _Component);
-
-	    function AddArticle() {
-	        _classCallCheck(this, AddArticle);
-
-	        return _possibleConstructorReturn(this, (AddArticle.__proto__ || Object.getPrototypeOf(AddArticle)).apply(this, arguments));
-	    }
-
-	    _createClass(AddArticle, [{
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            $('#imgUrl').fileinput({
-	                language: "zh",
-	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
-	                uploadAsync: true,
-	                maxFileCount: 1
-	            });
-	            //初始化文章的表单
-	            $('#articleFile').fileinput({
-	                language: "zh",
-	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
-	                uploadAsync: true,
-	                maxFileSize: 200
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'content-wrapper add-article' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { id: 'container' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-10  col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'page-header' },
-	                                _react2.default.createElement(
-	                                    'h1',
-	                                    null,
-	                                    '新增文章'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'form',
-	                                { id: 'articleForm' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { htmlFor: 'atricleTitle' },
-	                                        '标题'
-	                                    ),
-	                                    _react2.default.createElement(_Input2.default, { type: 'text', className: 'form-control', id: 'atricleTitle', name: 'atricleTitle' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { htmlFor: 'atricleDescribe' },
-	                                        '简介'
-	                                    ),
-	                                    _react2.default.createElement('textarea', { id: 'atricleDescribe', className: 'form-control', rows: '3', placeholder: '简介...' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { htmlFor: 'imgUrl' },
-	                                        '封面'
-	                                    ),
-	                                    _react2.default.createElement(_Input2.default, { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading', 'data-upload-url': '/article/add' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { htmlFor: 'articleFile' },
-	                                        '文章图片'
-	                                    ),
-	                                    _react2.default.createElement(_Input2.default, { id: 'articleFile', name: 'articleFile', type: 'file', className: 'file-loading', multiple: true, 'data-upload-url': '/article/add' }),
-	                                    _react2.default.createElement(
-	                                        'p',
-	                                        { className: 'help-block' },
-	                                        '请选择.jpg.jpeg.png.gif格式的文件上传'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'btn-group' },
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'btn btn-primary' },
-	                                                '获取图片的url路径'
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('ul', null)
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { htmlFor: 'text-input' },
-	                                        '文章'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'nav-tabs-custom' },
-	                                        _react2.default.createElement(
-	                                            'ul',
-	                                            { className: 'nav nav-tabs' },
-	                                            _react2.default.createElement(
-	                                                'li',
-	                                                { className: 'active' },
-	                                                _react2.default.createElement(
-	                                                    'a',
-	                                                    { href: '#edit', 'data-toggle': 'tab' },
-	                                                    _react2.default.createElement('i', { className: 'fa fa-pencil fa-fw' }),
-	                                                    '编辑'
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'li',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'a',
-	                                                    { href: '#preview', 'data-toggle': 'tab' },
-	                                                    _react2.default.createElement('i', { className: 'fa fa-eye fa-fw' }),
-	                                                    '预览'
-	                                                )
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'tab-content' },
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'active tab-pane', id: 'edit' },
-	                                                _react2.default.createElement(
-	                                                    'div',
-	                                                    { className: 'form-group' },
-	                                                    _react2.default.createElement('textarea', { className: 'form-control', id: 'text-input', oninput: 'this.editor.update()', rows: '3', placeholder: '请在此输入文本 ...' })
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'tab-pane', id: 'preview' },
-	                                                _react2.default.createElement('div', { id: 'preview' })
-	                                            )
-	                                        )
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', id: 'article-upload', className: 'btn-primary btn-block btn-flat btn button' },
-	                                    '上传'
-	                                )
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return AddArticle;
-	}(_react.Component);
-
-	exports.default = AddArticle;
-
-/***/ },
-/* 124 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
 
 /***/ }
 ]);
