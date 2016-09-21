@@ -7921,11 +7921,11 @@ webpackJsonp([0,1],[
 	                                                _react2.default.createElement(
 	                                                    'a',
 	                                                    { href: '#', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
-	                                                    _react2.default.createElement('img', { src: '#', alt: 'User Image', className: 'user-image' }),
+	                                                    _react2.default.createElement('img', { src: login.loginUser.avatarUrl, alt: '用户头像', className: 'user-image' }),
 	                                                    _react2.default.createElement(
 	                                                        'span',
 	                                                        { className: 'hidden-xs' },
-	                                                        login.loginUser.username
+	                                                        login.loginUser.author
 	                                                    )
 	                                                ),
 	                                                _react2.default.createElement(
@@ -7937,21 +7937,21 @@ webpackJsonp([0,1],[
 	                                                        _react2.default.createElement(
 	                                                            _reactRouter.Link,
 	                                                            { to: '#' },
-	                                                            _react2.default.createElement('img', { src: '#', className: 'img-circle', alt: 'user image' })
+	                                                            _react2.default.createElement('img', { src: login.loginUser.avatarUrl, className: 'img-circle', alt: '用户头像' })
 	                                                        ),
 	                                                        _react2.default.createElement(
 	                                                            'p',
 	                                                            null,
-	                                                            '人生一世',
+	                                                            login.loginUser.brief,
 	                                                            _react2.default.createElement(
 	                                                                'small',
 	                                                                null,
-	                                                                '18768107826'
+	                                                                login.loginUser.tel
 	                                                            ),
 	                                                            _react2.default.createElement(
 	                                                                'small',
 	                                                                null,
-	                                                                '11@qq.com'
+	                                                                login.loginUser.email
 	                                                            )
 	                                                        )
 	                                                    ),
@@ -8530,7 +8530,7 @@ webpackJsonp([0,1],[
 	                        articles.list.map(function (article, index, articles) {
 	                            return _react2.default.createElement(
 	                                "div",
-	                                { className: "col-sm-6 col-md-4 col-lg-4" },
+	                                { key: article.title, className: "col-sm-6 col-md-4 col-lg-4" },
 	                                _react2.default.createElement(
 	                                    "div",
 	                                    { className: "thumbnail article-body" },
@@ -9307,7 +9307,7 @@ webpackJsonp([0,1],[
 	    return function (dispatch) {
 	        dispatch(login_request()); //挂起登录请求,防止重复请求
 	        return (0, _ajax2.default)().login(user).then(function (data) {
-	            return dispatch(login_reveive(user, data.status));
+	            return dispatch(login_reveive(data));
 	        }); //接受到数据后重新更新state
 	    };
 	}
@@ -9330,11 +9330,11 @@ webpackJsonp([0,1],[
 	 * @returns {{type: string, user: {username: *}, status: *}}
 	 */
 
-	function login_reveive(user, status) {
+	function login_reveive(data) {
 	    return {
 	        type: _actionType.LOGIN_RECEIVE,
-	        user: { username: user.username },
-	        status: status
+	        user: data.data,
+	        status: data.status
 	    };
 	}
 
@@ -9711,7 +9711,7 @@ webpackJsonp([0,1],[
 	    return function (dispatch) {
 	        dispatch(register_request()); //挂起注册请求,防止重复请求
 	        return (0, _ajax2.default)().register(user).then(function (data) {
-	            return dispatch(register_process(user, data.status));
+	            return dispatch(register_process(data));
 	        }); //接受到数据后重新更新state
 	    };
 	}
@@ -9730,19 +9730,19 @@ webpackJsonp([0,1],[
 	/**
 	 * 接收状态处理
 	 * @param user
-	 * @param status
+	 * @param data
 	 * @returns {{type: *, user: {username: *}, status: *}}
 	 */
-	function register_process(user, status) {
+	function register_process(data) {
 
 	    if (status === _httpType.user_exist) {
 	        //注册失败
-	        return register_recieve(status);
+	        return register_recieve(data.status);
 	    } else {
 	        //注册成功
 	        return function (dispatch) {
-	            dispatch((0, _login.login_reveive)(user, status)); //登录state tree
-	            return dispatch(register_recieve(status));
+	            dispatch((0, _login.login_reveive)(data)); //登录state tree
+	            return dispatch(register_recieve(data.status));
 	        };
 	    }
 	}
@@ -10138,7 +10138,7 @@ webpackJsonp([0,1],[
 				return {
 					logined: true,
 					loginStatus: _httpType.success,
-					loginUser: action.user,
+					loginUser: action.user[0], //数据库里传的是数组
 					logining: false
 				};
 

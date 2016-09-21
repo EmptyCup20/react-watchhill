@@ -25,7 +25,7 @@ export default class Home extends Component{
                     {
                         articles.list.map( (article,index,articles) => {
                             return (
-                                <div className="col-sm-6 col-md-4 col-lg-4">
+                                <div key={article.title} className="col-sm-6 col-md-4 col-lg-4">
                                     <div className="thumbnail article-body">
                                         <a href="#" title="none">
                                             <img className="lazy artical-image" src={article.image}   alt={article.title} />

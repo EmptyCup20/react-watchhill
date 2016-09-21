@@ -285,6 +285,17 @@
 	function loginAuthen(req, res, next) {
 	    var query = req.body;
 	    _user2.default.login(query).then(function (data) {
+	        if (data.code === 0) {
+	            var login = data.data[0]; //数据库给的是数组
+	            req.session.author = login.author;
+	            req.session.avatarUrl = login.avatarUrl;
+	            req.session.email = login.email;
+	            req.session.team = login.team;
+	            req.session.brief = login.brief;
+	            req.session.codeUrl = login.codeUrl;
+	            req.session.tel = login.tel;
+	        }
+
 	        res.send(data);
 	    }, function (data) {
 	        console.log(data);
@@ -301,6 +312,16 @@
 	function register(req, res, next) {
 	    var query = req.body;
 	    _user2.default.addUser(query).then(function (data) {
+	        if (data.code === 0) {
+	            var login = data.data[0]; //数据库给的是数组
+	            req.session.author = login.author;
+	            req.session.avatarUrl = login.avatarUrl;
+	            req.session.email = login.email;
+	            req.session.team = login.team;
+	            req.session.brief = login.brief;
+	            req.session.codeUrl = login.codeUrl;
+	            req.session.tel = login.tel;
+	        }
 	        res.send(data);
 	    }, function (data) {
 	        console.log(data);
@@ -352,7 +373,8 @@
 	                return;
 	            }
 	            _db_tools2.default.add('user', obj).then(function (data) {
-	                resolve(data);
+	                _statusMsg2.default.successMsg.data = data;
+	                resolve(_statusMsg2.default.successMsg);
 	            }, function (err) {
 	                reject(err);
 	            });
@@ -445,7 +467,7 @@
 	            if (err) {
 	                reject(err);
 	            } else {
-	                resolve(statusMsg.successMsg);
+	                resolve(doc);
 	            }
 	        });
 	    });
@@ -829,10 +851,16 @@
 	     * 获取登录状态
 	     */
 	    function getLoginStatus() {
-	        if (req.session.user) {
+	        if (req.session.author) {
 	            req.session.stateTree.login = {
 	                loginUser: {
-	                    username: req.session.user
+	                    author: req.session.author,
+	                    avatarUrl: req.session.avatarUrl,
+	                    email: req.session.email,
+	                    team: req.session.team,
+	                    brief: req.session.brief,
+	                    codeUrl: req.session.codeUrl,
+	                    tel: req.session.tel
 	                },
 	                logined: true
 	            };
@@ -882,8 +910,6 @@
 	            Promise.all([
 	            //getLoginStatus()
 	            getArticleList()]).then(function (datas) {
-	                //如果网页没有浏览过,则获取文章列表
-
 
 	                /*1. state tree 获取登录状态*/
 	                getLoginStatus();
@@ -1489,11 +1515,11 @@
 	                                                _react2.default.createElement(
 	                                                    'a',
 	                                                    { href: '#', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
-	                                                    _react2.default.createElement('img', { src: '#', alt: 'User Image', className: 'user-image' }),
+	                                                    _react2.default.createElement('img', { src: login.loginUser.avatarUrl, alt: '用户头像', className: 'user-image' }),
 	                                                    _react2.default.createElement(
 	                                                        'span',
 	                                                        { className: 'hidden-xs' },
-	                                                        login.loginUser.username
+	                                                        login.loginUser.author
 	                                                    )
 	                                                ),
 	                                                _react2.default.createElement(
@@ -1505,21 +1531,21 @@
 	                                                        _react2.default.createElement(
 	                                                            _reactRouter.Link,
 	                                                            { to: '#' },
-	                                                            _react2.default.createElement('img', { src: '#', className: 'img-circle', alt: 'user image' })
+	                                                            _react2.default.createElement('img', { src: login.loginUser.avatarUrl, className: 'img-circle', alt: '用户头像' })
 	                                                        ),
 	                                                        _react2.default.createElement(
 	                                                            'p',
 	                                                            null,
-	                                                            '人生一世',
+	                                                            login.loginUser.brief,
 	                                                            _react2.default.createElement(
 	                                                                'small',
 	                                                                null,
-	                                                                '18768107826'
+	                                                                login.loginUser.tel
 	                                                            ),
 	                                                            _react2.default.createElement(
 	                                                                'small',
 	                                                                null,
-	                                                                '11@qq.com'
+	                                                                login.loginUser.email
 	                                                            )
 	                                                        )
 	                                                    ),
@@ -2098,7 +2124,7 @@
 	                        articles.list.map(function (article, index, articles) {
 	                            return _react2.default.createElement(
 	                                "div",
-	                                { className: "col-sm-6 col-md-4 col-lg-4" },
+	                                { key: article.title, className: "col-sm-6 col-md-4 col-lg-4" },
 	                                _react2.default.createElement(
 	                                    "div",
 	                                    { className: "thumbnail article-body" },
@@ -2875,7 +2901,7 @@
 	    return function (dispatch) {
 	        dispatch(login_request()); //挂起登录请求,防止重复请求
 	        return (0, _ajax2.default)().login(user).then(function (data) {
-	            return dispatch(login_reveive(user, data.status));
+	            return dispatch(login_reveive(data));
 	        }); //接受到数据后重新更新state
 	    };
 	}
@@ -2898,11 +2924,11 @@
 	 * @returns {{type: string, user: {username: *}, status: *}}
 	 */
 
-	function login_reveive(user, status) {
+	function login_reveive(data) {
 	    return {
 	        type: _actionType.LOGIN_RECEIVE,
-	        user: { username: user.username },
-	        status: status
+	        user: data.data,
+	        status: data.status
 	    };
 	}
 
@@ -3279,7 +3305,7 @@
 	    return function (dispatch) {
 	        dispatch(register_request()); //挂起注册请求,防止重复请求
 	        return (0, _ajax2.default)().register(user).then(function (data) {
-	            return dispatch(register_process(user, data.status));
+	            return dispatch(register_process(data));
 	        }); //接受到数据后重新更新state
 	    };
 	}
@@ -3298,19 +3324,19 @@
 	/**
 	 * 接收状态处理
 	 * @param user
-	 * @param status
+	 * @param data
 	 * @returns {{type: *, user: {username: *}, status: *}}
 	 */
-	function register_process(user, status) {
+	function register_process(data) {
 
 	    if (status === _httpType.user_exist) {
 	        //注册失败
-	        return register_recieve(status);
+	        return register_recieve(data.status);
 	    } else {
 	        //注册成功
 	        return function (dispatch) {
-	            dispatch((0, _login.login_reveive)(user, status)); //登录state tree
-	            return dispatch(register_recieve(status));
+	            dispatch((0, _login.login_reveive)(data)); //登录state tree
+	            return dispatch(register_recieve(data.status));
 	        };
 	    }
 	}
@@ -3457,7 +3483,7 @@
 				return {
 					logined: true,
 					loginStatus: _httpType.success,
-					loginUser: action.user,
+					loginUser: action.user[0], //数据库里传的是数组
 					logining: false
 				};
 

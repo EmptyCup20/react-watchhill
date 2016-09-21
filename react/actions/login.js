@@ -37,7 +37,7 @@ function login_ajax(user) {
     return dispatch => {
         dispatch(login_request());                                  //挂起登录请求,防止重复请求
         return ajax().login(user)
-            .then(data => dispatch(login_reveive(user,data.status)));   //接受到数据后重新更新state
+            .then(data => dispatch(login_reveive(data)));   //接受到数据后重新更新state
     };
 }
 
@@ -59,11 +59,11 @@ function login_request() {
  * @returns {{type: string, user: {username: *}, status: *}}
  */
 
-export function login_reveive(user,status) {
+export function login_reveive(data) {
     return {
         type: LOGIN_RECEIVE,
-        user: {username:user.username},
-        status: status
+        user: data.data,
+        status: data.status
     };
 }
 

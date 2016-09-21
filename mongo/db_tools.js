@@ -46,7 +46,7 @@ Db_tools.add = function(model, addObj) {
             if (err) {
                 reject(err);
             } else {
-                resolve(statusMsg.successMsg);
+                resolve(doc);
             }
         });
     })
