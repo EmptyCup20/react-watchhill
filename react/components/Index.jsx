@@ -43,10 +43,10 @@ export default class Index extends Component{
 
         return (
             <div>
-                <Header login = {login} logout={logout}></Header> 
+
+                <Header login = {login} logout={logout}></Header>
 
                 {this.props.children}
-
 
                 <Footer></Footer>
 
