@@ -813,7 +813,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(54);
+	var _store = __webpack_require__(57);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -1022,7 +1022,7 @@
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
-	var _AddArticleContainer = __webpack_require__(61);
+	var _AddArticleContainer = __webpack_require__(54);
 
 	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
 
@@ -1657,11 +1657,11 @@
 	                                            _react2.default.createElement(
 	                                                'a',
 	                                                { href: '', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
-	                                                _react2.default.createElement('img', { src: '#', alt: 'User Image', className: 'user-image' }),
+	                                                _react2.default.createElement('img', { src: login.loginUser.avatarUrl, alt: 'User Image', className: 'user-image' }),
 	                                                _react2.default.createElement(
 	                                                    'span',
 	                                                    { className: 'hidden-xs' },
-	                                                    login.loginUser.username
+	                                                    login.loginUser.author
 	                                                )
 	                                            ),
 	                                            _react2.default.createElement(
@@ -1673,21 +1673,21 @@
 	                                                    _react2.default.createElement(
 	                                                        _reactRouter.Link,
 	                                                        { to: '#' },
-	                                                        _react2.default.createElement('img', { src: '#', className: 'img-circle', alt: 'user image' })
+	                                                        _react2.default.createElement('img', { src: login.loginUser.avatarUrl, className: 'img-circle', alt: 'user image' })
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'p',
 	                                                        null,
-	                                                        '人生一世',
+	                                                        login.loginUser.brief,
 	                                                        _react2.default.createElement(
 	                                                            'small',
 	                                                            null,
-	                                                            '18768107826'
+	                                                            login.loginUser.tel
 	                                                        ),
 	                                                        _react2.default.createElement(
 	                                                            'small',
 	                                                            null,
-	                                                            '11@qq.com'
+	                                                            login.loginUser.email
 	                                                        )
 	                                                    )
 	                                                ),
@@ -3179,251 +3179,6 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.default = configureStore;
-
-	var _redux = __webpack_require__(27);
-
-	var _reduxThunk = __webpack_require__(55);
-
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-	var _reduxLogger = __webpack_require__(56);
-
-	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
-
-	var _reducers = __webpack_require__(57);
-
-	var _reducers2 = _interopRequireDefault(_reducers);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//基础库
-	var loggerMiddleware = (0, _reduxLogger2.default)();
-
-	//reducers -> 改变state
-
-
-	//中间件
-	function configureStore(preloadedState) {
-		var store = (0, _redux.createStore)(_reducers2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default, loggerMiddleware));
-
-		return store;
-	}
-
-/***/ },
-/* 55 */
-/***/ function(module, exports) {
-
-	module.exports = require("redux-thunk");
-
-/***/ },
-/* 56 */
-/***/ function(module, exports) {
-
-	module.exports = require("redux-logger");
-
-/***/ },
-/* 57 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _redux = __webpack_require__(27);
-
-	var _login = __webpack_require__(58);
-
-	var _login2 = _interopRequireDefault(_login);
-
-	var _register = __webpack_require__(59);
-
-	var _register2 = _interopRequireDefault(_register);
-
-	var _articles = __webpack_require__(60);
-
-	var _articles2 = _interopRequireDefault(_articles);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//注册
-	//基础库
-	var reducer = (0, _redux.combineReducers)({
-		login: _login2.default,
-		register: _register2.default,
-		articles: _articles2.default
-	});
-	//文章
-
-
-	//登录
-	exports.default = reducer;
-
-/***/ },
-/* 58 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _actionType = __webpack_require__(32);
-
-	var _httpType = __webpack_require__(33);
-
-	var login_status = function login_status(state, action) {
-		switch (action.status) {
-
-			case _httpType.user_no_exist:
-				return {
-					//logined:false,
-					loginStatus: _httpType.user_no_exist,
-					logining: false
-					//loginUser:{}
-				};
-
-			case _httpType.password_err:
-				return {
-					//logined:false,
-					loginStatus: _httpType.password_err,
-					logining: false
-					//loginUser:{}
-				};
-
-			case _httpType.success:
-				return {
-					logined: true,
-					loginStatus: _httpType.success,
-					loginUser: action.user[0], //数据库里传的是数组
-					logining: false
-				};
-
-			default:
-				return state;
-		}
-	};
-
-	var login = function login() {
-		var state = arguments.length <= 0 || arguments[0] === undefined ? {
-			logined: false,
-			loginStatus: _httpType.init, //登录状态
-			logining: false, //有没有正在登录标志
-			loginUser: {}
-		} : arguments[0];
-		var action = arguments[1];
-
-
-		switch (action.type) {
-
-			case _actionType.LOGIN_REQUEST:
-				//发起登录请求
-				return _extends({}, state, {
-					logining: true
-				});
-
-			case _actionType.LOGIN_RECEIVE:
-				//接受登录结果
-				return _extends({}, state, login_status(state, action));
-
-			case _actionType.LOGOUT_RECEIVE:
-				return _extends({}, state, {
-					logined: false,
-					loginUser: {},
-					loginStatus: _httpType.init,
-					logining: false
-				});
-
-			default:
-				return state;
-		}
-	};
-
-	exports.default = login;
-
-/***/ },
-/* 59 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _httpType = __webpack_require__(33);
-
-	var _actionType = __webpack_require__(32);
-
-	var register = function register() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
-	        registering: false, //正在注册
-	        registerStatus: _httpType.init //注册状态
-	    } : arguments[0];
-	    var action = arguments[1];
-
-
-	    switch (action.type) {
-	        case _actionType.REGISTER_REQUEST:
-	            return _extends({}, state, {
-
-	                registering: true
-	            });
-
-	        case _actionType.REGISTER_RECEIVE:
-	            return _extends({}, state, {
-	                registering: false,
-	                registerStatus: action.status
-	            });
-
-	        default:
-	            return state;
-	    }
-	};
-
-	exports.default = register;
-
-/***/ },
-/* 60 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var article = function article() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
-	        list: []
-	    } : arguments[0];
-	    var action = arguments[1];
-
-
-	    switch (action.type) {
-	        default:
-	            return state;
-	    }
-	};
-
-	exports.default = article;
-
-/***/ },
-/* 61 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
@@ -3431,7 +3186,7 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _AddArticle = __webpack_require__(62);
+	var _AddArticle = __webpack_require__(55);
 
 	var _AddArticle2 = _interopRequireDefault(_AddArticle);
 
@@ -3446,7 +3201,7 @@
 	//基础库
 
 /***/ },
-/* 62 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3461,7 +3216,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(63);
+	__webpack_require__(56);
 
 	var _Input = __webpack_require__(48);
 
@@ -3667,10 +3422,255 @@
 	exports.default = AddArticle;
 
 /***/ },
-/* 63 */
+/* 56 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 57 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = configureStore;
+
+	var _redux = __webpack_require__(27);
+
+	var _reduxThunk = __webpack_require__(58);
+
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+	var _reduxLogger = __webpack_require__(59);
+
+	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+
+	var _reducers = __webpack_require__(60);
+
+	var _reducers2 = _interopRequireDefault(_reducers);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//基础库
+	var loggerMiddleware = (0, _reduxLogger2.default)();
+
+	//reducers -> 改变state
+
+
+	//中间件
+	function configureStore(preloadedState) {
+		var store = (0, _redux.createStore)(_reducers2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default, loggerMiddleware));
+
+		return store;
+	}
+
+/***/ },
+/* 58 */
+/***/ function(module, exports) {
+
+	module.exports = require("redux-thunk");
+
+/***/ },
+/* 59 */
+/***/ function(module, exports) {
+
+	module.exports = require("redux-logger");
+
+/***/ },
+/* 60 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _redux = __webpack_require__(27);
+
+	var _login = __webpack_require__(61);
+
+	var _login2 = _interopRequireDefault(_login);
+
+	var _register = __webpack_require__(62);
+
+	var _register2 = _interopRequireDefault(_register);
+
+	var _articles = __webpack_require__(63);
+
+	var _articles2 = _interopRequireDefault(_articles);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//注册
+	//基础库
+	var reducer = (0, _redux.combineReducers)({
+		login: _login2.default,
+		register: _register2.default,
+		articles: _articles2.default
+	});
+	//文章
+
+
+	//登录
+	exports.default = reducer;
+
+/***/ },
+/* 61 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _actionType = __webpack_require__(32);
+
+	var _httpType = __webpack_require__(33);
+
+	var login_status = function login_status(state, action) {
+		switch (action.status) {
+
+			case _httpType.user_no_exist:
+				return {
+					//logined:false,
+					loginStatus: _httpType.user_no_exist,
+					logining: false
+					//loginUser:{}
+				};
+
+			case _httpType.password_err:
+				return {
+					//logined:false,
+					loginStatus: _httpType.password_err,
+					logining: false
+					//loginUser:{}
+				};
+
+			case _httpType.success:
+				return {
+					logined: true,
+					loginStatus: _httpType.success,
+					loginUser: action.user[0], //数据库里传的是数组
+					logining: false
+				};
+
+			default:
+				return state;
+		}
+	};
+
+	var login = function login() {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? {
+			logined: false,
+			loginStatus: _httpType.init, //登录状态
+			logining: false, //有没有正在登录标志
+			loginUser: {}
+		} : arguments[0];
+		var action = arguments[1];
+
+
+		switch (action.type) {
+
+			case _actionType.LOGIN_REQUEST:
+				//发起登录请求
+				return _extends({}, state, {
+					logining: true
+				});
+
+			case _actionType.LOGIN_RECEIVE:
+				//接受登录结果
+				return _extends({}, state, login_status(state, action));
+
+			case _actionType.LOGOUT_RECEIVE:
+				return _extends({}, state, {
+					logined: false,
+					loginUser: {},
+					loginStatus: _httpType.init,
+					logining: false
+				});
+
+			default:
+				return state;
+		}
+	};
+
+	exports.default = login;
+
+/***/ },
+/* 62 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _httpType = __webpack_require__(33);
+
+	var _actionType = __webpack_require__(32);
+
+	var register = function register() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
+	        registering: false, //正在注册
+	        registerStatus: _httpType.init //注册状态
+	    } : arguments[0];
+	    var action = arguments[1];
+
+
+	    switch (action.type) {
+	        case _actionType.REGISTER_REQUEST:
+	            return _extends({}, state, {
+
+	                registering: true
+	            });
+
+	        case _actionType.REGISTER_RECEIVE:
+	            return _extends({}, state, {
+	                registering: false,
+	                registerStatus: action.status
+	            });
+
+	        default:
+	            return state;
+	    }
+	};
+
+	exports.default = register;
+
+/***/ },
+/* 63 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var article = function article() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
+	        list: []
+	    } : arguments[0];
+	    var action = arguments[1];
+
+
+	    switch (action.type) {
+	        default:
+	            return state;
+	    }
+	};
+
+	exports.default = article;
 
 /***/ }
 /******/ ]);

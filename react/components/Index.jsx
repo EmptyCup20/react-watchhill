@@ -48,7 +48,6 @@ export default class Index extends Component{
 
                 {this.props.children}
 
-
                 <Footer></Footer>
 
             </div>

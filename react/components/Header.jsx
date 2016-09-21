@@ -64,18 +64,18 @@ export default class Header extends Component{
                                                 </li>
                                                  <li className="dropdown user user-menu">
                                                     <a href="" className="dropdown-togglt" data-toggle="dropdown" aria-expanded="false">
-                                                        <img src="#" alt="User Image" className="user-image" />
-                                                        <span className="hidden-xs">{login.loginUser.username}</span>
+                                                        <img src={login.loginUser.avatarUrl} alt="User Image" className="user-image" />
+                                                        <span className="hidden-xs">{login.loginUser.author}</span>
                                                     </a>
                                                      <ul className="dropdown-menu">
                                                          <li className="user-header">
                                                              <Link to="#">
-                                                                 <img src="#" className="img-circle" alt="user image" />
+                                                                 <img src={login.loginUser.avatarUrl} className="img-circle" alt="user image" />
                                                              </Link>
                                                              <p>
-                                                                 人生一世
-                                                                 <small>18768107826</small>
-                                                                 <small>11@qq.com</small>
+                                                                 {login.loginUser.brief}
+                                                                 <small>{login.loginUser.tel}</small>
+                                                                 <small>{login.loginUser.email}</small>
                                                              </p>
                                                          </li>
 
