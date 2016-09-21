@@ -15,6 +15,13 @@ import RegisterContainer from '../containers/RegisterContainer';
 import AddArticleContainer from '../containers/AddArticleContainer'
 import ProfileContainer from '../containers/ProfileContainer';
 
+//个人信息页的组件
+import Info from '../components/profile/info';
+import Code from '../components/profile/Code';
+import Avatar from '../components/profile/Avatar';
+import Pass from '../components/profile/Pass';
+
+
 
 const routes = (state) => {
 
@@ -35,6 +42,11 @@ const routes = (state) => {
                 <Route path='/add_article' component={AddArticleContainer}  />
 
                 <Route path='/profile' component={ProfileContainer}>
+                    <IndexRoute component={Info}/>
+                    <Route path="info" component={Info} />
+                    <Route path="pass" component={Pass} />
+                    <Route path="avatar" component={Avatar} />
+                    <Route path="code" component={Code} />
 
                 </Route>
 

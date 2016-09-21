@@ -35,8 +35,6 @@ const login_status = (state,action) => {
 };
 
 
-
-
 const login = (state = {
 	logined:false,
 	loginStatus:init,			//登录状态

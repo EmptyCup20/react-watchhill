@@ -372,7 +372,7 @@
 	                    return;
 	                }
 	                //返回登录成功
-	                _statusMsg2.default.successMsg.data = data.toObject();
+	                _statusMsg2.default.successMsg.data = data[0].toObject();
 	                resolve(_statusMsg2.default.successMsg);
 	            }, function (data) {
 	                reject(err);
@@ -817,7 +817,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(59);
+	var _store = __webpack_require__(63);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -1034,7 +1034,25 @@
 
 	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
 
+	var _info = __webpack_require__(59);
+
+	var _info2 = _interopRequireDefault(_info);
+
+	var _Code = __webpack_require__(60);
+
+	var _Code2 = _interopRequireDefault(_Code);
+
+	var _Avatar = __webpack_require__(61);
+
+	var _Avatar2 = _interopRequireDefault(_Avatar);
+
+	var _Pass = __webpack_require__(62);
+
+	var _Pass2 = _interopRequireDefault(_Pass);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//个人信息页的组件
 
 	//import Index from '../containers/Index';
 
@@ -1060,7 +1078,15 @@
 	            _react2.default.createElement(_reactRouter.Route, { path: '/node', component: _Node2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', component: _AddArticleContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _ProfileContainer2.default })
+	            _react2.default.createElement(
+	                _reactRouter.Route,
+	                { path: '/profile', component: _ProfileContainer2.default },
+	                _react2.default.createElement(_reactRouter.IndexRoute, { component: _info2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'info', component: _info2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'pass', component: _Pass2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'avatar', component: _Avatar2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'code', component: _Code2.default })
+	            )
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: isLogined, component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _RegisterContainer2.default })
@@ -3469,6 +3495,90 @@
 /* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(23);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(25);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Profile = function (_Component) {
+	    _inherits(Profile, _Component);
+
+	    function Profile() {
+	        _classCallCheck(this, Profile);
+
+	        return _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).apply(this, arguments));
+	    }
+
+	    _createClass(Profile, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'col-xs-3 col-sm-3 col-md-3 col-lg-3' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'list-group' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/profile/info', className: 'list-group-item' },
+	                            '个人信息'
+	                        ),
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/profile/pass', className: 'list-group-item' },
+	                            '密码'
+	                        ),
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/profile/avatar', className: 'list-group-item' },
+	                            '头像'
+	                        ),
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/profile/code', className: 'list-group-item' },
+	                            '二维码'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'col-xs-7 col-sm-7 col-md-7 col-lg-7' },
+	                    this.props.children
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Profile;
+	}(_react.Component);
+
+	exports.default = Profile;
+
+/***/ },
+/* 59 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -3489,33 +3599,384 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Profile = function (_Component) {
-	    _inherits(Profile, _Component);
+	var Info = function (_Component) {
+	    _inherits(Info, _Component);
 
-	    function Profile() {
-	        _classCallCheck(this, Profile);
+	    function Info() {
+	        _classCallCheck(this, Info);
 
-	        return _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (Info.__proto__ || Object.getPrototypeOf(Info)).apply(this, arguments));
 	    }
 
-	    _createClass(Profile, [{
+	    _createClass(Info, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "box box-info" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "box-header with-border" },
+	                        _react2.default.createElement(
+	                            "h3",
+	                            { className: "box-title" },
+	                            "个签修改"
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "form",
+	                        { className: "form-horizontal" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "box-body" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "form-group" },
+	                                _react2.default.createElement(
+	                                    "label",
+	                                    { "for": "inputPassword3", className: "col-sm-2 control-label" },
+	                                    "新的个签"
+	                                ),
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "col-sm-10" },
+	                                    _react2.default.createElement("input", { type: "password", className: "form-control", id: "inputPassword3", placeholder: "New Email" })
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "box-footer" },
+	                            _react2.default.createElement(
+	                                "button",
+	                                { type: "submit", className: "btn btn-info pull-right" },
+	                                "修 改"
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "box-header with-border" },
+	                        _react2.default.createElement(
+	                            "h3",
+	                            { className: "box-title" },
+	                            "邮箱修改"
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "form",
+	                        { className: "form-horizontal" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "box-body" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "form-group" },
+	                                _react2.default.createElement(
+	                                    "label",
+	                                    { "for": "inputEmail3", className: "col-sm-2 control-label" },
+	                                    "原始邮箱"
+	                                ),
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "col-sm-10" },
+	                                    _react2.default.createElement("input", { type: "email", className: "form-control", id: "inputEmail3", disabled: true })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "form-group" },
+	                                _react2.default.createElement(
+	                                    "label",
+	                                    { "for": "inputPassword3", className: "col-sm-2 control-label" },
+	                                    "新的邮箱"
+	                                ),
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "col-sm-10" },
+	                                    _react2.default.createElement("input", { type: "password", className: "form-control", id: "inputPassword3", placeholder: "New Email" })
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "box-footer" },
+	                            _react2.default.createElement(
+	                                "button",
+	                                { type: "submit", className: "btn btn-info pull-right" },
+	                                "修 改"
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "box-header with-border" },
+	                        _react2.default.createElement(
+	                            "h3",
+	                            { className: "box-title" },
+	                            "电话修改"
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "form",
+	                        { className: "form-horizontal" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "box-body" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "form-group" },
+	                                _react2.default.createElement(
+	                                    "label",
+	                                    { "for": "inputEmail3", className: "col-sm-2 control-label" },
+	                                    "原始电话"
+	                                ),
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "col-sm-10" },
+	                                    _react2.default.createElement("input", { type: "email", className: "form-control", id: "inputEmail3", disabled: true })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "form-group" },
+	                                _react2.default.createElement(
+	                                    "label",
+	                                    { "for": "inputPassword3", className: "col-sm-2 control-label" },
+	                                    "新的电话"
+	                                ),
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "col-sm-10" },
+	                                    _react2.default.createElement("input", { type: "password", className: "form-control", id: "inputPassword3", placeholder: "New Tel" })
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "box-footer" },
+	                            _react2.default.createElement(
+	                                "button",
+	                                { type: "submit", className: "btn btn-info pull-right" },
+	                                "修 改"
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Info;
+	}(_react.Component);
+
+	exports.default = Info;
+
+/***/ },
+/* 60 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(23);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Code = function (_Component) {
+	    _inherits(Code, _Component);
+
+	    function Code() {
+	        _classCallCheck(this, Code);
+
+	        return _possibleConstructorReturn(this, (Code.__proto__ || Object.getPrototypeOf(Code)).apply(this, arguments));
+	    }
+
+	    _createClass(Code, [{
 	        key: "render",
 	        value: function render() {
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "container" },
-	                "个人中心"
+	                "二维码"
 	            );
 	        }
 	    }]);
 
-	    return Profile;
+	    return Code;
 	}(_react.Component);
 
-	exports.default = Profile;
+	exports.default = Code;
 
 /***/ },
-/* 59 */
+/* 61 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(23);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Avatar = function (_Component) {
+	    _inherits(Avatar, _Component);
+
+	    function Avatar() {
+	        _classCallCheck(this, Avatar);
+
+	        return _possibleConstructorReturn(this, (Avatar.__proto__ || Object.getPrototypeOf(Avatar)).apply(this, arguments));
+	    }
+
+	    _createClass(Avatar, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "container" },
+	                "头像"
+	            );
+	        }
+	    }]);
+
+	    return Avatar;
+	}(_react.Component);
+
+	exports.default = Avatar;
+
+/***/ },
+/* 62 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(23);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Code = function (_Component) {
+	    _inherits(Code, _Component);
+
+	    function Code() {
+	        _classCallCheck(this, Code);
+
+	        return _possibleConstructorReturn(this, (Code.__proto__ || Object.getPrototypeOf(Code)).apply(this, arguments));
+	    }
+
+	    _createClass(Code, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "box box-info" },
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "box-header with-border" },
+	                    _react2.default.createElement(
+	                        "h3",
+	                        { className: "box-title" },
+	                        "密码修改"
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "form",
+	                    { className: "form-horizontal" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "box-body" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "form-group" },
+	                            _react2.default.createElement(
+	                                "label",
+	                                { "for": "inputEmail3", className: "col-sm-2 control-label" },
+	                                "原始密码"
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-sm-10" },
+	                                _react2.default.createElement("input", { type: "email", className: "form-control", id: "inputEmail3", placeholder: "Password" })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "form-group" },
+	                            _react2.default.createElement(
+	                                "label",
+	                                { "for": "inputPassword3", className: "col-sm-2 control-label" },
+	                                "新的密码"
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col-sm-10" },
+	                                _react2.default.createElement("input", { type: "password", className: "form-control", id: "inputPassword3", placeholder: "New Password" })
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "box-footer" },
+	                        _react2.default.createElement(
+	                            "button",
+	                            { type: "submit", className: "btn btn-info pull-right" },
+	                            "修 改"
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Code;
+	}(_react.Component);
+
+	exports.default = Code;
+
+/***/ },
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3527,15 +3988,15 @@
 
 	var _redux = __webpack_require__(27);
 
-	var _reduxThunk = __webpack_require__(60);
+	var _reduxThunk = __webpack_require__(64);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(61);
+	var _reduxLogger = __webpack_require__(65);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(62);
+	var _reducers = __webpack_require__(66);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -3555,19 +4016,19 @@
 	}
 
 /***/ },
-/* 60 */
+/* 64 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 61 */
+/* 65 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-logger");
 
 /***/ },
-/* 62 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3578,15 +4039,15 @@
 
 	var _redux = __webpack_require__(27);
 
-	var _login = __webpack_require__(63);
+	var _login = __webpack_require__(67);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(64);
+	var _register = __webpack_require__(68);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(65);
+	var _articles = __webpack_require__(69);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
@@ -3606,7 +4067,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 63 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3691,7 +4152,7 @@
 	exports.default = login;
 
 /***/ },
-/* 64 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3735,7 +4196,7 @@
 	exports.default = register;
 
 /***/ },
-/* 65 */
+/* 69 */
 /***/ function(module, exports) {
 
 	"use strict";
