@@ -10,14 +10,14 @@ export default class Code extends Component{
                 <form className="form-horizontal">
                     <div className="box-body">
                         <div className="form-group">
-                            <label for="inputEmail3" className="col-sm-2 control-label">原始密码</label>
+                            <label htmlFor="inputEmail3" className="col-sm-2 control-label">原始密码</label>
 
                             <div className="col-sm-10">
                                 <input type="email" className="form-control" id="inputEmail3" placeholder="Password" />
                             </div>
                         </div>
                         <div className="form-group">
-                            <label for="inputPassword3" className="col-sm-2 control-label">新的密码</label>
+                            <label htmlFor="inputPassword3" className="col-sm-2 control-label">新的密码</label>
 
                             <div className="col-sm-10">
                                 <input type="password" className="form-control" id="inputPassword3" placeholder="New Password" />

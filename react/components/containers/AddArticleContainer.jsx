@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 
 //视图组件
-import AddArticle from '../components/AddArticle.jsx';
+import AddArticle from '../views/index/AddArticle.jsx';
 
 
 

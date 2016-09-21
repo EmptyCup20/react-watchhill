@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 
 //视图组件
-import Home from '../components/Home';
+import Home from '../views/index/Home';
 
 
 function mapStateToProps(state) {

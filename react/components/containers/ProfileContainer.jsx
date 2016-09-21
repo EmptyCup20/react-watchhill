@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 
 //视图组件
-import Profile from '../components/Profile';
+import Profile from '../views/index/Profile';
 
 
 

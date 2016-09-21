@@ -1,8 +1,8 @@
 import React,{ Component } from 'react';
-import '../../public/css/addArticle.less'
+import '../../../../public/css/addArticle.less'
 //基础组件
-import Input from './elements/Input';
-import Button from './elements/Button';
+import Input from '../../elements/Input';
+import Button from '../../elements/Button';
 
 export default class AddArticle extends Component{
     componentWillMount(){
@@ -36,7 +36,7 @@ export default class AddArticle extends Component{
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="atricleDescribe">简介</label>
-                                    <textarea id="atricleDescribe" className="form-control" rows="3" placeholder="简介..."></textarea>
+                                    <textarea id="atricleDescribe" className="form-control" rows="3" placeholder="简介..." />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="imgUrl">封面</label>
@@ -59,13 +59,13 @@ export default class AddArticle extends Component{
                                     <label htmlFor="text-input">文章</label>
                                     <div className="nav-tabs-custom">
                                         <ul className="nav nav-tabs">
-                                            <li className="active"><a href="#edit" data-toggle="tab"><i className="fa fa-pencil fa-fw"></i>编辑</a></li>
-                                            <li><a href="#preview" data-toggle="tab"><i className="fa fa-eye fa-fw"></i>预览</a></li>
+                                            <li className="active"><a href="#edit" data-toggle="tab"><i className="fa fa-pencil fa-fw" />编辑</a></li>
+                                            <li><a href="#preview" data-toggle="tab"><i className="fa fa-eye fa-fw" />预览</a></li>
                                         </ul>
                                         <div className="tab-content">
                                             <div className="active tab-pane" id="edit">
                                                 <div className="form-group">
-                                                    <textarea  className="form-control"  id="text-input" oninput="this.editor.update()" rows="3" placeholder="请在此输入文本 ..."></textarea>
+                                                    <textarea  className="form-control"  id="text-input" oninput="this.editor.update()" rows="3" placeholder="请在此输入文本 ..." />
                                                 </div>
                                             </div>
                                             <div className="tab-pane" id="preview">

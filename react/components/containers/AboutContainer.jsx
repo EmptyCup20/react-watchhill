@@ -1,12 +1,11 @@
 //基础库
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 //action
 
 
 //视图组件
-import About from '../components/About.jsx';
+import About from '../views/index/About.jsx';
 
 
 

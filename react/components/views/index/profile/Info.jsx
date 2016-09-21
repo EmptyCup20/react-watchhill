@@ -12,7 +12,7 @@ export default class Info extends Component{
                     <form className="form-horizontal">
                         <div className="box-body">
                             <div className="form-group">
-                                <label for="inputPassword3" className="col-sm-2 control-label">新的个签</label>
+                                <label htmlFor="inputPassword3" className="col-sm-2 control-label">新的个签</label>
 
                                 <div className="col-sm-10">
                                     <input type="password" className="form-control" id="inputPassword3" placeholder="New Label" />
@@ -31,14 +31,14 @@ export default class Info extends Component{
                     <form className="form-horizontal">
                         <div className="box-body">
                             <div className="form-group">
-                                <label for="inputEmail3" className="col-sm-2 control-label">原始邮箱</label>
+                                <label htmlFor="inputEmail3" className="col-sm-2 control-label">原始邮箱</label>
 
                                 <div className="col-sm-10">
                                     <input type="email" className="form-control" id="inputEmail3" disabled />
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label for="inputPassword3" className="col-sm-2 control-label">新的邮箱</label>
+                                <label htmlFor="inputPassword3" className="col-sm-2 control-label">新的邮箱</label>
 
                                 <div className="col-sm-10">
                                     <input type="password" className="form-control" id="inputPassword3" placeholder="New Email" />
@@ -57,14 +57,14 @@ export default class Info extends Component{
                     <form className="form-horizontal">
                         <div className="box-body">
                             <div className="form-group">
-                                <label for="inputEmail3" className="col-sm-2 control-label">原始电话</label>
+                                <label htmlFor="inputEmail3" className="col-sm-2 control-label">原始电话</label>
 
                                 <div className="col-sm-10">
                                     <input type="email" className="form-control" id="inputEmail3" disabled />
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label for="inputPassword3" className="col-sm-2 control-label">新的电话</label>
+                                <label htmlFor="inputPassword3" className="col-sm-2 control-label">新的电话</label>
 
                                 <div className="col-sm-10">
                                     <input type="password" className="form-control" id="inputPassword3" placeholder="New Tel" />
