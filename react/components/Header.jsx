@@ -81,7 +81,7 @@ export default class Header extends Component{
 
                                                          <li className="user-footer">
                                                              <div className="pull-left">
-                                                                 <a className="btn btn-default btn-flat">个人中心</a>
+                                                                 <Link to="/profile"   className="btn btn-default btn-flat">个人中心</Link>
                                                              </div>
                                                              <div className="pull-right">
                                                                  <a className="btn btn-default btn-flat" onClick={_this.logout.bind(_this)}>退出登录</a>

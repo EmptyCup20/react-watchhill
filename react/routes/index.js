@@ -13,7 +13,7 @@ import About from '../containers/About';
 import LoginContainer from '../containers/LoginContainer';
 import RegisterContainer from '../containers/RegisterContainer';
 import AddArticleContainer from '../containers/AddArticleContainer'
-
+import ProfileContainer from '../containers/ProfileContainer';
 
 
 const routes = (state) => {
@@ -33,6 +33,11 @@ const routes = (state) => {
                 <Route path='/node' component={Node}  />
                 <Route path='/about' component={About}  />
                 <Route path='/add_article' component={AddArticleContainer}  />
+
+                <Route path='/profile' component={ProfileContainer}>
+
+                </Route>
+
             </Route>
             <Route path="/login" onEnter={isLogined} component={LoginContainer}/>
             <Route path="/register" component={RegisterContainer}/>

@@ -817,7 +817,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(57);
+	var _store = __webpack_require__(59);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -1030,8 +1030,17 @@
 
 	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
 
+	var _ProfileContainer = __webpack_require__(57);
+
+	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//import Index from '../containers/Index';
+
+
+	//容器组件
+	//基础库
 	var routes = function routes(state) {
 
 	    //进入之前判断是否已经登录
@@ -1050,17 +1059,14 @@
 	            _react2.default.createElement(_reactRouter.Route, { path: '/web', component: _Web2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/node', component: _Node2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', component: _AddArticleContainer2.default })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', component: _AddArticleContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _ProfileContainer2.default })
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: isLogined, component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _RegisterContainer2.default })
 	    );
 	};
-	//import Index from '../containers/Index';
 
-
-	//容器组件
-	//基础库
 	exports.default = routes;
 
 /***/ },
@@ -1702,8 +1708,8 @@
 	                                                        'div',
 	                                                        { className: 'pull-left' },
 	                                                        _react2.default.createElement(
-	                                                            'a',
-	                                                            { className: 'btn btn-default btn-flat' },
+	                                                            _reactRouter.Link,
+	                                                            { to: '/profile', className: 'btn btn-default btn-flat' },
 	                                                            '个人中心'
 	                                                        )
 	                                                    ),
@@ -3438,21 +3444,98 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(27);
+
+	var _reactRedux = __webpack_require__(26);
+
+	var _Profile = __webpack_require__(58);
+
+	var _Profile2 = _interopRequireDefault(_Profile);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = (0, _reactRedux.connect)()(_Profile2.default);
+
+	//action
+
+
+	//视图组件
+	//基础库
+
+/***/ },
+/* 58 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(23);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Profile = function (_Component) {
+	    _inherits(Profile, _Component);
+
+	    function Profile() {
+	        _classCallCheck(this, Profile);
+
+	        return _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).apply(this, arguments));
+	    }
+
+	    _createClass(Profile, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "container" },
+	                "个人中心"
+	            );
+	        }
+	    }]);
+
+	    return Profile;
+	}(_react.Component);
+
+	exports.default = Profile;
+
+/***/ },
+/* 59 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 	exports.default = configureStore;
 
 	var _redux = __webpack_require__(27);
 
-	var _reduxThunk = __webpack_require__(58);
+	var _reduxThunk = __webpack_require__(60);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(59);
+	var _reduxLogger = __webpack_require__(61);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(60);
+	var _reducers = __webpack_require__(62);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -3472,19 +3555,19 @@
 	}
 
 /***/ },
-/* 58 */
+/* 60 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 59 */
+/* 61 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-logger");
 
 /***/ },
-/* 60 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3495,15 +3578,15 @@
 
 	var _redux = __webpack_require__(27);
 
-	var _login = __webpack_require__(61);
+	var _login = __webpack_require__(63);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(62);
+	var _register = __webpack_require__(64);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(63);
+	var _articles = __webpack_require__(65);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
@@ -3523,7 +3606,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 61 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3608,7 +3691,7 @@
 	exports.default = login;
 
 /***/ },
-/* 62 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3652,7 +3735,7 @@
 	exports.default = register;
 
 /***/ },
-/* 63 */
+/* 65 */
 /***/ function(module, exports) {
 
 	"use strict";

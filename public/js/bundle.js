@@ -7436,8 +7436,17 @@ webpackJsonp([0,1],[
 
 	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
 
+	var _ProfileContainer = __webpack_require__(125);
+
+	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//import Index from '../containers/Index';
+
+
+	//容器组件
+	//基础库
 	var routes = function routes(state) {
 
 	    //进入之前判断是否已经登录
@@ -7456,17 +7465,14 @@ webpackJsonp([0,1],[
 	            _react2.default.createElement(_reactRouter.Route, { path: '/web', component: _Web2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/node', component: _Node2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', component: _AddArticleContainer2.default })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', component: _AddArticleContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _ProfileContainer2.default })
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: isLogined, component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _RegisterContainer2.default })
 	    );
 	};
-	//import Index from '../containers/Index';
 
-
-	//容器组件
-	//基础库
 	exports.default = routes;
 
 /***/ },
@@ -8108,8 +8114,8 @@ webpackJsonp([0,1],[
 	                                                        'div',
 	                                                        { className: 'pull-left' },
 	                                                        _react2.default.createElement(
-	                                                            'a',
-	                                                            { className: 'btn btn-default btn-flat' },
+	                                                            _reactRouter.Link,
+	                                                            { to: '/profile', className: 'btn btn-default btn-flat' },
 	                                                            '个人中心'
 	                                                        )
 	                                                    ),
@@ -10330,6 +10336,83 @@ webpackJsonp([0,1],[
 	};
 
 	exports.default = article;
+
+/***/ },
+/* 125 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(74);
+
+	var _reactRedux = __webpack_require__(67);
+
+	var _Profile = __webpack_require__(126);
+
+	var _Profile2 = _interopRequireDefault(_Profile);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = (0, _reactRedux.connect)()(_Profile2.default);
+
+	//action
+
+
+	//视图组件
+	//基础库
+
+/***/ },
+/* 126 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Profile = function (_Component) {
+	    _inherits(Profile, _Component);
+
+	    function Profile() {
+	        _classCallCheck(this, Profile);
+
+	        return _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).apply(this, arguments));
+	    }
+
+	    _createClass(Profile, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "container" },
+	                "个人中心"
+	            );
+	        }
+	    }]);
+
+	    return Profile;
+	}(_react.Component);
+
+	exports.default = Profile;
 
 /***/ }
 ]);
