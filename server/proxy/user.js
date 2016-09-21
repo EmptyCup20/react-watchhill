@@ -49,7 +49,7 @@ User.login = function(obj) {
                     return;
                 }
                 //返回登录成功
-                statusMsg.successMsg.data = data;
+                statusMsg.successMsg.data = data.toObject();
                 resolve(statusMsg.successMsg);
             }, function(data) {
                 reject(err);
