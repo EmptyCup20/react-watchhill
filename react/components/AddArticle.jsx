@@ -6,19 +6,7 @@ import Button from './elements/Button';
 
 export default class AddArticle extends Component{
     componentWillMount(){
-        $('#imgUrl').fileinput({
-            language: "zh",
-            allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
-            uploadAsync: true,
-            maxFileCount: 1
-        });
-        //初始化文章的表单
-        $('#articleFile').fileinput({
-            language: "zh",
-            allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
-            uploadAsync: true,
-            maxFileSize:200
-        });
+
     }
     render(){
         return(
@@ -40,11 +28,11 @@ export default class AddArticle extends Component{
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="imgUrl">封面</label>
-                                    <Input id="imgUrl" name="imgUrl" type="file" className="file-loading" data-upload-url="/article/add" />
+                                    <input id="imgUrl" name="imgUrl" type="file" className="file-loading" data-upload-url="/article/add" />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="articleFile">文章图片</label>
-                                    <Input id="articleFile" name="articleFile" type="file" className="file-loading" multiple data-upload-url="/article/add" />
+                                    <input id="articleFile" name="articleFile" type="file" className="file-loading" multiple data-upload-url="/article/add" />
                                     <p className="help-block">请选择.jpg.jpeg.png.gif格式的文件上传</p>
                                     <div className="btn-group">
                                        <div>
@@ -87,5 +75,29 @@ export default class AddArticle extends Component{
 
             </div>
         );
+    }
+    componentDidMount(){
+        $('#imgUrl').fileinput({
+            language: "zh",
+            allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+            uploadAsync: true,
+            maxFileCount: 1
+        });
+        //初始化文章的表单
+        $('#articleFile').fileinput({
+            language: "zh",
+            allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+            uploadAsync: true,
+            maxFileSize:200
+        });
+        function Editor(input, preview) {
+            this.update = function () {
+                preview.innerHTML = markdown.toHTML(input.value);
+            };
+            input.editor = this;
+            this.update();
+        }
+        var a = function (id) { return document.getElementById(id); };
+        new Editor(a("text-input"), a("preview"));
     }
 }

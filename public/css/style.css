@@ -10,6 +10,9 @@
 .add-article textarea {
   height: 526px;
 }
+.add-article form .file-preview {
+  background-color: #fff;
+}
 .add-article form .file-input .input-group-btn .fileinput-upload-button {
   display: none;
 }
