@@ -7,3 +7,21 @@
 .skin-about .head-title h2 {
   margin-top: 10px;
 }
+.add-article textarea {
+  height: 526px;
+}
+.add-article form .file-input .input-group-btn .fileinput-upload-button {
+  display: none;
+}
+.add-article form > .form-group:nth-of-type(4) {
+  margin-bottom: 20px;
+  position: relative;
+}
+.add-article form > .form-group:nth-of-type(4) .btn-group > div {
+  width: 100%;
+}
+.add-article form > .form-group:nth-of-type(4) .btn-group ul {
+  width: 100%;
+  display: none;
+  list-style: none;
+}

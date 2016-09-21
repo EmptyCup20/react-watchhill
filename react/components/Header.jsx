@@ -25,7 +25,7 @@ export default class Header extends Component{
     render() {
 
         const { login } = this.props;
-        
+
         return(
             <header className="main-header skin-header-user">
                 <nav className="navbar navbar-static-top">
@@ -60,7 +60,7 @@ export default class Header extends Component{
                                         return (
                                             <ul className="nav navbar-nav navbar-right">
                                                 <li className="dropdown">
-                                                    <Link to="#">新增文章</Link>
+                                                    <Link to="/add_article">新增文章</Link>
                                                 </li>
                                                  <li className="dropdown user user-menu">
                                                     <a href="" className="dropdown-togglt" data-toggle="dropdown" aria-expanded="false">
