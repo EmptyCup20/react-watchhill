@@ -106,7 +106,6 @@ router.get('/*', (req, res,next) => {
                 }
 
 
-
                 let store = configureStore(req.session.stateTree);
                 console.log('node finally store:', store.getState());  //需要注意与客户端的store统一
 

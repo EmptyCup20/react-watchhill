@@ -8414,7 +8414,7 @@ webpackJsonp([0,1],[
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _redux = __webpack_require__(74);
@@ -8427,12 +8427,11 @@ webpackJsonp([0,1],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//function mapStateToProps(state) {
-	//    return {
-	//        login: state.login
-	//    }
-	//}
-
+	function mapStateToProps(state) {
+	    return {
+	        articles: state.articles
+	    };
+	}
 
 	//绑定logout action到Logout组件
 	//function mapDispatchToProps(dispatch) {
@@ -8440,10 +8439,9 @@ webpackJsonp([0,1],[
 	//}
 
 
-	exports.default = (0, _reactRedux.connect)()(_Home2.default);
-
 	//视图组件
 	//基础库
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Home2.default);
 
 /***/ },
 /* 102 */
@@ -8481,6 +8479,9 @@ webpackJsonp([0,1],[
 	    _createClass(Home, [{
 	        key: "render",
 	        value: function render() {
+	            var articles = this.props.articles;
+
+
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "content-wrapped" },
@@ -8518,6 +8519,59 @@ webpackJsonp([0,1],[
 	                                )
 	                            )
 	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "container", id: "actives" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "row head-response-article" },
+	                        articles.list.map(function (article, index, articles) {
+	                            return _react2.default.createElement(
+	                                "div",
+	                                { className: "col-sm-6 col-md-4 col-lg-4" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "thumbnail article-body" },
+	                                    _react2.default.createElement(
+	                                        "a",
+	                                        { href: "#", title: "none" },
+	                                        _react2.default.createElement("img", { className: "lazy artical-image", src: article.image, alt: article.title })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "div",
+	                                        { className: "caption" },
+	                                        _react2.default.createElement(
+	                                            "h3",
+	                                            { className: "artical-title" },
+	                                            _react2.default.createElement(
+	                                                "a",
+	                                                { href: "#" },
+	                                                article.title
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "small",
+	                                                null,
+	                                                "作者:",
+	                                                article.author
+	                                            ),
+	                                            _react2.default.createElement("br", null),
+	                                            _react2.default.createElement(
+	                                                "small",
+	                                                null,
+	                                                article.createTime
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "p",
+	                                                { className: "artical-describe" },
+	                                                article.describe
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            );
+	                        })
 	                    )
 	                )
 	            );

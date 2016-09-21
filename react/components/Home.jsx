@@ -2,6 +2,10 @@ import React,{ Component } from 'react'
 
 export default class Home extends Component{
     render() {
+
+        const { articles } = this.props;
+
+
         return (
             <div className="content-wrapped">
                 <div className="info-box head-response">
@@ -13,6 +17,37 @@ export default class Home extends Component{
                                 <footer>楼宇WEB前端组 <cite title="Source Title">一群有志向的青年、一个欢乐又不失严肃的团队</cite></footer>
                             </blockquote>
                         </div>
+                    </div>
+                </div>
+
+                <div className="container" id="actives">
+                    <div className="row head-response-article">
+                    {
+                        articles.list.map( (article,index,articles) => {
+                            return (
+                                <div className="col-sm-6 col-md-4 col-lg-4">
+                                    <div className="thumbnail article-body">
+                                        <a href="#" title="none">
+                                            <img className="lazy artical-image" src={article.image}   alt={article.title} />
+                                        </a>
+                                        <div className="caption">
+                                            <h3 className="artical-title">
+                                                <a href="#">
+                                                    {article.title}
+                                                </a>
+                                                <small>作者:{article.author}</small>
+                                                <br />
+                                                <small>{article.createTime}</small>
+                                                <p className="artical-describe">
+                                                    {article.describe}
+                                                </p>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                     </div>
                 </div>
             </div>

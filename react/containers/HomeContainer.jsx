@@ -7,11 +7,11 @@ import { connect } from 'react-redux';
 import Home from '../components/Home';
 
 
-//function mapStateToProps(state) {
-//    return {
-//        login: state.login
-//    }
-//}
+function mapStateToProps(state) {
+    return {
+        articles: state.articles
+    }
+}
 
 
 //绑定logout action到Logout组件
@@ -20,4 +20,4 @@ import Home from '../components/Home';
 //}
 
 
-export default connect()(Home);
+export default connect(mapStateToProps)(Home);
