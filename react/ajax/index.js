@@ -52,6 +52,11 @@ function ajax() {
         //个人中心-个签,电话,邮箱修改
         modifyInfo:function(data) {
             return req('POST', '/user/profile/info',data);
+        },
+
+        //新增空白文章
+        addTempArticle: function(){
+            return req('POST','/article/addArticle');
         }
 
 

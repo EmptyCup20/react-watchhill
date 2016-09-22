@@ -1,4 +1,4 @@
-import { PREVIEW } from '../constants/actionType';
+import { PREVIEW , ADD_TEMP_ARTICLE } from '../constants/actionType';
 
 const addArticle = (state = {
    preview:''
@@ -10,6 +10,11 @@ const addArticle = (state = {
                 ...state,
                 preview: action.value
             };
+        case ADD_TEMP_ARTICLE:
+            return {
+                ...state,
+                tempId: action.value._id
+            }
         default:
             return state;
     }

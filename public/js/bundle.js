@@ -7735,7 +7735,8 @@ webpackJsonp([0,1],[
 	    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE', //注销
 
 	    //addArticle
-	    PREVIEW: 'PREVIEW'
+	    PREVIEW: 'PREVIEW', //预览功能
+	    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE' //新增文章
 	};
 
 /***/ },
@@ -7822,6 +7823,11 @@ webpackJsonp([0,1],[
 	        //个人中心-个签,电话,邮箱修改
 	        modifyInfo: function modifyInfo(data) {
 	            return req('POST', '/user/profile/info', data);
+	        },
+
+	        //新增空白文章
+	        addTempArticle: function addTempArticle() {
+	            return req('POST', '/article/addArticle');
 	        }
 
 	    };
@@ -8860,13 +8866,35 @@ webpackJsonp([0,1],[
 	    value: true
 	});
 	exports.preview = preview;
+	exports.addTempArticle = addTempArticle;
 
 	var _actionType = __webpack_require__(94);
+
+	var _ajax = __webpack_require__(96);
+
+	var _ajax2 = _interopRequireDefault(_ajax);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function preview(value) {
 	    return {
 	        type: _actionType.PREVIEW,
 	        value: value
+	    };
+	}
+
+	function addTempArticle() {
+	    return function (dispatch) {
+	        return (0, _ajax2.default)().addTempArticle().then(function (data) {
+	            return dispatch(addTempArticle_receive(data));
+	        });
+	    };
+	}
+
+	function addTempArticle_receive(data) {
+	    return {
+	        type: _actionType.ADD_TEMP_ARTICLE,
+	        value: data.data
 	    };
 	}
 
@@ -8923,6 +8951,7 @@ webpackJsonp([0,1],[
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.props.preview('');
+	            this.props.addTempArticle();
 	        }
 	    }, {
 	        key: 'render',
@@ -11478,6 +11507,10 @@ webpackJsonp([0,1],[
 	        case _actionType.PREVIEW:
 	            return _extends({}, state, {
 	                preview: action.value
+	            });
+	        case _actionType.ADD_TEMP_ARTICLE:
+	            return _extends({}, state, {
+	                tempId: action.value._id
 	            });
 	        default:
 	            return state;

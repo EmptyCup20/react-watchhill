@@ -8,6 +8,7 @@ import Markdown from '../../elements/Markdown.jsx'
 export default class AddArticle extends Component{
     componentWillMount(){
         this.props.preview('');
+        this.props.addTempArticle();
     }
     render(){
         const { preview, addArticle} = this.props

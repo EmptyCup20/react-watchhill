@@ -24,5 +24,6 @@ module.exports = {
     LOGOUT_RECEIVE: 'LOGOUT_RECEIVE',        //注销
 
     //addArticle
-    PREVIEW: 'PREVIEW'
+    PREVIEW: 'PREVIEW',          //预览功能
+    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE'  //新增文章
 };
