@@ -7892,7 +7892,10 @@ webpackJsonp([0,1],[
 	    REGISTER_RECEIVE: 'REGISTER_RECEIVE', //接收注册状况处理
 
 	    //logout
-	    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE' //注销
+	    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE', //注销
+
+	    //addArticle
+	    PREVIEW: 'PREVIEW'
 	};
 
 /***/ },
@@ -8296,11 +8299,11 @@ webpackJsonp([0,1],[
 	                                            _react2.default.createElement(
 	                                                'a',
 	                                                { href: '', className: 'dropdown-togglt', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
-	                                                _react2.default.createElement('img', { src: '#', alt: 'User Image', className: 'user-image' }),
+	                                                _react2.default.createElement('img', { src: login.loginUser.avatarUrl, alt: 'User Image', className: 'user-image' }),
 	                                                _react2.default.createElement(
 	                                                    'span',
 	                                                    { className: 'hidden-xs' },
-	                                                    login.loginUser.username
+	                                                    login.loginUser.author
 	                                                )
 	                                            ),
 	                                            _react2.default.createElement(
@@ -8312,21 +8315,21 @@ webpackJsonp([0,1],[
 	                                                    _react2.default.createElement(
 	                                                        _reactRouter.Link,
 	                                                        { to: '#' },
-	                                                        _react2.default.createElement('img', { src: '#', className: 'img-circle', alt: 'user image' })
+	                                                        _react2.default.createElement('img', { src: login.loginUser.avatarUrl, className: 'img-circle', alt: 'user image' })
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'p',
 	                                                        null,
-	                                                        '人生一世',
+	                                                        login.loginUser.brief,
 	                                                        _react2.default.createElement(
 	                                                            'small',
 	                                                            null,
-	                                                            '18768107826'
+	                                                            login.loginUser.tel
 	                                                        ),
 	                                                        _react2.default.createElement(
 	                                                            'small',
 	                                                            null,
-	                                                            '11@qq.com'
+	                                                            login.loginUser.email
 	                                                        )
 	                                                    )
 	                                                ),
@@ -8582,7 +8585,7 @@ webpackJsonp([0,1],[
 	                        articles.list.map(function (article, index, articles) {
 	                            return _react2.default.createElement(
 	                                "div",
-	                                { className: "col-sm-6 col-md-4 col-lg-4" },
+	                                { key: article.title, className: "col-sm-6 col-md-4 col-lg-4" },
 	                                _react2.default.createElement(
 	                                    "div",
 	                                    { className: "thumbnail article-body" },
@@ -9359,7 +9362,7 @@ webpackJsonp([0,1],[
 	    return function (dispatch) {
 	        dispatch(login_request()); //挂起登录请求,防止重复请求
 	        return (0, _ajax2.default)().login(user).then(function (data) {
-	            return dispatch(login_reveive(user, data.status));
+	            return dispatch(login_reveive(data));
 	        }); //接受到数据后重新更新state
 	    };
 	}
@@ -9382,11 +9385,11 @@ webpackJsonp([0,1],[
 	 * @returns {{type: string, user: {username: *}, status: *}}
 	 */
 
-	function login_reveive(user, status) {
+	function login_reveive(data) {
 	    return {
 	        type: _actionType.LOGIN_RECEIVE,
-	        user: { username: user.username },
-	        status: status
+	        user: data.data,
+	        status: data.status
 	    };
 	}
 
@@ -9763,7 +9766,7 @@ webpackJsonp([0,1],[
 	    return function (dispatch) {
 	        dispatch(register_request()); //挂起注册请求,防止重复请求
 	        return (0, _ajax2.default)().register(user).then(function (data) {
-	            return dispatch(register_process(user, data.status));
+	            return dispatch(register_process(data));
 	        }); //接受到数据后重新更新state
 	    };
 	}
@@ -9782,19 +9785,19 @@ webpackJsonp([0,1],[
 	/**
 	 * 接收状态处理
 	 * @param user
-	 * @param status
+	 * @param data
 	 * @returns {{type: *, user: {username: *}, status: *}}
 	 */
-	function register_process(user, status) {
+	function register_process(data) {
 
 	    if (status === _httpType.user_exist) {
 	        //注册失败
-	        return register_recieve(status);
+	        return register_recieve(data.status);
 	    } else {
 	        //注册成功
 	        return function (dispatch) {
-	            dispatch((0, _login.login_reveive)(user, status)); //登录state tree
-	            return dispatch(register_recieve(status));
+	            dispatch((0, _login.login_reveive)(data)); //登录state tree
+	            return dispatch(register_recieve(data.status));
 	        };
 	    }
 	}
@@ -9818,12 +9821,16 @@ webpackJsonp([0,1],[
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _redux = __webpack_require__(74);
 
 	var _reactRedux = __webpack_require__(67);
+
+	var _addArticle = __webpack_require__(132);
+
+	var addArticle = _interopRequireWildcard(_addArticle);
 
 	var _AddArticle = __webpack_require__(121);
 
@@ -9831,13 +9838,24 @@ webpackJsonp([0,1],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = (0, _reactRedux.connect)()(_AddArticle2.default);
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	//action
-
+	//基础库
+	function mapStateToProps(state) {
+	    return {
+	        addArticle: state.addArticle
+	    };
+	}
 
 	//视图组件
-	//基础库
+
+
+	function mapDispatchToProps(dispatch) {
+	    return (0, _redux.bindActionCreators)(addArticle, dispatch);
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_AddArticle2.default);
 
 /***/ },
 /* 121 */
@@ -9865,6 +9883,10 @@ webpackJsonp([0,1],[
 
 	var _Button2 = _interopRequireDefault(_Button);
 
+	var _Markdown = __webpack_require__(130);
+
+	var _Markdown2 = _interopRequireDefault(_Markdown);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9886,10 +9908,16 @@ webpackJsonp([0,1],[
 
 	    _createClass(AddArticle, [{
 	        key: 'componentWillMount',
-	        value: function componentWillMount() {}
+	        value: function componentWillMount() {
+	            this.props.preview('');
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _props = this.props;
+	            var preview = _props.preview;
+	            var addArticle = _props.addArticle;
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'content-wrapper add-article' },
@@ -9981,52 +10009,7 @@ webpackJsonp([0,1],[
 	                                        { htmlFor: 'text-input' },
 	                                        '文章'
 	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'nav-tabs-custom' },
-	                                        _react2.default.createElement(
-	                                            'ul',
-	                                            { className: 'nav nav-tabs' },
-	                                            _react2.default.createElement(
-	                                                'li',
-	                                                { className: 'active' },
-	                                                _react2.default.createElement(
-	                                                    'a',
-	                                                    { href: '#edit', 'data-toggle': 'tab' },
-	                                                    _react2.default.createElement('i', { className: 'fa fa-pencil fa-fw' }),
-	                                                    '编辑'
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'li',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'a',
-	                                                    { href: '#preview', 'data-toggle': 'tab' },
-	                                                    _react2.default.createElement('i', { className: 'fa fa-eye fa-fw' }),
-	                                                    '预览'
-	                                                )
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'tab-content' },
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'active tab-pane', id: 'edit' },
-	                                                _react2.default.createElement(
-	                                                    'div',
-	                                                    { className: 'form-group' },
-	                                                    _react2.default.createElement('textarea', { className: 'form-control', id: 'text-input', oninput: 'this.editor.update()', rows: '3', placeholder: '请在此输入文本 ...' })
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'tab-pane', id: 'preview' },
-	                                                _react2.default.createElement('div', { id: 'preview' })
-	                                            )
-	                                        )
-	                                    )
+	                                    _react2.default.createElement(_Markdown2.default, { preview: preview, addArticle: addArticle })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'button',
@@ -10055,17 +10038,6 @@ webpackJsonp([0,1],[
 	                uploadAsync: true,
 	                maxFileSize: 200
 	            });
-	            function Editor(input, preview) {
-	                this.update = function () {
-	                    preview.innerHTML = markdown.toHTML(input.value);
-	                };
-	                input.editor = this;
-	                this.update();
-	            }
-	            var a = function a(id) {
-	                return document.getElementById(id);
-	            };
-	            new Editor(a("text-input"), a("preview"));
 	        }
 	    }]);
 
@@ -10405,19 +10377,26 @@ webpackJsonp([0,1],[
 
 	var _articles2 = _interopRequireDefault(_articles);
 
+	var _addArticle = __webpack_require__(131);
+
+	var _addArticle2 = _interopRequireDefault(_addArticle);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//注册
-	//基础库
-	var reducer = (0, _redux.combineReducers)({
-		login: _login2.default,
-		register: _register2.default,
-		articles: _articles2.default
-	});
 	//文章
 
 
 	//登录
+	var reducer = (0, _redux.combineReducers)({
+		login: _login2.default,
+		register: _register2.default,
+		articles: _articles2.default,
+		addArticle: _addArticle2.default
+	});
+	//添加文章
+
+	//注册
+	//基础库
 	exports.default = reducer;
 
 /***/ },
@@ -10459,7 +10438,7 @@ webpackJsonp([0,1],[
 				return {
 					logined: true,
 					loginStatus: _httpType.success,
-					loginUser: action.user,
+					loginUser: action.user[0], //数据库里传的是数组
 					logining: false
 				};
 
@@ -10573,6 +10552,159 @@ webpackJsonp([0,1],[
 	};
 
 	exports.default = article;
+
+/***/ },
+/* 130 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Markdown = function (_React$Component) {
+	    _inherits(Markdown, _React$Component);
+
+	    function Markdown() {
+	        _classCallCheck(this, Markdown);
+
+	        return _possibleConstructorReturn(this, (Markdown.__proto__ || Object.getPrototypeOf(Markdown)).apply(this, arguments));
+	    }
+
+	    _createClass(Markdown, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "nav-tabs-custom" },
+	                _react2.default.createElement(
+	                    "ul",
+	                    { className: "nav nav-tabs" },
+	                    _react2.default.createElement(
+	                        "li",
+	                        { className: "active" },
+	                        _react2.default.createElement(
+	                            "a",
+	                            { href: "#edit", "data-toggle": "tab" },
+	                            _react2.default.createElement("i", { className: "fa fa-pencil fa-fw" }),
+	                            "编辑"
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "li",
+	                        null,
+	                        _react2.default.createElement(
+	                            "a",
+	                            { href: "#preview", "data-toggle": "tab" },
+	                            _react2.default.createElement("i", { className: "fa fa-eye fa-fw" }),
+	                            "预览"
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "tab-content" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "active tab-pane", id: "edit" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "form-group" },
+	                            _react2.default.createElement("textarea", { className: "form-control", id: "text-input", rows: "3", placeholder: "请在此输入文本 ...", onBlur: this.update.bind(this) })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "tab-pane", id: "preview" },
+	                        _react2.default.createElement("div", { id: "preview", dangerouslySetInnerHTML: this.tohtml() })
+	                    )
+	                )
+	            );
+	        }
+	    }, {
+	        key: "update",
+	        value: function update(event) {
+	            this.props.preview(markdown.toHTML(event.target.value));
+	        }
+	    }, {
+	        key: "tohtml",
+	        value: function tohtml() {
+	            return { __html: this.props.addArticle.preview };
+	        }
+	    }]);
+
+	    return Markdown;
+	}(_react2.default.Component);
+
+	exports.default = Markdown;
+
+/***/ },
+/* 131 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _actionType = __webpack_require__(98);
+
+	var addArticle = function addArticle() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
+	        preview: ''
+	    } : arguments[0];
+	    var action = arguments[1];
+
+
+	    switch (action.type) {
+	        case _actionType.PREVIEW:
+	            return _extends({}, state, {
+	                preview: action.value
+	            });
+	        default:
+	            return state;
+	    }
+	};
+
+	exports.default = addArticle;
+
+/***/ },
+/* 132 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.preview = preview;
+
+	var _actionType = __webpack_require__(98);
+
+	function preview(value) {
+	    return {
+	        type: _actionType.PREVIEW,
+	        value: value
+	    };
+	}
 
 /***/ }
 ]);

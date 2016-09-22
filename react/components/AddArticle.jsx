@@ -3,12 +3,14 @@ import '../../public/css/addArticle.less'
 //基础组件
 import Input from './elements/Input';
 import Button from './elements/Button';
+import Markdown from './elements/Markdown'
 
 export default class AddArticle extends Component{
     componentWillMount(){
-
+        this.props.preview('');
     }
     render(){
+        const { preview, addArticle} = this.props
         return(
             <div className="content-wrapper add-article">
                 <div id="container">
@@ -45,24 +47,7 @@ export default class AddArticle extends Component{
 
                                 <div className="form-group">
                                     <label htmlFor="text-input">文章</label>
-                                    <div className="nav-tabs-custom">
-                                        <ul className="nav nav-tabs">
-                                            <li className="active"><a href="#edit" data-toggle="tab"><i className="fa fa-pencil fa-fw"></i>编辑</a></li>
-                                            <li><a href="#preview" data-toggle="tab"><i className="fa fa-eye fa-fw"></i>预览</a></li>
-                                        </ul>
-                                        <div className="tab-content">
-                                            <div className="active tab-pane" id="edit">
-                                                <div className="form-group">
-                                                    <textarea  className="form-control"  id="text-input" oninput="this.editor.update()" rows="3" placeholder="请在此输入文本 ..."></textarea>
-                                                </div>
-                                            </div>
-                                            <div className="tab-pane" id="preview">
-
-                                                <div id="preview">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <Markdown preview={preview} addArticle={addArticle}></Markdown>
                                 </div>
 
                                 <button type="button" id="article-upload" className="btn-primary btn-block btn-flat btn button">上传</button>
@@ -90,14 +75,6 @@ export default class AddArticle extends Component{
             uploadAsync: true,
             maxFileSize:200
         });
-        function Editor(input, preview) {
-            this.update = function () {
-                preview.innerHTML = markdown.toHTML(input.value);
-            };
-            input.editor = this;
-            this.update();
-        }
-        var a = function (id) { return document.getElementById(id); };
-        new Editor(a("text-input"), a("preview"));
     }
+
 }

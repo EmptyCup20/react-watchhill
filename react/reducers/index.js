@@ -7,15 +7,15 @@ import login from './login';
 import register from './register';
 //文章
 import articles from './articles';
-
+//添加文章
+import addArticle from './addArticle'
 
 
 const reducer = combineReducers({
 	login,
 	register,
-	articles
+	articles,
+	addArticle
 });
 
 export default reducer;
-
-

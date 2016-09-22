@@ -11,10 +11,8 @@ module.exports = {
     REGISTER_RECEIVE: 'REGISTER_RECEIVE',   //接收注册状况处理
 
     //logout
-    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE'        //注销
+    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE',        //注销
+
+    //addArticle
+    PREVIEW: 'PREVIEW'
 };
-
-
-
-
-
