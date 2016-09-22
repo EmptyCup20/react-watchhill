@@ -68,17 +68,20 @@ User.modifyPwd = function(obj) {
         db_tools.queryByCondition('user', { _id: obj.userId }, 'password').then(data => {
             data = data[0].toObject();
             if (data.password !== obj.oldPwd) {
-                reslove(statusMsg.modfiyPwdErr);
+                resolve(statusMsg.modfiyPwdErr);
                 return;
             }
+
+            delete obj.oldPwd;
+
             //修改密码
-            db_tools.edit('user', { _id: obj.userId }).then(data => {
+            db_tools.edit('user', obj).then(data => {
                 //返回成功信息
-                reslove(data);
+                resolve(data);
             }, err => {
-                reject(data);
+                reject(err);
             })
-        }, derrata => {
+        }, data => {
             reject(data);
         });
     });

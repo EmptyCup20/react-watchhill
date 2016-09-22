@@ -93,14 +93,15 @@ function modify_process(type,data) {
         switch(type) {
             //修改密码
             case MODIFY_PASS:
-                return  modify_receive(data.status);
+                dispatch(modify_receive(data.status));
+                break;
 
             //修改邮箱,简介,电话
             case MODIFY_EMAIL:
             case MODIFY_BRIEF:
             case MODIFY_TEL:
-
-                return  modify_receive(data.status);
+                dispatch(modify_receive(data.status));
+                break;
 
             default:
                 break;

@@ -1,5 +1,5 @@
 import { MODIFY_REQUEST,MODIFY_RECEIVE } from '../constants/actionType';
-import { init,password_err,success } from '../constants/httpType';
+import { init } from '../constants/httpType';
 
 const profile = (state = {
     modifying:false,            //正在修改
@@ -17,6 +17,7 @@ const profile = (state = {
         case MODIFY_RECEIVE:
             return {
                 ...state,
+                modifying: false,
                 modifyStatus:action.status
             };
 

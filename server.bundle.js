@@ -319,15 +319,15 @@
 	    //修改密码
 	    if (req.params.type === 'pass') {
 	        _user2.default.modifyPwd(query).then(function (data) {
+	            res.send({ status: data.status });
+	        }, function (data) {
 	            console.log(data);
-	            res.send(data);
 	        });
 
 	        //修改邮箱,简介,电话
 	    } else {
 	        _user2.default.modfiyUserData(query).then(function (data) {
-	            console.log(data);
-	            res.send(data);
+	            res.send({ status: data.status });
 	        });
 	    }
 	}
@@ -409,19 +409,22 @@
 	    return new Promise(function (resolve, reject) {
 	        //判断旧密码是否正确
 	        _db_tools2.default.queryByCondition('user', { _id: obj.userId }, 'password').then(function (data) {
-	            data = data.toObject();
+	            data = data[0].toObject();
 	            if (data.password !== obj.oldPwd) {
-	                reslove(_statusMsg2.default.modfiyPwdErr);
+	                resolve(_statusMsg2.default.modfiyPwdErr);
 	                return;
 	            }
+
+	            delete obj.oldPwd;
+
 	            //修改密码
-	            _db_tools2.default.edit('user', { _id: obj.userId }).then(function (data) {
+	            _db_tools2.default.edit('user', obj).then(function (data) {
 	                //返回成功信息
-	                reslove(data);
+	                resolve(data);
 	            }, function (err) {
-	                reject(data);
+	                reject(err);
 	            });
-	        }, function (derrata) {
+	        }, function (data) {
 	            reject(data);
 	        });
 	    });
@@ -606,8 +609,8 @@
 	 */
 	var mongoose = __webpack_require__(14);
 	//连接数据库
-	var db = mongoose.connect('mongodb://10.33.31.234/watchhill', function (err) {
-	    //var db = mongoose.connect('mongodb://localhost/watchhill',function(err){
+	//var db = mongoose.connect('mongodb://10.33.31.234/watchhill',function(err){
+	var db = mongoose.connect('mongodb://localhost/watchhill', function (err) {
 	    if (err) {
 	        console.log(err);
 	    }
@@ -3415,14 +3418,15 @@
 	        switch (type) {
 	            //修改密码
 	            case _actionType.MODIFY_PASS:
-	                return modify_receive(data.status);
+	                dispatch(modify_receive(data.status));
+	                break;
 
 	            //修改邮箱,简介,电话
 	            case _actionType.MODIFY_EMAIL:
 	            case _actionType.MODIFY_BRIEF:
 	            case _actionType.MODIFY_TEL:
-
-	                return modify_receive(data.status);
+	                dispatch(modify_receive(data.status));
+	                break;
 
 	            default:
 	                break;
@@ -3507,12 +3511,23 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var login = this.props.login;
+	            var _props = this.props;
+	            var profile = _props.profile;
+	            var login = _props.login;
 
 
 	            return _react2.default.createElement(
 	                'div',
 	                null,
+	                function () {
+	                    if (profile.modifyStatus === 'success') {
+	                        return _react2.default.createElement(
+	                            'div',
+	                            { className: 'alert alert-success', role: 'alert' },
+	                            '修改成功!'
+	                        );
+	                    }
+	                }(),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'box box-info' },
@@ -3903,6 +3918,8 @@
 
 	var _actionType = __webpack_require__(34);
 
+	var _httpType = __webpack_require__(35);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3939,7 +3956,7 @@
 	            } else {
 	                var data = {
 	                    oldPwd: pass,
-	                    newPwd: password
+	                    password: password
 	                };
 
 	                this.props.modify_start(_actionType.MODIFY_PASS, data);
@@ -3948,6 +3965,9 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var profile = this.props.profile;
+
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'box box-info' },
@@ -4009,6 +4029,25 @@
 	                            )
 	                        )
 	                    ),
+	                    function () {
+	                        switch (profile.modifyStatus) {
+	                            case _httpType.old_pwd_err:
+	                                return _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'alert alert-danger', role: 'alert' },
+	                                    '原始密码错误!'
+	                                );
+
+	                            case _httpType.success:
+	                                return _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'alert alert-success', role: 'alert' },
+	                                    '修改成功!'
+	                                );
+	                            default:
+	                                break;
+	                        }
+	                    }(),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'box-footer' },
@@ -5180,6 +5219,7 @@
 
 	        case _actionType.MODIFY_RECEIVE:
 	            return _extends({}, state, {
+	                modifying: false,
 	                modifyStatus: action.status
 	            });
 

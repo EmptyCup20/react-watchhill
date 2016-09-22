@@ -1,5 +1,6 @@
 import React,{ Component } from 'react';
 import { MODIFY_PASS } from '../../../../constants/actionType';
+import { old_pwd_err,success } from '../../../../constants/httpType';
 
 
 
@@ -26,7 +27,7 @@ export default class Code extends Component{
         else {
             let data = {
                 oldPwd:pass,
-                newPwd:password
+                password:password
             };
 
             this.props.modify_start(MODIFY_PASS,data)
@@ -35,6 +36,9 @@ export default class Code extends Component{
 
 
     render() {
+
+        const { profile } = this.props;
+
         return (
             <div className="box box-info">
                 <div className="box-header with-border">
@@ -64,6 +68,31 @@ export default class Code extends Component{
                             </div>
                         </div>
                     </div>
+
+
+                    {
+                        (function (){
+                            switch(profile.modifyStatus) {
+                                case old_pwd_err:
+                                    return (
+                                        <div className="alert alert-danger" role="alert">
+                                            原始密码错误!
+                                        </div>
+                                    );
+
+                                case success:
+                                    return (
+                                        <div className="alert alert-success" role="alert">
+                                            修改成功!
+                                        </div>
+                                    );
+                                default:
+                                    break;
+                            }
+                        }())
+                    }
+
+
                     <div className="box-footer">
                         <button type="submit" className="btn btn-info pull-right" onClick={this._onClick.bind(this)}>修 改</button>
                     </div>

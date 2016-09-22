@@ -38,12 +38,23 @@ export default class Info extends Component{
 
 
     render() {
-        const { login } = this.props;
+        const { profile,login } = this.props;
 
         return (
             <div>
-                <div className="box box-info">
+                {
+                    (function (){
+                        if(profile.modifyStatus === 'success')  {
+                            return (
+                                <div className="alert alert-success" role="alert">
+                                    修改成功!
+                                </div>
+                            );
+                        }
+                    }())
+                }
 
+                <div className="box box-info">
                     <div className="box-header with-border">
                         <h3 className="box-title">个签修改</h3>
                     </div>

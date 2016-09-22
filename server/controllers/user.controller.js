@@ -78,16 +78,16 @@ export function profile(req, res, next) {
 
     //修改密码
     if(req.params.type === 'pass') {
-        User.modifyPwd(query).then( data => {
+        User.modifyPwd(query).then(function (data) {
+            res.send({status:data.status});
+        }, function (data) {
             console.log(data);
-            res.send(data);
         });
 
     //修改邮箱,简介,电话
     }else{
         User.modfiyUserData(query).then( data => {
-            console.log(data);
-            res.send(data);
+            res.send({status:data.status});
         })
     }
 }
