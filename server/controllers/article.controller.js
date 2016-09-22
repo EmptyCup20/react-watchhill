@@ -32,9 +32,19 @@ export function addArticle(req, res, next) {
     article.addArticle(query).then(function(data) {
         //临时文件夹
         temp_dir = path.resolve('public/images/temp',data.data._id.toHexString());
-        //创建临时文件夹
-        if(data.code == 0 && !fs.existsSync(temp_dir) ) {
-            fs.mkdirSync(temp_dir);
+        if(data.code == 0) {
+            //如果temp文件夹不存在,则创建一个temp文件夹
+            if(!fs.existsSync('public/images/temp')){
+                fs.mkdir('public/images/temp',(err,stat)=>{
+                    //创建临时文件夹
+                    fs.mkdirSync(temp_dir);
+                });
+            }else{
+                //存在temp文件夹,但是不存在articleid文件夹,则创建临时文件夹
+                if(!fs.existsSync(temp_dir)){
+                    fs.mkdirSync(temp_dir);
+                }
+            }
         }
         res.send(data);
     }, function(data) {
