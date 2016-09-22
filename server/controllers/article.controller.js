@@ -31,9 +31,9 @@ export function addArticle(req, res, next) {
         temp_dir;
     article.addArticle(query).then(function(data) {
         //临时文件夹
-        temp_dir = fs.statSync(path.resolve('/public/images/temp',data._id));
+        temp_dir = path.resolve('public/images/temp',data.data._id.toHexString());
         //创建临时文件夹
-        if(data.code == 0 && !temp_dir) {
+        if(data.code == 0 && !fs.existsSync(temp_dir) ) {
             fs.mkdirSync(temp_dir);
         }
         res.send(data);
@@ -61,12 +61,12 @@ export function modfiyArticle(req, res, next) {
     
     article.modfiyArticle(query).then(function(data) {
         //临时文件夹
-        temp_dir = fs.statSync(path.resolve('/public/images/temp',data._id));
+        temp_dir = path.resolve('public/images/temp',data.data._id.toHexString());
         //用户下问文章图片文件夹
-        user_dir = fs.statSync(path.resolve('/public/images/',req.session.loginUser.username,'article',data._id))
+        user_dir = path.resolve('public/images/',req.session.loginUser.username,'article',data.data._id.toHexString());
         // 临时文件夹中的文件,转移到该用户的文件夹下
-        if(data.code == 0 && temp_dir) {
-            if(user_dir){
+        if(data.code == 0 && fs.existsSync(temp_dir) )  {
+            if( fs.existsSync(user_dir) ){
                 moveFile(temp_dir,user_dir);
             }else{
                 fs.mkdir(user_dir,(err,stats)=>{
