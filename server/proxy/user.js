@@ -66,7 +66,7 @@ User.modifyPwd = function(obj) {
     return new Promise((resolve, reject) => {
         //判断旧密码是否正确
         db_tools.queryByCondition('user', { _id: obj.userId }, 'password').then(data => {
-            data = data.toObject();
+            data = data[0].toObject();
             if (data.password !== obj.oldPwd) {
                 reslove(statusMsg.modfiyPwdErr);
                 return;
