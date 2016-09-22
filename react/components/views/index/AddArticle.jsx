@@ -3,6 +3,7 @@ import '../../../../public/css/addArticle.less'
 //基础组件
 import Input from '../../elements/Input';
 import Button from '../../elements/Button';
+import Markdown from '../../elements/Markdown.jsx'
 
 export default class AddArticle extends Component{
     componentWillMount(){

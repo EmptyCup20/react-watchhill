@@ -1,7 +1,45 @@
 import React,{ Component } from 'react';
+import { MODIFY_EMAIL,MODIFY_BRIEF,MODIFY_TEL } from '../../../../constants/actionType';
+
 
 export default class Info extends Component{
+
+    _onClick(e) {
+        e.preventDefault();
+        let data = {};
+        let refs = this.refs;
+
+        switch(e.target.id) {
+            case MODIFY_BRIEF:
+                data = {
+                    brief: refs.brief.value
+                };
+                break;
+
+            case MODIFY_EMAIL:
+                data = {
+                    email: refs.email.value
+                };
+                break;
+
+            case MODIFY_TEL:
+                data = {
+                    tel: refs.tel.value
+                };
+                break;
+
+            default:
+                break;
+        }
+
+        this.props.modify_start(e.target.id,data);
+
+    }
+
+
     render() {
+        const { login } = this.props;
+
         return (
             <div>
                 <div className="box box-info">
@@ -12,15 +50,21 @@ export default class Info extends Component{
                     <form className="form-horizontal">
                         <div className="box-body">
                             <div className="form-group">
-                                <label htmlFor="inputPassword3" className="col-sm-2 control-label">新的个签</label>
+                                <label htmlFor="profile_brief" className="col-sm-2 control-label">原始个签</label>
+                                <div className="col-sm-10">
+                                    <input type="text" className="form-control" id="profile_brief" value={login.loginUser.brief} disabled />
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="profile_brief_new" className="col-sm-2 control-label">新的个签</label>
 
                                 <div className="col-sm-10">
-                                    <input type="password" className="form-control" id="inputPassword3" placeholder="New Label" />
+                                    <input  type="text" className="form-control" id="profile_brief_new" ref='brief' placeholder="New Label" />
                                 </div>
                             </div>
                         </div>
                         <div className="box-footer">
-                            <button type="submit" className="btn btn-info pull-right">修 改</button>
+                            <button id={MODIFY_BRIEF} type="submit" className="btn btn-info pull-right" onClick={this._onClick.bind(this)} >修 改</button>
                         </div>
                     </form>
 
@@ -31,22 +75,22 @@ export default class Info extends Component{
                     <form className="form-horizontal">
                         <div className="box-body">
                             <div className="form-group">
-                                <label htmlFor="inputEmail3" className="col-sm-2 control-label">原始邮箱</label>
+                                <label htmlFor="profile_email" className="col-sm-2 control-label">原始邮箱</label>
 
                                 <div className="col-sm-10">
-                                    <input type="email" className="form-control" id="inputEmail3" disabled />
+                                    <input type="email" className="form-control" id="profile_email" value={login.loginUser.email} disabled />
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="inputPassword3" className="col-sm-2 control-label">新的邮箱</label>
+                                <label htmlFor="profile_email_new" className="col-sm-2 control-label">新的邮箱</label>
 
                                 <div className="col-sm-10">
-                                    <input type="password" className="form-control" id="inputPassword3" placeholder="New Email" />
+                                    <input type="email" className="form-control" id="profile_email_new"  ref='email' placeholder="New Email" />
                                 </div>
                             </div>
                         </div>
                         <div className="box-footer">
-                            <button type="submit" className="btn btn-info pull-right">修 改</button>
+                            <button id={MODIFY_EMAIL} type="submit" className="btn btn-info pull-right" onClick={this._onClick.bind(this)} >修 改</button>
                         </div>
                     </form>
 
@@ -57,22 +101,22 @@ export default class Info extends Component{
                     <form className="form-horizontal">
                         <div className="box-body">
                             <div className="form-group">
-                                <label htmlFor="inputEmail3" className="col-sm-2 control-label">原始电话</label>
+                                <label htmlFor="profile_tel" className="col-sm-2 control-label">原始电话</label>
 
                                 <div className="col-sm-10">
-                                    <input type="email" className="form-control" id="inputEmail3" disabled />
+                                    <input type="text" className="form-control" id="profile_tel" value={login.loginUser.tel} disabled />
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="inputPassword3" className="col-sm-2 control-label">新的电话</label>
+                                <label htmlFor="profile_tel_new" className="col-sm-2 control-label">新的电话</label>
 
                                 <div className="col-sm-10">
-                                    <input type="password" className="form-control" id="inputPassword3" placeholder="New Tel" />
+                                    <input type="text" className="form-control" id="profile_tel_new"  ref='tel' placeholder="New Tel" />
                                 </div>
                             </div>
                         </div>
                         <div className="box-footer">
-                            <button type="submit" className="btn btn-info pull-right">修 改</button>
+                            <button id={MODIFY_TEL} type="submit" className="btn btn-info pull-right" onClick={this._onClick.bind(this)} >修 改</button>
                         </div>
                     </form>
                 </div>

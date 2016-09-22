@@ -13,6 +13,6 @@ module.exports = {
     user_exist: 'user_exist',           //用户存在
 
 
-
-    success:'success'                   //请求成功
+    success:'success',                  //请求成功
+    fail:'fail'                         //请求失败
 };
