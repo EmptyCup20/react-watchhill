@@ -4,7 +4,7 @@ import '../../../../public/css/about.less';
 export default class About extends Component{
     render() {
         return (
-            <div className="content-wrapper">
+            <div className="content-wrapper skin-about">
                 <div className="jumbotron masthead head head-response">
                     <div className="container head-title">
                         <h1>HIK FED</h1>

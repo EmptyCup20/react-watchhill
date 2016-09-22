@@ -1,4 +1,5 @@
 import React,{ Component } from 'react'
+import '../../../../public/css/blogList.less'
 
 export default class Home extends Component{
     render() {
@@ -7,7 +8,7 @@ export default class Home extends Component{
 
 
         return (
-            <div className="content-wrapped">
+            <div className="content-wrapped blog-list">
                 <div className="info-box head-response">
                     <div className="info-box-content">
                         <div className="container">
@@ -35,13 +36,13 @@ export default class Home extends Component{
                                                 <a href="#">
                                                     {article.title}
                                                 </a>
-                                                <small>作者:{article.author}</small>
-                                                <br />
-                                                <small>{article.createTime}</small>
-                                                <p className="artical-describe">
-                                                    {article.describe}
-                                                </p>
                                             </h3>
+                                            <small>作者:{article.author}</small>
+                                            <br />
+                                            <small>{article.createTime}</small>
+                                            <p className="artical-describe">
+                                                {article.describe}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
