@@ -1969,6 +1969,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	__webpack_require__(87);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1991,9 +1993,19 @@
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'h3',
-	                null,
-	                '尾部'
+	                'footer',
+	                { className: 'main-footer' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'pull-right hidden-xs' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        'Version'
+	                    ),
+	                    ' 1.1.0'
+	                ),
+	                _react2.default.createElement('br', null)
 	            );
 	        }
 	    }]);
@@ -5085,6 +5097,12 @@
 	};
 
 	exports.default = profile;
+
+/***/ },
+/* 87 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);
