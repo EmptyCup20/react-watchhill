@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as addArticle from '../actions/addArticle';
 
 //视图组件
-import AddArticle from '../components/AddArticle.jsx';
+import AddArticle from '../views/index/AddArticle.jsx';
 
 function mapStateToProps(state) {
     return {

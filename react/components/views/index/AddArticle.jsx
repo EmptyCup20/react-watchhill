@@ -1,9 +1,8 @@
 import React,{ Component } from 'react';
-import '../../public/css/addArticle.less'
+import '../../../../public/css/addArticle.less'
 //基础组件
 import Input from './elements/Input';
 import Button from './elements/Button';
-import Markdown from './elements/Markdown'
 
 export default class AddArticle extends Component{
     componentWillMount(){
@@ -26,7 +25,7 @@ export default class AddArticle extends Component{
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="atricleDescribe">简介</label>
-                                    <textarea id="atricleDescribe" className="form-control" rows="3" placeholder="简介..."></textarea>
+                                    <textarea id="atricleDescribe" className="form-control" rows="3" placeholder="简介..." />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="imgUrl">封面</label>

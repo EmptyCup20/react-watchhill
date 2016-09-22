@@ -1,16 +1,11 @@
 //基础库
-import { Link } from 'react-router';
 import React,{ Component,PropTypes } from 'react';
 
-//基础组件(demo)
-import Button from './elements/Button';
 
 //主要组件
-import Header from './Header';
-import Footer from './Footer';
+import Header from './index/Header';
+import Footer from './index/Footer';
 
-//导航
-import history from '../history';
 
 export default class Index extends Component{
 
@@ -44,11 +39,11 @@ export default class Index extends Component{
         return (
             <div>
 
-                <Header login = {login} logout={logout}></Header>
+                <Header login = {login} logout={logout} />
 
                 {this.props.children}
 
-                <Footer></Footer>
+                <Footer />
 
             </div>
         )

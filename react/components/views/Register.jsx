@@ -3,15 +3,15 @@ import React,{ Component,PropTypes } from 'react';
 import { Link } from 'react-router';
 
 //基础组件
-import Input from './elements/Input';
-import Button from './elements/Button';
+import Input from '../elements/Input';
+import Button from '../elements/Button';
 
 //常量
-import { _onClick } from '../constants/privateType';                //私有函数常量
-import { user_exist } from '../constants/httpType'; //注册状态常量
+import { _onClick } from '../../constants/privateType';                //私有函数常量
+import { user_exist } from '../../constants/httpType'; //注册状态常量
 
 //导航
-import history from '../history';
+import history from '../../history';
 
 
 
@@ -86,23 +86,23 @@ export default class Login extends Component{
                     <form>
                         <div className="form-group has-feedback">
                             <Input id="register_username" name='author' type="text" className="form-control" placeholder="账号" />
-                            <span className="form-control-feedback"> <i className="fa fa-user fa-fw"></i></span>
+                            <span className="form-control-feedback"> <i className="fa fa-user fa-fw" /></span>
                         </div>
                         <div className="form-group has-feedback">
                             <Input id="register_pass" name='pass' type="password" className="form-control" placeholder="密码" />
-                            <span className="form-control-feedback"> <i className="fa fa-lock fa-fw"></i></span>
+                            <span className="form-control-feedback"> <i className="fa fa-lock fa-fw" /></span>
                         </div>
                         <div className="form-group has-feedback">
                             <Input id="register_password" name="password" type="password" className="form-control" placeholder="密码确认" />
-                            <span className="form-control-feedback"> <i className="fa fa-lock fa-fw"></i></span>
+                            <span className="form-control-feedback"> <i className="fa fa-lock fa-fw" /></span>
                         </div>
                         <div className="form-group has-feedback">
                             <Input id="register_email" name="email" type="email" className="form-control" placeholder="邮箱" />
-                            <span className="form-control-feedback"> <i className="fa fa-comment fa-fw"></i></span>
+                            <span className="form-control-feedback"> <i className="fa fa-comment fa-fw" /></span>
                         </div>
                         <div className="form-group has-feedback">
                             <Input id="register_tel" name="tel" type="text" className="form-control" placeholder="电话" />
-                            <span className="form-control-feedback"> <i className="fa fa-phone fa-fw"></i></span>
+                            <span className="form-control-feedback"> <i className="fa fa-phone fa-fw" /></span>
                         </div>
                         <div className="form-group has-feedback">
                             <select id="register_team" name="team" className="form-control">

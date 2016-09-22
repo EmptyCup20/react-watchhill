@@ -2,12 +2,6 @@
 import { Link } from 'react-router';
 import React,{ Component,PropTypes } from 'react';
 
-//基础组件(demo)
-import Button from './elements/Button';
-
-
-//导航
-import history from '../history';
 
 export default class Header extends Component{
 
@@ -34,7 +28,7 @@ export default class Header extends Component{
                             <Link to="/" className="navbar-brand"><b>Watch</b>Hill</Link>
                             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
                                     data-target="#navbar-collapse">
-                                <i className="fa fa-bars"></i>
+                                <i className="fa fa-bars" />
                             </button>
                         </div>
                         <div className="collapse navbar-collapse" id="navbar-collapse">
@@ -81,7 +75,7 @@ export default class Header extends Component{
 
                                                          <li className="user-footer">
                                                              <div className="pull-left">
-                                                                 <a className="btn btn-default btn-flat">个人中心</a>
+                                                                 <Link to="/profile"   className="btn btn-default btn-flat">个人中心</Link>
                                                              </div>
                                                              <div className="pull-right">
                                                                  <a className="btn btn-default btn-flat" onClick={_this.logout.bind(_this)}>退出登录</a>

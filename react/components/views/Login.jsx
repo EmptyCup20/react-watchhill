@@ -4,15 +4,15 @@ import { Link } from 'react-router';
 
 
 //基础组件
-import Input from './elements/Input';
-import Button from './elements/Button';
+import Input from '../elements/Input';
+import Button from '../elements/Button';
 
 //常量
-import { _onClick } from '../constants/privateType';                //私有函数常量
-import { user_no_exist,password_err } from '../constants/httpType'; //登录状态常量
+import { _onClick } from '../../constants/privateType';                //私有函数常量
+import { user_no_exist,password_err } from '../../constants/httpType'; //登录状态常量
 
 //导航
-import history from '../history';
+import history from '../../history';
 
 export default class Login extends Component{
 
@@ -22,6 +22,7 @@ export default class Login extends Component{
     };
 
 
+    //这里是否可以加static属性,公司测试
     //不能修改属性和状态,在render之前接收到新的props和state进行执行
     componentWillUpdate(nextProps,nextState) {
         //console.log(nextProps.login);
@@ -105,11 +106,11 @@ export default class Login extends Component{
                    <from>
                        <div className="form-group has-feedback">
                            <Input id="login_username" type="text" className="form-control" placeholder="账号"  />
-                           <span className="form-control-feedback"> <i className="fa fa-user fa-fw"></i></span>
+                           <span className="form-control-feedback"> <i className="fa fa-user fa-fw" /></span>
                        </div>
                        <div className="form-group has-feedback">
                            <Input  id="login_password" type="password" className="form-control" placeholder="密码" />
-                           <span className="form-control-feedback"> <i className="fa fa-lock fa-fw"></i></span>
+                           <span className="form-control-feedback"> <i className="fa fa-lock fa-fw" /></span>
                        </div>
 
                        <div className="row">

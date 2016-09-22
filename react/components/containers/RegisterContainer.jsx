@@ -3,10 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 //视图组件
-import Register from '../components/Register';
+import Register from '../views/Register';
 
 //action
-import * as RegisterActions from '../actions/register';
+import * as RegisterActions from '../../actions/register';
 
 
 //绑定login store到Login组件,注册的同时也登录了,所以绑定login store

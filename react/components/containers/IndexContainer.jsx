@@ -3,10 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 //action
-import * as LogoutActions from '../actions/logout';
+import * as LogoutActions from '../../actions/logout';
 
 //视图组件
-import Index from '../components/Index';
+import Index from '../views/Index';
 
 
 function mapStateToProps(state) {
