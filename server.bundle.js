@@ -312,29 +312,24 @@
 
 	    var user = {};
 	    var query = req.body;
-	    user.userId = req.session.loginUser._id;
+	    query.userId = req.session.loginUser._id;
 
-	    switch (req.params.type) {
-	        case 'pass':
-	            user.oldPwd = query.pass;
-	            user.newPwd = query.password;
-	            break;
+	    console.log(query);
 
-	        case 'info':
-	            if (query.brief) {
-	                user.brief = query.brief;
-	            } else if (query.email) {
-	                user.email = query.email;
-	            } else if (query.tel) {
-	                user.tel = query.tel;
-	            }
-	            break;
+	    //修改密码
+	    if (req.params.type === 'pass') {
+	        _user2.default.modifyPwd(query).then(function (data) {
+	            console.log(data);
+	            res.send(data);
+	        });
 
-	        default:
-	            break;
+	        //修改邮箱,简介,电话
+	    } else {
+	        _user2.default.modfiyUserData(query).then(function (data) {
+	            console.log(data);
+	            res.send(data);
+	        });
 	    }
-
-	    console.log(user);
 	}
 
 /***/ },
