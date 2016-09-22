@@ -342,13 +342,14 @@
 	            _db_tools2.default.add('user', obj).then(function (data) {
 	                _statusMsg2.default.successMsg.data = data.toObject();
 	                if (_statusMsg2.default.successMsg.data.password) {
+	                    // 不返回用户密码
 	                    delete _statusMsg2.default.successMsg.data.password;
 	                }
 	                resolve(_statusMsg2.default.successMsg);
 	            }, function (err) {
 	                reject(err);
 	            });
-	        }, function (data) {
+	        }, function (err) {
 	            reject(err);
 	        });
 	    });
@@ -374,14 +375,49 @@
 	                //返回登录成功
 	                _statusMsg2.default.successMsg.data = data[0].toObject();
 	                resolve(_statusMsg2.default.successMsg);
-	            }, function (data) {
+	            }, function (err) {
 	                reject(err);
 	            });
-	        }, function (data) {
+	        }, function (err) {
 	            reject(err);
 	        });
 	    });
 	};
+
+	//修改用户密码
+	User.modifyPwd = function (obj) {
+	    return new Promise(function (resolve, reject) {
+	        //判断旧密码是否正确
+	        _db_tools2.default.queryByCondition('user', { _id: obj.userId }, 'password').then(function (data) {
+	            data = data.toObject();
+	            if (data.password !== obj.oldPwd) {
+	                reslove(_statusMsg2.default.modfiyPwdErr);
+	                return;
+	            }
+	            //修改密码
+	            _db_tools2.default.edit('user', { _id: obj.userId }).then(function (data) {
+	                //返回成功信息
+	                reslove(data);
+	            }, function (err) {
+	                reject(data);
+	            });
+	        }, function (derrata) {
+	            reject(data);
+	        });
+	    });
+	};
+
+	//修改用户资料
+	User.modfiyUserData = function (obj) {
+	    return new Promise(function (resolve, reject) {
+	        _db_tools2.default.edit('user', obj).then(function (data) {
+	            resolve(data);
+	        }, function (err) {
+	            reject(err);
+	        });
+	    });
+	};
+
 	module.exports = User;
 
 /***/ },
@@ -452,8 +488,9 @@
 	 * @param  {Function} callback   回调函数
 	 */
 	Db_tools.edit = function (model, editObj) {
-	    var id = editObj.id;
-	    delete editObj.id;
+	    var typeId = model + 'Id',
+	        id = editObj[typeId];
+	    delete editObj[typeId];
 	    model = init(model);
 	    return new Promise(function (resolve, reject) {
 	        model.findOneAndUpdate({ _id: id }, {
@@ -709,6 +746,13 @@
 	        "code": 22,
 	        "data": null,
 	        "status": 'password_err'
+	    },
+
+	    /* 旧密码不正确*/
+	    modfiyPwdErr: {
+	        "code": 31,
+	        "data": null,
+	        "status": 'old_pwd_err'
 	    }
 	};
 
@@ -818,7 +862,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(72);
+	var _store = __webpack_require__(76);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -1003,51 +1047,51 @@
 
 	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
 
-	var _HomeContainer = __webpack_require__(39);
+	var _HomeContainer = __webpack_require__(41);
 
 	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
 
-	var _AboutContainer = __webpack_require__(41);
+	var _AboutContainer = __webpack_require__(44);
 
 	var _AboutContainer2 = _interopRequireDefault(_AboutContainer);
 
-	var _WebContainer = __webpack_require__(44);
+	var _WebContainer = __webpack_require__(47);
 
 	var _WebContainer2 = _interopRequireDefault(_WebContainer);
 
-	var _NodeContainer = __webpack_require__(46);
+	var _NodeContainer = __webpack_require__(49);
 
 	var _NodeContainer2 = _interopRequireDefault(_NodeContainer);
 
-	var _AddArticleContainer = __webpack_require__(48);
+	var _AddArticleContainer = __webpack_require__(51);
 
 	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
 
-	var _ProfileContainer = __webpack_require__(54);
+	var _ProfileContainer = __webpack_require__(58);
 
 	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
 
-	var _InfoContainer = __webpack_require__(56);
+	var _InfoContainer = __webpack_require__(60);
 
 	var _InfoContainer2 = _interopRequireDefault(_InfoContainer);
 
-	var _CodeContainer = __webpack_require__(58);
+	var _CodeContainer = __webpack_require__(62);
 
 	var _CodeContainer2 = _interopRequireDefault(_CodeContainer);
 
-	var _AvatarContainer = __webpack_require__(60);
+	var _AvatarContainer = __webpack_require__(64);
 
 	var _AvatarContainer2 = _interopRequireDefault(_AvatarContainer);
 
-	var _PassContainer = __webpack_require__(62);
+	var _PassContainer = __webpack_require__(66);
 
 	var _PassContainer2 = _interopRequireDefault(_PassContainer);
 
-	var _LoginContainer = __webpack_require__(64);
+	var _LoginContainer = __webpack_require__(68);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _RegisterContainer = __webpack_require__(69);
+	var _RegisterContainer = __webpack_require__(73);
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
@@ -1320,7 +1364,8 @@
 	    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE', //注销
 
 	    //addArticle
-	    PREVIEW: 'PREVIEW'
+	    PREVIEW: 'PREVIEW', //预览功能
+	    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE' //新增文章
 	};
 
 /***/ },
@@ -1396,6 +1441,11 @@
 	        //注册
 	        register: function register(data) {
 	            return req('POST', '/user/register', data);
+	        },
+
+	        //新增空白文章
+	        addTempArticle: function addTempArticle() {
+	            return req('POST', '/article/addArticle');
 	        }
 	    };
 	}
@@ -1418,13 +1468,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(82);
+	__webpack_require__(37);
 
-	var _Header = __webpack_require__(37);
+	var _Header = __webpack_require__(38);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _Footer = __webpack_require__(38);
+	var _Footer = __webpack_require__(40);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
@@ -1495,6 +1545,12 @@
 
 /***/ },
 /* 37 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1511,7 +1567,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(83);
+	__webpack_require__(39);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1736,7 +1792,13 @@
 	exports.default = Header;
 
 /***/ },
-/* 38 */
+/* 39 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1786,7 +1848,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 39 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1799,7 +1861,7 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Home = __webpack_require__(40);
+	var _Home = __webpack_require__(42);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
@@ -1822,7 +1884,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Home2.default);
 
 /***/ },
-/* 40 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1837,7 +1899,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(81);
+	__webpack_require__(43);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1964,7 +2026,13 @@
 	exports.default = Home;
 
 /***/ },
-/* 41 */
+/* 43 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1975,7 +2043,7 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _About = __webpack_require__(42);
+	var _About = __webpack_require__(45);
 
 	var _About2 = _interopRequireDefault(_About);
 
@@ -1990,7 +2058,7 @@
 	//视图组件
 
 /***/ },
-/* 42 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2005,7 +2073,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(43);
+	__webpack_require__(46);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2200,13 +2268,13 @@
 	exports.default = About;
 
 /***/ },
-/* 43 */
+/* 46 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 44 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2217,7 +2285,7 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Web = __webpack_require__(45);
+	var _Web = __webpack_require__(48);
 
 	var _Web2 = _interopRequireDefault(_Web);
 
@@ -2231,7 +2299,7 @@
 	//视图组件
 
 /***/ },
-/* 45 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2284,7 +2352,7 @@
 	exports.default = Web;
 
 /***/ },
-/* 46 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2295,7 +2363,7 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Node = __webpack_require__(47);
+	var _Node = __webpack_require__(50);
 
 	var _Node2 = _interopRequireDefault(_Node);
 
@@ -2310,7 +2378,7 @@
 	//视图组件
 
 /***/ },
-/* 47 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2363,7 +2431,7 @@
 	exports.default = Node;
 
 /***/ },
-/* 48 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2376,11 +2444,11 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _addArticle = __webpack_require__(49);
+	var _addArticle = __webpack_require__(52);
 
 	var addArticle = _interopRequireWildcard(_addArticle);
 
-	var _AddArticle = __webpack_require__(50);
+	var _AddArticle = __webpack_require__(53);
 
 	var _AddArticle2 = _interopRequireDefault(_AddArticle);
 
@@ -2406,7 +2474,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_AddArticle2.default);
 
 /***/ },
-/* 49 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2415,8 +2483,15 @@
 	    value: true
 	});
 	exports.preview = preview;
+	exports.addTempArticle = addTempArticle;
 
 	var _actionType = __webpack_require__(33);
+
+	var _ajax = __webpack_require__(35);
+
+	var _ajax2 = _interopRequireDefault(_ajax);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function preview(value) {
 	    return {
@@ -2425,8 +2500,23 @@
 	    };
 	}
 
+	function addTempArticle() {
+	    return function (dispatch) {
+	        return (0, _ajax2.default)().addTempArticle().then(function (data) {
+	            return dispatch(data);
+	        });
+	    };
+	}
+
+	function addTempArticle_receive(data) {
+	    return {
+	        type: ADD_TEMP_ARTICLE,
+	        value: data.data
+	    };
+	}
+
 /***/ },
-/* 50 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2441,17 +2531,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(51);
+	__webpack_require__(54);
 
-	var _Input = __webpack_require__(52);
+	var _Input = __webpack_require__(55);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(53);
+	var _Button = __webpack_require__(56);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _Markdown = __webpack_require__(80);
+	var _Markdown = __webpack_require__(57);
 
 	var _Markdown2 = _interopRequireDefault(_Markdown);
 
@@ -2478,6 +2568,7 @@
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.props.preview('');
+	            this.props.addTempArticle();
 	        }
 	    }, {
 	        key: 'render',
@@ -2615,13 +2706,13 @@
 	exports.default = AddArticle;
 
 /***/ },
-/* 51 */
+/* 54 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 52 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2700,7 +2791,7 @@
 	exports.default = Input;
 
 /***/ },
-/* 53 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2762,7 +2853,107 @@
 	exports.default = Button;
 
 /***/ },
-/* 54 */
+/* 57 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(23);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Markdown = function (_React$Component) {
+	    _inherits(Markdown, _React$Component);
+
+	    function Markdown() {
+	        _classCallCheck(this, Markdown);
+
+	        return _possibleConstructorReturn(this, (Markdown.__proto__ || Object.getPrototypeOf(Markdown)).apply(this, arguments));
+	    }
+
+	    _createClass(Markdown, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "nav-tabs-custom" },
+	                _react2.default.createElement(
+	                    "ul",
+	                    { className: "nav nav-tabs" },
+	                    _react2.default.createElement(
+	                        "li",
+	                        { className: "active" },
+	                        _react2.default.createElement(
+	                            "a",
+	                            { href: "#edit", "data-toggle": "tab" },
+	                            _react2.default.createElement("i", { className: "fa fa-pencil fa-fw" }),
+	                            "编辑"
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "li",
+	                        null,
+	                        _react2.default.createElement(
+	                            "a",
+	                            { href: "#preview", "data-toggle": "tab" },
+	                            _react2.default.createElement("i", { className: "fa fa-eye fa-fw" }),
+	                            "预览"
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "tab-content" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "active tab-pane", id: "edit" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "form-group" },
+	                            _react2.default.createElement("textarea", { className: "form-control", id: "text-input", rows: "3", placeholder: "请在此输入文本 ...", onBlur: this.update.bind(this) })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "tab-pane", id: "preview" },
+	                        _react2.default.createElement("div", { id: "preview", dangerouslySetInnerHTML: this.tohtml() })
+	                    )
+	                )
+	            );
+	        }
+	    }, {
+	        key: "update",
+	        value: function update(event) {
+	            this.props.preview(markdown.toHTML(event.target.value));
+	        }
+	    }, {
+	        key: "tohtml",
+	        value: function tohtml() {
+	            return { __html: this.props.addArticle.preview };
+	        }
+	    }]);
+
+	    return Markdown;
+	}(_react2.default.Component);
+
+	exports.default = Markdown;
+
+/***/ },
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2775,7 +2966,7 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Profile = __webpack_require__(55);
+	var _Profile = __webpack_require__(59);
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
@@ -2790,7 +2981,7 @@
 	//基础库
 
 /***/ },
-/* 55 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2874,7 +3065,7 @@
 	exports.default = Profile;
 
 /***/ },
-/* 56 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2885,7 +3076,7 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Info = __webpack_require__(57);
+	var _Info = __webpack_require__(61);
 
 	var _Info2 = _interopRequireDefault(_Info);
 
@@ -2900,7 +3091,7 @@
 	//视图组件
 
 /***/ },
-/* 57 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3100,7 +3291,7 @@
 	exports.default = Info;
 
 /***/ },
-/* 58 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3111,7 +3302,7 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Code = __webpack_require__(59);
+	var _Code = __webpack_require__(63);
 
 	var _Code2 = _interopRequireDefault(_Code);
 
@@ -3126,7 +3317,7 @@
 	//视图组件
 
 /***/ },
-/* 59 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3175,7 +3366,7 @@
 	exports.default = Code;
 
 /***/ },
-/* 60 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3186,7 +3377,7 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Avatar = __webpack_require__(61);
+	var _Avatar = __webpack_require__(65);
 
 	var _Avatar2 = _interopRequireDefault(_Avatar);
 
@@ -3201,7 +3392,7 @@
 	//视图组件
 
 /***/ },
-/* 61 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3250,7 +3441,7 @@
 	exports.default = Avatar;
 
 /***/ },
-/* 62 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3261,7 +3452,7 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Pass = __webpack_require__(63);
+	var _Pass = __webpack_require__(67);
 
 	var _Pass2 = _interopRequireDefault(_Pass);
 
@@ -3276,7 +3467,7 @@
 	//视图组件
 
 /***/ },
-/* 63 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3378,7 +3569,7 @@
 	exports.default = Code;
 
 /***/ },
-/* 64 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3391,11 +3582,11 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Login = __webpack_require__(65);
+	var _Login = __webpack_require__(69);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(68);
+	var _login = __webpack_require__(72);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -3426,7 +3617,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 65 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3443,19 +3634,19 @@
 
 	var _reactRouter = __webpack_require__(25);
 
-	var _Input = __webpack_require__(52);
+	var _Input = __webpack_require__(55);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(53);
+	var _Button = __webpack_require__(56);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(66);
+	var _privateType = __webpack_require__(70);
 
 	var _httpType = __webpack_require__(34);
 
-	var _history = __webpack_require__(67);
+	var _history = __webpack_require__(71);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -3636,7 +3827,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 66 */
+/* 70 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -3648,7 +3839,7 @@
 	};
 
 /***/ },
-/* 67 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3662,7 +3853,7 @@
 	exports.default = _reactRouter.browserHistory;
 
 /***/ },
-/* 68 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3779,7 +3970,7 @@
 	//}
 
 /***/ },
-/* 69 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3792,11 +3983,11 @@
 
 	var _reactRedux = __webpack_require__(26);
 
-	var _Register = __webpack_require__(70);
+	var _Register = __webpack_require__(74);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
-	var _register = __webpack_require__(71);
+	var _register = __webpack_require__(75);
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -3827,7 +4018,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
-/* 70 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3844,19 +4035,19 @@
 
 	var _reactRouter = __webpack_require__(25);
 
-	var _Input = __webpack_require__(52);
+	var _Input = __webpack_require__(55);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(53);
+	var _Button = __webpack_require__(56);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(66);
+	var _privateType = __webpack_require__(70);
 
 	var _httpType = __webpack_require__(34);
 
-	var _history = __webpack_require__(67);
+	var _history = __webpack_require__(71);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -4064,7 +4255,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 71 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4082,7 +4273,7 @@
 
 	var _httpType = __webpack_require__(34);
 
-	var _login = __webpack_require__(68);
+	var _login = __webpack_require__(72);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4168,7 +4359,7 @@
 	}
 
 /***/ },
-/* 72 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4180,15 +4371,15 @@
 
 	var _redux = __webpack_require__(27);
 
-	var _reduxThunk = __webpack_require__(73);
+	var _reduxThunk = __webpack_require__(77);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(74);
+	var _reduxLogger = __webpack_require__(78);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(75);
+	var _reducers = __webpack_require__(79);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -4208,19 +4399,19 @@
 	}
 
 /***/ },
-/* 73 */
+/* 77 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 74 */
+/* 78 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-logger");
 
 /***/ },
-/* 75 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4231,19 +4422,19 @@
 
 	var _redux = __webpack_require__(27);
 
-	var _login = __webpack_require__(76);
+	var _login = __webpack_require__(80);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(77);
+	var _register = __webpack_require__(81);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(78);
+	var _articles = __webpack_require__(82);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
-	var _addArticle = __webpack_require__(79);
+	var _addArticle = __webpack_require__(83);
 
 	var _addArticle2 = _interopRequireDefault(_addArticle);
 
@@ -4266,7 +4457,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 76 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4351,7 +4542,7 @@
 	exports.default = login;
 
 /***/ },
-/* 77 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4395,7 +4586,7 @@
 	exports.default = register;
 
 /***/ },
-/* 78 */
+/* 82 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4420,7 +4611,7 @@
 	exports.default = article;
 
 /***/ },
-/* 79 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4445,130 +4636,16 @@
 	            return _extends({}, state, {
 	                preview: action.value
 	            });
+	        case _actionType.ADD_TEMP_ARTICLE:
+	            return _extends({}, state, {
+	                tempId: action.value._id
+	            });
 	        default:
 	            return state;
 	    }
 	};
 
 	exports.default = addArticle;
-
-/***/ },
-/* 80 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(23);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Markdown = function (_React$Component) {
-	    _inherits(Markdown, _React$Component);
-
-	    function Markdown() {
-	        _classCallCheck(this, Markdown);
-
-	        return _possibleConstructorReturn(this, (Markdown.__proto__ || Object.getPrototypeOf(Markdown)).apply(this, arguments));
-	    }
-
-	    _createClass(Markdown, [{
-	        key: "render",
-	        value: function render() {
-	            return _react2.default.createElement(
-	                "div",
-	                { className: "nav-tabs-custom" },
-	                _react2.default.createElement(
-	                    "ul",
-	                    { className: "nav nav-tabs" },
-	                    _react2.default.createElement(
-	                        "li",
-	                        { className: "active" },
-	                        _react2.default.createElement(
-	                            "a",
-	                            { href: "#edit", "data-toggle": "tab" },
-	                            _react2.default.createElement("i", { className: "fa fa-pencil fa-fw" }),
-	                            "编辑"
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        "li",
-	                        null,
-	                        _react2.default.createElement(
-	                            "a",
-	                            { href: "#preview", "data-toggle": "tab" },
-	                            _react2.default.createElement("i", { className: "fa fa-eye fa-fw" }),
-	                            "预览"
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    "div",
-	                    { className: "tab-content" },
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "active tab-pane", id: "edit" },
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "form-group" },
-	                            _react2.default.createElement("textarea", { className: "form-control", id: "text-input", rows: "3", placeholder: "请在此输入文本 ...", onBlur: this.update.bind(this) })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "tab-pane", id: "preview" },
-	                        _react2.default.createElement("div", { id: "preview", dangerouslySetInnerHTML: this.tohtml() })
-	                    )
-	                )
-	            );
-	        }
-	    }, {
-	        key: "update",
-	        value: function update(event) {
-	            this.props.preview(markdown.toHTML(event.target.value));
-	        }
-	    }, {
-	        key: "tohtml",
-	        value: function tohtml() {
-	            return { __html: this.props.addArticle.preview };
-	        }
-	    }]);
-
-	    return Markdown;
-	}(_react2.default.Component);
-
-	exports.default = Markdown;
-
-/***/ },
-/* 81 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 82 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 83 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);

@@ -42,6 +42,11 @@ function ajax() {
         //注册
         register: function(data) {
             return req('POST','/user/register',data);
+        },
+
+        //新增空白文章
+        addTempArticle: function(){
+            return req('POST','/article/addArticle');
         }
     };
 }
