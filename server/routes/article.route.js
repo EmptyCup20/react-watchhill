@@ -10,9 +10,9 @@ router.get('/getArticleList', getArticleList);
 router.get('/getArticle', getArticle);
 
 //新增文章
-router.get('/addArticle', addArticle);
+router.post('/addArticle', addArticle);
 
 //修改文章
-router.get('/modfiyArticle', modfiyArticle);
+router.post('/modfiyArticle', modfiyArticle);
 
 module.exports = router;
