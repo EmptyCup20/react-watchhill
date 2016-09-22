@@ -1,4 +1,4 @@
-import { PREVIEW } from '../constants/actionType';
+import { PREVIEW , ADD_TEMP_ARTICLE } from '../constants/actionType';
 import ajax from '../ajax';
 export function preview(value){
     return {
@@ -11,7 +11,7 @@ export function addTempArticle(){
     return dispatch => {
         return ajax().addTempArticle()
             .then(data => {
-                return dispatch(data);
+                return dispatch(addTempArticle_receive(data));
             })
     }
 }
