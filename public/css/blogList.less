@@ -1,0 +1,68 @@
+
+ .blog-list{
+     @content-bgcolor : #fff;
+     @box-height: 370px;
+     @main-color: #367fa9;
+     .text-ellipsis(@line){
+       word-break: break-all;
+       display:-webkit-box;
+       -webkit-box-orient:vertical;
+       -webkit-line-clamp:@line;        //指定简介文章详情显示的行数
+       overflow:hidden;
+     }
+
+    background-color: @content-bgcolor;
+    .info-box{
+      box-shadow:0 1px 1px rgba(0,0,0,0.4);     //标题和box之间的分割线的颜色
+      .container blockquote{
+        border-left:none;
+        text-align: center;
+      }
+    }
+    >.container>.row {
+      .article-body{
+        height:@box-height;
+        margin-top: 15px;
+        padding:10px;
+        >a img{
+          width: 100%;
+          height: floor(@box-height*0.47);//简介中图片占整体box的高度
+        }
+        >.caption{
+          min-height: floor(@box-height*0.53); //简介中文字占整体box的最小高度
+          small{
+              font-size: 12px;
+              color:#333;
+          }
+          h3{
+            max-height: floor(@box-height*0.53*0.55);
+            a{
+              color:@main-color;
+              display: block;
+              white-space:nowrap;
+              text-overflow: ellipsis; //文章标题显示一行
+              overflow: hidden;
+            }
+          }
+          .artical-describe{
+            height:60px;
+            .text-ellipsis(3);
+          }
+        }
+      }
+      //文章简介下的 “查看更多” 样式
+      >a{
+          background-color: @main-color;
+          color: white;
+          display: block;
+          margin: 0 auto;
+          width: 100px;
+          margin-bottom: 20px;
+          border:1px solid;
+          &:hover,&:active{
+              background-color: @main-color;
+              color: white;
+          }
+      }
+    }
+ }
