@@ -18,7 +18,7 @@ webpackJsonp([0,1],[
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(138);
+	var _store = __webpack_require__(139);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -7408,57 +7408,57 @@ webpackJsonp([0,1],[
 
 	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
 
-	var _HomeContainer = __webpack_require__(102);
+	var _HomeContainer = __webpack_require__(103);
 
 	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
 
-	var _AboutContainer = __webpack_require__(105);
+	var _AboutContainer = __webpack_require__(106);
 
 	var _AboutContainer2 = _interopRequireDefault(_AboutContainer);
 
-	var _WebContainer = __webpack_require__(108);
+	var _WebContainer = __webpack_require__(109);
 
 	var _WebContainer2 = _interopRequireDefault(_WebContainer);
 
-	var _NodeContainer = __webpack_require__(110);
+	var _NodeContainer = __webpack_require__(111);
 
 	var _NodeContainer2 = _interopRequireDefault(_NodeContainer);
 
-	var _AddArticleContainer = __webpack_require__(112);
+	var _AddArticleContainer = __webpack_require__(113);
 
 	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
 
-	var _ProfileContainer = __webpack_require__(119);
+	var _ProfileContainer = __webpack_require__(120);
 
 	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
 
-	var _InfoContainer = __webpack_require__(121);
+	var _InfoContainer = __webpack_require__(122);
 
 	var _InfoContainer2 = _interopRequireDefault(_InfoContainer);
 
-	var _CodeContainer = __webpack_require__(124);
+	var _CodeContainer = __webpack_require__(125);
 
 	var _CodeContainer2 = _interopRequireDefault(_CodeContainer);
 
-	var _AvatarContainer = __webpack_require__(126);
+	var _AvatarContainer = __webpack_require__(127);
 
 	var _AvatarContainer2 = _interopRequireDefault(_AvatarContainer);
 
-	var _PassContainer = __webpack_require__(128);
+	var _PassContainer = __webpack_require__(129);
 
 	var _PassContainer2 = _interopRequireDefault(_PassContainer);
 
-	var _LoginContainer = __webpack_require__(130);
+	var _LoginContainer = __webpack_require__(131);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _RegisterContainer = __webpack_require__(135);
+	var _RegisterContainer = __webpack_require__(136);
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
-	var _login = __webpack_require__(134);
+	var _login = __webpack_require__(135);
 
-	var _register = __webpack_require__(137);
+	var _register = __webpack_require__(138);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8207,6 +8207,8 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
+	__webpack_require__(102);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8229,9 +8231,19 @@ webpackJsonp([0,1],[
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'h3',
-	                null,
-	                '尾部'
+	                'footer',
+	                { className: 'main-footer' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'pull-right hidden-xs' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        'Version'
+	                    ),
+	                    ' 1.1.0'
+	                ),
+	                _react2.default.createElement('br', null)
 	            );
 	        }
 	    }]);
@@ -8243,6 +8255,12 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 102 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8255,7 +8273,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Home = __webpack_require__(103);
+	var _Home = __webpack_require__(104);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
@@ -8278,7 +8296,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Home2.default);
 
 /***/ },
-/* 103 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8293,7 +8311,7 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(104);
+	__webpack_require__(105);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8420,13 +8438,13 @@ webpackJsonp([0,1],[
 	exports.default = Home;
 
 /***/ },
-/* 104 */
+/* 105 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 105 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8437,7 +8455,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _About = __webpack_require__(106);
+	var _About = __webpack_require__(107);
 
 	var _About2 = _interopRequireDefault(_About);
 
@@ -8452,7 +8470,7 @@ webpackJsonp([0,1],[
 	//视图组件
 
 /***/ },
-/* 106 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8467,7 +8485,7 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(107);
+	__webpack_require__(108);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8662,13 +8680,13 @@ webpackJsonp([0,1],[
 	exports.default = About;
 
 /***/ },
-/* 107 */
+/* 108 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 108 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8679,7 +8697,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Web = __webpack_require__(109);
+	var _Web = __webpack_require__(110);
 
 	var _Web2 = _interopRequireDefault(_Web);
 
@@ -8693,7 +8711,7 @@ webpackJsonp([0,1],[
 	//视图组件
 
 /***/ },
-/* 109 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8746,7 +8764,7 @@ webpackJsonp([0,1],[
 	exports.default = Web;
 
 /***/ },
-/* 110 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8757,7 +8775,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Node = __webpack_require__(111);
+	var _Node = __webpack_require__(112);
 
 	var _Node2 = _interopRequireDefault(_Node);
 
@@ -8772,7 +8790,7 @@ webpackJsonp([0,1],[
 	//视图组件
 
 /***/ },
-/* 111 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8825,7 +8843,7 @@ webpackJsonp([0,1],[
 	exports.default = Node;
 
 /***/ },
-/* 112 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8838,11 +8856,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _addArticle = __webpack_require__(113);
+	var _addArticle = __webpack_require__(114);
 
 	var addArticle = _interopRequireWildcard(_addArticle);
 
-	var _AddArticle = __webpack_require__(114);
+	var _AddArticle = __webpack_require__(115);
 
 	var _AddArticle2 = _interopRequireDefault(_AddArticle);
 
@@ -8868,7 +8886,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_AddArticle2.default);
 
 /***/ },
-/* 113 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8910,7 +8928,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 114 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8925,17 +8943,17 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(115);
+	__webpack_require__(116);
 
-	var _Input = __webpack_require__(116);
+	var _Input = __webpack_require__(117);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(117);
+	var _Button = __webpack_require__(118);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _Markdown = __webpack_require__(118);
+	var _Markdown = __webpack_require__(119);
 
 	var _Markdown2 = _interopRequireDefault(_Markdown);
 
@@ -9100,13 +9118,13 @@ webpackJsonp([0,1],[
 	exports.default = AddArticle;
 
 /***/ },
-/* 115 */
+/* 116 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 116 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9185,7 +9203,7 @@ webpackJsonp([0,1],[
 	exports.default = Input;
 
 /***/ },
-/* 117 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9247,7 +9265,7 @@ webpackJsonp([0,1],[
 	exports.default = Button;
 
 /***/ },
-/* 118 */
+/* 119 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9347,7 +9365,7 @@ webpackJsonp([0,1],[
 	exports.default = Markdown;
 
 /***/ },
-/* 119 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9360,7 +9378,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Profile = __webpack_require__(120);
+	var _Profile = __webpack_require__(121);
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
@@ -9375,7 +9393,7 @@ webpackJsonp([0,1],[
 	//基础库
 
 /***/ },
-/* 120 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9459,7 +9477,7 @@ webpackJsonp([0,1],[
 	exports.default = Profile;
 
 /***/ },
-/* 121 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9472,11 +9490,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _profile = __webpack_require__(122);
+	var _profile = __webpack_require__(123);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
 
-	var _Info = __webpack_require__(123);
+	var _Info = __webpack_require__(124);
 
 	var _Info2 = _interopRequireDefault(_Info);
 
@@ -9507,7 +9525,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Info2.default);
 
 /***/ },
-/* 122 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9637,7 +9655,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 123 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9888,7 +9906,7 @@ webpackJsonp([0,1],[
 	exports.default = Info;
 
 /***/ },
-/* 124 */
+/* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9899,7 +9917,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Code = __webpack_require__(125);
+	var _Code = __webpack_require__(126);
 
 	var _Code2 = _interopRequireDefault(_Code);
 
@@ -9914,7 +9932,7 @@ webpackJsonp([0,1],[
 	//视图组件
 
 /***/ },
-/* 125 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9963,7 +9981,7 @@ webpackJsonp([0,1],[
 	exports.default = Code;
 
 /***/ },
-/* 126 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9974,7 +9992,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Avatar = __webpack_require__(127);
+	var _Avatar = __webpack_require__(128);
 
 	var _Avatar2 = _interopRequireDefault(_Avatar);
 
@@ -9989,7 +10007,7 @@ webpackJsonp([0,1],[
 	//视图组件
 
 /***/ },
-/* 127 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10038,7 +10056,7 @@ webpackJsonp([0,1],[
 	exports.default = Avatar;
 
 /***/ },
-/* 128 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10051,11 +10069,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _profile = __webpack_require__(122);
+	var _profile = __webpack_require__(123);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
 
-	var _Pass = __webpack_require__(129);
+	var _Pass = __webpack_require__(130);
 
 	var _Pass2 = _interopRequireDefault(_Pass);
 
@@ -10085,7 +10103,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Pass2.default);
 
 /***/ },
-/* 129 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10137,8 +10155,8 @@ webpackJsonp([0,1],[
 	                alert('两次新密码不一致!');
 	            } else {
 	                var data = {
-	                    pass: pass,
-	                    password: password
+	                    oldPwd: pass,
+	                    newPwd: password
 	                };
 
 	                this.props.modify_start(_actionType.MODIFY_PASS, data);
@@ -10228,7 +10246,7 @@ webpackJsonp([0,1],[
 	exports.default = Code;
 
 /***/ },
-/* 130 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10241,11 +10259,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Login = __webpack_require__(131);
+	var _Login = __webpack_require__(132);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(134);
+	var _login = __webpack_require__(135);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -10276,7 +10294,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 131 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10293,19 +10311,19 @@ webpackJsonp([0,1],[
 
 	var _reactRouter = __webpack_require__(3);
 
-	var _Input = __webpack_require__(116);
+	var _Input = __webpack_require__(117);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(117);
+	var _Button = __webpack_require__(118);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(132);
+	var _privateType = __webpack_require__(133);
 
 	var _httpType = __webpack_require__(95);
 
-	var _history = __webpack_require__(133);
+	var _history = __webpack_require__(134);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -10486,7 +10504,7 @@ webpackJsonp([0,1],[
 	exports.default = Login;
 
 /***/ },
-/* 132 */
+/* 133 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -10498,7 +10516,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-/* 133 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10512,7 +10530,7 @@ webpackJsonp([0,1],[
 	exports.default = _reactRouter.browserHistory;
 
 /***/ },
-/* 134 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10639,7 +10657,7 @@ webpackJsonp([0,1],[
 	//}
 
 /***/ },
-/* 135 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10652,11 +10670,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Register = __webpack_require__(136);
+	var _Register = __webpack_require__(137);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
-	var _register = __webpack_require__(137);
+	var _register = __webpack_require__(138);
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -10687,7 +10705,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
-/* 136 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10704,19 +10722,19 @@ webpackJsonp([0,1],[
 
 	var _reactRouter = __webpack_require__(3);
 
-	var _Input = __webpack_require__(116);
+	var _Input = __webpack_require__(117);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(117);
+	var _Button = __webpack_require__(118);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(132);
+	var _privateType = __webpack_require__(133);
 
 	var _httpType = __webpack_require__(95);
 
-	var _history = __webpack_require__(133);
+	var _history = __webpack_require__(134);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -10924,7 +10942,7 @@ webpackJsonp([0,1],[
 	exports.default = Login;
 
 /***/ },
-/* 137 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10943,7 +10961,7 @@ webpackJsonp([0,1],[
 
 	var _httpType = __webpack_require__(95);
 
-	var _login = __webpack_require__(134);
+	var _login = __webpack_require__(135);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11038,7 +11056,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 138 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11050,15 +11068,15 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
-	var _reduxThunk = __webpack_require__(139);
+	var _reduxThunk = __webpack_require__(140);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(140);
+	var _reduxLogger = __webpack_require__(141);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(141);
+	var _reducers = __webpack_require__(142);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -11078,7 +11096,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 139 */
+/* 140 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -11106,7 +11124,7 @@ webpackJsonp([0,1],[
 	exports['default'] = thunk;
 
 /***/ },
-/* 140 */
+/* 141 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -11339,7 +11357,7 @@ webpackJsonp([0,1],[
 	module.exports = createLogger;
 
 /***/ },
-/* 141 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11350,23 +11368,23 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
-	var _login = __webpack_require__(142);
+	var _login = __webpack_require__(143);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(143);
+	var _register = __webpack_require__(144);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(144);
+	var _articles = __webpack_require__(145);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
-	var _addArticle = __webpack_require__(145);
+	var _addArticle = __webpack_require__(146);
 
 	var _addArticle2 = _interopRequireDefault(_addArticle);
 
-	var _profile = __webpack_require__(146);
+	var _profile = __webpack_require__(147);
 
 	var _profile2 = _interopRequireDefault(_profile);
 
@@ -11392,7 +11410,7 @@ webpackJsonp([0,1],[
 	exports.default = reducer;
 
 /***/ },
-/* 142 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11483,7 +11501,7 @@ webpackJsonp([0,1],[
 	exports.default = login;
 
 /***/ },
-/* 143 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11534,7 +11552,7 @@ webpackJsonp([0,1],[
 	exports.default = register;
 
 /***/ },
-/* 144 */
+/* 145 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -11559,7 +11577,7 @@ webpackJsonp([0,1],[
 	exports.default = article;
 
 /***/ },
-/* 145 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11596,7 +11614,7 @@ webpackJsonp([0,1],[
 	exports.default = addArticle;
 
 /***/ },
-/* 146 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

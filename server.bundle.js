@@ -859,9 +859,19 @@
 	    _article2.default.addArticle(query).then(function (data) {
 	        //临时文件夹
 	        temp_dir = _path2.default.resolve('public/images/temp', data.data._id.toHexString());
-	        //创建临时文件夹
-	        if (data.code == 0 && !_fs2.default.existsSync(temp_dir)) {
-	            _fs2.default.mkdirSync(temp_dir);
+	        if (data.code == 0) {
+	            //如果temp文件夹不存在,则创建一个temp文件夹
+	            if (!_fs2.default.existsSync('public/images/temp')) {
+	                _fs2.default.mkdir('public/images/temp', function (err, stat) {
+	                    //创建临时文件夹
+	                    _fs2.default.mkdirSync(temp_dir);
+	                });
+	            } else {
+	                //存在temp文件夹,但是不存在articleid文件夹,则创建临时文件夹
+	                if (!_fs2.default.existsSync(temp_dir)) {
+	                    _fs2.default.mkdirSync(temp_dir);
+	                }
+	            }
 	        }
 	        res.send(data);
 	    }, function (data) {
@@ -1004,7 +1014,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(78);
+	var _store = __webpack_require__(79);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -1181,57 +1191,57 @@
 
 	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
 
-	var _HomeContainer = __webpack_require__(42);
+	var _HomeContainer = __webpack_require__(43);
 
 	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
 
-	var _AboutContainer = __webpack_require__(45);
+	var _AboutContainer = __webpack_require__(46);
 
 	var _AboutContainer2 = _interopRequireDefault(_AboutContainer);
 
-	var _WebContainer = __webpack_require__(48);
+	var _WebContainer = __webpack_require__(49);
 
 	var _WebContainer2 = _interopRequireDefault(_WebContainer);
 
-	var _NodeContainer = __webpack_require__(50);
+	var _NodeContainer = __webpack_require__(51);
 
 	var _NodeContainer2 = _interopRequireDefault(_NodeContainer);
 
-	var _AddArticleContainer = __webpack_require__(52);
+	var _AddArticleContainer = __webpack_require__(53);
 
 	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
 
-	var _ProfileContainer = __webpack_require__(59);
+	var _ProfileContainer = __webpack_require__(60);
 
 	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
 
-	var _InfoContainer = __webpack_require__(61);
+	var _InfoContainer = __webpack_require__(62);
 
 	var _InfoContainer2 = _interopRequireDefault(_InfoContainer);
 
-	var _CodeContainer = __webpack_require__(64);
+	var _CodeContainer = __webpack_require__(65);
 
 	var _CodeContainer2 = _interopRequireDefault(_CodeContainer);
 
-	var _AvatarContainer = __webpack_require__(66);
+	var _AvatarContainer = __webpack_require__(67);
 
 	var _AvatarContainer2 = _interopRequireDefault(_AvatarContainer);
 
-	var _PassContainer = __webpack_require__(68);
+	var _PassContainer = __webpack_require__(69);
 
 	var _PassContainer2 = _interopRequireDefault(_PassContainer);
 
-	var _LoginContainer = __webpack_require__(70);
+	var _LoginContainer = __webpack_require__(71);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _RegisterContainer = __webpack_require__(75);
+	var _RegisterContainer = __webpack_require__(76);
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
-	var _login = __webpack_require__(74);
+	var _login = __webpack_require__(75);
 
-	var _register = __webpack_require__(77);
+	var _register = __webpack_require__(78);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1980,7 +1990,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(87);
+	__webpack_require__(42);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2028,6 +2038,12 @@
 
 /***/ },
 /* 42 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2040,7 +2056,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Home = __webpack_require__(43);
+	var _Home = __webpack_require__(44);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
@@ -2063,7 +2079,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Home2.default);
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2078,7 +2094,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(44);
+	__webpack_require__(45);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2205,13 +2221,13 @@
 	exports.default = Home;
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2222,7 +2238,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _About = __webpack_require__(46);
+	var _About = __webpack_require__(47);
 
 	var _About2 = _interopRequireDefault(_About);
 
@@ -2237,7 +2253,7 @@
 	//视图组件
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2252,7 +2268,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(47);
+	__webpack_require__(48);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2447,13 +2463,13 @@
 	exports.default = About;
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2464,7 +2480,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Web = __webpack_require__(49);
+	var _Web = __webpack_require__(50);
 
 	var _Web2 = _interopRequireDefault(_Web);
 
@@ -2478,7 +2494,7 @@
 	//视图组件
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2531,7 +2547,7 @@
 	exports.default = Web;
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2542,7 +2558,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Node = __webpack_require__(51);
+	var _Node = __webpack_require__(52);
 
 	var _Node2 = _interopRequireDefault(_Node);
 
@@ -2557,7 +2573,7 @@
 	//视图组件
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2610,7 +2626,7 @@
 	exports.default = Node;
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2623,11 +2639,11 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _addArticle = __webpack_require__(53);
+	var _addArticle = __webpack_require__(54);
 
 	var addArticle = _interopRequireWildcard(_addArticle);
 
-	var _AddArticle = __webpack_require__(54);
+	var _AddArticle = __webpack_require__(55);
 
 	var _AddArticle2 = _interopRequireDefault(_AddArticle);
 
@@ -2653,7 +2669,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_AddArticle2.default);
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2695,7 +2711,7 @@
 	}
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2710,17 +2726,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(55);
+	__webpack_require__(56);
 
-	var _Input = __webpack_require__(56);
+	var _Input = __webpack_require__(57);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(57);
+	var _Button = __webpack_require__(58);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _Markdown = __webpack_require__(58);
+	var _Markdown = __webpack_require__(59);
 
 	var _Markdown2 = _interopRequireDefault(_Markdown);
 
@@ -2885,13 +2901,13 @@
 	exports.default = AddArticle;
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2970,7 +2986,7 @@
 	exports.default = Input;
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3032,7 +3048,7 @@
 	exports.default = Button;
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3132,7 +3148,7 @@
 	exports.default = Markdown;
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3145,7 +3161,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Profile = __webpack_require__(60);
+	var _Profile = __webpack_require__(61);
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
@@ -3160,7 +3176,7 @@
 	//基础库
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3244,7 +3260,7 @@
 	exports.default = Profile;
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3257,11 +3273,11 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _profile = __webpack_require__(62);
+	var _profile = __webpack_require__(63);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
 
-	var _Info = __webpack_require__(63);
+	var _Info = __webpack_require__(64);
 
 	var _Info2 = _interopRequireDefault(_Info);
 
@@ -3292,7 +3308,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Info2.default);
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3422,7 +3438,7 @@
 	}
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3673,7 +3689,7 @@
 	exports.default = Info;
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3684,7 +3700,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Code = __webpack_require__(65);
+	var _Code = __webpack_require__(66);
 
 	var _Code2 = _interopRequireDefault(_Code);
 
@@ -3699,7 +3715,7 @@
 	//视图组件
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3748,7 +3764,7 @@
 	exports.default = Code;
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3759,7 +3775,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Avatar = __webpack_require__(67);
+	var _Avatar = __webpack_require__(68);
 
 	var _Avatar2 = _interopRequireDefault(_Avatar);
 
@@ -3774,7 +3790,7 @@
 	//视图组件
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3823,7 +3839,7 @@
 	exports.default = Avatar;
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3836,11 +3852,11 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _profile = __webpack_require__(62);
+	var _profile = __webpack_require__(63);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
 
-	var _Pass = __webpack_require__(69);
+	var _Pass = __webpack_require__(70);
 
 	var _Pass2 = _interopRequireDefault(_Pass);
 
@@ -3870,7 +3886,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Pass2.default);
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3922,8 +3938,8 @@
 	                alert('两次新密码不一致!');
 	            } else {
 	                var data = {
-	                    pass: pass,
-	                    password: password
+	                    oldPwd: pass,
+	                    newPwd: password
 	                };
 
 	                this.props.modify_start(_actionType.MODIFY_PASS, data);
@@ -4013,7 +4029,7 @@
 	exports.default = Code;
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4026,11 +4042,11 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Login = __webpack_require__(71);
+	var _Login = __webpack_require__(72);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(74);
+	var _login = __webpack_require__(75);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -4061,7 +4077,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4078,19 +4094,19 @@
 
 	var _reactRouter = __webpack_require__(26);
 
-	var _Input = __webpack_require__(56);
+	var _Input = __webpack_require__(57);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(57);
+	var _Button = __webpack_require__(58);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(72);
+	var _privateType = __webpack_require__(73);
 
 	var _httpType = __webpack_require__(35);
 
-	var _history = __webpack_require__(73);
+	var _history = __webpack_require__(74);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -4271,7 +4287,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -4283,7 +4299,7 @@
 	};
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4297,7 +4313,7 @@
 	exports.default = _reactRouter.browserHistory;
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4424,7 +4440,7 @@
 	//}
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4437,11 +4453,11 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Register = __webpack_require__(76);
+	var _Register = __webpack_require__(77);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
-	var _register = __webpack_require__(77);
+	var _register = __webpack_require__(78);
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -4472,7 +4488,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4489,19 +4505,19 @@
 
 	var _reactRouter = __webpack_require__(26);
 
-	var _Input = __webpack_require__(56);
+	var _Input = __webpack_require__(57);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(57);
+	var _Button = __webpack_require__(58);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(72);
+	var _privateType = __webpack_require__(73);
 
 	var _httpType = __webpack_require__(35);
 
-	var _history = __webpack_require__(73);
+	var _history = __webpack_require__(74);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -4709,7 +4725,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4728,7 +4744,7 @@
 
 	var _httpType = __webpack_require__(35);
 
-	var _login = __webpack_require__(74);
+	var _login = __webpack_require__(75);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4823,7 +4839,7 @@
 	}
 
 /***/ },
-/* 78 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4835,15 +4851,15 @@
 
 	var _redux = __webpack_require__(28);
 
-	var _reduxThunk = __webpack_require__(79);
+	var _reduxThunk = __webpack_require__(80);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(80);
+	var _reduxLogger = __webpack_require__(81);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(81);
+	var _reducers = __webpack_require__(82);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -4863,19 +4879,19 @@
 	}
 
 /***/ },
-/* 79 */
+/* 80 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-logger");
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4886,23 +4902,23 @@
 
 	var _redux = __webpack_require__(28);
 
-	var _login = __webpack_require__(82);
+	var _login = __webpack_require__(83);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(83);
+	var _register = __webpack_require__(84);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(84);
+	var _articles = __webpack_require__(85);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
-	var _addArticle = __webpack_require__(85);
+	var _addArticle = __webpack_require__(86);
 
 	var _addArticle2 = _interopRequireDefault(_addArticle);
 
-	var _profile = __webpack_require__(86);
+	var _profile = __webpack_require__(87);
 
 	var _profile2 = _interopRequireDefault(_profile);
 
@@ -4928,7 +4944,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5019,7 +5035,7 @@
 	exports.default = login;
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5070,7 +5086,7 @@
 	exports.default = register;
 
 /***/ },
-/* 84 */
+/* 85 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5095,7 +5111,7 @@
 	exports.default = article;
 
 /***/ },
-/* 85 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5132,7 +5148,7 @@
 	exports.default = addArticle;
 
 /***/ },
-/* 86 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5173,12 +5189,6 @@
 	};
 
 	exports.default = profile;
-
-/***/ },
-/* 87 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);

@@ -25,8 +25,8 @@ export default class Code extends Component{
 
         else {
             let data = {
-                pass:pass,
-                password:password
+                oldPwd:pass,
+                newPwd:password
             };
 
             this.props.modify_start(MODIFY_PASS,data)
