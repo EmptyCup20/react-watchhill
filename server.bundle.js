@@ -796,10 +796,10 @@
 	router.get('/getArticle', _article.getArticle);
 
 	//新增文章
-	router.get('/addArticle', _article.addArticle);
+	router.post('/addArticle', _article.addArticle);
 
 	//修改文章
-	router.get('/modfiyArticle', _article.modfiyArticle);
+	router.post('/modfiyArticle', _article.modfiyArticle);
 
 	module.exports = router;
 
@@ -863,9 +863,9 @@
 	        temp_dir;
 	    _article2.default.addArticle(query).then(function (data) {
 	        //临时文件夹
-	        temp_dir = _fs2.default.statSync(_path2.default.resolve('/public/images/temp', data._id));
+	        temp_dir = _path2.default.resolve('public/images/temp', data.data._id.toHexString());
 	        //创建临时文件夹
-	        if (data.code == 0 && !temp_dir) {
+	        if (data.code == 0 && !_fs2.default.existsSync(temp_dir)) {
 	            _fs2.default.mkdirSync(temp_dir);
 	        }
 	        res.send(data);
@@ -893,12 +893,12 @@
 
 	    _article2.default.modfiyArticle(query).then(function (data) {
 	        //临时文件夹
-	        temp_dir = _fs2.default.statSync(_path2.default.resolve('/public/images/temp', data._id));
+	        temp_dir = _path2.default.resolve('public/images/temp', data.data._id.toHexString());
 	        //用户下问文章图片文件夹
-	        user_dir = _fs2.default.statSync(_path2.default.resolve('/public/images/', req.session.loginUser.username, 'article', data._id));
+	        user_dir = _path2.default.resolve('public/images/', req.session.loginUser.username, 'article', data.data._id.toHexString());
 	        // 临时文件夹中的文件,转移到该用户的文件夹下
-	        if (data.code == 0 && temp_dir) {
-	            if (user_dir) {
+	        if (data.code == 0 && _fs2.default.existsSync(temp_dir)) {
+	            if (_fs2.default.existsSync(user_dir)) {
 	                moveFile(temp_dir, user_dir);
 	            } else {
 	                _fs2.default.mkdir(user_dir, function (err, stats) {
