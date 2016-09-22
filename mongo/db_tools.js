@@ -34,9 +34,6 @@ function init(model) {
  * @author zhangxin14
  * @date   2016-07-19
  * @param  {string}   model [新增的类型]
- * @param  {object}   addObj     [新的数据
- *                                User的字段(author,tel,email,team,photo);
- *                                Article的字段(title,author,createTime,content,image,describe)]
  */
 
 Db_tools.add = function(model, addObj) {
@@ -58,7 +55,6 @@ Db_tools.add = function(model, addObj) {
  * @date   2016-07-19
  * @param  {string}   model [新增的类型]
  * @param  {object}   editObj    [需要修改的数据]
- * @param  {Function} callback   回调函数
  */
 Db_tools.edit = function(model, editObj) {
     var typeId = model+'Id',
@@ -83,8 +79,6 @@ Db_tools.edit = function(model, editObj) {
  * @date   2016-07-19
  * @param  {string}   model [新增的类型]
  * @param  {string}   removeId   [删除的项目的id]
- * @param  {Function} callback   回调函数
- * @return {[type]}              [description]
  */
 Db_tools.remove = function(model, removeId) {
     model = init(model);
@@ -104,8 +98,6 @@ Db_tools.remove = function(model, removeId) {
  * @date   2016-07-19
  * @param  {string}   model [新增的类型]
  * @param  {object}   queryObj   [查询的pageSize和pageNo]
- * @param  {Function} callback   回调函数
- * @return {[type]}              [description]
  */
 Db_tools.query = function(model, queryObj, fields, options, callback) {
     var pageSize = Number(queryObj.pageSize);
@@ -137,7 +129,6 @@ Db_tools.query = function(model, queryObj, fields, options, callback) {
  * @date   2016-07-25
  * @param  {string}   model 集合名称
  * @param  {查询主键}   queryObj   string
- * @return {[type]}              [description]
  */
 Db_tools.queryByCondition = function(model, queryObj, fields, options, callback) {
     model = init(model);
