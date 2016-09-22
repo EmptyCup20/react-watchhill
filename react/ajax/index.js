@@ -42,7 +42,20 @@ function ajax() {
         //注册
         register: function(data) {
             return req('POST','/user/register',data);
+        },
+
+        //个人中心-密码修改
+        modifyPass:function(data) {
+            return req('POST', '/user/profile/pass',data);
+        },
+
+        //个人中心-个签,电话,邮箱修改
+        modifyInfo:function(data) {
+            return req('POST', '/user/profile/info',data);
         }
+
+
+
     };
 }
 

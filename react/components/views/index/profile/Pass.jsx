@@ -1,6 +1,31 @@
 import React,{ Component } from 'react';
+import { MODIFY_PASS } from '../../../../constants/actionType';
+
+
 
 export default class Code extends Component{
+
+
+    _onClick(e) {
+        e.preventDefault();
+        let pass = this.refs.pass.value,
+            password = this.refs.password.value;
+
+        if(pass === password) {
+            alert('新密码与原始密码一致!');
+            this.refs.password.value = '';
+        }
+        else {
+            let data = {
+                pass:pass,
+                password:password
+            };
+
+            this.props.modify_start(MODIFY_PASS,data)
+        }
+    }
+
+
     render() {
         return (
             <div className="box box-info">
@@ -10,22 +35,22 @@ export default class Code extends Component{
                 <form className="form-horizontal">
                     <div className="box-body">
                         <div className="form-group">
-                            <label htmlFor="inputEmail3" className="col-sm-2 control-label">原始密码</label>
+                            <label htmlFor="profile_pass" className="col-sm-2 control-label">原始密码</label>
 
                             <div className="col-sm-10">
-                                <input type="email" className="form-control" id="inputEmail3" placeholder="Password" />
+                                <input type="password" ref='pass' className="form-control" id="profile_pass" placeholder="Password" />
                             </div>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="inputPassword3" className="col-sm-2 control-label">新的密码</label>
+                            <label htmlFor="profile_password" className="col-sm-2 control-label">新的密码</label>
 
                             <div className="col-sm-10">
-                                <input type="password" className="form-control" id="inputPassword3" placeholder="New Password" />
+                                <input type="password" ref='password' className="form-control" id="profile_password" placeholder="New Password" />
                             </div>
                         </div>
                     </div>
                     <div className="box-footer">
-                        <button type="submit" className="btn btn-info pull-right">修 改</button>
+                        <button type="submit" className="btn btn-info pull-right" onClick={this._onClick.bind(this)}>修 改</button>
                     </div>
                 </form>
             </div>

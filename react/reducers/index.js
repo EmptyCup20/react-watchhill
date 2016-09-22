@@ -9,13 +9,15 @@ import register from './register';
 import articles from './articles';
 //添加文章
 import addArticle from './addArticle'
-
+//个人中心-用户修改
+import profile from './profile';
 
 const reducer = combineReducers({
 	login,
 	register,
 	articles,
-	addArticle
+	addArticle,
+	profile
 });
 
 export default reducer;
