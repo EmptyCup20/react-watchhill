@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 //action
-import * as addArticle from '../actions/addArticle';
+import * as addArticle from '../../actions/addArticle';
 
 //视图组件
 import AddArticle from '../views/index/AddArticle.jsx';

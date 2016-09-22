@@ -1,8 +1,8 @@
 import React,{ Component } from 'react';
 import '../../../../public/css/addArticle.less'
 //基础组件
-import Input from './elements/Input';
-import Button from './elements/Button';
+import Input from '../../elements/Input';
+import Button from '../../elements/Button';
 
 export default class AddArticle extends Component{
     componentWillMount(){
