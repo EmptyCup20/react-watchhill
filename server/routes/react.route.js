@@ -71,9 +71,9 @@ router.get('/*', (req, res,next) => {
 
 
     //console.log('node init store:', store.getState());  //需要注意与客户端的store统一
-    //const store = configureStore();       //这里需要传入需要的state tree
+    const store = configureStore();       //这里需要传入需要的state tree
 
-    match({ routes:routes(), location: req.url }, (err, redirect, props) => {
+    match({ routes:routes(store), location: req.url }, (err, redirect, props) => {
 
         if (err) {
             res.status(500).send(err.message)

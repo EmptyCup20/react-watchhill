@@ -90,12 +90,5 @@ export function profile(req, res, next) {
             res.send(data);
         })
     }
-
-
-
-
-
-
-
 }
 

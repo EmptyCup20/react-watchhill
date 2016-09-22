@@ -1,5 +1,17 @@
-import { MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_PASS,MODIFY_EMAIL,MODIFY_BRIEF,MODIFY_TEL } from '../constants/actionType';
+import { MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_PASS,MODIFY_EMAIL,MODIFY_BRIEF,MODIFY_TEL,MODIFY_INIT } from '../constants/actionType';
 import ajax  from '../ajax';
+
+
+/**
+ * 状态初始化
+ * @returns {{type: string}}
+ */
+
+export function modify_init() {
+    return {
+        type: MODIFY_INIT
+    };
+}
 
 
 
@@ -69,15 +81,14 @@ function modify_request() {
 
 
 /**
- * 接收处理
+ * 接收数据处理
+ * @param type
  * @param data
+ * @returns {Function}
  */
 function modify_process(type,data) {
 
     return dispatch => {
-        //dispatch(login_request());                                  //挂起登录请求,防止重复请求
-        //return ajax().login(user)
-        //    .then(data => dispatch(login_reveive(data)));   //接受到数据后重新更新state
 
         switch(type) {
             //修改密码
@@ -88,6 +99,7 @@ function modify_process(type,data) {
             case MODIFY_EMAIL:
             case MODIFY_BRIEF:
             case MODIFY_TEL:
+
                 return  modify_receive(data.status);
 
             default:

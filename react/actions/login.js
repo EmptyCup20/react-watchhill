@@ -1,5 +1,15 @@
-import { LOGIN_REQUEST,LOGIN_RECEIVE } from '../constants/actionType';
+import { LOGIN_REQUEST,LOGIN_RECEIVE,LOGIN_INIT } from '../constants/actionType';
 import ajax from '../ajax';
+
+
+/**
+ * 视图初始化
+ */
+export function login_init() {
+    return {
+        type: LOGIN_INIT
+    };
+}
 
 
 /**

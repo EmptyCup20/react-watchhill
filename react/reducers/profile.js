@@ -20,8 +20,6 @@ const profile = (state = {
                 modifyStatus:action.status
             };
 
-
-
         default:
             return state;
     }

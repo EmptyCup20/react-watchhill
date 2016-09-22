@@ -1,5 +1,5 @@
 
-import { LOGIN_REQUEST,LOGIN_RECEIVE,LOGOUT_RECEIVE } from '../constants/actionType';
+import { LOGIN_REQUEST,LOGIN_RECEIVE,LOGOUT_RECEIVE,LOGIN_INIT } from '../constants/actionType';
 import { init,user_no_exist,password_err,success } from '../constants/httpType';
 
 const login_status = (state,action) => {
@@ -43,6 +43,12 @@ const login = (state = {
 }, action) => {
 
 	switch(action.type) {
+
+		case LOGIN_INIT:		//初始化视图
+			return {
+				...state,
+				loginStatus:init
+			};
 
 		case LOGIN_REQUEST:		//发起登录请求
 			return {

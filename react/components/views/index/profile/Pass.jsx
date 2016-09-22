@@ -9,12 +9,20 @@ export default class Code extends Component{
     _onClick(e) {
         e.preventDefault();
         let pass = this.refs.pass.value,
-            password = this.refs.password.value;
+            password = this.refs.password.value,
+            verify = this.refs.verify.value;
 
         if(pass === password) {
-            alert('新密码与原始密码一致!');
             this.refs.password.value = '';
+            this.refs.verify.value = '';
+            alert('新密码与原始密码一致!');
+        } else if(password !== verify) {
+            this.refs.password.value = '';
+            this.refs.verify.value = '';
+            alert('两次新密码不一致!');
         }
+
+
         else {
             let data = {
                 pass:pass,
@@ -46,6 +54,13 @@ export default class Code extends Component{
 
                             <div className="col-sm-10">
                                 <input type="password" ref='password' className="form-control" id="profile_password" placeholder="New Password" />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="profile_verify" className="col-sm-2 control-label">密码确认</label>
+
+                            <div className="col-sm-10">
+                                <input type="password" ref='verify' className="form-control" id="verify" placeholder="New Password" />
                             </div>
                         </div>
                     </div>

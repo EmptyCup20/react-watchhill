@@ -2,13 +2,10 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-//容器组件
+/*容器组件*/
+import AppContainer from '../components/containers/AppContainer';           //首页
 
-//首页
-import AppContainer from '../components/containers/AppContainer';
-
-//主页
-import IndexContainer from '../components/containers/IndexContainer';
+import IndexContainer from '../components/containers/IndexContainer';       //主页
     import HomeContainer from '../components/containers/HomeContainer';
     import AboutContainer from '../components/containers/AboutContainer';
     import WebContainer from '../components/containers/WebContainer';
@@ -20,21 +17,23 @@ import IndexContainer from '../components/containers/IndexContainer';
         import AvatarContainer from '../components/containers/AvatarContainer';
         import PassContainer from '../components/containers/PassContainer';
 
-//登录页
-import LoginContainer from '../components/containers/LoginContainer';
+import LoginContainer from '../components/containers/LoginContainer';       //登录页
+import RegisterContainer from '../components/containers/RegisterContainer'; //注册页
 
-//注册页
-import RegisterContainer from '../components/containers/RegisterContainer';
-
-
-
+/*初始化action*/
+import { login_init } from '../actions/login';
+import { register_init } from '../actions/register';
 
 
-const routes = (state) => {
+const routes = (store) => {
 
-    //进入之前判断是否已经登录
-    function isLogined() {
-        //console.log('isLogined:',state.login.logined);
+    //初始化视图
+    function loginViewStateInit() {
+        store.dispatch(login_init());
+    }
+
+    function registerViewStateInit() {
+        store.dispatch(register_init());
     }
 
     return(
@@ -54,8 +53,8 @@ const routes = (state) => {
                     <Route path="code" component={CodeContainer} />
                 </Route>
             </Route>
-            <Route path="/login" onEnter={isLogined} component={LoginContainer}/>
-            <Route path="/register" component={RegisterContainer}/>
+            <Route path="/login" onEnter={loginViewStateInit} component={LoginContainer}/>
+            <Route path="/register" onEnter={registerViewStateInit} component={RegisterContainer}/>
         </Route>
     )
 };

@@ -13,6 +13,10 @@ module.exports = {
     user_exist: 'user_exist',           //用户存在
 
 
+    //profile
+    old_pwd_err: 'old_pwd_err',         //原始密码错误
+
+
     success:'success',                  //请求成功
     fail:'fail'                         //请求失败
 };

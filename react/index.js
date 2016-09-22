@@ -20,7 +20,7 @@ const app = document.getElementById('app');
 render(
 	<Provider store={store}>
 		<Router history={browserHistory} >
-      		{routes()}
+      		{routes(store)}
   		</Router>
 	</Provider>,
   app

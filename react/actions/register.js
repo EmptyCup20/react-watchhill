@@ -1,7 +1,18 @@
-import { REGISTER_REQUEST,REGISTER_RECEIVE } from '../constants/actionType';
+import { REGISTER_REQUEST,REGISTER_RECEIVE,REGISTER_INIT } from '../constants/actionType';
 import ajax  from '../ajax';
 import { user_exist,success } from '../constants/httpType';
 import  { login_reveive } from './login';
+
+
+/**
+ * 视图初始化
+ */
+export function register_init() {
+    return {
+        type: REGISTER_INIT
+    };
+}
+
 
 /**
  * 准备开始注册

@@ -42,7 +42,7 @@ webpackJsonp([0,1],[
 	  _react2.default.createElement(
 	    _reactRouter.Router,
 	    { history: _reactRouter.browserHistory },
-	    (0, _routes2.default)()
+	    (0, _routes2.default)(store)
 	  )
 	), app);
 
@@ -7456,20 +7456,29 @@ webpackJsonp([0,1],[
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
+	var _login = __webpack_require__(134);
+
+	var _register = __webpack_require__(137);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//登录页
+	//注册页
+
+	/*初始化action*/
+	//主页
 
 
-	//容器组件
-
-	//首页
+	/*容器组件*/
 	//基础库
-	var routes = function routes(state) {
+	var routes = function routes(store) {
 
-	    //进入之前判断是否已经登录
-	    function isLogined() {
-	        //console.log('isLogined:',state.login.logined);
+	    //初始化视图
+	    function loginViewStateInit() {
+	        store.dispatch((0, _login.login_init)());
+	    }
+
+	    function registerViewStateInit() {
+	        store.dispatch((0, _register.register_init)());
 	    }
 
 	    return _react2.default.createElement(
@@ -7494,15 +7503,12 @@ webpackJsonp([0,1],[
 	                _react2.default.createElement(_reactRouter.Route, { path: 'code', component: _CodeContainer2.default })
 	            )
 	        ),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: isLogined, component: _LoginContainer2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _RegisterContainer2.default })
+	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: loginViewStateInit, component: _LoginContainer2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/register', onEnter: registerViewStateInit, component: _RegisterContainer2.default })
 	    );
-	};
+	}; //登录页
+	//首页
 
-	//注册页
-
-
-	//主页
 	exports.default = routes;
 
 /***/ },
@@ -7714,22 +7720,23 @@ webpackJsonp([0,1],[
 	module.exports = {
 
 	    //login
+	    LOGIN_INIT: 'LOGIN_INIT', //登录视图初始化
 	    LOGIN_REQUEST: 'LOGIN_REQUEST', //挂起登录请求
 	    LOGIN_RECEIVE: 'LOGIN_RECEIVE', //接收登录状况处理
 
 	    //register
+	    REGISTER_INIT: 'REGISTER_INIT', //注册视图初始化
 	    REGISTER_REQUEST: 'REGISTER_REQUEST', //挂起注册请求
 	    REGISTER_RECEIVE: 'REGISTER_RECEIVE', //接收注册状况处理
 
 	    //profile
+	    MODIFY_INIT: 'MODIFY_INIT', //前端状态初始化(需要注意服务器端数据,刷新时保持一致)
 	    MODIFY_REQUEST: 'MODIFY_REQUEST', //挂起修改请求
 	    MODIFY_PASS: 'MODIFY_PASS', //修改密码
 	    MODIFY_EMAIL: 'MODIFY_EMAIL', //修改邮箱
 	    MODIFY_BRIEF: 'MODIFY_BRIEF', //修改简介
 	    MODIFY_TEL: 'MODIFY_TEL', //修改电话
-
 	    MODIFY_RECEIVE: 'MODIFY_RECEIVE', //接收修改状况处理
-
 
 	    //logout
 	    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE', //注销
@@ -7757,6 +7764,10 @@ webpackJsonp([0,1],[
 
 	    //register
 	    user_exist: 'user_exist', //用户存在
+
+
+	    //profile
+	    old_pwd_err: 'old_pwd_err', //原始密码错误
 
 
 	    success: 'success', //请求成功
@@ -9504,6 +9515,7 @@ webpackJsonp([0,1],[
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.modify_init = modify_init;
 	exports.modify_start = modify_start;
 
 	var _actionType = __webpack_require__(94);
@@ -9513,6 +9525,17 @@ webpackJsonp([0,1],[
 	var _ajax2 = _interopRequireDefault(_ajax);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * 状态初始化
+	 * @returns {{type: string}}
+	 */
+
+	function modify_init() {
+	    return {
+	        type: _actionType.MODIFY_INIT
+	    };
+	}
 
 	/**
 	 * 发起修改请求
@@ -9579,15 +9602,14 @@ webpackJsonp([0,1],[
 	}
 
 	/**
-	 * 接收处理
+	 * 接收数据处理
+	 * @param type
 	 * @param data
+	 * @returns {Function}
 	 */
 	function modify_process(type, data) {
 
 	    return function (dispatch) {
-	        //dispatch(login_request());                                  //挂起登录请求,防止重复请求
-	        //return ajax().login(user)
-	        //    .then(data => dispatch(login_reveive(data)));   //接受到数据后重新更新state
 
 	        switch (type) {
 	            //修改密码
@@ -9598,6 +9620,7 @@ webpackJsonp([0,1],[
 	            case _actionType.MODIFY_EMAIL:
 	            case _actionType.MODIFY_BRIEF:
 	            case _actionType.MODIFY_TEL:
+
 	                return modify_receive(data.status);
 
 	            default:
@@ -10101,11 +10124,17 @@ webpackJsonp([0,1],[
 	        value: function _onClick(e) {
 	            e.preventDefault();
 	            var pass = this.refs.pass.value,
-	                password = this.refs.password.value;
+	                password = this.refs.password.value,
+	                verify = this.refs.verify.value;
 
 	            if (pass === password) {
-	                alert('新密码与原始密码一致!');
 	                this.refs.password.value = '';
+	                this.refs.verify.value = '';
+	                alert('新密码与原始密码一致!');
+	            } else if (password !== verify) {
+	                this.refs.password.value = '';
+	                this.refs.verify.value = '';
+	                alert('两次新密码不一致!');
 	            } else {
 	                var data = {
 	                    pass: pass,
@@ -10162,6 +10191,20 @@ webpackJsonp([0,1],[
 	                                'div',
 	                                { className: 'col-sm-10' },
 	                                _react2.default.createElement('input', { type: 'password', ref: 'password', className: 'form-control', id: 'profile_password', placeholder: 'New Password' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group' },
+	                            _react2.default.createElement(
+	                                'label',
+	                                { htmlFor: 'profile_verify', className: 'col-sm-2 control-label' },
+	                                '密码确认'
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-sm-10' },
+	                                _react2.default.createElement('input', { type: 'password', ref: 'verify', className: 'form-control', id: 'verify', placeholder: 'New Password' })
 	                            )
 	                        )
 	                    ),
@@ -10477,6 +10520,7 @@ webpackJsonp([0,1],[
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.login_init = login_init;
 	exports.login_start = login_start;
 	exports.login_reveive = login_reveive;
 
@@ -10487,6 +10531,15 @@ webpackJsonp([0,1],[
 	var _ajax2 = _interopRequireDefault(_ajax);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * 视图初始化
+	 */
+	function login_init() {
+	    return {
+	        type: _actionType.LOGIN_INIT
+	    };
+	}
 
 	/**
 	 * 准备开始登录
@@ -10879,6 +10932,7 @@ webpackJsonp([0,1],[
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.register_init = register_init;
 	exports.register_start = register_start;
 
 	var _actionType = __webpack_require__(94);
@@ -10892,6 +10946,15 @@ webpackJsonp([0,1],[
 	var _login = __webpack_require__(134);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * 视图初始化
+	 */
+	function register_init() {
+	    return {
+	        type: _actionType.REGISTER_INIT
+	    };
+	}
 
 	/**
 	 * 准备开始注册
@@ -11388,6 +11451,12 @@ webpackJsonp([0,1],[
 
 		switch (action.type) {
 
+			case _actionType.LOGIN_INIT:
+				//初始化视图
+				return _extends({}, state, {
+					loginStatus: _httpType.init
+				});
+
 			case _actionType.LOGIN_REQUEST:
 				//发起登录请求
 				return _extends({}, state, {
@@ -11438,6 +11507,13 @@ webpackJsonp([0,1],[
 
 
 	    switch (action.type) {
+
+	        case _actionType.REGISTER_INIT:
+	            //初始化视图
+	            return _extends({}, state, {
+	                registerStatus: _httpType.init
+	            });
+
 	        case _actionType.REGISTER_REQUEST:
 	            return _extends({}, state, {
 

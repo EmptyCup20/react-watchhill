@@ -1,6 +1,6 @@
 
 import { init,user_no_exist,password_err,user_exist,success } from '../constants/httpType';
-import { REGISTER_REQUEST,REGISTER_RECEIVE } from '../constants/actionType';
+import { REGISTER_REQUEST,REGISTER_RECEIVE,REGISTER_INIT } from '../constants/actionType';
 
 
 const register = (state = {
@@ -9,6 +9,14 @@ const register = (state = {
 }, action) => {
 
     switch(action.type) {
+
+        case REGISTER_INIT:		//初始化视图
+            return {
+                ...state,
+                registerStatus:init
+            };
+
+
         case REGISTER_REQUEST:
             return {
                 ...state,
