@@ -61,8 +61,9 @@ Db_tools.add = function(model, addObj) {
  * @param  {Function} callback   回调函数
  */
 Db_tools.edit = function(model, editObj) {
-    var id = editObj.id;
-    delete editObj.id;
+    var typeId = model+'Id',
+        id = editObj[typeId];
+    delete editObj[typeId];
     model = init(model);
     return new Promise((resolve, reject) => {
         model.findOneAndUpdate({ _id: id }, {

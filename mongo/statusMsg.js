@@ -33,4 +33,11 @@ module.exports = {
         "data": null,
         "status": 'password_err'
     },
+    
+    /* 旧密码不正确*/
+    modfiyPwdErr:{
+        "code": 31,
+        "data": null,
+        "status": 'old_pwd_err'
+    }
 };
