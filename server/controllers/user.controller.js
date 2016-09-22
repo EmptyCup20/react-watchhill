@@ -1,5 +1,7 @@
 // import { user_no_exist,password_err,user_exist,success } from '../../react/constants/httpType';
-import user from '../proxy/user';
+import User from '../proxy/user';
+
+
 /**
  * 登录验证
  * @param req
@@ -9,7 +11,7 @@ import user from '../proxy/user';
 export function loginAuthen(req, res, next) {
 
     var query = req.body;
-    user.login(query).then(function (data) {
+    User.login(query).then(function (data) {
        if(data.code === 0) {
            req.session.loginUser = data.data;
        }
@@ -32,7 +34,7 @@ export function loginAuthen(req, res, next) {
  */
 export function register(req, res, next) {
     var query = req.body;
-    user.addUser(query).then(function (data) {
+    User.addUser(query).then(function (data) {
         if(data.code === 0) {
             req.session.loginUser = data.data;
         }
@@ -70,30 +72,28 @@ export function profile(req, res, next) {
 
     let user = {};
     let query = req.body;
-    user.userId = req.session.loginUser._id;
+    query.userId = req.session.loginUser._id;
 
-    switch(req.params.type) {
-        case 'pass':
-            user.oldPwd = query.pass;
-            user.newPwd = query.password;
-            break;
+    console.log(query);
 
-        case 'info':
-            if(query.brief) {
-               user.brief = query.brief;
-            } else if(query.email) {
-               user.email = query.email;
-            } else if(query.tel) {
-               user.tel = query.tel;
-            }
-            break;
+    //修改密码
+    if(req.params.type === 'pass') {
+        User.modifyPwd(query).then( data => {
+            console.log(data);
+            res.send(data);
+        });
 
-        default:
-            break;
+    //修改邮箱,简介,电话
+    }else{
+        User.modfiyUserData(query).then( data => {
+            console.log(data);
+            res.send(data);
+        })
     }
 
 
-    console.log(user);
+
+
 
 
 
