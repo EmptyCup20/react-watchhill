@@ -431,8 +431,8 @@
 	            }, function (err) {
 	                reject(err);
 	            });
-	        }, function (data) {
-	            reject(data);
+	        }, function (err) {
+	            reject(err);
 	        });
 	    });
 	};
@@ -951,7 +951,7 @@
 
 	var Article = function Article() {};
 
-	//��ȡ�����б�
+	//获取文章列表
 	Article.getArticleList = function (obj) {
 	    return new Promise(function (resolve, reject) {
 	        _db_tools2.default.query('article', obj, '-content -_id -__v').then(function (data) {
@@ -962,18 +962,24 @@
 	    });
 	};
 
-	//��ȡ��������
+	//获取文章内容及作者信息
 	Article.getArticle = function (obj) {
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.queryByCondition('article', obj, 'content').then(function (data) {
-	            resolve(data);
+	        _db_tools2.default.queryByCondition('article', obj, 'content author').then(function (articleData) {
+	            articleData = articleData.toObject(); //转成对象字面量
+	            //根据author字段查询作者信息，过滤密码字段
+	            _db_tools2.default.queryByCondition('user', { author: data.author }, '-password').then(function (userData) {
+	                userData = userData.toObject();
+	                articleData.userInfo = userData;
+	                resolve(articleData);
+	            });
 	        }, function (err) {
 	            reject(err);
 	        });
 	    });
 	};
 
-	//��������
+	//新增文章
 	Article.addArticle = function (obj) {
 	    return new Promise(function (resolve, reject) {
 	        _db_tools2.default.add('article', obj).then(function (data) {
@@ -985,7 +991,7 @@
 	    });
 	};
 
-	//�޸�����
+	//修改文章
 	Article.modfiyArticle = function (obj) {
 	    return new Promise(function (resolve, reject) {
 	        _db_tools2.default.edit('article', obj).then(function (data) {
@@ -2906,14 +2912,24 @@
 	                language: "zh",
 	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
 	                uploadAsync: true,
-	                maxFileCount: 1
+	                maxFileCount: 1,
+	                uploadUrl: '/article/uploadimg',
+	                uploadExtraData: {
+	                    type: 'cover',
+	                    id: this.props.tempId
+	                }
 	            });
 	            //初始化文章的表单
 	            $('#articleFile').fileinput({
 	                language: "zh",
 	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
 	                uploadAsync: true,
-	                maxFileSize: 200
+	                maxFileSize: 200,
+	                uploadUrl: '/article/uploadimg',
+	                uploadExtraData: {
+	                    type: 'article',
+	                    id: this.props.tempId
+	                }
 	            });
 	        }
 	    }]);

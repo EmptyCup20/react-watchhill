@@ -67,14 +67,24 @@ export default class AddArticle extends Component{
             language: "zh",
             allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
             uploadAsync: true,
-            maxFileCount: 1
+            maxFileCount: 1,
+            uploadUrl: '/article/uploadimg',
+            uploadExtraData: {
+                type:'cover',
+                id:this.props.tempId
+            }
         });
         //初始化文章的表单
         $('#articleFile').fileinput({
             language: "zh",
             allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
             uploadAsync: true,
-            maxFileSize:200
+            maxFileSize:200,
+            uploadUrl: '/article/uploadimg',
+            uploadExtraData: {
+                type:'article',
+                id:this.props.tempId
+            }
         });
     }
 
