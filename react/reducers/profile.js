@@ -1,4 +1,4 @@
-import { MODIFY_REQUEST,MODIFY_RECEIVE } from '../constants/actionType';
+import { MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_INIT } from '../constants/actionType';
 import { init } from '../constants/httpType';
 
 const profile = (state = {
@@ -7,6 +7,12 @@ const profile = (state = {
 }, action) => {
 
     switch(action.type) {
+
+        case MODIFY_INIT:
+            return {
+                ...state,
+                modifyStatus:init
+            };
 
         case MODIFY_REQUEST:
             return {

@@ -34,6 +34,11 @@ export default class Info extends Component{
 
         this.props.modify_start(e.target.id,data);
 
+        //清空
+        refs.brief.value = '';
+        refs.email.value = '';
+        refs.tel.value = '';
+
     }
 
 

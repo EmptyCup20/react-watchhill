@@ -87,6 +87,12 @@ export function profile(req, res, next) {
     //修改邮箱,简介,电话
     }else{
         User.modfiyUserData(query).then( data => {
+            if(data.status === 'success') { //同步服务端登录数据
+                req.session.loginUser = {
+                    ...req.session.loginUser,
+                    ...query
+                }
+            }
             res.send({status:data.status});
         })
     }
