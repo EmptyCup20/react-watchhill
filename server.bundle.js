@@ -1020,9 +1020,9 @@
 
 	var _redux = __webpack_require__(28);
 
-	var _routes = __webpack_require__(29);
+	var _indexServer = __webpack_require__(29);
 
-	var _routes2 = _interopRequireDefault(_routes);
+	var _indexServer2 = _interopRequireDefault(_indexServer);
 
 	var _store = __webpack_require__(79);
 
@@ -1098,7 +1098,7 @@
 	    //console.log('node init store:', store.getState());  //需要注意与客户端的store统一
 	    var store = (0, _store2.default)(); //这里需要传入需要的state tree
 
-	    (0, _reactRouter.match)({ routes: (0, _routes2.default)(store), location: req.url }, function (err, redirect, props) {
+	    (0, _reactRouter.match)({ routes: (0, _indexServer2.default)(store), location: req.url }, function (err, redirect, props) {
 
 	        if (err) {
 	            res.status(500).send(err.message);
@@ -1255,11 +1255,18 @@
 
 	var _profile = __webpack_require__(63);
 
+	var _addArticle = __webpack_require__(54);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//登录页
-	//首页
+	//注册页
 
+	/*初始化action*/
+	//主页
+
+
+	/*容器组件*/
+	//基础库
 	var routes = function routes(store) {
 
 	    //初始化视图
@@ -1273,6 +1280,10 @@
 
 	    function profileViewStateInit() {
 	        store.dispatch((0, _profile.modify_init)());
+	    }
+
+	    function setTempArticleId() {
+	        store.dispatch((0, _addArticle.addTempArticle)());
 	    }
 
 	    return _react2.default.createElement(
@@ -1290,9 +1301,9 @@
 	            _react2.default.createElement(
 	                _reactRouter.Route,
 	                { path: '/profile', component: _ProfileContainer2.default },
-	                _react2.default.createElement(_reactRouter.IndexRoute, { onEnter: profileViewStateInit, component: _InfoContainer2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: 'info', onEnter: profileViewStateInit, component: _InfoContainer2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: 'pass', onEnter: profileViewStateInit, component: _PassContainer2.default }),
+	                _react2.default.createElement(_reactRouter.IndexRoute, { component: _InfoContainer2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'info', component: _InfoContainer2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'pass', component: _PassContainer2.default }),
 	                _react2.default.createElement(_reactRouter.Route, { path: 'avatar', component: _AvatarContainer2.default }),
 	                _react2.default.createElement(_reactRouter.Route, { path: 'code', component: _CodeContainer2.default })
 	            )
@@ -1300,14 +1311,9 @@
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: loginViewStateInit, component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', onEnter: registerViewStateInit, component: _RegisterContainer2.default })
 	    );
-	}; //注册页
+	}; //登录页
+	//首页
 
-	/*初始化action*/
-	//主页
-
-
-	/*容器组件*/
-	//基础库
 	exports.default = routes;
 
 /***/ },
@@ -2780,7 +2786,7 @@
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.props.preview('');
-	            this.props.addTempArticle();
+	            // this.props.addTempArticle();
 	        }
 	    }, {
 	        key: 'render',
@@ -2841,7 +2847,7 @@
 	                                        { htmlFor: 'imgUrl' },
 	                                        '封面'
 	                                    ),
-	                                    _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading', 'data-upload-url': '/article/add' })
+	                                    _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -2851,7 +2857,7 @@
 	                                        { htmlFor: 'articleFile' },
 	                                        '文章图片'
 	                                    ),
-	                                    _react2.default.createElement('input', { id: 'articleFile', name: 'articleFile', type: 'file', className: 'file-loading', multiple: true, 'data-upload-url': '/article/add' }),
+	                                    _react2.default.createElement('input', { id: 'articleFile', name: 'articleFile', type: 'file', className: 'file-loading', multiple: true }),
 	                                    _react2.default.createElement(
 	                                        'p',
 	                                        { className: 'help-block' },

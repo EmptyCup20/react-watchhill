@@ -54,11 +54,11 @@ const routes = (store) => {
                 <Route path='/web' component={WebContainer}  />
                 <Route path='/node' component={NodeContainer}  />
                 <Route path='/about' component={AboutContainer}  />
-                <Route path='/add_article' onEnter={setTempArticleId} component={AddArticleContainer}  />
+                <Route path='/add_article'  component={AddArticleContainer}  />
                 <Route path='/profile' component={ProfileContainer}>
-                    <IndexRoute onEnter={profileViewStateInit} component={InfoContainer}/>
-                    <Route path="info"  onEnter={profileViewStateInit} component={InfoContainer} />
-                    <Route path="pass" onEnter={profileViewStateInit} component={PassContainer} />
+                    <IndexRoute  component={InfoContainer}/>
+                    <Route path="info"   component={InfoContainer} />
+                    <Route path="pass"  component={PassContainer} />
                     <Route path="avatar" component={AvatarContainer} />
                     <Route path="code" component={CodeContainer} />
                 </Route>

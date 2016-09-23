@@ -8,7 +8,7 @@ import Markdown from '../../elements/Markdown.jsx'
 export default class AddArticle extends Component{
     componentWillMount(){
         this.props.preview('');
-        this.props.addTempArticle();
+        // this.props.addTempArticle();
     }
     render(){
         const { preview, addArticle} = this.props
@@ -31,11 +31,11 @@ export default class AddArticle extends Component{
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="imgUrl">封面</label>
-                                    <input id="imgUrl" name="imgUrl" type="file" className="file-loading" data-upload-url="/article/add" />
+                                    <input id="imgUrl" name="imgUrl" type="file" className="file-loading"  />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="articleFile">文章图片</label>
-                                    <input id="articleFile" name="articleFile" type="file" className="file-loading" multiple data-upload-url="/article/add" />
+                                    <input id="articleFile" name="articleFile" type="file" className="file-loading" multiple  />
                                     <p className="help-block">请选择.jpg.jpeg.png.gif格式的文件上传</p>
                                     <div className="btn-group">
                                        <div>
