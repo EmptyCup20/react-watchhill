@@ -1,11 +1,11 @@
-import db_tools from '../../mongo/db_tools';
+ï»¿import db_tools from '../../mongo/db_tools';
 import statusMsg from '../../mongo/statusMsg';
 var Article = function() {};
 
-//»ñÈ¡ÎÄÕÂÁĞ±í
+//è·å–æ–‡ç« åˆ—è¡¨
 Article.getArticleList = function(obj) {
     return new Promise((resolve, reject) => {
-        db_tools.query('article',obj,'-content -_id -__v').then(
+        db_tools.query('article', obj, '-content -_id -__v').then(
             data => {
                 resolve(data);
             },
@@ -17,39 +17,41 @@ Article.getArticleList = function(obj) {
     });
 };
 
-//»ñÈ¡ÎÄÕÂÄÚÈİ
+//è·å–æ–‡ç« å†…å®¹åŠä½œè€…ä¿¡æ¯
 Article.getArticle = function(obj) {
     return new Promise((resolve, reject) => {
-        db_tools.queryByCondition('article',obj,'content').then(
-            data => {
-                resolve(data);
-            },
-
-            err =>{
-                reject(err);
-            }
-        );
-    });
-};
-
-//ĞÂÔöÎÄÕÂ
-Article.addArticle = function(obj){
-    return new Promise((resolve,reject)=>{
-        db_tools.add('article',obj).then(data=>{
-            statusMsg.successMsg.data = data.toObject()
-            resolve(statusMsg.successMsg);
-        },err=>{
+        db_tools.queryByCondition('article', obj, 'content author').then(articleData => {
+            articleData = articleData.toObject(); //è½¬æˆå¯¹è±¡å­—é¢é‡
+            //æ ¹æ®authorå­—æ®µæŸ¥è¯¢ä½œè€…ä¿¡æ¯ï¼Œè¿‡æ»¤å¯†ç å­—æ®µ
+            db_tools.queryByCondition('user', { author: data.author }, '-password').then(userData => {
+                userData = userData.toObject();
+                articleData.userInfo = userData;
+                resolve(articleData);
+            })
+        }, err => {
             reject(err);
         });
     });
 };
 
-//ĞŞ¸ÄÎÄÕÂ
-Article.modfiyArticle = function(obj){
-    return new Promise((resolve,reject)=>{
-        db_tools.edit('article',obj).then(data=>{
+//æ–°å¢æ–‡ç« 
+Article.addArticle = function(obj) {
+    return new Promise((resolve, reject) => {
+        db_tools.add('article', obj).then(data => {
+            statusMsg.successMsg.data = data.toObject()
+            resolve(statusMsg.successMsg);
+        }, err => {
+            reject(err);
+        });
+    });
+};
+
+//ä¿®æ”¹æ–‡ç« 
+Article.modfiyArticle = function(obj) {
+    return new Promise((resolve, reject) => {
+        db_tools.edit('article', obj).then(data => {
             resolve(data);
-        },err=>{
+        }, err => {
             reject(err);
         });
     });
