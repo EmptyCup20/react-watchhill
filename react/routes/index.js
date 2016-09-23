@@ -16,6 +16,7 @@ import IndexContainer from '../components/containers/IndexContainer';       //�
         import CodeContainer from '../components/containers/CodeContainer';
         import AvatarContainer from '../components/containers/AvatarContainer';
         import PassContainer from '../components/containers/PassContainer';
+    import ArticleContainer from '../components/containers/ArticleContainer';
 
 import LoginContainer from '../components/containers/LoginContainer';       //登录页
 import RegisterContainer from '../components/containers/RegisterContainer'; //注册页
@@ -36,10 +37,15 @@ const routes = (store) => {
         store.dispatch(register_init());
     }
 
-
     function profileViewStateInit() {
         store.dispatch(modify_init());
     }
+
+    //获取文章内容
+    function toGetArticleContent() {
+        //alert(1);
+    }
+
 
     return(
         <Route>
@@ -50,6 +56,7 @@ const routes = (store) => {
                 <Route path='/node' component={NodeContainer}  />
                 <Route path='/about' component={AboutContainer}  />
                 <Route path='/add_article' component={AddArticleContainer}  />
+
                 <Route path='/profile' component={ProfileContainer}>
                     <IndexRoute onEnter={profileViewStateInit} component={InfoContainer}/>
                     <Route path="info"  onEnter={profileViewStateInit} component={InfoContainer} />
@@ -57,6 +64,9 @@ const routes = (store) => {
                     <Route path="avatar" component={AvatarContainer} />
                     <Route path="code" component={CodeContainer} />
                 </Route>
+
+                <Route path="/article/:id" component={ArticleContainer} />
+
             </Route>
             <Route path="/login" onEnter={loginViewStateInit} component={LoginContainer}/>
             <Route path="/register" onEnter={registerViewStateInit} component={RegisterContainer}/>

@@ -2,10 +2,10 @@ import db_tools from '../../mongo/db_tools';
 import statusMsg from '../../mongo/statusMsg';
 var Article = function() {};
 
-//»ñÈ¡ÎÄÕÂÁÐ±í
+//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
 Article.getArticleList = function(obj) {
     return new Promise((resolve, reject) => {
-        db_tools.query('article',obj,'-content -_id -__v').then(
+        db_tools.query('article',obj,'-content -__v').then(
             data => {
                 resolve(data);
             },
@@ -17,7 +17,7 @@ Article.getArticleList = function(obj) {
     });
 };
 
-//»ñÈ¡ÎÄÕÂÄÚÈÝ
+//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 Article.getArticle = function(obj) {
     return new Promise((resolve, reject) => {
         db_tools.queryByCondition('article',obj,'content').then(
@@ -32,7 +32,7 @@ Article.getArticle = function(obj) {
     });
 };
 
-//ÐÂÔöÎÄÕÂ
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 Article.addArticle = function(obj){
     return new Promise((resolve,reject)=>{
         db_tools.add('article',obj).then(data=>{
@@ -44,7 +44,7 @@ Article.addArticle = function(obj){
     });
 };
 
-//ÐÞ¸ÄÎÄÕÂ
+//ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½
 Article.modfiyArticle = function(obj){
     return new Promise((resolve,reject)=>{
         db_tools.edit('article',obj).then(data=>{

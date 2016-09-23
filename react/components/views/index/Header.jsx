@@ -32,7 +32,7 @@ export default class Header extends Component{
                             </button>
                         </div>
                         <div className="collapse navbar-collapse" id="navbar-collapse">
-                            <ul className="nav navbar-nav navbar-left">
+                            <ul className="nav navbar-nav navbar-left" role="nav">
                                 <li>
                                     <Link to="/index">主页</Link>
                                 </li>

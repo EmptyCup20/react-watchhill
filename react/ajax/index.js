@@ -3,11 +3,16 @@
  */
 
 function ajax() {
-    function req(method,url,data) {
+    function req(method,url,data,async) {
         var defered = $.Deferred();
+
+
+
+
         var request = {
             type: method,
-            url: url
+            url: url,
+            async:async?false:true
             //dataType: "json"?
             //data: data
         };
@@ -15,6 +20,10 @@ function ajax() {
         if(data) {
             request.data = data;
         }
+
+
+
+
 
         $.ajax(request)
             .done(function(data){
@@ -58,6 +67,9 @@ function ajax() {
         addTempArticle: function(){
             return req('POST','/article/addArticle');
         }
+
+
+
 
 
 
