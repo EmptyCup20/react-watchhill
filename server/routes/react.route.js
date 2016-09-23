@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 import { combineReducers } from 'redux';
 
 //react路由
-import routes from '../../react/routes';
+import routes from '../../react/routes/index-server';
 
 //redux store
 import configureStore from '../../react/store';
@@ -122,4 +122,3 @@ router.get('/*', (req, res,next) => {
 
 
 module.exports = router;
-

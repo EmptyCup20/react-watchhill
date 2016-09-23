@@ -431,8 +431,8 @@
 	            }, function (err) {
 	                reject(err);
 	            });
-	        }, function (data) {
-	            reject(data);
+	        }, function (err) {
+	            reject(err);
 	        });
 	    });
 	};
@@ -951,7 +951,7 @@
 
 	var Article = function Article() {};
 
-	//��ȡ�����б�
+	//获取文章列表
 	Article.getArticleList = function (obj) {
 	    return new Promise(function (resolve, reject) {
 	        _db_tools2.default.query('article', obj, '-content -__v').then(function (data) {
@@ -962,18 +962,24 @@
 	    });
 	};
 
-	//��ȡ��������
+	//获取文章内容及作者信息
 	Article.getArticle = function (obj) {
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.queryByCondition('article', obj, 'content').then(function (data) {
-	            resolve(data);
+	        _db_tools2.default.queryByCondition('article', obj, 'content author').then(function (articleData) {
+	            articleData = articleData.toObject(); //转成对象字面量
+	            //根据author字段查询作者信息，过滤密码字段
+	            _db_tools2.default.queryByCondition('user', { author: data.author }, '-password').then(function (userData) {
+	                userData = userData.toObject();
+	                articleData.userInfo = userData;
+	                resolve(articleData);
+	            });
 	        }, function (err) {
 	            reject(err);
 	        });
 	    });
 	};
 
-	//��������
+	//新增文章
 	Article.addArticle = function (obj) {
 	    return new Promise(function (resolve, reject) {
 	        _db_tools2.default.add('article', obj).then(function (data) {
@@ -985,7 +991,7 @@
 	    });
 	};
 
-	//�޸�����
+	//修改文章
 	Article.modfiyArticle = function (obj) {
 	    return new Promise(function (resolve, reject) {
 	        _db_tools2.default.edit('article', obj).then(function (data) {
@@ -1020,9 +1026,9 @@
 
 	var _redux = __webpack_require__(28);
 
-	var _routes = __webpack_require__(29);
+	var _indexServer = __webpack_require__(90);
 
-	var _routes2 = _interopRequireDefault(_routes);
+	var _indexServer2 = _interopRequireDefault(_indexServer);
 
 	var _store = __webpack_require__(81);
 
@@ -1078,7 +1084,7 @@
 
 	    var store = (0, _store2.default)(); //这里需要传入需要的state tree
 
-	    (0, _reactRouter.match)({ routes: (0, _routes2.default)(store), location: req.url }, function (err, redirect, props) {
+	    (0, _reactRouter.match)({ routes: (0, _indexServer2.default)(store), location: req.url }, function (err, redirect, props) {
 
 	        if (err) {
 	            res.status(500).send(err.message);
@@ -1164,149 +1170,7 @@
 	module.exports = require("redux");
 
 /***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(24);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(26);
-
-	var _AppContainer = __webpack_require__(30);
-
-	var _AppContainer2 = _interopRequireDefault(_AppContainer);
-
-	var _IndexContainer = __webpack_require__(32);
-
-	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
-
-	var _HomeContainer = __webpack_require__(43);
-
-	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
-
-	var _AboutContainer = __webpack_require__(47);
-
-	var _AboutContainer2 = _interopRequireDefault(_AboutContainer);
-
-	var _WebContainer = __webpack_require__(50);
-
-	var _WebContainer2 = _interopRequireDefault(_WebContainer);
-
-	var _NodeContainer = __webpack_require__(52);
-
-	var _NodeContainer2 = _interopRequireDefault(_NodeContainer);
-
-	var _AddArticleContainer = __webpack_require__(54);
-
-	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
-
-	var _ProfileContainer = __webpack_require__(61);
-
-	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
-
-	var _InfoContainer = __webpack_require__(63);
-
-	var _InfoContainer2 = _interopRequireDefault(_InfoContainer);
-
-	var _CodeContainer = __webpack_require__(66);
-
-	var _CodeContainer2 = _interopRequireDefault(_CodeContainer);
-
-	var _AvatarContainer = __webpack_require__(68);
-
-	var _AvatarContainer2 = _interopRequireDefault(_AvatarContainer);
-
-	var _PassContainer = __webpack_require__(70);
-
-	var _PassContainer2 = _interopRequireDefault(_PassContainer);
-
-	var _ArticleContainer = __webpack_require__(72);
-
-	var _ArticleContainer2 = _interopRequireDefault(_ArticleContainer);
-
-	var _LoginContainer = __webpack_require__(74);
-
-	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
-
-	var _RegisterContainer = __webpack_require__(78);
-
-	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
-
-	var _login = __webpack_require__(77);
-
-	var _register = __webpack_require__(80);
-
-	var _profile = __webpack_require__(64);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//登录页
-	//主页
-
-
-	/*容器组件*/
-	//基础库
-	var routes = function routes(store) {
-
-	    //初始化视图
-	    function loginViewStateInit() {
-	        store.dispatch((0, _login.login_init)());
-	    }
-
-	    function registerViewStateInit() {
-	        store.dispatch((0, _register.register_init)());
-	    }
-
-	    function profileViewStateInit() {
-	        store.dispatch((0, _profile.modify_init)());
-	    }
-
-	    //获取文章内容
-	    function toGetArticleContent() {
-	        //alert(1);
-	    }
-
-	    return _react2.default.createElement(
-	        _reactRouter.Route,
-	        null,
-	        _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default }),
-	        _react2.default.createElement(
-	            _reactRouter.Route,
-	            { path: '/index', component: _IndexContainer2.default },
-	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _HomeContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/web', component: _WebContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/node', component: _NodeContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _AboutContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', component: _AddArticleContainer2.default }),
-	            _react2.default.createElement(
-	                _reactRouter.Route,
-	                { path: '/profile', component: _ProfileContainer2.default },
-	                _react2.default.createElement(_reactRouter.IndexRoute, { onEnter: profileViewStateInit, component: _InfoContainer2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: 'info', onEnter: profileViewStateInit, component: _InfoContainer2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: 'pass', onEnter: profileViewStateInit, component: _PassContainer2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: 'avatar', component: _AvatarContainer2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: 'code', component: _CodeContainer2.default })
-	            ),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/article/:id', component: _ArticleContainer2.default })
-	        ),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: loginViewStateInit, component: _LoginContainer2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/register', onEnter: registerViewStateInit, component: _RegisterContainer2.default })
-	    );
-	}; //注册页
-
-	/*初始化action*/
-	//首页
-
-	exports.default = routes;
-
-/***/ },
+/* 29 */,
 /* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2826,7 +2690,7 @@
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.props.preview('');
-	            this.props.addTempArticle();
+	            // this.props.addTempArticle();
 	        }
 	    }, {
 	        key: 'render',
@@ -2887,7 +2751,7 @@
 	                                        { htmlFor: 'imgUrl' },
 	                                        '封面'
 	                                    ),
-	                                    _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading', 'data-upload-url': '/article/add' })
+	                                    _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -2897,7 +2761,7 @@
 	                                        { htmlFor: 'articleFile' },
 	                                        '文章图片'
 	                                    ),
-	                                    _react2.default.createElement('input', { id: 'articleFile', name: 'articleFile', type: 'file', className: 'file-loading', multiple: true, 'data-upload-url': '/article/add' }),
+	                                    _react2.default.createElement('input', { id: 'articleFile', name: 'articleFile', type: 'file', className: 'file-loading', multiple: true }),
 	                                    _react2.default.createElement(
 	                                        'p',
 	                                        { className: 'help-block' },
@@ -2946,14 +2810,24 @@
 	                language: "zh",
 	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
 	                uploadAsync: true,
-	                maxFileCount: 1
+	                maxFileCount: 1,
+	                uploadUrl: '/article/uploadimg',
+	                uploadExtraData: {
+	                    type: 'cover',
+	                    id: this.props.tempId
+	                }
 	            });
 	            //初始化文章的表单
 	            $('#articleFile').fileinput({
 	                language: "zh",
 	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
 	                uploadAsync: true,
-	                maxFileSize: 200
+	                maxFileSize: 200,
+	                uploadUrl: '/article/uploadimg',
+	                uploadExtraData: {
+	                    type: 'article',
+	                    id: this.props.tempId
+	                }
 	            });
 	        }
 	    }]);
@@ -4155,142 +4029,8 @@
 	exports.default = Code;
 
 /***/ },
-/* 72 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _reactRedux = __webpack_require__(27);
-
-	var _Article = __webpack_require__(73);
-
-	var _Article2 = _interopRequireDefault(_Article);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//基础库
-	exports.default = (0, _reactRedux.connect)()(_Article2.default);
-
-	//action
-
-
-	//视图组件
-
-/***/ },
-/* 73 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(24);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Article = function (_Component) {
-	    _inherits(Article, _Component);
-
-	    function Article() {
-	        _classCallCheck(this, Article);
-
-	        return _possibleConstructorReturn(this, (Article.__proto__ || Object.getPrototypeOf(Article)).apply(this, arguments));
-	    }
-
-	    _createClass(Article, [{
-	        key: "render",
-	        value: function render() {
-	            return _react2.default.createElement(
-	                "div",
-	                { className: "container" },
-	                _react2.default.createElement(
-	                    "div",
-	                    { className: "row" },
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "col-lg-4 col-md-4 col-sm-12" },
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "module-categories module" },
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "box box-primary row" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "box-body box-profile col-sm-12 col-md-12 col-lg-12" },
-	                                    _react2.default.createElement(
-	                                        "h3",
-	                                        { className: "profile-username text-center" },
-	                                        "作者"
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        "p",
-	                                        { className: "text-muted text-center" },
-	                                        "个签"
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        "p",
-	                                        { className: "text-muted text-center" },
-	                                        "组别"
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        "ul",
-	                                        { className: "list-group list-group-unbordered" },
-	                                        _react2.default.createElement(
-	                                            "li",
-	                                            { className: "list-group-item" },
-	                                            _react2.default.createElement(
-	                                                "b",
-	                                                null,
-	                                                "联系方式:"
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            "li",
-	                                            { className: "list-group-item" },
-	                                            _react2.default.createElement(
-	                                                "b",
-	                                                null,
-	                                                "邮箱:"
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "box-img" },
-	                                        _react2.default.createElement("img", { src: "#", alt: "扫二维码" })
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Article;
-	}(_react.Component);
-
-	exports.default = Article;
-
-/***/ },
+/* 72 */,
+/* 73 */,
 /* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -5462,6 +5202,145 @@
 	};
 
 	exports.default = profile;
+
+/***/ },
+/* 90 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(24);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(26);
+
+	var _AppContainer = __webpack_require__(30);
+
+	var _AppContainer2 = _interopRequireDefault(_AppContainer);
+
+	var _IndexContainer = __webpack_require__(32);
+
+	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
+
+	var _HomeContainer = __webpack_require__(43);
+
+	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
+
+	var _AboutContainer = __webpack_require__(47);
+
+	var _AboutContainer2 = _interopRequireDefault(_AboutContainer);
+
+	var _WebContainer = __webpack_require__(50);
+
+	var _WebContainer2 = _interopRequireDefault(_WebContainer);
+
+	var _NodeContainer = __webpack_require__(52);
+
+	var _NodeContainer2 = _interopRequireDefault(_NodeContainer);
+
+	var _AddArticleContainer = __webpack_require__(54);
+
+	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
+
+	var _ProfileContainer = __webpack_require__(61);
+
+	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
+
+	var _InfoContainer = __webpack_require__(63);
+
+	var _InfoContainer2 = _interopRequireDefault(_InfoContainer);
+
+	var _CodeContainer = __webpack_require__(66);
+
+	var _CodeContainer2 = _interopRequireDefault(_CodeContainer);
+
+	var _AvatarContainer = __webpack_require__(68);
+
+	var _AvatarContainer2 = _interopRequireDefault(_AvatarContainer);
+
+	var _PassContainer = __webpack_require__(70);
+
+	var _PassContainer2 = _interopRequireDefault(_PassContainer);
+
+	var _LoginContainer = __webpack_require__(74);
+
+	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
+
+	var _RegisterContainer = __webpack_require__(78);
+
+	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
+
+	var _login = __webpack_require__(77);
+
+	var _register = __webpack_require__(80);
+
+	var _profile = __webpack_require__(64);
+
+	var _addArticle = __webpack_require__(55);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//注册页
+
+	/*初始化action*/
+	//主页
+
+
+	/*容器组件*/
+	//基础库
+	var routes = function routes(store) {
+
+	    //初始化视图
+	    function loginViewStateInit() {
+	        store.dispatch((0, _login.login_init)());
+	    }
+
+	    function registerViewStateInit() {
+	        store.dispatch((0, _register.register_init)());
+	    }
+
+	    function profileViewStateInit() {
+	        store.dispatch((0, _profile.modify_init)());
+	    }
+
+	    function setTempArticleId() {
+	        store.dispatch((0, _addArticle.addTempArticle)());
+	    }
+
+	    return _react2.default.createElement(
+	        _reactRouter.Route,
+	        null,
+	        _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default }),
+	        _react2.default.createElement(
+	            _reactRouter.Route,
+	            { path: '/index', component: _IndexContainer2.default },
+	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _HomeContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/web', component: _WebContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/node', component: _NodeContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _AboutContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', component: _AddArticleContainer2.default }),
+	            _react2.default.createElement(
+	                _reactRouter.Route,
+	                { path: '/profile', component: _ProfileContainer2.default },
+	                _react2.default.createElement(_reactRouter.IndexRoute, { component: _InfoContainer2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'info', component: _InfoContainer2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'pass', component: _PassContainer2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'avatar', component: _AvatarContainer2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'code', component: _CodeContainer2.default })
+	            )
+	        ),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginContainer2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _RegisterContainer2.default })
+	    );
+	}; //登录页
+	//首页
+
+	exports.default = routes;
 
 /***/ }
 /******/ ]);

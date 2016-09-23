@@ -16,7 +16,6 @@ import IndexContainer from '../components/containers/IndexContainer';       //�
         import CodeContainer from '../components/containers/CodeContainer';
         import AvatarContainer from '../components/containers/AvatarContainer';
         import PassContainer from '../components/containers/PassContainer';
-    import ArticleContainer from '../components/containers/ArticleContainer';
 
 import LoginContainer from '../components/containers/LoginContainer';       //登录页
 import RegisterContainer from '../components/containers/RegisterContainer'; //注册页
@@ -38,6 +37,7 @@ const routes = (store) => {
         store.dispatch(register_init());
     }
 
+
     function profileViewStateInit() {
         store.dispatch(modify_init());
     }
@@ -54,20 +54,17 @@ const routes = (store) => {
                 <Route path='/web' component={WebContainer}  />
                 <Route path='/node' component={NodeContainer}  />
                 <Route path='/about' component={AboutContainer}  />
-                <Route path='/add_article' onEnter={setTempArticleId} component={AddArticleContainer}  />
+                <Route path='/add_article'  component={AddArticleContainer}  />
                 <Route path='/profile' component={ProfileContainer}>
-                    <IndexRoute onEnter={profileViewStateInit} component={InfoContainer}/>
-                    <Route path="info"  onEnter={profileViewStateInit} component={InfoContainer} />
-                    <Route path="pass" onEnter={profileViewStateInit} component={PassContainer} />
+                    <IndexRoute  component={InfoContainer}/>
+                    <Route path="info"   component={InfoContainer} />
+                    <Route path="pass"  component={PassContainer} />
                     <Route path="avatar" component={AvatarContainer} />
                     <Route path="code" component={CodeContainer} />
                 </Route>
-
-                <Route path="/article/:id" component={ArticleContainer} />
-
             </Route>
-            <Route path="/login" onEnter={loginViewStateInit} component={LoginContainer}/>
-            <Route path="/register" onEnter={registerViewStateInit} component={RegisterContainer}/>
+            <Route path="/login"  component={LoginContainer}/>
+            <Route path="/register"  component={RegisterContainer}/>
         </Route>
     )
 };

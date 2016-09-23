@@ -81,8 +81,8 @@ User.modifyPwd = function(obj) {
             }, err => {
                 reject(err);
             })
-        }, data => {
-            reject(data);
+        }, err => {
+            reject(err);
         });
     });
 };

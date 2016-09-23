@@ -7466,14 +7466,15 @@ webpackJsonp([0,1],[
 
 	var _profile = __webpack_require__(124);
 
+	var _addArticle = __webpack_require__(115);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//登录页
-	//主页
+	//注册页
 
+	/*初始化action*/
+	//首页
 
-	/*容器组件*/
-	//基础库
 	var routes = function routes(store) {
 
 	    //初始化视图
@@ -7489,9 +7490,8 @@ webpackJsonp([0,1],[
 	        store.dispatch((0, _profile.modify_init)());
 	    }
 
-	    //获取文章内容
-	    function toGetArticleContent() {
-	        //alert(1);
+	    function setTempArticleId() {
+	        store.dispatch((0, _addArticle.addTempArticle)());
 	    }
 
 	    return _react2.default.createElement(
@@ -7505,7 +7505,7 @@ webpackJsonp([0,1],[
 	            _react2.default.createElement(_reactRouter.Route, { path: '/web', component: _WebContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/node', component: _NodeContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _AboutContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', component: _AddArticleContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', onEnter: setTempArticleId, component: _AddArticleContainer2.default }),
 	            _react2.default.createElement(
 	                _reactRouter.Route,
 	                { path: '/profile', component: _ProfileContainer2.default },
@@ -7520,11 +7520,12 @@ webpackJsonp([0,1],[
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: loginViewStateInit, component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', onEnter: registerViewStateInit, component: _RegisterContainer2.default })
 	    );
-	}; //注册页
+	}; //登录页
+	//主页
 
-	/*初始化action*/
-	//首页
 
+	/*容器组件*/
+	//基础库
 	exports.default = routes;
 
 /***/ },
@@ -9047,7 +9048,7 @@ webpackJsonp([0,1],[
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.props.preview('');
-	            this.props.addTempArticle();
+	            // this.props.addTempArticle();
 	        }
 	    }, {
 	        key: 'render',
@@ -9108,7 +9109,7 @@ webpackJsonp([0,1],[
 	                                        { htmlFor: 'imgUrl' },
 	                                        '封面'
 	                                    ),
-	                                    _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading', 'data-upload-url': '/article/add' })
+	                                    _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -9118,7 +9119,7 @@ webpackJsonp([0,1],[
 	                                        { htmlFor: 'articleFile' },
 	                                        '文章图片'
 	                                    ),
-	                                    _react2.default.createElement('input', { id: 'articleFile', name: 'articleFile', type: 'file', className: 'file-loading', multiple: true, 'data-upload-url': '/article/add' }),
+	                                    _react2.default.createElement('input', { id: 'articleFile', name: 'articleFile', type: 'file', className: 'file-loading', multiple: true }),
 	                                    _react2.default.createElement(
 	                                        'p',
 	                                        { className: 'help-block' },
@@ -9167,14 +9168,24 @@ webpackJsonp([0,1],[
 	                language: "zh",
 	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
 	                uploadAsync: true,
-	                maxFileCount: 1
+	                maxFileCount: 1,
+	                uploadUrl: '/article/uploadimg',
+	                uploadExtraData: {
+	                    type: 'cover',
+	                    id: this.props.tempId
+	                }
 	            });
 	            //初始化文章的表单
 	            $('#articleFile').fileinput({
 	                language: "zh",
 	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
 	                uploadAsync: true,
-	                maxFileSize: 200
+	                maxFileSize: 200,
+	                uploadUrl: '/article/uploadimg',
+	                uploadExtraData: {
+	                    type: 'article',
+	                    id: this.props.tempId
+	                }
 	            });
 	        }
 	    }]);
@@ -10440,6 +10451,7 @@ webpackJsonp([0,1],[
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "container" },
+	                _react2.default.createElement("br", null),
 	                _react2.default.createElement(
 	                    "div",
 	                    { className: "row" },
@@ -10455,6 +10467,11 @@ webpackJsonp([0,1],[
 	                                _react2.default.createElement(
 	                                    "div",
 	                                    { className: "box-body box-profile col-sm-12 col-md-12 col-lg-12" },
+	                                    _react2.default.createElement(
+	                                        "a",
+	                                        null,
+	                                        _react2.default.createElement("img", { className: "profile-user-img img-responsive img-circle", alt: "个人照片" })
+	                                    ),
 	                                    _react2.default.createElement(
 	                                        "h3",
 	                                        { className: "profile-username text-center" },
@@ -10493,11 +10510,33 @@ webpackJsonp([0,1],[
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
+	                                        "a",
+	                                        { className: "btn btn-primary btn-block" },
+	                                        _react2.default.createElement(
+	                                            "b",
+	                                            null,
+	                                            "更多文章..."
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
 	                                        "div",
 	                                        { className: "box-img" },
-	                                        _react2.default.createElement("img", { src: "#", alt: "扫二维码" })
+	                                        _react2.default.createElement("img", { alt: "扫二维码" })
 	                                    )
 	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "col-lg-8 col-md-8 col-sm-12" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "content-wrapper bg-content" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "container md-content" },
+	                                "2313213"
 	                            )
 	                        )
 	                    )
