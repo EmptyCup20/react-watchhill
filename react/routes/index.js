@@ -23,7 +23,7 @@ import RegisterContainer from '../components/containers/RegisterContainer'; //�
 /*初始化action*/
 import { login_init } from '../actions/login';
 import { register_init } from '../actions/register';
-
+import { modify_init } from '../actions/profile';
 
 const routes = (store) => {
 
@@ -36,6 +36,11 @@ const routes = (store) => {
         store.dispatch(register_init());
     }
 
+
+    function profileViewStateInit() {
+        store.dispatch(modify_init());
+    }
+
     return(
         <Route>
             <Route path="/" component={AppContainer} />
@@ -46,9 +51,9 @@ const routes = (store) => {
                 <Route path='/about' component={AboutContainer}  />
                 <Route path='/add_article' component={AddArticleContainer}  />
                 <Route path='/profile' component={ProfileContainer}>
-                    <IndexRoute component={InfoContainer}/>
-                    <Route path="info" component={InfoContainer} />
-                    <Route path="pass" component={PassContainer} />
+                    <IndexRoute onEnter={profileViewStateInit} component={InfoContainer}/>
+                    <Route path="info"  onEnter={profileViewStateInit} component={InfoContainer} />
+                    <Route path="pass" onEnter={profileViewStateInit} component={PassContainer} />
                     <Route path="avatar" component={AvatarContainer} />
                     <Route path="code" component={CodeContainer} />
                 </Route>

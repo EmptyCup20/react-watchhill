@@ -1,7 +1,13 @@
 
-import { LOGIN_REQUEST,LOGIN_RECEIVE,LOGOUT_RECEIVE,LOGIN_INIT } from '../constants/actionType';
+import { LOGIN_REQUEST,LOGIN_RECEIVE,LOGOUT_RECEIVE,LOGIN_INIT,MODIFY_LOGIN } from '../constants/actionType';
 import { init,user_no_exist,password_err,success } from '../constants/httpType';
 
+/**
+ * 登录状态设置
+ * @param state
+ * @param action
+ * @returns {*}
+ */
 const login_status = (state,action) => {
 	switch(action.status) {
 
@@ -35,6 +41,17 @@ const login_status = (state,action) => {
 };
 
 
+
+
+
+
+/**
+ * Login State Tree Reducer
+ * @param state
+ * @param action
+ * @returns {*}
+ */
+
 const login = (state = {
 	logined:false,
 	loginStatus:init,			//登录状态
@@ -57,7 +74,7 @@ const login = (state = {
 			};
 
 
-		case LOGIN_RECEIVE:		//接受登录结果
+		case LOGIN_RECEIVE:		//接受登录结果,注册的时候也会调用
 			return {
 				...state,
 				// loginStatus:action.status,
@@ -74,6 +91,15 @@ const login = (state = {
 				loginUser:{},
 				loginStatus:init,
 				logining:false
+			};
+
+		case MODIFY_LOGIN:		//个人信息修改页面发送的action
+			return {
+				...state,
+				loginUser:{
+					...state.loginUser,
+					...action.user
+				}
 			};
 
 		default:

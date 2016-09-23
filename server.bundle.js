@@ -235,6 +235,10 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; // import { user_no_exist,password_err,user_exist,success } from '../../react/constants/httpType';
+
+
 	exports.loginAuthen = loginAuthen;
 	exports.register = register;
 	exports.logout = logout;
@@ -272,7 +276,6 @@
 	 * @param res
 	 * @param next
 	 */
-	// import { user_no_exist,password_err,user_exist,success } from '../../react/constants/httpType';
 	function register(req, res, next) {
 	    var query = req.body;
 	    _user2.default.addUser(query).then(function (data) {
@@ -327,6 +330,10 @@
 	        //修改邮箱,简介,电话
 	    } else {
 	        _user2.default.modfiyUserData(query).then(function (data) {
+	            if (data.status === 'success') {
+	                //同步服务端登录数据
+	                req.session.loginUser = _extends({}, req.session.loginUser, query);
+	            }
 	            res.send({ status: data.status });
 	        });
 	    }
@@ -609,8 +616,8 @@
 	 */
 	var mongoose = __webpack_require__(14);
 	//连接数据库
-	//var db = mongoose.connect('mongodb://10.33.31.234/watchhill',function(err){
-	var db = mongoose.connect('mongodb://localhost/watchhill', function (err) {
+	var db = mongoose.connect('mongodb://10.33.31.234/watchhill', function (err) {
+	    //var db = mongoose.connect('mongodb://localhost/watchhill',function(err){
 	    if (err) {
 	        console.log(err);
 	    }
@@ -1246,16 +1253,13 @@
 
 	var _register = __webpack_require__(78);
 
+	var _profile = __webpack_require__(63);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//注册页
+	//登录页
+	//首页
 
-	/*初始化action*/
-	//主页
-
-
-	/*容器组件*/
-	//基础库
 	var routes = function routes(store) {
 
 	    //初始化视图
@@ -1265,6 +1269,10 @@
 
 	    function registerViewStateInit() {
 	        store.dispatch((0, _register.register_init)());
+	    }
+
+	    function profileViewStateInit() {
+	        store.dispatch((0, _profile.modify_init)());
 	    }
 
 	    return _react2.default.createElement(
@@ -1282,9 +1290,9 @@
 	            _react2.default.createElement(
 	                _reactRouter.Route,
 	                { path: '/profile', component: _ProfileContainer2.default },
-	                _react2.default.createElement(_reactRouter.IndexRoute, { component: _InfoContainer2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: 'info', component: _InfoContainer2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: 'pass', component: _PassContainer2.default }),
+	                _react2.default.createElement(_reactRouter.IndexRoute, { onEnter: profileViewStateInit, component: _InfoContainer2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'info', onEnter: profileViewStateInit, component: _InfoContainer2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'pass', onEnter: profileViewStateInit, component: _PassContainer2.default }),
 	                _react2.default.createElement(_reactRouter.Route, { path: 'avatar', component: _AvatarContainer2.default }),
 	                _react2.default.createElement(_reactRouter.Route, { path: 'code', component: _CodeContainer2.default })
 	            )
@@ -1292,9 +1300,14 @@
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: loginViewStateInit, component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', onEnter: registerViewStateInit, component: _RegisterContainer2.default })
 	    );
-	}; //登录页
-	//首页
+	}; //注册页
 
+	/*初始化action*/
+	//主页
+
+
+	/*容器组件*/
+	//基础库
 	exports.default = routes;
 
 /***/ },
@@ -1523,6 +1536,7 @@
 	    MODIFY_BRIEF: 'MODIFY_BRIEF', //修改简介
 	    MODIFY_TEL: 'MODIFY_TEL', //修改电话
 	    MODIFY_RECEIVE: 'MODIFY_RECEIVE', //接收修改状况处理
+	    MODIFY_LOGIN: 'MODIFY_LOGIN', //修改信息的同时更新视图个人信息
 
 	    //logout
 	    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE', //注销
@@ -3331,7 +3345,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/**
-	 * 状态初始化
+	 * 状态初始化动作
 	 * @returns {{type: string}}
 	 */
 
@@ -3368,9 +3382,9 @@
 	/**
 	 * 发起ajax请求
 	 * @param type
-	 * @param data
+	 * @param user -> 需要修改的用户信息
 	 */
-	function modify_ajax(type, data) {
+	function modify_ajax(type, user) {
 
 	    return function (dispatch) {
 	        dispatch(modify_request()); //挂起注册请求,防止重复请求
@@ -3378,7 +3392,7 @@
 	        switch (type) {
 	            //修改密码
 	            case _actionType.MODIFY_PASS:
-	                return (0, _ajax2.default)().modifyPass(data).then(function (data) {
+	                return (0, _ajax2.default)().modifyPass(user).then(function (data) {
 	                    return dispatch(modify_process(type, data));
 	                }); //接受到数据后重新更新state
 
@@ -3386,8 +3400,8 @@
 	            case _actionType.MODIFY_EMAIL:
 	            case _actionType.MODIFY_BRIEF:
 	            case _actionType.MODIFY_TEL:
-	                return (0, _ajax2.default)().modifyInfo(data).then(function (data) {
-	                    return dispatch(modify_process(type, data));
+	                return (0, _ajax2.default)().modifyInfo(user).then(function (data) {
+	                    return dispatch(modify_process(type, data, user));
 	                }); //接受到数据后重新更新state
 
 	            default:
@@ -3397,7 +3411,7 @@
 	}
 
 	/**
-	 * 挂起修改请求
+	 * 挂起修改请求动作
 	 */
 	function modify_request() {
 	    return {
@@ -3407,11 +3421,12 @@
 
 	/**
 	 * 接收数据处理
+	 * @param user -> 需要更改的用户信息
 	 * @param type
-	 * @param data
+	 * @param data -> 反馈信息
 	 * @returns {Function}
 	 */
-	function modify_process(type, data) {
+	function modify_process(type, data, user) {
 
 	    return function (dispatch) {
 
@@ -3425,7 +3440,11 @@
 	            case _actionType.MODIFY_EMAIL:
 	            case _actionType.MODIFY_BRIEF:
 	            case _actionType.MODIFY_TEL:
-	                dispatch(modify_receive(data.status));
+	                if (data.status === 'success') {
+	                    //一般来说肯定会返回成功,但是数据库那边没有反馈err处理
+	                    dispatch(modify_login(user));
+	                }
+	                return dispatch(modify_receive(data.status));
 	                break;
 
 	            default:
@@ -3434,6 +3453,23 @@
 	    };
 	}
 
+	/**
+	 * 发起登录用户信息更改动作
+	 * @param user
+	 */
+
+	function modify_login(user) {
+	    return {
+	        type: _actionType.MODIFY_LOGIN,
+	        user: user
+	    };
+	}
+
+	/**
+	 * 发起接收处理动作
+	 * @param status
+	 * @returns {{type: string, status: *}}
+	 */
 	function modify_receive(status) {
 	    return {
 	        type: _actionType.MODIFY_RECEIVE,
@@ -3507,6 +3543,11 @@
 	            }
 
 	            this.props.modify_start(e.target.id, data);
+
+	            //清空
+	            refs.brief.value = '';
+	            refs.email.value = '';
+	            refs.tel.value = '';
 	        }
 	    }, {
 	        key: 'render',
@@ -4998,6 +5039,12 @@
 
 	var _httpType = __webpack_require__(35);
 
+	/**
+	 * 登录状态设置
+	 * @param state
+	 * @param action
+	 * @returns {*}
+	 */
 	var login_status = function login_status(state, action) {
 		switch (action.status) {
 
@@ -5030,6 +5077,13 @@
 		}
 	};
 
+	/**
+	 * Login State Tree Reducer
+	 * @param state
+	 * @param action
+	 * @returns {*}
+	 */
+
 	var login = function login() {
 		var state = arguments.length <= 0 || arguments[0] === undefined ? {
 			logined: false,
@@ -5055,7 +5109,7 @@
 				});
 
 			case _actionType.LOGIN_RECEIVE:
-				//接受登录结果
+				//接受登录结果,注册的时候也会调用
 				return _extends({}, state, login_status(state, action));
 
 			case _actionType.LOGOUT_RECEIVE:
@@ -5064,6 +5118,12 @@
 					loginUser: {},
 					loginStatus: _httpType.init,
 					logining: false
+				});
+
+			case _actionType.MODIFY_LOGIN:
+				//个人信息修改页面发送的action
+				return _extends({}, state, {
+					loginUser: _extends({}, state.loginUser, action.user)
 				});
 
 			default:
@@ -5211,6 +5271,11 @@
 
 
 	    switch (action.type) {
+
+	        case _actionType.MODIFY_INIT:
+	            return _extends({}, state, {
+	                modifyStatus: _httpType.init
+	            });
 
 	        case _actionType.MODIFY_REQUEST:
 	            return _extends({}, state, {

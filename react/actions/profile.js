@@ -1,9 +1,9 @@
-import { MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_PASS,MODIFY_EMAIL,MODIFY_BRIEF,MODIFY_TEL,MODIFY_INIT } from '../constants/actionType';
+import { MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_PASS,MODIFY_EMAIL,MODIFY_BRIEF,MODIFY_TEL,MODIFY_INIT,MODIFY_LOGIN } from '../constants/actionType';
 import ajax  from '../ajax';
 
 
 /**
- * 状态初始化
+ * 状态初始化动作
  * @returns {{type: string}}
  */
 
@@ -44,9 +44,9 @@ function modify_authen(state) {
 /**
  * 发起ajax请求
  * @param type
- * @param data
+ * @param user -> 需要修改的用户信息
  */
-function modify_ajax(type,data) {
+function modify_ajax(type,user) {
 
     return dispatch => {
         dispatch(modify_request());                          //挂起注册请求,防止重复请求
@@ -54,15 +54,15 @@ function modify_ajax(type,data) {
         switch(type) {
             //修改密码
             case MODIFY_PASS:
-                return ajax().modifyPass(data)
+                return ajax().modifyPass(user)
                     .then(data => dispatch(modify_process(type,data)));   //接受到数据后重新更新state
 
             //修改邮箱,简介,电话
             case MODIFY_EMAIL:
             case MODIFY_BRIEF:
             case MODIFY_TEL:
-                return ajax().modifyInfo(data)
-                    .then(data => dispatch(modify_process(type,data)));   //接受到数据后重新更新state
+                return ajax().modifyInfo(user)
+                    .then(data => dispatch(modify_process(type,data,user)));   //接受到数据后重新更新state
 
             default:
                 return dispatch(modify_receive());
@@ -71,7 +71,7 @@ function modify_ajax(type,data) {
 }
 
 /**
- * 挂起修改请求
+ * 挂起修改请求动作
  */
 function modify_request() {
     return {
@@ -82,11 +82,12 @@ function modify_request() {
 
 /**
  * 接收数据处理
+ * @param user -> 需要更改的用户信息
  * @param type
- * @param data
+ * @param data -> 反馈信息
  * @returns {Function}
  */
-function modify_process(type,data) {
+function modify_process(type,data,user) {
 
     return dispatch => {
 
@@ -100,7 +101,10 @@ function modify_process(type,data) {
             case MODIFY_EMAIL:
             case MODIFY_BRIEF:
             case MODIFY_TEL:
-                dispatch(modify_receive(data.status));
+                if(data.status === 'success') { //一般来说肯定会返回成功,但是数据库那边没有反馈err处理
+                    dispatch(modify_login(user));
+                }
+                return dispatch(modify_receive(data.status));
                 break;
 
             default:
@@ -110,8 +114,24 @@ function modify_process(type,data) {
 }
 
 
+/**
+ * 发起登录用户信息更改动作
+ * @param user
+ */
+
+function modify_login(user) {
+    return {
+        type:MODIFY_LOGIN,
+        user:user
+    }
+}
 
 
+/**
+ * 发起接收处理动作
+ * @param status
+ * @returns {{type: string, status: *}}
+ */
 function modify_receive(status) {
     return {
         type: MODIFY_RECEIVE,
