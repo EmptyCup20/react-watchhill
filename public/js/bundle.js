@@ -18,7 +18,7 @@ webpackJsonp([0,1],[
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(141);
+	var _store = __webpack_require__(142);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -7468,6 +7468,12 @@ webpackJsonp([0,1],[
 
 	var _addArticle = __webpack_require__(115);
 
+	var _article = __webpack_require__(141);
+
+	var _ajax = __webpack_require__(96);
+
+	var _ajax2 = _interopRequireDefault(_ajax);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	//注册页
@@ -7494,6 +7500,15 @@ webpackJsonp([0,1],[
 	        store.dispatch((0, _addArticle.addTempArticle)());
 	    }
 
+	    //获取文章内容
+	    function getArticleContent(nextState, replaceState) {
+	        var id = {
+	            id: nextState.params.id
+	        };
+
+	        store.dispatch((0, _article.article_getContent)(id));
+	    }
+
 	    return _react2.default.createElement(
 	        _reactRouter.Route,
 	        null,
@@ -7515,12 +7530,15 @@ webpackJsonp([0,1],[
 	                _react2.default.createElement(_reactRouter.Route, { path: 'avatar', component: _AvatarContainer2.default }),
 	                _react2.default.createElement(_reactRouter.Route, { path: 'code', component: _CodeContainer2.default })
 	            ),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/article/:id', component: _ArticleContainer2.default })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/article/:id', onEnter: getArticleContent, component: _ArticleContainer2.default })
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: loginViewStateInit, component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', onEnter: registerViewStateInit, component: _RegisterContainer2.default })
 	    );
-	}; //登录页
+	};
+
+	/*ajax*/
+	//登录页
 	//主页
 
 
@@ -7759,6 +7777,10 @@ webpackJsonp([0,1],[
 	    //logout
 	    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE', //注销
 
+	    //article
+	    ARTICLE_REQUEST: 'ARTICLE_REQUEST', //挂起获取文章请求
+	    ARTICLE_RECEIVE: 'ARTICLE_RECEIVE', //获取文章内容处理
+
 	    //addArticle
 	    PREVIEW: 'PREVIEW', //预览功能
 	    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE' //新增文章
@@ -7806,13 +7828,12 @@ webpackJsonp([0,1],[
 	 */
 
 	function ajax() {
-	    function req(method, url, data, async) {
+	    function req(method, url, data) {
 	        var defered = $.Deferred();
 
 	        var request = {
 	            type: method,
-	            url: url,
-	            async: async ? false : true
+	            url: url
 	            //dataType: "json"?
 	            //data: data
 	        };
@@ -7859,6 +7880,11 @@ webpackJsonp([0,1],[
 	        //新增空白文章
 	        addTempArticle: function addTempArticle() {
 	            return req('POST', '/article/addArticle');
+	        },
+
+	        //获取文章内容
+	        article: function article(data) {
+	            return req('POST', '/article/getArticle', data);
 	        }
 
 	    };
@@ -11353,21 +11379,98 @@ webpackJsonp([0,1],[
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.article_getContent = article_getContent;
+
+	var _actionType = __webpack_require__(94);
+
+	var _ajax = __webpack_require__(96);
+
+	var _ajax2 = _interopRequireDefault(_ajax);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * 获取文章内容
+	 * @param id -> 需要获取的文章id
+	 * @returns {Function}
+	 */
+	function article_getContent(id) {
+	    return function (dispatch, getState) {
+	        if (article_authen(getState())) {
+	            return dispatch(article_ajax(id)); //发起一个http请求
+	        } else {
+	            return Promise.resolve(); //告诉thunk无需等待,从而跳过dispatch,进入reducers?
+	        }
+	    };
+	}
+
+	/**
+	 * 判断是否正在获取文章
+	 * @param state
+	 */
+
+	function article_authen(state) {
+	    return !state.articles.getting;
+	}
+
+	/**
+	 * 发起获取文章内容的ajax
+	 * @param id
+	 */
+	function article_ajax(id) {
+	    return function (dispatch) {
+	        dispatch(article_request()); //挂起登录请求,防止重复请求
+	        return (0, _ajax2.default)().article(id).then(function (data) {
+	            return dispatch(article_reveive(data));
+	        }); //接受到数据后重新更新state
+	    };
+	}
+
+	/**
+	 * 挂起获取文章内容请求
+	 * @returns {{type: string}}
+	 */
+	function article_request() {
+	    return {
+	        type: _actionType.ARTICLE_REQUEST
+	    };
+	}
+
+	/**
+	 * 获取文章内容
+	 * @param data
+	 * @returns {{type: string}}
+	 */
+	function article_reveive(data) {
+	    return {
+	        type: _actionType.ARTICLE_RECEIVE
+	    };
+	}
+
+/***/ },
+/* 142 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 	exports.default = configureStore;
 
 	var _redux = __webpack_require__(74);
 
-	var _reduxThunk = __webpack_require__(142);
+	var _reduxThunk = __webpack_require__(143);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(143);
+	var _reduxLogger = __webpack_require__(144);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(144);
+	var _reducers = __webpack_require__(145);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -11387,7 +11490,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 142 */
+/* 143 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -11415,7 +11518,7 @@ webpackJsonp([0,1],[
 	exports['default'] = thunk;
 
 /***/ },
-/* 143 */
+/* 144 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -11648,7 +11751,7 @@ webpackJsonp([0,1],[
 	module.exports = createLogger;
 
 /***/ },
-/* 144 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11659,23 +11762,23 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
-	var _login = __webpack_require__(145);
+	var _login = __webpack_require__(146);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(146);
+	var _register = __webpack_require__(147);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(147);
+	var _articles = __webpack_require__(148);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
-	var _addArticle = __webpack_require__(148);
+	var _addArticle = __webpack_require__(149);
 
 	var _addArticle2 = _interopRequireDefault(_addArticle);
 
-	var _profile = __webpack_require__(149);
+	var _profile = __webpack_require__(150);
 
 	var _profile2 = _interopRequireDefault(_profile);
 
@@ -11701,7 +11804,7 @@ webpackJsonp([0,1],[
 	exports.default = reducer;
 
 /***/ },
-/* 145 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11811,7 +11914,7 @@ webpackJsonp([0,1],[
 	exports.default = login;
 
 /***/ },
-/* 146 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11862,23 +11965,40 @@ webpackJsonp([0,1],[
 	exports.default = register;
 
 /***/ },
-/* 147 */
-/***/ function(module, exports) {
+/* 148 */
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _actionType = __webpack_require__(94);
+
 	var article = function article() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
-	        list: []
+	        list: [], //页面显示的文章列表
+	        contentList: [], //文章内容组成的列表
+	        getting: false //有没有正在获取文章内容标志
+
 	    } : arguments[0];
 	    var action = arguments[1];
 
 
 	    switch (action.type) {
+	        case _actionType.ARTICLE_REQUEST:
+	            return _extends({}, state, {
+	                getting: true
+	            });
+
+	        case _actionType.ARTICLE_RECEIVE:
+	            return _extends({}, state, {
+	                getting: false
+	            });
+
 	        default:
 	            return state;
 	    }
@@ -11887,7 +12007,7 @@ webpackJsonp([0,1],[
 	exports.default = article;
 
 /***/ },
-/* 148 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11924,7 +12044,7 @@ webpackJsonp([0,1],[
 	exports.default = addArticle;
 
 /***/ },
-/* 149 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

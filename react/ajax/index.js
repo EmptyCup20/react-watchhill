@@ -3,16 +3,13 @@
  */
 
 function ajax() {
-    function req(method,url,data,async) {
+    function req(method,url,data) {
         var defered = $.Deferred();
-
-
 
 
         var request = {
             type: method,
-            url: url,
-            async:async?false:true
+            url: url
             //dataType: "json"?
             //data: data
         };
@@ -20,10 +17,6 @@ function ajax() {
         if(data) {
             request.data = data;
         }
-
-
-
-
 
         $.ajax(request)
             .done(function(data){
@@ -66,9 +59,12 @@ function ajax() {
         //新增空白文章
         addTempArticle: function(){
             return req('POST','/article/addArticle');
+        },
+
+        //获取文章内容
+        article:function(data) {
+            return req('POST','/article/getArticle',data);
         }
-
-
 
 
 
