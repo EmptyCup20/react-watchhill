@@ -20,7 +20,7 @@ export function uploaderImg(req, res, next) {
             return;
         }
         //临时目录
-        imgUrl = path.resolve('public/images', req.session.loginUser.author, 'article', files.imgUrl.name);
+        imgUrl = path.resolve('public/images', req.session.loginUser.author, 'article', fields.articleId, files.imgUrl.name);
         //读取文件
         fs.writeFile(imgUrl, fs.readFileSync(files.imgUrl.path), (err) => {
             if (err) {
@@ -28,12 +28,11 @@ export function uploaderImg(req, res, next) {
                 return;
             }
             statusMsg.successMsg.data = {
-                    imgUrl: imgUrl
-                }
-                //返回成功信息
+                imgUrl: imgUrl
+            }
+            //返回成功信息
             res.send(statusMsg.successMsg);
         });
-
     });
 };
 

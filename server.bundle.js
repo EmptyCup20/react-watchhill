@@ -688,7 +688,9 @@
 
 	var db = __webpack_require__(13);
 	var Schema = db.Schema;
+	var ObjectId = db.Schema.Types.ObjectId;
 	var userSchema = new Schema({
+	    authorId: ObjectId,
 	    //用户名
 	    author: {
 	        type: String,
@@ -719,7 +721,10 @@
 	    },
 	    //部门
 	    team: String
+	}, {
+	    versionKey: false
 	});
+
 	var user = db.model('User', userSchema);
 	module.exports = user;
 
@@ -731,6 +736,7 @@
 
 	var db = __webpack_require__(13);
 	var Schema = db.Schema;
+	var ObjectId = db.Schema.Types.ObjectId;
 	var articleSchema = new Schema({
 	    title: {
 	        type: String,
@@ -739,6 +745,10 @@
 	        unique: true
 	    },
 	    tag: String,
+	    // articleId:{
+	    //    type:String,
+	    //    default:ObjectId
+	    // },
 	    author: String,
 	    createTime: String,
 	    content: String,
@@ -747,6 +757,9 @@
 	        default: '/images/default/article.jpg'
 	    },
 	    describe: String
+
+	}, {
+	    versionKey: false
 	});
 	var article = db.model('Article', articleSchema);
 	module.exports = article;
@@ -938,7 +951,7 @@
 
 	//新增文章
 	function addArticle(req, res, next) {
-	    var query = req.query,
+	    var query = req.body,
 	        article_dir;
 	    _article2.default.addArticle(query).then(function (data) {
 	        //创建以文章标题为名称的文件夹
@@ -957,7 +970,7 @@
 
 	//修改文章
 	function modfiyArticle(req, res, next) {
-	    var query = req.query;
+	    var query = req.body;
 	    _article2.default.modfiyArticle(query).then(function (data) {
 	        res.send(data);
 	    }, function (data) {
@@ -986,7 +999,7 @@
 	//获取文章列表
 	Article.getArticleList = function (obj) {
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.query('article', obj, '-content -__v').then(function (data) {
+	        _db_tools2.default.query('article', obj, '-content').then(function (data) {
 	            resolve(data);
 	        }, function (err) {
 	            reject(err);
@@ -1091,7 +1104,7 @@
 	            return;
 	        }
 	        //临时目录
-	        imgUrl = _path2.default.resolve('public/images', req.session.loginUser.author, 'article', files.imgUrl.name);
+	        imgUrl = _path2.default.resolve('public/images', req.session.loginUser.author, 'article', fields.articleId, files.imgUrl.name);
 	        //读取文件
 	        _fs2.default.writeFile(imgUrl, _fs2.default.readFileSync(files.imgUrl.path), function (err) {
 	            if (err) {
@@ -1755,12 +1768,17 @@
 
 	        //新增文章
 	        addTempArticle: function addTempArticle(data) {
-	            return req('POST', '/article/addArticle');
+	            return req('POST', '/article/addArticle', data);
 	        },
 
 	        //获取文章内容
 	        article: function article(data) {
 	            return req('POST', '/article/getArticle', data);
+	        },
+
+	        //删除文章
+	        delArticle: function delArticle(data) {
+	            return req('POST', '/article/delArticle', data);
 	        }
 
 	    };
@@ -2885,12 +2903,14 @@
 	}
 
 	function addTempArticle(article) {
-	    if (article.tempId) {
+	    if (article.articleId) {
 	        var delbool = window.confirm('是否确定删除清空');
 	        if (delbool) {
-	            return {
-	                type: DEL_ARTICLE
-	            };
+	            // return ajax().delArticle(article)
+	            //     .then(data => {
+	            //         return dispatch(clearAndDel_receive());
+	            //     })
+	            return clearAndDel_receive();
 	        } else {
 	            return {
 	                type: 'NO_DELETE'
@@ -2914,15 +2934,21 @@
 
 	function addTitle(value) {
 	    return {
-	        type: ADD_ARTICLE_TITLE,
+	        type: _actionType.ADD_ARTICLE_TITLE,
 	        value: value
 	    };
 	}
 
 	function addIntro(value) {
 	    return {
-	        type: ADD_ARTICLE_INTRO,
+	        type: _actionType.ADD_ARTICLE_INTRO,
 	        value: value
+	    };
+	}
+
+	function clearAndDel_receive() {
+	    return {
+	        type: _actionType.DEL_ARTICLE
 	    };
 	}
 
@@ -3034,7 +3060,7 @@
 	                                        { htmlFor: 'atricleTitle' },
 	                                        '标题'
 	                                    ),
-	                                    _react2.default.createElement(_Input2.default, { type: 'text', className: 'form-control', id: 'atricleTitle', name: 'atricleTitle', onBlur: this.addTitle })
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'atricleTitle', name: 'atricleTitle', onBlur: this.addTitle.bind(this) })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -3044,19 +3070,23 @@
 	                                        { htmlFor: 'atricleDescribe' },
 	                                        '简介'
 	                                    ),
-	                                    _react2.default.createElement('textarea', { id: 'atricleDescribe', className: 'form-control', rows: '3', placeholder: '简介...', onBlur: this.addIntro })
+	                                    _react2.default.createElement('textarea', { id: 'atricleDescribe', className: 'form-control', rows: '3', placeholder: '简介...', onBlur: this.addIntro.bind(this) })
 	                                ),
 	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', id: 'article-add', className: 'btn-primary btn-block btn-flat btn button', onClick: this.add_del.bind(this) },
-	                                    ' ',
-	                                    addArticle.tempId ? "删除清空" : "新建文章",
-	                                    ' '
+	                                    'div',
+	                                    { id: 'btn-div', className: addArticle.articleId ? "clear" : "add" },
+	                                    _react2.default.createElement(
+	                                        'button',
+	                                        { type: 'button', id: 'article-add', className: 'btn-primary btn-block btn-flat btn button', onClick: this.add_del.bind(this) },
+	                                        ' ',
+	                                        addArticle.articleId ? "删除清空" : "新建文章",
+	                                        ' '
+	                                    )
 	                                ),
 	                                _react2.default.createElement('br', null),
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { className: addArticle.tempId ? "" : "hidden", id: 'article-detail' },
+	                                    { className: addArticle.articleId ? "" : "hidden", id: 'article-detail' },
 	                                    _react2.default.createElement(
 	                                        'div',
 	                                        { className: 'form-group' },
@@ -3135,7 +3165,7 @@
 	                uploadUrl: '/article/uploadimg',
 	                uploadExtraData: {
 	                    type: 'cover',
-	                    id: this.props.addArticle.tempId
+	                    articleId: this.props.addArticle.articleId
 	                }
 	            });
 	            //初始化文章的表单
@@ -3147,17 +3177,27 @@
 	                uploadUrl: '/article/uploadimg',
 	                uploadExtraData: {
 	                    type: 'article',
-	                    id: this.props.addArticle.tempId
+	                    articleId: this.props.addArticle.articleId
 	                }
 	            });
 
 	            $('#imgUrl').on('fileuploaded', function (event, data, previewId, index) {
-	                imgurl.filename = data.filenames[0];
+	                imgUrl.filename = data.filenames[0];
 	                imgUrl.url = data.response.data.url;
 	            });
 
 	            $('#articleFile').on('fileuploaded', function (event, data, previewId, index) {
 	                files = data.files;
+	            });
+
+	            $('#article-add').click(function (e) {
+	                if ($(e.target).parent().attr('class').indexOf('clear') > -1) {
+	                    $('#atricleTitle').val('');
+	                    $('#atricleDescribe').val('');
+	                    $('#imgUrl').fileinput('clear');
+	                    $('#articleFile').fileinput('clear');
+	                    $('#text-input').val('');
+	                }
 	            });
 	        }
 	    }]);
@@ -5718,7 +5758,7 @@
 	            });
 	        case _actionType.ADD_TEMP_ARTICLE:
 	            return _extends({}, state, {
-	                tempId: action.value._id
+	                articleId: action.value._id
 	            });
 	        case _actionType.ADD_ARTICLE_TITLE:
 	            return _extends({}, state, {
@@ -5726,13 +5766,15 @@
 	            });
 	        case _actionType.ADD_ARTICLE_INTRO:
 	            return _extends({}, state, {
-	                intro: action.value
+	                describe: action.value
 	            });
 	        case _actionType.DEL_ARTICLE:
 	            {
 	                return _extends({}, state, {
 	                    title: '',
-	                    intro: ''
+	                    describe: '',
+	                    articleId: '',
+	                    preview: ''
 	                });
 	            }
 	        default:

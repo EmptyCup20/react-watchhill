@@ -35,11 +35,11 @@ export function getArticle(req, res, next) {
 
 //新增文章
 export function addArticle(req, res, next) {
-    var query = req.query,
+    var query = req.body,
         article_dir;
     article.addArticle(query).then(function(data) {
         //创建以文章标题为名称的文件夹
-        article_dir = path.resolve('public/images', req.session.loginUser.author, 'article', data.data.title);
+        article_dir = path.resolve('public/images', req.session.loginUser.author, 'article',data.data.title);
         if (data.code == 0) {
             fs.mkdir(article_dir, err => {
                 res.send(data);
@@ -54,7 +54,7 @@ export function addArticle(req, res, next) {
 
 //修改文章
 export function modfiyArticle(req, res, next) {
-    var query = req.query;
+    var query = req.body;
     article.modfiyArticle(query).then(function(data) {
         res.send(data);
     }, function(data) {
