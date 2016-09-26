@@ -7496,7 +7496,7 @@ webpackJsonp([0,1],[
 	    //获取文章内容
 	    function getArticleContent(nextState, replaceState) {
 	        var id = {
-	            id: nextState.params.id
+	            articleId: nextState.params.id
 	        };
 
 	        store.dispatch((0, _article.article_getContent)(id));
