@@ -28,9 +28,6 @@ import { modify_init } from '../actions/profile';
 import { addTempArticle } from '../actions/addArticle';
 import { article_getContent } from '../actions/article';
 
-/*ajax*/
-import ajax from '../ajax';
-
 
 const routes = (store) => {
 
@@ -47,9 +44,6 @@ const routes = (store) => {
         store.dispatch(modify_init());
     }
 
-    function setTempArticleId() {
-        store.dispatch(addTempArticle());
-    }
 
     //获取文章内容
     function getArticleContent(nextState, replaceState) {
@@ -72,7 +66,7 @@ const routes = (store) => {
                 <Route path='/web' component={WebContainer}  />
                 <Route path='/node' component={NodeContainer}  />
                 <Route path='/about' component={AboutContainer}  />
-                <Route path='/add_article' onEnter={setTempArticleId} component={AddArticleContainer}  />
+                <Route path='/add_article' component={AddArticleContainer}  />
                 <Route path='/profile' component={ProfileContainer}>
                     <IndexRoute onEnter={profileViewStateInit} component={InfoContainer}/>
                     <Route path="info"  onEnter={profileViewStateInit} component={InfoContainer} />

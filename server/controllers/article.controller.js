@@ -28,62 +28,26 @@ export function getArticle(req, res, next) {
 //新增文章
 export function addArticle(req, res, next) {
     var query = req.query,
-        temp_dir;
+        article_dir;
     article.addArticle(query).then(function(data) {
-        //临时文件夹
-        temp_dir = path.resolve('public/images/temp',data.data._id.toHexString());
-        if(data.code == 0) {
-            //如果temp文件夹不存在,则创建一个temp文件夹
-            if(!fs.existsSync('public/images/temp')){
-                fs.mkdir('public/images/temp',(err,stat)=>{
-                    //创建临时文件夹
-                    fs.mkdirSync(temp_dir);
-                });
-            }else{
-                //存在temp文件夹,但是不存在articleid文件夹,则创建临时文件夹
-                if(!fs.existsSync(temp_dir)){
-                    fs.mkdirSync(temp_dir);
-                }
-            }
+        //创建以文章标题为名称的文件夹
+        article_dir = path.resolve('public/images', req.session.loginUser.author, 'article', data.data.title);
+        if (data.code == 0) {
+            fs.mkdir(article_dir, err => {
+                res.send(data);
+            });
+        } else {
+            res.send(data);
         }
-        res.send(data);
-    }, function(data) {
-        console.log(data);
+    }, err => {
+        console.log(err);
     });
 };
 
 //修改文章
 export function modfiyArticle(req, res, next) {
-    var query = req.query,
-        temp_dir,
-        user_dir;
-    /*
-     * @date 2016-9-22
-     * @param src [移动文件的源文件夹]
-     * @param dst [移动文件的目标文件夹]
-     * 遍历源文件夹,将其文件复制到目标文件夹下
-     */
-    var moveFile = (src,dst) => {
-        fs.readdirSync(src).forEach(file=>{
-            fs.writeFileSync(path.resolve(src,file),fs.readFileSync(dst));
-        });
-    };
-    
+    var query = req.query;
     article.modfiyArticle(query).then(function(data) {
-        //临时文件夹
-        temp_dir = path.resolve('public/images/temp',data.data._id.toHexString());
-        //用户下问文章图片文件夹
-        user_dir = path.resolve('public/images/',req.session.loginUser.username,'article',data.data._id.toHexString());
-        // 临时文件夹中的文件,转移到该用户的文件夹下
-        if(data.code == 0 && fs.existsSync(temp_dir) )  {
-            if( fs.existsSync(user_dir) ){
-                moveFile(temp_dir,user_dir);
-            }else{
-                fs.mkdir(user_dir,(err,stats)=>{
-                    moveFile(temp_dir,user_dir);
-                });
-            }
-        }
         res.send(data);
     }, function(data) {
         console.log(data);

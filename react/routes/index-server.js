@@ -17,15 +17,9 @@ import IndexContainer from '../components/containers/IndexContainer';       //�
         import AvatarContainer from '../components/containers/AvatarContainer';
         import PassContainer from '../components/containers/PassContainer';
     import ArticleContainer from '../components/containers/ArticleContainer';
-
 import LoginContainer from '../components/containers/LoginContainer';       //登录页
 import RegisterContainer from '../components/containers/RegisterContainer'; //注册页
 
-/*初始化action*/
-import { login_init } from '../actions/login';
-import { register_init } from '../actions/register';
-import { modify_init } from '../actions/profile';
-import { addTempArticle } from '../actions/addArticle'
 
 const routes = (store) => {
 
