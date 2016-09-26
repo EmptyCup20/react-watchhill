@@ -7498,7 +7498,6 @@ webpackJsonp([0,1],[
 	        var id = {
 	            articleId: nextState.params.id
 	        };
-
 	        store.dispatch((0, _article.article_getContent)(id));
 	    }
 

@@ -48,7 +48,6 @@ const routes = (store) => {
         const id = {
             articleId:nextState.params.id
         };
-
         store.dispatch(article_getContent(id));
     }
 
