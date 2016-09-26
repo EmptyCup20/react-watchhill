@@ -17,14 +17,17 @@ Article.getArticleList = function(obj) {
     });
 };
 
-//获取文章内容及作者信息
+//获取文章内容及作者信息(byArticleId)
 Article.getArticle = function(obj) {
+    var queryObj = {
+        _id:obj.articleId
+    };
     return new Promise((resolve, reject) => {
-        db_tools.queryByCondition('article', obj, 'content author').then(articleData => {
-            articleData = articleData.toObject(); //转成对象字面量
+        db_tools.queryByCondition('article', queryObj, 'content author').then(articleData => {
+            articleData = articleData[0].toObject(); //转成对象字面量
             //根据author字段查询作者信息，过滤密码字段
-            db_tools.queryByCondition('user', { author: data.author }, '-password').then(userData => {
-                userData = userData.toObject();
+            db_tools.queryByCondition('user', { author: articleData.author }, '-password').then(userData => {
+                userData = !!userData.length ? userData[0].toObject() : [];
                 articleData.userInfo = userData;
                 resolve(articleData);
             })
