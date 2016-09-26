@@ -27,5 +27,8 @@ module.exports = {
 
     //addArticle
     PREVIEW: 'PREVIEW',          //预览功能
-    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE'  //新增文章
+    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE',  //新增文章
+    ADD_ARTICLE_TITLE: 'ADD_ARTICLE_TITLE',//新增标题
+    ADD_ARTICLE_INTRO: 'ADD_ARTICLE_INTRO',//新增简介
+    DEL_ARTICLE: 'DEL_ARTICLE'
 };

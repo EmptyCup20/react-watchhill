@@ -25,7 +25,6 @@ import RegisterContainer from '../components/containers/RegisterContainer'; //æ³
 import { login_init } from '../actions/login';
 import { register_init } from '../actions/register';
 import { modify_init } from '../actions/profile';
-import { addTempArticle } from '../actions/addArticle'
 
 const routes = (store) => {
 
@@ -42,9 +41,6 @@ const routes = (store) => {
         store.dispatch(modify_init());
     }
 
-    function setTempArticleId() {
-        store.dispatch(addTempArticle());
-    }
 
     return(
         <Route>
@@ -54,7 +50,7 @@ const routes = (store) => {
                 <Route path='/web' component={WebContainer}  />
                 <Route path='/node' component={NodeContainer}  />
                 <Route path='/about' component={AboutContainer}  />
-                <Route path='/add_article' onEnter={setTempArticleId} component={AddArticleContainer}  />
+                <Route path='/add_article' component={AddArticleContainer}  />
                 <Route path='/profile' component={ProfileContainer}>
                     <IndexRoute onEnter={profileViewStateInit} component={InfoContainer}/>
                     <Route path="info"  onEnter={profileViewStateInit} component={InfoContainer} />

@@ -954,7 +954,7 @@
 	//获取文章列表
 	Article.getArticleList = function (obj) {
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.query('article', obj, '-content -__v').then(function (data) {
+	        _db_tools2.default.query('article', obj, '-content -_id -__v').then(function (data) {
 	            resolve(data);
 	        }, function (err) {
 	            reject(err);
@@ -1026,11 +1026,11 @@
 
 	var _redux = __webpack_require__(28);
 
-	var _indexServer = __webpack_require__(90);
+	var _indexServer = __webpack_require__(29);
 
 	var _indexServer2 = _interopRequireDefault(_indexServer);
 
-	var _store = __webpack_require__(81);
+	var _store = __webpack_require__(79);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -1076,12 +1076,32 @@
 	     * 获取文章列表
 	     */
 	    function getArticleList() {
+	        //if(!req.session.browse) {             //如果网页没有浏览过,则获取文章列表
+	        //req.session.browse = true;
 	        return _article2.default.getArticleList({
 	            pageSize: 9, //首页只需要获取9篇文章
 	            pageNo: 1
 	        });
+	        //}
 	    }
 
+	    ////暂时这么设置,同步服务端和客户端
+	    //if(req.session.user) {
+	    //    var store = configureStore({
+	    //        login:{
+	    //            loginUser:{
+	    //                username:req.session.user
+	    //            },
+	    //            logined:true
+	    //        }
+	    //    });       //这里需要传入需要的state tree
+	    //
+	    //} else {
+	    //    var store = configureStore({});
+	    //}
+
+
+	    //console.log('node init store:', store.getState());  //需要注意与客户端的store统一
 	    var store = (0, _store2.default)(); //这里需要传入需要的state tree
 
 	    (0, _reactRouter.match)({ routes: (0, _indexServer2.default)(store), location: req.url }, function (err, redirect, props) {
@@ -1091,12 +1111,6 @@
 	        } else if (redirect) {
 	            res.redirect(redirect.pathname + redirect.search);
 	        } else if (props) {
-
-	            if (req.url.indexOf('/article/') !== -1) {
-	                console.log('文章请求:', req.url);
-	                console.log(req.url.split('/')[1]);
-	                console.log(req.url.split('/')[2]);
-	            }
 
 	            Promise.all([
 	            //getLoginStatus()
@@ -1170,7 +1184,141 @@
 	module.exports = require("redux");
 
 /***/ },
-/* 29 */,
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(24);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(26);
+
+	var _AppContainer = __webpack_require__(30);
+
+	var _AppContainer2 = _interopRequireDefault(_AppContainer);
+
+	var _IndexContainer = __webpack_require__(32);
+
+	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
+
+	var _HomeContainer = __webpack_require__(43);
+
+	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
+
+	var _AboutContainer = __webpack_require__(46);
+
+	var _AboutContainer2 = _interopRequireDefault(_AboutContainer);
+
+	var _WebContainer = __webpack_require__(49);
+
+	var _WebContainer2 = _interopRequireDefault(_WebContainer);
+
+	var _NodeContainer = __webpack_require__(51);
+
+	var _NodeContainer2 = _interopRequireDefault(_NodeContainer);
+
+	var _AddArticleContainer = __webpack_require__(53);
+
+	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
+
+	var _ProfileContainer = __webpack_require__(60);
+
+	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
+
+	var _InfoContainer = __webpack_require__(62);
+
+	var _InfoContainer2 = _interopRequireDefault(_InfoContainer);
+
+	var _CodeContainer = __webpack_require__(65);
+
+	var _CodeContainer2 = _interopRequireDefault(_CodeContainer);
+
+	var _AvatarContainer = __webpack_require__(67);
+
+	var _AvatarContainer2 = _interopRequireDefault(_AvatarContainer);
+
+	var _PassContainer = __webpack_require__(69);
+
+	var _PassContainer2 = _interopRequireDefault(_PassContainer);
+
+	var _LoginContainer = __webpack_require__(71);
+
+	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
+
+	var _RegisterContainer = __webpack_require__(76);
+
+	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
+
+	var _login = __webpack_require__(75);
+
+	var _register = __webpack_require__(78);
+
+	var _profile = __webpack_require__(63);
+
+	var _addArticle = __webpack_require__(54);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//注册页
+
+	/*初始化action*/
+	//主页
+
+
+	/*容器组件*/
+	//基础库
+	var routes = function routes(store) {
+
+	    //初始化视图
+	    function loginViewStateInit() {
+	        store.dispatch((0, _login.login_init)());
+	    }
+
+	    function registerViewStateInit() {
+	        store.dispatch((0, _register.register_init)());
+	    }
+
+	    function profileViewStateInit() {
+	        store.dispatch((0, _profile.modify_init)());
+	    }
+
+	    return _react2.default.createElement(
+	        _reactRouter.Route,
+	        null,
+	        _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default }),
+	        _react2.default.createElement(
+	            _reactRouter.Route,
+	            { path: '/index', component: _IndexContainer2.default },
+	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _HomeContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/web', component: _WebContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/node', component: _NodeContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _AboutContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', component: _AddArticleContainer2.default }),
+	            _react2.default.createElement(
+	                _reactRouter.Route,
+	                { path: '/profile', component: _ProfileContainer2.default },
+	                _react2.default.createElement(_reactRouter.IndexRoute, { component: _InfoContainer2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'info', component: _InfoContainer2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'pass', component: _PassContainer2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'avatar', component: _AvatarContainer2.default }),
+	                _react2.default.createElement(_reactRouter.Route, { path: 'code', component: _CodeContainer2.default })
+	            )
+	        ),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: loginViewStateInit, component: _LoginContainer2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/register', onEnter: registerViewStateInit, component: _RegisterContainer2.default })
+	    );
+	}; //登录页
+	//首页
+
+	exports.default = routes;
+
+/***/ },
 /* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1403,7 +1551,10 @@
 
 	    //addArticle
 	    PREVIEW: 'PREVIEW', //预览功能
-	    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE' //新增文章
+	    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE', //新增文章
+	    ADD_ARTICLE_TITLE: 'ADD_ARTICLE_TITLE', //新增标题
+	    ADD_ARTICLE_INTRO: 'ADD_ARTICLE_INTRO', //新增简介
+	    DEL_ARTICLE: 'DEL_ARTICLE'
 	};
 
 /***/ },
@@ -1448,13 +1599,11 @@
 	 */
 
 	function ajax() {
-	    function req(method, url, data, async) {
+	    function req(method, url, data) {
 	        var defered = $.Deferred();
-
 	        var request = {
 	            type: method,
-	            url: url,
-	            async: async ? false : true
+	            url: url
 	            //dataType: "json"?
 	            //data: data
 	        };
@@ -1498,8 +1647,8 @@
 	            return req('POST', '/user/profile/info', data);
 	        },
 
-	        //新增空白文章
-	        addTempArticle: function addTempArticle() {
+	        //新增文章
+	        addTempArticle: function addTempArticle(data) {
 	            return req('POST', '/article/addArticle');
 	        }
 
@@ -1690,7 +1839,7 @@
 	                            { className: 'collapse navbar-collapse', id: 'navbar-collapse' },
 	                            _react2.default.createElement(
 	                                'ul',
-	                                { className: 'nav navbar-nav navbar-left', role: 'nav' },
+	                                { className: 'nav navbar-nav navbar-left' },
 	                                _react2.default.createElement(
 	                                    'li',
 	                                    null,
@@ -1975,12 +2124,6 @@
 
 	__webpack_require__(45);
 
-	var _reactRouter = __webpack_require__(26);
-
-	var _history = __webpack_require__(46);
-
-	var _history2 = _interopRequireDefault(_history);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1988,9 +2131,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	//导航
-
 
 	var Home = function (_Component) {
 	    _inherits(Home, _Component);
@@ -2003,31 +2143,6 @@
 
 	    _createClass(Home, [{
 	        key: 'render',
-
-
-	        //static contextTypes = {
-	        //    router: PropTypes.object
-	        //};
-
-
-	        //_onClick(e) {
-	        //    e.preventDefault();
-	        //
-	        //    let id = e.target.getAttribute('data-id');
-	        //
-	        //
-	        //    console.log(id);
-	        //
-	        //    //alert(1);
-	        //
-	        //    ////to={'/article/' + article._id}
-	        //    //history.replace({
-	        //    //    pathname:`/article/${id}`
-	        //    //});
-	        //
-	        //    this.context.router.push(`/article/${id}`);
-	        //}
-
 	        value: function render() {
 	            var articles = this.props.articles;
 
@@ -2085,8 +2200,8 @@
 	                                    'div',
 	                                    { className: 'thumbnail article-body' },
 	                                    _react2.default.createElement(
-	                                        _reactRouter.Link,
-	                                        { to: '/article/' + article._id },
+	                                        'a',
+	                                        { href: '#', title: 'none' },
 	                                        _react2.default.createElement('img', { className: 'lazy artical-image', src: article.image, alt: article.title })
 	                                    ),
 	                                    _react2.default.createElement(
@@ -2096,8 +2211,8 @@
 	                                            'h3',
 	                                            { className: 'artical-title' },
 	                                            _react2.default.createElement(
-	                                                _reactRouter.Link,
-	                                                { to: '/article/' + article._id },
+	                                                'a',
+	                                                { href: '#' },
 	                                                article.title
 	                                            )
 	                                        ),
@@ -2149,23 +2264,9 @@
 	  value: true
 	});
 
-	var _reactRouter = __webpack_require__(26);
-
-	exports.default = _reactRouter.browserHistory;
-
-/***/ },
-/* 47 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
 	var _reactRedux = __webpack_require__(27);
 
-	var _About = __webpack_require__(48);
+	var _About = __webpack_require__(47);
 
 	var _About2 = _interopRequireDefault(_About);
 
@@ -2180,7 +2281,7 @@
 	//视图组件
 
 /***/ },
-/* 48 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2195,7 +2296,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(49);
+	__webpack_require__(48);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2390,13 +2491,13 @@
 	exports.default = About;
 
 /***/ },
-/* 49 */
+/* 48 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 50 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2407,7 +2508,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Web = __webpack_require__(51);
+	var _Web = __webpack_require__(50);
 
 	var _Web2 = _interopRequireDefault(_Web);
 
@@ -2421,7 +2522,7 @@
 	//视图组件
 
 /***/ },
-/* 51 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2474,7 +2575,7 @@
 	exports.default = Web;
 
 /***/ },
-/* 52 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2485,7 +2586,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Node = __webpack_require__(53);
+	var _Node = __webpack_require__(52);
 
 	var _Node2 = _interopRequireDefault(_Node);
 
@@ -2500,7 +2601,7 @@
 	//视图组件
 
 /***/ },
-/* 53 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2553,7 +2654,7 @@
 	exports.default = Node;
 
 /***/ },
-/* 54 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2566,11 +2667,11 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _addArticle = __webpack_require__(55);
+	var _addArticle = __webpack_require__(54);
 
 	var addArticle = _interopRequireWildcard(_addArticle);
 
-	var _AddArticle = __webpack_require__(56);
+	var _AddArticle = __webpack_require__(55);
 
 	var _AddArticle2 = _interopRequireDefault(_AddArticle);
 
@@ -2596,7 +2697,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_AddArticle2.default);
 
 /***/ },
-/* 55 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2606,6 +2707,8 @@
 	});
 	exports.preview = preview;
 	exports.addTempArticle = addTempArticle;
+	exports.addTitle = addTitle;
+	exports.addIntro = addIntro;
 
 	var _actionType = __webpack_require__(34);
 
@@ -2622,12 +2725,25 @@
 	    };
 	}
 
-	function addTempArticle() {
-	    return function (dispatch) {
-	        return (0, _ajax2.default)().addTempArticle().then(function (data) {
-	            return dispatch(addTempArticle_receive(data));
-	        });
-	    };
+	function addTempArticle(article) {
+	    if (article.tempId) {
+	        var delbool = window.confirm('是否确定删除清空');
+	        if (delbool) {
+	            return {
+	                type: DEL_ARTICLE
+	            };
+	        } else {
+	            return {
+	                type: 'NO_DELETE'
+	            };
+	        }
+	    } else {
+	        return function (dispatch) {
+	            return (0, _ajax2.default)().addTempArticle(article).then(function (data) {
+	                return dispatch(addTempArticle_receive(data));
+	            });
+	        };
+	    }
 	}
 
 	function addTempArticle_receive(data) {
@@ -2637,8 +2753,22 @@
 	    };
 	}
 
+	function addTitle(value) {
+	    return {
+	        type: ADD_ARTICLE_TITLE,
+	        value: value
+	    };
+	}
+
+	function addIntro(value) {
+	    return {
+	        type: ADD_ARTICLE_INTRO,
+	        value: value
+	    };
+	}
+
 /***/ },
-/* 56 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2653,17 +2783,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(57);
+	__webpack_require__(56);
 
-	var _Input = __webpack_require__(58);
+	var _Input = __webpack_require__(57);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(59);
+	var _Button = __webpack_require__(58);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _Markdown = __webpack_require__(60);
+	var _Markdown = __webpack_require__(59);
 
 	var _Markdown2 = _interopRequireDefault(_Markdown);
 
@@ -2690,7 +2820,21 @@
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.props.preview('');
-	            // this.props.addTempArticle();
+	        }
+	    }, {
+	        key: 'addTitle',
+	        value: function addTitle(event) {
+	            this.props.addTitle(event.target.value);
+	        }
+	    }, {
+	        key: 'addIntro',
+	        value: function addIntro(event) {
+	            this.props.addIntro(event.target.value);
+	        }
+	    }, {
+	        key: 'add_del',
+	        value: function add_del() {
+	            this.props.addTempArticle(this.props.addArticle);
 	        }
 	    }, {
 	        key: 'render',
@@ -2731,7 +2875,7 @@
 	                                        { htmlFor: 'atricleTitle' },
 	                                        '标题'
 	                                    ),
-	                                    _react2.default.createElement(_Input2.default, { type: 'text', className: 'form-control', id: 'atricleTitle', name: 'atricleTitle' })
+	                                    _react2.default.createElement(_Input2.default, { type: 'text', className: 'form-control', id: 'atricleTitle', name: 'atricleTitle', onBlur: this.addTitle })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -2741,61 +2885,73 @@
 	                                        { htmlFor: 'atricleDescribe' },
 	                                        '简介'
 	                                    ),
-	                                    _react2.default.createElement('textarea', { id: 'atricleDescribe', className: 'form-control', rows: '3', placeholder: '简介...' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { htmlFor: 'imgUrl' },
-	                                        '封面'
-	                                    ),
-	                                    _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { htmlFor: 'articleFile' },
-	                                        '文章图片'
-	                                    ),
-	                                    _react2.default.createElement('input', { id: 'articleFile', name: 'articleFile', type: 'file', className: 'file-loading', multiple: true }),
-	                                    _react2.default.createElement(
-	                                        'p',
-	                                        { className: 'help-block' },
-	                                        '请选择.jpg.jpeg.png.gif格式的文件上传'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'btn-group' },
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'btn btn-primary' },
-	                                                '获取图片的url路径'
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('ul', null)
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { htmlFor: 'text-input' },
-	                                        '文章'
-	                                    ),
-	                                    _react2.default.createElement(_Markdown2.default, { preview: preview, addArticle: addArticle })
+	                                    _react2.default.createElement('textarea', { id: 'atricleDescribe', className: 'form-control', rows: '3', placeholder: '简介...', onBlur: this.addIntro })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'button',
-	                                    { type: 'button', id: 'article-upload', className: 'btn-primary btn-block btn-flat btn button' },
-	                                    '上传'
+	                                    { type: 'button', id: 'article-add', className: 'btn-primary btn-block btn-flat btn button', onClick: this.add_del.bind(this) },
+	                                    ' ',
+	                                    addArticle.tempId ? "删除清空" : "新建文章",
+	                                    ' '
+	                                ),
+	                                _react2.default.createElement('br', null),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: addArticle.tempId ? "" : "hidden", id: 'article-detail' },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { htmlFor: 'imgUrl' },
+	                                            '封面'
+	                                        ),
+	                                        _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading' })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { htmlFor: 'articleFile' },
+	                                            '文章图片'
+	                                        ),
+	                                        _react2.default.createElement('input', { id: 'articleFile', name: 'articleFile', type: 'file', className: 'file-loading', multiple: true }),
+	                                        _react2.default.createElement(
+	                                            'p',
+	                                            { className: 'help-block' },
+	                                            '请选择.jpg.jpeg.png.gif格式的文件上传'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'btn-group' },
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    'div',
+	                                                    { className: 'btn btn-primary' },
+	                                                    '获取图片的url路径'
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement('ul', null)
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { htmlFor: 'text-input' },
+	                                            '文章'
+	                                        ),
+	                                        _react2.default.createElement(_Markdown2.default, { preview: preview, addArticle: addArticle })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'button',
+	                                        { type: 'button', id: 'article-upload', className: 'btn-primary btn-block btn-flat btn button' },
+	                                        '保存'
+	                                    )
 	                                )
 	                            )
 	                        )
@@ -2806,6 +2962,12 @@
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
+	            var imgUrl = {
+	                filename: '',
+	                url: ''
+	            };
+	            var files = [];
+
 	            $('#imgUrl').fileinput({
 	                language: "zh",
 	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
@@ -2814,7 +2976,7 @@
 	                uploadUrl: '/article/uploadimg',
 	                uploadExtraData: {
 	                    type: 'cover',
-	                    id: this.props.tempId
+	                    id: this.props.addArticle.tempId
 	                }
 	            });
 	            //初始化文章的表单
@@ -2826,8 +2988,17 @@
 	                uploadUrl: '/article/uploadimg',
 	                uploadExtraData: {
 	                    type: 'article',
-	                    id: this.props.tempId
+	                    id: this.props.addArticle.tempId
 	                }
+	            });
+
+	            $('#imgUrl').on('fileuploaded', function (event, data, previewId, index) {
+	                imgurl.filename = data.filenames[0];
+	                imgUrl.url = data.response.data.url;
+	            });
+
+	            $('#articleFile').on('fileuploaded', function (event, data, previewId, index) {
+	                files = data.files;
 	            });
 	        }
 	    }]);
@@ -2838,13 +3009,13 @@
 	exports.default = AddArticle;
 
 /***/ },
-/* 57 */
+/* 56 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 58 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2923,7 +3094,7 @@
 	exports.default = Input;
 
 /***/ },
-/* 59 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2985,7 +3156,7 @@
 	exports.default = Button;
 
 /***/ },
-/* 60 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3085,7 +3256,7 @@
 	exports.default = Markdown;
 
 /***/ },
-/* 61 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3098,7 +3269,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Profile = __webpack_require__(62);
+	var _Profile = __webpack_require__(61);
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
@@ -3113,7 +3284,7 @@
 	//基础库
 
 /***/ },
-/* 62 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3197,7 +3368,7 @@
 	exports.default = Profile;
 
 /***/ },
-/* 63 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3210,11 +3381,11 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _profile = __webpack_require__(64);
+	var _profile = __webpack_require__(63);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
 
-	var _Info = __webpack_require__(65);
+	var _Info = __webpack_require__(64);
 
 	var _Info2 = _interopRequireDefault(_Info);
 
@@ -3245,7 +3416,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Info2.default);
 
 /***/ },
-/* 64 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3398,7 +3569,7 @@
 	}
 
 /***/ },
-/* 65 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3665,7 +3836,7 @@
 	exports.default = Info;
 
 /***/ },
-/* 66 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3676,7 +3847,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Code = __webpack_require__(67);
+	var _Code = __webpack_require__(66);
 
 	var _Code2 = _interopRequireDefault(_Code);
 
@@ -3691,7 +3862,7 @@
 	//视图组件
 
 /***/ },
-/* 67 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3740,7 +3911,7 @@
 	exports.default = Code;
 
 /***/ },
-/* 68 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3751,7 +3922,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Avatar = __webpack_require__(69);
+	var _Avatar = __webpack_require__(68);
 
 	var _Avatar2 = _interopRequireDefault(_Avatar);
 
@@ -3766,7 +3937,7 @@
 	//视图组件
 
 /***/ },
-/* 69 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3815,7 +3986,7 @@
 	exports.default = Avatar;
 
 /***/ },
-/* 70 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3828,11 +3999,11 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _profile = __webpack_require__(64);
+	var _profile = __webpack_require__(63);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
 
-	var _Pass = __webpack_require__(71);
+	var _Pass = __webpack_require__(70);
 
 	var _Pass2 = _interopRequireDefault(_Pass);
 
@@ -3862,7 +4033,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Pass2.default);
 
 /***/ },
-/* 71 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4029,9 +4200,7 @@
 	exports.default = Code;
 
 /***/ },
-/* 72 */,
-/* 73 */,
-/* 74 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4044,11 +4213,11 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Login = __webpack_require__(75);
+	var _Login = __webpack_require__(72);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(77);
+	var _login = __webpack_require__(75);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -4079,7 +4248,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 75 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4096,19 +4265,19 @@
 
 	var _reactRouter = __webpack_require__(26);
 
-	var _Input = __webpack_require__(58);
+	var _Input = __webpack_require__(57);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(59);
+	var _Button = __webpack_require__(58);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(76);
+	var _privateType = __webpack_require__(73);
 
 	var _httpType = __webpack_require__(35);
 
-	var _history = __webpack_require__(46);
+	var _history = __webpack_require__(74);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -4289,7 +4458,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 76 */
+/* 73 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -4301,7 +4470,21 @@
 	};
 
 /***/ },
-/* 77 */
+/* 74 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactRouter = __webpack_require__(26);
+
+	exports.default = _reactRouter.browserHistory;
+
+/***/ },
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4428,7 +4611,7 @@
 	//}
 
 /***/ },
-/* 78 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4441,11 +4624,11 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _Register = __webpack_require__(79);
+	var _Register = __webpack_require__(77);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
-	var _register = __webpack_require__(80);
+	var _register = __webpack_require__(78);
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -4476,7 +4659,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
-/* 79 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4493,19 +4676,19 @@
 
 	var _reactRouter = __webpack_require__(26);
 
-	var _Input = __webpack_require__(58);
+	var _Input = __webpack_require__(57);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(59);
+	var _Button = __webpack_require__(58);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(76);
+	var _privateType = __webpack_require__(73);
 
 	var _httpType = __webpack_require__(35);
 
-	var _history = __webpack_require__(46);
+	var _history = __webpack_require__(74);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -4713,7 +4896,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 80 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4732,7 +4915,7 @@
 
 	var _httpType = __webpack_require__(35);
 
-	var _login = __webpack_require__(77);
+	var _login = __webpack_require__(75);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4827,7 +5010,7 @@
 	}
 
 /***/ },
-/* 81 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4839,15 +5022,15 @@
 
 	var _redux = __webpack_require__(28);
 
-	var _reduxThunk = __webpack_require__(82);
+	var _reduxThunk = __webpack_require__(80);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(83);
+	var _reduxLogger = __webpack_require__(81);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(84);
+	var _reducers = __webpack_require__(82);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -4867,19 +5050,19 @@
 	}
 
 /***/ },
-/* 82 */
+/* 80 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 83 */
+/* 81 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-logger");
 
 /***/ },
-/* 84 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4890,23 +5073,23 @@
 
 	var _redux = __webpack_require__(28);
 
-	var _login = __webpack_require__(85);
+	var _login = __webpack_require__(83);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(86);
+	var _register = __webpack_require__(84);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(87);
+	var _articles = __webpack_require__(85);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
-	var _addArticle = __webpack_require__(88);
+	var _addArticle = __webpack_require__(86);
 
 	var _addArticle2 = _interopRequireDefault(_addArticle);
 
-	var _profile = __webpack_require__(89);
+	var _profile = __webpack_require__(87);
 
 	var _profile2 = _interopRequireDefault(_profile);
 
@@ -4932,7 +5115,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 85 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5042,7 +5225,7 @@
 	exports.default = login;
 
 /***/ },
-/* 86 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5093,7 +5276,7 @@
 	exports.default = register;
 
 /***/ },
-/* 87 */
+/* 85 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5118,7 +5301,7 @@
 	exports.default = article;
 
 /***/ },
-/* 88 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5147,6 +5330,21 @@
 	            return _extends({}, state, {
 	                tempId: action.value._id
 	            });
+	        case _actionType.ADD_ARTICLE_TITLE:
+	            return _extends({}, state, {
+	                title: action.value
+	            });
+	        case _actionType.ADD_ARTICLE_INTRO:
+	            return _extends({}, state, {
+	                intro: action.value
+	            });
+	        case _actionType.DEL_ARTICLE:
+	            {
+	                return _extends({}, state, {
+	                    title: '',
+	                    intro: ''
+	                });
+	            }
 	        default:
 	            return state;
 	    }
@@ -5155,7 +5353,7 @@
 	exports.default = addArticle;
 
 /***/ },
-/* 89 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5202,145 +5400,6 @@
 	};
 
 	exports.default = profile;
-
-/***/ },
-/* 90 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(24);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(26);
-
-	var _AppContainer = __webpack_require__(30);
-
-	var _AppContainer2 = _interopRequireDefault(_AppContainer);
-
-	var _IndexContainer = __webpack_require__(32);
-
-	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
-
-	var _HomeContainer = __webpack_require__(43);
-
-	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
-
-	var _AboutContainer = __webpack_require__(47);
-
-	var _AboutContainer2 = _interopRequireDefault(_AboutContainer);
-
-	var _WebContainer = __webpack_require__(50);
-
-	var _WebContainer2 = _interopRequireDefault(_WebContainer);
-
-	var _NodeContainer = __webpack_require__(52);
-
-	var _NodeContainer2 = _interopRequireDefault(_NodeContainer);
-
-	var _AddArticleContainer = __webpack_require__(54);
-
-	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
-
-	var _ProfileContainer = __webpack_require__(61);
-
-	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
-
-	var _InfoContainer = __webpack_require__(63);
-
-	var _InfoContainer2 = _interopRequireDefault(_InfoContainer);
-
-	var _CodeContainer = __webpack_require__(66);
-
-	var _CodeContainer2 = _interopRequireDefault(_CodeContainer);
-
-	var _AvatarContainer = __webpack_require__(68);
-
-	var _AvatarContainer2 = _interopRequireDefault(_AvatarContainer);
-
-	var _PassContainer = __webpack_require__(70);
-
-	var _PassContainer2 = _interopRequireDefault(_PassContainer);
-
-	var _LoginContainer = __webpack_require__(74);
-
-	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
-
-	var _RegisterContainer = __webpack_require__(78);
-
-	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
-
-	var _login = __webpack_require__(77);
-
-	var _register = __webpack_require__(80);
-
-	var _profile = __webpack_require__(64);
-
-	var _addArticle = __webpack_require__(55);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//注册页
-
-	/*初始化action*/
-	//主页
-
-
-	/*容器组件*/
-	//基础库
-	var routes = function routes(store) {
-
-	    //初始化视图
-	    function loginViewStateInit() {
-	        store.dispatch((0, _login.login_init)());
-	    }
-
-	    function registerViewStateInit() {
-	        store.dispatch((0, _register.register_init)());
-	    }
-
-	    function profileViewStateInit() {
-	        store.dispatch((0, _profile.modify_init)());
-	    }
-
-	    function setTempArticleId() {
-	        store.dispatch((0, _addArticle.addTempArticle)());
-	    }
-
-	    return _react2.default.createElement(
-	        _reactRouter.Route,
-	        null,
-	        _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default }),
-	        _react2.default.createElement(
-	            _reactRouter.Route,
-	            { path: '/index', component: _IndexContainer2.default },
-	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _HomeContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/web', component: _WebContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/node', component: _NodeContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _AboutContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', component: _AddArticleContainer2.default }),
-	            _react2.default.createElement(
-	                _reactRouter.Route,
-	                { path: '/profile', component: _ProfileContainer2.default },
-	                _react2.default.createElement(_reactRouter.IndexRoute, { component: _InfoContainer2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: 'info', component: _InfoContainer2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: 'pass', component: _PassContainer2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: 'avatar', component: _AvatarContainer2.default }),
-	                _react2.default.createElement(_reactRouter.Route, { path: 'code', component: _CodeContainer2.default })
-	            )
-	        ),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginContainer2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _RegisterContainer2.default })
-	    );
-	}; //登录页
-	//首页
-
-	exports.default = routes;
 
 /***/ }
 /******/ ]);

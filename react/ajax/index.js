@@ -63,8 +63,8 @@ function ajax() {
             return req('POST', '/user/profile/info',data);
         },
 
-        //新增空白文章
-        addTempArticle: function(){
+        //新增文章
+        addTempArticle: function(data){
             return req('POST','/article/addArticle');
         }
 
