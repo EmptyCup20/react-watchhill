@@ -58,8 +58,8 @@ function ajax() {
 
         //新增文章
         addTempArticle: function(data){
-            return req('POST','/article/addArticle');
-        },
+            return req('POST','/article/addArticle',data);
+        }
 
         //获取文章内容
         article:function(data) {

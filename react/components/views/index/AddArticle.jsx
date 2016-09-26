@@ -32,15 +32,15 @@ export default class AddArticle extends Component{
                             <form  id="articleForm">
                                 <div className="form-group">
                                     <label htmlFor="atricleTitle">标题</label>
-                                    <Input type="text" className="form-control" id="atricleTitle" name="atricleTitle" onBlur = {this.addTitle}/>
+                                    <input type="text" className="form-control" id="atricleTitle" name="atricleTitle" onBlur={this.addTitle.bind(this)}/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="atricleDescribe">简介</label>
-                                    <textarea id="atricleDescribe" className="form-control" rows="3" placeholder="简介..." onBlur = {this.addIntro}/>
+                                    <textarea id="atricleDescribe" className="form-control" rows="3" placeholder="简介..." onBlur={this.addIntro.bind(this)}/>
                                 </div>
-                                <button type="button" id="article-add" className="btn-primary btn-block btn-flat btn button" onClick={this.add_del.bind(this)} > {addArticle.tempId?"删除清空":"新建文章"} </button>
+                                <button type="button" id="article-add" className="btn-primary btn-block btn-flat btn button" onClick={this.add_del.bind(this)} > {addArticle._id?"删除清空":"新建文章"} </button>
                                 <br></br>
-                                <div className={addArticle.tempId?"":"hidden"} id="article-detail">
+                                <div className={addArticle._id?"":"hidden"} id="article-detail">
                                     <div className="form-group">
                                         <label htmlFor="imgUrl">封面</label>
                                         <input id="imgUrl" name="imgUrl" type="file" className="file-loading"  />
@@ -90,7 +90,7 @@ export default class AddArticle extends Component{
             uploadUrl: '/article/uploadimg',
             uploadExtraData: {
                 type:'cover',
-                id:this.props.addArticle.tempId
+                _id:this.props.addArticle._id
             }
         });
         //初始化文章的表单
@@ -102,12 +102,12 @@ export default class AddArticle extends Component{
             uploadUrl: '/article/uploadimg',
             uploadExtraData: {
                 type:'article',
-                id:this.props.addArticle.tempId
+                _id:this.props.addArticle._id
             }
         });
 
         $('#imgUrl').on('fileuploaded', function(event, data, previewId, index){
-            imgurl.filename = data.filenames[0];
+            imgUrl.filename = data.filenames[0];
             imgUrl.url = data.response.data.url;
         });
 

@@ -1,4 +1,4 @@
-import { PREVIEW , ADD_TEMP_ARTICLE } from '../constants/actionType';
+import { PREVIEW , ADD_TEMP_ARTICLE , ADD_ARTICLE_TITLE ,ADD_ARTICLE_INTRO} from '../constants/actionType';
 import ajax from '../ajax';
 export function preview(value){
     return {
@@ -8,7 +8,7 @@ export function preview(value){
 }
 
 export function addTempArticle(article){
-    if(article.tempId){
+    if(article._id){
         var delbool = window.confirm('是否确定删除清空');
         if(delbool){
             return {
