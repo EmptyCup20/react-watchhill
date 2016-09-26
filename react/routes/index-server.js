@@ -42,9 +42,7 @@ const routes = (store) => {
         store.dispatch(modify_init());
     }
 
-    function setTempArticleId() {
-        store.dispatch(addTempArticle());
-    }
+
 
     return(
         <Route>

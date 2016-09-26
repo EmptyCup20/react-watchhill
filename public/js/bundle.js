@@ -7691,18 +7691,11 @@ webpackJsonp([0,1],[
 
 	var _profile = __webpack_require__(128);
 
-	var _addArticle = __webpack_require__(119);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//注册页
+	//登录页
+	//首页
 
-	/*初始化action*/
-	//主页
-
-
-	/*容器组件*/
-	//基础库
 	var routes = function routes(store) {
 
 	    //初始化视图
@@ -7718,10 +7711,6 @@ webpackJsonp([0,1],[
 	        store.dispatch((0, _profile.modify_init)());
 	    }
 
-	    function setTempArticleId() {
-	        store.dispatch((0, _addArticle.addTempArticle)());
-	    }
-
 	    return _react2.default.createElement(
 	        _reactRouter.Route,
 	        null,
@@ -7733,7 +7722,7 @@ webpackJsonp([0,1],[
 	            _react2.default.createElement(_reactRouter.Route, { path: '/web', component: _WebContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/node', component: _NodeContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _AboutContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', onEnter: setTempArticleId, component: _AddArticleContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/add_article', component: _AddArticleContainer2.default }),
 	            _react2.default.createElement(
 	                _reactRouter.Route,
 	                { path: '/profile', component: _ProfileContainer2.default },
@@ -7747,9 +7736,14 @@ webpackJsonp([0,1],[
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', onEnter: loginViewStateInit, component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', onEnter: registerViewStateInit, component: _RegisterContainer2.default })
 	    );
-	}; //登录页
-	//首页
+	}; //注册页
 
+	/*初始化action*/
+	//主页
+
+
+	/*容器组件*/
+	//基础库
 	exports.default = routes;
 
 /***/ },
@@ -7985,7 +7979,10 @@ webpackJsonp([0,1],[
 
 	    //addArticle
 	    PREVIEW: 'PREVIEW', //预览功能
-	    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE' //新增文章
+	    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE', //新增文章
+	    ADD_ARTICLE_TITLE: 'ADD_ARTICLE_TITLE', //新增标题
+	    ADD_ARTICLE_INTRO: 'ADD_ARTICLE_INTRO', //新增简介
+	    DEL_ARTICLE: 'DEL_ARTICLE'
 	};
 
 /***/ },
@@ -8078,8 +8075,8 @@ webpackJsonp([0,1],[
 	            return req('POST', '/user/profile/info', data);
 	        },
 
-	        //新增空白文章
-	        addTempArticle: function addTempArticle() {
+	        //新增文章
+	        addTempArticle: function addTempArticle(data) {
 	            return req('POST', '/article/addArticle');
 	        }
 
@@ -9138,6 +9135,8 @@ webpackJsonp([0,1],[
 	});
 	exports.preview = preview;
 	exports.addTempArticle = addTempArticle;
+	exports.addTitle = addTitle;
+	exports.addIntro = addIntro;
 
 	var _actionType = __webpack_require__(99);
 
@@ -9154,18 +9153,45 @@ webpackJsonp([0,1],[
 	    };
 	}
 
-	function addTempArticle() {
-	    return function (dispatch) {
-	        return (0, _ajax2.default)().addTempArticle().then(function (data) {
-	            return dispatch(addTempArticle_receive(data));
-	        });
-	    };
+	function addTempArticle(article) {
+	    if (article.tempId) {
+	        var delbool = window.confirm('是否确定删除清空');
+	        if (delbool) {
+	            return {
+	                type: DEL_ARTICLE
+	            };
+	        } else {
+	            return {
+	                type: 'NO_DELETE'
+	            };
+	        }
+	    } else {
+	        return function (dispatch) {
+	            return (0, _ajax2.default)().addTempArticle(article).then(function (data) {
+	                return dispatch(addTempArticle_receive(data));
+	            });
+	        };
+	    }
 	}
 
 	function addTempArticle_receive(data) {
 	    return {
 	        type: _actionType.ADD_TEMP_ARTICLE,
 	        value: data.data
+	    };
+	}
+
+	function addTitle(value) {
+	    return {
+	        type: ADD_ARTICLE_TITLE,
+	        value: value
+	    };
+	}
+
+	function addIntro(value) {
+	    return {
+	        type: ADD_ARTICLE_INTRO,
+	        value: value
 	    };
 	}
 
@@ -9222,7 +9248,21 @@ webpackJsonp([0,1],[
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.props.preview('');
-	            // this.props.addTempArticle();
+	        }
+	    }, {
+	        key: 'addTitle',
+	        value: function addTitle(event) {
+	            this.props.addTitle(event.target.value);
+	        }
+	    }, {
+	        key: 'addIntro',
+	        value: function addIntro(event) {
+	            this.props.addIntro(event.target.value);
+	        }
+	    }, {
+	        key: 'add_del',
+	        value: function add_del() {
+	            this.props.addTempArticle(this.props.addArticle);
 	        }
 	    }, {
 	        key: 'render',
@@ -9263,7 +9303,7 @@ webpackJsonp([0,1],[
 	                                        { htmlFor: 'atricleTitle' },
 	                                        '标题'
 	                                    ),
-	                                    _react2.default.createElement(_Input2.default, { type: 'text', className: 'form-control', id: 'atricleTitle', name: 'atricleTitle' })
+	                                    _react2.default.createElement(_Input2.default, { type: 'text', className: 'form-control', id: 'atricleTitle', name: 'atricleTitle', onBlur: this.addTitle })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -9273,61 +9313,73 @@ webpackJsonp([0,1],[
 	                                        { htmlFor: 'atricleDescribe' },
 	                                        '简介'
 	                                    ),
-	                                    _react2.default.createElement('textarea', { id: 'atricleDescribe', className: 'form-control', rows: '3', placeholder: '简介...' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { htmlFor: 'imgUrl' },
-	                                        '封面'
-	                                    ),
-	                                    _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { htmlFor: 'articleFile' },
-	                                        '文章图片'
-	                                    ),
-	                                    _react2.default.createElement('input', { id: 'articleFile', name: 'articleFile', type: 'file', className: 'file-loading', multiple: true }),
-	                                    _react2.default.createElement(
-	                                        'p',
-	                                        { className: 'help-block' },
-	                                        '请选择.jpg.jpeg.png.gif格式的文件上传'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'btn-group' },
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'btn btn-primary' },
-	                                                '获取图片的url路径'
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('ul', null)
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { htmlFor: 'text-input' },
-	                                        '文章'
-	                                    ),
-	                                    _react2.default.createElement(_Markdown2.default, { preview: preview, addArticle: addArticle })
+	                                    _react2.default.createElement('textarea', { id: 'atricleDescribe', className: 'form-control', rows: '3', placeholder: '简介...', onBlur: this.addIntro })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'button',
-	                                    { type: 'button', id: 'article-upload', className: 'btn-primary btn-block btn-flat btn button' },
-	                                    '上传'
+	                                    { type: 'button', id: 'article-add', className: 'btn-primary btn-block btn-flat btn button', onClick: this.add_del.bind(this) },
+	                                    ' ',
+	                                    addArticle.tempId ? "删除清空" : "新建文章",
+	                                    ' '
+	                                ),
+	                                _react2.default.createElement('br', null),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: addArticle.tempId ? "" : "hidden", id: 'article-detail' },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { htmlFor: 'imgUrl' },
+	                                            '封面'
+	                                        ),
+	                                        _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading' })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { htmlFor: 'articleFile' },
+	                                            '文章图片'
+	                                        ),
+	                                        _react2.default.createElement('input', { id: 'articleFile', name: 'articleFile', type: 'file', className: 'file-loading', multiple: true }),
+	                                        _react2.default.createElement(
+	                                            'p',
+	                                            { className: 'help-block' },
+	                                            '请选择.jpg.jpeg.png.gif格式的文件上传'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'btn-group' },
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    'div',
+	                                                    { className: 'btn btn-primary' },
+	                                                    '获取图片的url路径'
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement('ul', null)
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { htmlFor: 'text-input' },
+	                                            '文章'
+	                                        ),
+	                                        _react2.default.createElement(_Markdown2.default, { preview: preview, addArticle: addArticle })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'button',
+	                                        { type: 'button', id: 'article-upload', className: 'btn-primary btn-block btn-flat btn button' },
+	                                        '保存'
+	                                    )
 	                                )
 	                            )
 	                        )
@@ -9338,6 +9390,12 @@ webpackJsonp([0,1],[
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
+	            var imgUrl = {
+	                filename: '',
+	                url: ''
+	            };
+	            var files = [];
+
 	            $('#imgUrl').fileinput({
 	                language: "zh",
 	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
@@ -9346,7 +9404,7 @@ webpackJsonp([0,1],[
 	                uploadUrl: '/article/uploadimg',
 	                uploadExtraData: {
 	                    type: 'cover',
-	                    id: this.props.tempId
+	                    id: this.props.addArticle.tempId
 	                }
 	            });
 	            //初始化文章的表单
@@ -9358,8 +9416,17 @@ webpackJsonp([0,1],[
 	                uploadUrl: '/article/uploadimg',
 	                uploadExtraData: {
 	                    type: 'article',
-	                    id: this.props.tempId
+	                    id: this.props.addArticle.tempId
 	                }
+	            });
+
+	            $('#imgUrl').on('fileuploaded', function (event, data, previewId, index) {
+	                imgurl.filename = data.filenames[0];
+	                imgUrl.url = data.response.data.url;
+	            });
+
+	            $('#articleFile').on('fileuploaded', function (event, data, previewId, index) {
+	                files = data.files;
 	            });
 	        }
 	    }]);
@@ -11940,6 +12007,21 @@ webpackJsonp([0,1],[
 	            return _extends({}, state, {
 	                tempId: action.value._id
 	            });
+	        case _actionType.ADD_ARTICLE_TITLE:
+	            return _extends({}, state, {
+	                title: action.value
+	            });
+	        case _actionType.ADD_ARTICLE_INTRO:
+	            return _extends({}, state, {
+	                intro: action.value
+	            });
+	        case _actionType.DEL_ARTICLE:
+	            {
+	                return _extends({}, state, {
+	                    title: '',
+	                    intro: ''
+	                });
+	            }
 	        default:
 	            return state;
 	    }
