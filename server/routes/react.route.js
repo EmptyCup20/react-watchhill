@@ -26,7 +26,6 @@ router.get('/*', (req, res,next) => {
     //state tree
     req.session.stateTree = {};
 
-
     /**
      * 获取登录状态
      */
@@ -39,38 +38,21 @@ router.get('/*', (req, res,next) => {
         }
     }
 
-
     /**
      * 获取文章列表
      */
     function getArticleList() {
-        //if(!req.session.browse) {             //如果网页没有浏览过,则获取文章列表
-            //req.session.browse = true;
-            return article.getArticleList({
-                pageSize:9,                     //首页只需要获取9篇文章
-                pageNo:1
-            });
-        //}
+        return article.getArticleList({
+            pageSize:9,                     //首页只需要获取9篇文章
+            pageNo:1
+        });
     }
 
 
-    ////暂时这么设置,同步服务端和客户端
-    //if(req.session.user) {
-    //    var store = configureStore({
-    //        login:{
-    //            loginUser:{
-    //                username:req.session.user
-    //            },
-    //            logined:true
-    //        }
-    //    });       //这里需要传入需要的state tree
-    //
-    //} else {
-    //    var store = configureStore({});
-    //}
 
 
-    //console.log('node init store:', store.getState());  //需要注意与客户端的store统一
+
+
     const store = configureStore();       //这里需要传入需要的state tree
 
     match({ routes:routes(store), location: req.url }, (err, redirect, props) => {
@@ -80,6 +62,15 @@ router.get('/*', (req, res,next) => {
         } else if (redirect) {
             res.redirect(redirect.pathname + redirect.search)
         } else if (props) {
+
+
+            if(req.url.indexOf('/article/') !== -1) {
+                console.log('文章请求:', req.url);
+                console.log(req.url.split('/')[1]);
+                console.log(req.url.split('/')[2]);
+            }
+
+
 
             Promise.all([
                 //getLoginStatus()
@@ -128,13 +119,6 @@ router.get('/*', (req, res,next) => {
         }
     })
 });
-
-
-
-
-
-
-
 
 
 module.exports = router;

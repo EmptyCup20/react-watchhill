@@ -1,11 +1,40 @@
 import React,{ Component } from 'react'
 import '../../../../public/css/blogList.less'
+import { Link } from 'react-router';
+
+//导航
+import history from '../../../history';
+
+
 
 export default class Home extends Component{
+
+
+    //static contextTypes = {
+    //    router: PropTypes.object
+    //};
+
+
+    //_onClick(e) {
+    //    e.preventDefault();
+    //
+    //    let id = e.target.getAttribute('data-id');
+    //
+    //
+    //    console.log(id);
+    //
+    //    //alert(1);
+    //
+    //    ////to={'/article/' + article._id}
+    //    //history.replace({
+    //    //    pathname:`/article/${id}`
+    //    //});
+    //
+    //    this.context.router.push(`/article/${id}`);
+    //}
+
     render() {
-
         const { articles } = this.props;
-
 
         return (
             <div className="content-wrapped blog-list">
@@ -28,14 +57,14 @@ export default class Home extends Component{
                             return (
                                 <div key={article.title} className="col-sm-6 col-md-4 col-lg-4">
                                     <div className="thumbnail article-body">
-                                        <a href="#" title="none">
-                                            <img className="lazy artical-image" src={article.image}   alt={article.title} />
-                                        </a>
+                                        <Link to={'/article/' + article._id}>
+                                            <img  className="lazy artical-image" src={article.image}   alt={article.title} />
+                                        </Link>
                                         <div className="caption">
                                             <h3 className="artical-title">
-                                                <a href="#">
+                                                <Link to={'/article/' + article._id}>
                                                     {article.title}
-                                                </a>
+                                                </Link>
                                             </h3>
                                             <small>作者:{article.author}</small>
                                             <br />

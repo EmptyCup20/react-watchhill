@@ -61,8 +61,8 @@ const routes = (store) => {
                     <Route path="code" component={CodeContainer} />
                 </Route>
             </Route>
-            <Route path="/login" onEnter={loginViewStateInit} component={LoginContainer}/>
-            <Route path="/register" onEnter={registerViewStateInit} component={RegisterContainer}/>
+            <Route path="/login"  component={LoginContainer}/>
+            <Route path="/register"  component={RegisterContainer}/>
         </Route>
     )
 };
