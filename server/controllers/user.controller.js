@@ -1,5 +1,8 @@
 // import { user_no_exist,password_err,user_exist,success } from '../../react/constants/httpType';
 import User from '../proxy/user';
+import path from 'path';
+import fs from 'fs';
+import EventProxy from 'eventproxy';
 
 
 /**
@@ -11,15 +14,15 @@ import User from '../proxy/user';
 export function loginAuthen(req, res, next) {
 
     var query = req.body;
-    User.login(query).then(function (data) {
-       if(data.code === 0) {
-           req.session.loginUser = data.data;
-       }
+    User.login(query).then(function(data) {
+        if (data.code === 0) {
+            req.session.loginUser = data.data;
+        }
 
-       res.send(data);
+        res.send(data);
 
-    }, function (data) {
-       console.log(data);
+    }, function(data) {
+        console.log(data);
     });
 }
 
@@ -33,14 +36,49 @@ export function loginAuthen(req, res, next) {
  * @param next
  */
 export function register(req, res, next) {
-    var query = req.body;
-    User.addUser(query).then(function (data) {
-        if(data.code === 0) {
+    var query = req.body,
+        ep = new EventProxy(),
+        user_dir;
+    User.addUser(query).then(function(data) {
+        user_dir = path.resolve('public/images', data.data.author);
+        if (data.code === 0) {
             req.session.loginUser = data.data;
+            //创建用户文件夹
+            fs.mkdir(user_dir, err => {
+                ep.all('article', 'userInfo', () => {
+                    res.send(data);
+                });
+
+                // 侦听error事件
+                ep.bind('error', function(err) {
+                    // 卸载掉所有handler
+                    ep.unbind();
+                    // 异常回调
+                    callback(err);
+                });
+
+                // 创建用户文章文件夹
+                fs.mkdir(path.resolve(user_dir, 'article'), err => {
+                    if (err) {
+                        console.log(err);
+                        return ep.emit('error', err);
+                    };
+                    ep.emit('article');
+                });
+                // 创建用户个人信息文件夹
+                fs.mkdir(path.resolve(user_dir, 'userInfo'), err => {
+                    if (err) {
+                        console.log(err);
+                        return ep.emit('error', err);
+                    };
+                    ep.emit('userInfo');
+                });
+            });
+        } else {
+            res.send(data);
         }
-        res.send(data)
-    }, function (data) {
-        console.log(data);
+    }, err => {
+        console.log(err);
     });
 }
 
@@ -52,7 +90,7 @@ export function register(req, res, next) {
  * @param next
  */
 export function logout(req, res, next) {
-    req.session.destroy(function () {     //移除会话
+    req.session.destroy(function() { //移除会话
         res.json({
             "code": 0,
             "data": null,
@@ -77,24 +115,23 @@ export function profile(req, res, next) {
     console.log(query);
 
     //修改密码
-    if(req.params.type === 'pass') {
-        User.modifyPwd(query).then(function (data) {
-            res.send({status:data.status});
-        }, function (data) {
+    if (req.params.type === 'pass') {
+        User.modifyPwd(query).then(function(data) {
+            res.send({ status: data.status });
+        }, function(data) {
             console.log(data);
         });
 
-    //修改邮箱,简介,电话
-    }else{
-        User.modfiyUserData(query).then( data => {
-            if(data.status === 'success') { //同步服务端登录数据
+        //修改邮箱,简介,电话
+    } else {
+        User.modfiyUserData(query).then(data => {
+            if (data.status === 'success') { //同步服务端登录数据
                 req.session.loginUser = {
                     ...req.session.loginUser,
                     ...query
                 }
             }
-            res.send({status:data.status});
+            res.send({ status: data.status });
         })
     }
 }
-
