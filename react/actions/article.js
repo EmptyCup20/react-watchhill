@@ -37,7 +37,7 @@ function article_ajax(id) {
     return dispatch => {
         dispatch(article_request());                          //挂起登录请求,防止重复请求
         return ajax().article(id)
-            .then(data => dispatch(article_reveive(data)));   //接受到数据后重新更新state
+            .then(data => dispatch(article_reveive(id,data)));   //接受到数据后重新更新state
     };
 }
 
@@ -55,12 +55,17 @@ function article_request() {
 
 /**
  * 获取文章内容
+ * @param id
  * @param data
  * @returns {{type: string}}
  */
-function article_reveive(data) {
+function article_reveive(id,data) {
+
+    data._id = id.articleId;
+
     return {
-        type: ARTICLE_RECEIVE
+        type: ARTICLE_RECEIVE,
+        data: data
     }
 }
 

@@ -48,7 +48,22 @@ const routes = (store) => {
         const id = {
             articleId:nextState.params.id
         };
-        store.dispatch(article_getContent(id));
+
+        let isContentExist = false;
+
+        const state = store.getState();
+        const lists = state.articles.contentList;
+
+        for(let article of lists) {
+            if(article._id === nextState.params.id) {
+                isContentExist = true;
+                break;
+            }
+        }
+
+        if(!isContentExist) {   //如果文章不存在,则ajax获取文章
+            store.dispatch(article_getContent(id));
+        }
     }
 
 

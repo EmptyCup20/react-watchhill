@@ -1,5 +1,19 @@
 import { ARTICLE_REQUEST,ARTICLE_RECEIVE } from '../constants/actionType';
 
+
+/**
+ * 存入文章
+ * @param state
+ * @param data
+ */
+const addContentList = (state,data) => {
+    let lists = state.contentList;
+    lists.push(data);
+    return lists;
+};
+
+
+
 const article = (state = {
    list:[],             //页面显示的文章列表
    contentList:[],      //文章内容组成的列表
@@ -17,13 +31,18 @@ const article = (state = {
         case ARTICLE_RECEIVE:
             return {
                 ...state,
-                getting:false
+                getting:false,
+                contentList:addContentList(state,action.data)
             };
 
         default:
             return state;
     }
 };
+
+
+
+
 
 
 

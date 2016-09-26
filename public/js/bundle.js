@@ -7498,7 +7498,44 @@ webpackJsonp([0,1],[
 	        var id = {
 	            articleId: nextState.params.id
 	        };
-	        store.dispatch((0, _article.article_getContent)(id));
+
+	        var isContentExist = false;
+
+	        var state = store.getState();
+	        var lists = state.articles.contentList;
+
+	        var _iteratorNormalCompletion = true;
+	        var _didIteratorError = false;
+	        var _iteratorError = undefined;
+
+	        try {
+	            for (var _iterator = lists[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                var article = _step.value;
+
+	                if (article._id === nextState.params.id) {
+	                    isContentExist = true;
+	                    break;
+	                }
+	            }
+	        } catch (err) {
+	            _didIteratorError = true;
+	            _iteratorError = err;
+	        } finally {
+	            try {
+	                if (!_iteratorNormalCompletion && _iterator.return) {
+	                    _iterator.return();
+	                }
+	            } finally {
+	                if (_didIteratorError) {
+	                    throw _iteratorError;
+	                }
+	            }
+	        }
+
+	        if (!isContentExist) {
+	            //如果文章不存在,则ajax获取文章
+	            store.dispatch((0, _article.article_getContent)(id));
+	        }
 	    }
 
 	    return _react2.default.createElement(
@@ -10479,7 +10516,7 @@ webpackJsonp([0,1],[
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _reactRedux = __webpack_require__(67);
@@ -10490,13 +10527,19 @@ webpackJsonp([0,1],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//绑定article store到Article组件
 	//基础库
-	exports.default = (0, _reactRedux.connect)()(_Article2.default);
+	function mapStateToProps(state) {
+	    return {
+	        articles: state.articles
+	    };
+	}
 
 	//action
 
 
 	//视图组件
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Article2.default);
 
 /***/ },
 /* 133 */
@@ -10534,11 +10577,51 @@ webpackJsonp([0,1],[
 	    _createClass(Article, [{
 	        key: "render",
 	        value: function render() {
+	            var _props = this.props;
+	            var articles = _props.articles;
+	            var params = _props.params;
+
+	            var loading = true; //正在获取文章
+	            var showArticle = {}; //显示的文章
+
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+
+	            try {
+	                for (var _iterator = articles.contentList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var article = _step.value;
+
+	                    if (article._id === params.id) {
+	                        showArticle = article;
+	                        loading = false; //已经获取到文章
+	                        break;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "container" },
 	                _react2.default.createElement("br", null),
-	                _react2.default.createElement(
+	                loading ? _react2.default.createElement(
+	                    "div",
+	                    { className: "alert alert-info", role: "alert" },
+	                    "文章正在加载,请稍后..."
+	                ) : _react2.default.createElement(
 	                    "div",
 	                    { className: "row" },
 	                    _react2.default.createElement(
@@ -10556,22 +10639,22 @@ webpackJsonp([0,1],[
 	                                    _react2.default.createElement(
 	                                        "a",
 	                                        null,
-	                                        _react2.default.createElement("img", { className: "profile-user-img img-responsive img-circle", alt: "个人照片" })
+	                                        _react2.default.createElement("img", { src: showArticle.avatarUrl, className: "profile-user-img img-responsive img-circle", alt: "个人照片" })
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "h3",
 	                                        { className: "profile-username text-center" },
-	                                        "作者"
+	                                        showArticle.author
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "p",
 	                                        { className: "text-muted text-center" },
-	                                        "个签"
+	                                        showArticle.brief
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "p",
 	                                        { className: "text-muted text-center" },
-	                                        "组别"
+	                                        showArticle.team
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "ul",
@@ -10583,6 +10666,11 @@ webpackJsonp([0,1],[
 	                                                "b",
 	                                                null,
 	                                                "联系方式:"
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "a",
+	                                                { className: "pull-right", title: showArticle.tel },
+	                                                showArticle.tel
 	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
@@ -10592,6 +10680,11 @@ webpackJsonp([0,1],[
 	                                                "b",
 	                                                null,
 	                                                "邮箱:"
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                "a",
+	                                                { className: "pull-right", title: showArticle.email, href: "mailto:" + showArticle.email },
+	                                                showArticle.email
 	                                            )
 	                                        )
 	                                    ),
@@ -10607,7 +10700,7 @@ webpackJsonp([0,1],[
 	                                    _react2.default.createElement(
 	                                        "div",
 	                                        { className: "box-img" },
-	                                        _react2.default.createElement("img", { alt: "扫二维码" })
+	                                        _react2.default.createElement("img", { src: showArticle.codeUrl, alt: "扫二维码" })
 	                                    )
 	                                )
 	                            )
@@ -10619,11 +10712,7 @@ webpackJsonp([0,1],[
 	                        _react2.default.createElement(
 	                            "div",
 	                            { className: "content-wrapper bg-content" },
-	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "container md-content" },
-	                                "2313213"
-	                            )
+	                            _react2.default.createElement("div", { dangerouslySetInnerHTML: { __html: showArticle.content } })
 	                        )
 	                    )
 	                )
@@ -11483,7 +11572,7 @@ webpackJsonp([0,1],[
 	    return function (dispatch) {
 	        dispatch(article_request()); //挂起登录请求,防止重复请求
 	        return (0, _ajax2.default)().article(id).then(function (data) {
-	            return dispatch(article_reveive(data));
+	            return dispatch(article_reveive(id, data));
 	        }); //接受到数据后重新更新state
 	    };
 	}
@@ -11500,12 +11589,17 @@ webpackJsonp([0,1],[
 
 	/**
 	 * 获取文章内容
+	 * @param id
 	 * @param data
 	 * @returns {{type: string}}
 	 */
-	function article_reveive(data) {
+	function article_reveive(id, data) {
+
+	    data._id = id.articleId;
+
 	    return {
-	        type: _actionType.ARTICLE_RECEIVE
+	        type: _actionType.ARTICLE_RECEIVE,
+	        data: data
 	    };
 	}
 
@@ -12038,6 +12132,17 @@ webpackJsonp([0,1],[
 
 	var _actionType = __webpack_require__(94);
 
+	/**
+	 * 存入文章
+	 * @param state
+	 * @param data
+	 */
+	var addContentList = function addContentList(state, data) {
+	    var lists = state.contentList;
+	    lists.push(data);
+	    return lists;
+	};
+
 	var article = function article() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
 	        list: [], //页面显示的文章列表
@@ -12056,7 +12161,8 @@ webpackJsonp([0,1],[
 
 	        case _actionType.ARTICLE_RECEIVE:
 	            return _extends({}, state, {
-	                getting: false
+	                getting: false,
+	                contentList: addContentList(state, action.data)
 	            });
 
 	        default:
