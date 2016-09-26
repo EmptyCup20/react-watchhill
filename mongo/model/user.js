@@ -1,6 +1,8 @@
 var db = require('../mongo');
 var Schema = db.Schema;
+var ObjectId = db.Schema.Types.ObjectId;
 var userSchema = new Schema({
+    authorId:ObjectId,
     //用户名
     author: {
         type:String,
@@ -31,6 +33,9 @@ var userSchema = new Schema({
     },
     //部门
     team: String,
+},{
+    versionKey:false
 });
+
 var user = db.model('User',userSchema);
 module.exports = user;
