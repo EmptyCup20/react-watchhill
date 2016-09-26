@@ -4,7 +4,6 @@ import { Route, IndexRoute } from 'react-router';
 
 /*容器组件*/
 import AppContainer from '../components/containers/AppContainer';           //首页
-
 import IndexContainer from '../components/containers/IndexContainer';       //主页
     import HomeContainer from '../components/containers/HomeContainer';
     import AboutContainer from '../components/containers/AboutContainer';
@@ -22,7 +21,6 @@ import RegisterContainer from '../components/containers/RegisterContainer'; //�
 
 
 const routes = (store) => {
-
     return(
         <Route>
             <Route path="/" component={AppContainer} />

@@ -916,8 +916,7 @@
 	    });
 	};
 
-
-
+	//获取文章内容
 	function getArticle(req, res, next) {
 	    var query = req.body;
 	    _article2.default.getArticle(query).then(function (data) {
@@ -1366,9 +1365,7 @@
 
 
 	//首页
-
 	var routes = function routes(store) {
-
 	    return _react2.default.createElement(
 	        _reactRouter.Route,
 	        null,

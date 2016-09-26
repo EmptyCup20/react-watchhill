@@ -4,7 +4,6 @@ import { Route, IndexRoute } from 'react-router';
 
 /*容器组件*/
 import AppContainer from '../components/containers/AppContainer';           //首页
-
 import IndexContainer from '../components/containers/IndexContainer';       //主页
     import HomeContainer from '../components/containers/HomeContainer';
     import AboutContainer from '../components/containers/AboutContainer';
@@ -17,7 +16,6 @@ import IndexContainer from '../components/containers/IndexContainer';       //�
         import AvatarContainer from '../components/containers/AvatarContainer';
         import PassContainer from '../components/containers/PassContainer';
     import ArticleContainer from '../components/containers/ArticleContainer';
-
 import LoginContainer from '../components/containers/LoginContainer';       //登录页
 import RegisterContainer from '../components/containers/RegisterContainer'; //注册页
 
@@ -53,9 +51,6 @@ const routes = (store) => {
 
         store.dispatch(article_getContent(id));
     }
-
-
-
 
 
     return(

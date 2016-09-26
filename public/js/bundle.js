@@ -7532,7 +7532,6 @@ webpackJsonp([0,1],[
 
 	/*初始化action*/
 	//首页
-
 	exports.default = routes;
 
 /***/ },
