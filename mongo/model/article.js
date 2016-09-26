@@ -8,6 +8,10 @@ var articleSchema = new Schema({
         unique: true
     },
     tag: String,
+    //articleId:{
+    //    type:String,
+    //    set:ObjectId
+    //},
     author: String,
     createTime: String,
     content: String,
