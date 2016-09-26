@@ -48,7 +48,7 @@ const routes = (store) => {
     //获取文章内容
     function getArticleContent(nextState, replaceState) {
         const id = {
-            id:nextState.params.id
+            articleId:nextState.params.id
         };
 
         store.dispatch(article_getContent(id));
