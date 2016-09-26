@@ -1,5 +1,6 @@
 var db = require('../mongo');
 var Schema = db.Schema;
+var ObjectId = db.Schema.Types.ObjectId;
 var articleSchema = new Schema({
     title: {
         type:String,
@@ -8,10 +9,10 @@ var articleSchema = new Schema({
         unique: true
     },
     tag: String,
-    //articleId:{
+    // articleId:{
     //    type:String,
-    //    set:ObjectId
-    //},
+    //    default:ObjectId
+    // },
     author: String,
     createTime: String,
     content: String,
@@ -20,6 +21,9 @@ var articleSchema = new Schema({
         default: '/images/default/article.jpg'
     },
     describe: String
+    
+},{
+    versionKey:false
 });
 var article = db.model('Article',articleSchema);
 module.exports = article;

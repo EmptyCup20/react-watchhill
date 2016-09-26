@@ -33,7 +33,6 @@ export function uploaderImg(req, res, next) {
             //返回成功信息
             res.send(statusMsg.successMsg);
         });
-
     });
 };
 
