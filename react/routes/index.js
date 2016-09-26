@@ -25,6 +25,9 @@ import RegisterContainer from '../components/containers/RegisterContainer'; //�
 import { login_init } from '../actions/login';
 import { register_init } from '../actions/register';
 import { modify_init } from '../actions/profile';
+import { addTempArticle } from '../actions/addArticle';
+import { article_getContent } from '../actions/article';
+
 
 const routes = (store) => {
 
@@ -40,6 +43,19 @@ const routes = (store) => {
     function profileViewStateInit() {
         store.dispatch(modify_init());
     }
+
+
+    //获取文章内容
+    function getArticleContent(nextState, replaceState) {
+        const id = {
+            articleId:nextState.params.id
+        };
+
+        store.dispatch(article_getContent(id));
+    }
+
+
+
 
 
     return(
@@ -58,9 +74,7 @@ const routes = (store) => {
                     <Route path="avatar" component={AvatarContainer} />
                     <Route path="code" component={CodeContainer} />
                 </Route>
-
-                <Route path="/article/:id" component={ArticleContainer} />
-
+                <Route path="/article/:id" onEnter={getArticleContent} component={ArticleContainer} />
             </Route>
             <Route path="/login" onEnter={loginViewStateInit} component={LoginContainer}/>
             <Route path="/register" onEnter={registerViewStateInit} component={RegisterContainer}/>

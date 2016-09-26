@@ -17,7 +17,7 @@ export function getArticleList(req, res, next) {
 
 //获取文章内容
 export function getArticle(req, res, next) {
-    var query = req.query;
+    var query = req.body;
     article.getArticle(query).then(function(data) {
         res.send(data);
     }, function(data) {

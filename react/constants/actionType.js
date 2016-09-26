@@ -23,7 +23,11 @@ module.exports = {
     MODIFY_LOGIN:  'MODIFY_LOGIN',          //修改信息的同时更新视图个人信息
 
     //logout
-    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE',        //注销
+    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE',       //注销
+
+    //article
+    ARTICLE_REQUEST: 'ARTICLE_REQUEST',     //挂起获取文章请求
+    ARTICLE_RECEIVE: 'ARTICLE_RECEIVE',     //获取文章内容处理
 
     //addArticle
     PREVIEW: 'PREVIEW',          //预览功能

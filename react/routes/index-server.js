@@ -16,33 +16,12 @@ import IndexContainer from '../components/containers/IndexContainer';       //�
         import CodeContainer from '../components/containers/CodeContainer';
         import AvatarContainer from '../components/containers/AvatarContainer';
         import PassContainer from '../components/containers/PassContainer';
-
+    import ArticleContainer from '../components/containers/ArticleContainer';
 import LoginContainer from '../components/containers/LoginContainer';       //登录页
 import RegisterContainer from '../components/containers/RegisterContainer'; //注册页
 
-/*初始化action*/
-import { login_init } from '../actions/login';
-import { register_init } from '../actions/register';
-import { modify_init } from '../actions/profile';
-import { addTempArticle } from '../actions/addArticle'
 
 const routes = (store) => {
-
-    //初始化视图
-    function loginViewStateInit() {
-        store.dispatch(login_init());
-    }
-
-    function registerViewStateInit() {
-        store.dispatch(register_init());
-    }
-
-
-    function profileViewStateInit() {
-        store.dispatch(modify_init());
-    }
-
-
 
     return(
         <Route>
@@ -60,6 +39,7 @@ const routes = (store) => {
                     <Route path="avatar" component={AvatarContainer} />
                     <Route path="code" component={CodeContainer} />
                 </Route>
+                <Route path="/article/:id" component={ArticleContainer} />
             </Route>
             <Route path="/login"  component={LoginContainer}/>
             <Route path="/register"  component={RegisterContainer}/>

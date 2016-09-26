@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/getArticleList', getArticleList);
 
 //获取文章内容
-router.get('/getArticle', getArticle);
+router.post('/getArticle', getArticle);
 
 //新增文章
 router.post('/addArticle', addArticle);

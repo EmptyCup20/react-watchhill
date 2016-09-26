@@ -49,10 +49,6 @@ router.get('/*', (req, res,next) => {
     }
 
 
-
-
-
-
     const store = configureStore();       //这里需要传入需要的state tree
 
     match({ routes:routes(store), location: req.url }, (err, redirect, props) => {
@@ -62,15 +58,6 @@ router.get('/*', (req, res,next) => {
         } else if (redirect) {
             res.redirect(redirect.pathname + redirect.search)
         } else if (props) {
-
-
-            if(req.url.indexOf('/article/') !== -1) {
-                console.log('文章请求:', req.url);
-                console.log(req.url.split('/')[1]);
-                console.log(req.url.split('/')[2]);
-            }
-
-
 
             Promise.all([
                 //getLoginStatus()
@@ -86,7 +73,9 @@ router.get('/*', (req, res,next) => {
                 /*2. state tree 获取文章列表*/
                 if(datas && datas[0] && datas[0].rows) {
                     req.session.stateTree.articles = {
-                        list:[]
+                        list:[],
+                        contentList:[],
+                        getting:false
                     };
 
                     datas[0].rows.forEach(function(item){
