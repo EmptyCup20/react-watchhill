@@ -13,7 +13,7 @@ const addArticle = (state = {
         case ADD_TEMP_ARTICLE:
             return {
                 ...state,
-                tempId: action.value._id
+                _id: action.value._id
             }
         case ADD_ARTICLE_TITLE:
             return {
@@ -23,13 +23,13 @@ const addArticle = (state = {
         case ADD_ARTICLE_INTRO:
             return {
                 ...state,
-                intro: action.value
+                describe: action.value
             }
         case DEL_ARTICLE:{
             return {
                 ...state,
                 title: '',
-                intro: ''
+                describe: ''
             }
         }
         default:
