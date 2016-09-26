@@ -29,7 +29,9 @@ const addArticle = (state = {
             return {
                 ...state,
                 title: '',
-                describe: ''
+                describe: '',
+                _id:'',
+                preview:''
             }
         }
         default:

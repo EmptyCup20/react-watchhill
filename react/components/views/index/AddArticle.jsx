@@ -32,13 +32,15 @@ export default class AddArticle extends Component{
                             <form  id="articleForm">
                                 <div className="form-group">
                                     <label htmlFor="atricleTitle">标题</label>
-                                    <input type="text" className="form-control" id="atricleTitle" name="atricleTitle" onBlur={this.addTitle.bind(this)}/>
+                                    <input type="text" className="form-control" id="atricleTitle" name="atricleTitle" onBlur={this.addTitle.bind(this)} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="atricleDescribe">简介</label>
-                                    <textarea id="atricleDescribe" className="form-control" rows="3" placeholder="简介..." onBlur={this.addIntro.bind(this)}/>
+                                    <textarea id="atricleDescribe" className="form-control" rows="3" placeholder="简介..." onBlur={this.addIntro.bind(this)}  />
                                 </div>
-                                <button type="button" id="article-add" className="btn-primary btn-block btn-flat btn button" onClick={this.add_del.bind(this)} > {addArticle._id?"删除清空":"新建文章"} </button>
+                                <div id = 'btn-div' className={addArticle._id?"clear":"add"}>
+                                    <button type="button" id="article-add" className="btn-primary btn-block btn-flat btn button" onClick={this.add_del.bind(this)} > {addArticle._id?"删除清空":"新建文章"} </button>
+                                </div>
                                 <br></br>
                                 <div className={addArticle._id?"":"hidden"} id="article-detail">
                                     <div className="form-group">
@@ -115,6 +117,15 @@ export default class AddArticle extends Component{
             files = data.files;
         });
 
+        $('#article-add').click(function(e){
+            if($(e.target).parent().attr('class').indexOf('clear')>-1){
+                $('#atricleTitle').val('');
+                $('#atricleDescribe').val('');
+                $('#imgUrl').fileinput('clear');
+                $('#articleFile').fileinput('clear');
+                $('#text-input').val('');
+            }
+        });
 
     }
 

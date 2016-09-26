@@ -1,4 +1,4 @@
-import { PREVIEW , ADD_TEMP_ARTICLE , ADD_ARTICLE_TITLE ,ADD_ARTICLE_INTRO} from '../constants/actionType';
+import { PREVIEW , ADD_TEMP_ARTICLE , ADD_ARTICLE_TITLE ,ADD_ARTICLE_INTRO,DEL_ARTICLE} from '../constants/actionType';
 import ajax from '../ajax';
 export function preview(value){
     return {
@@ -11,9 +11,11 @@ export function addTempArticle(article){
     if(article._id){
         var delbool = window.confirm('是否确定删除清空');
         if(delbool){
-            return {
-                type : DEL_ARTICLE
-            }
+            // return ajax().delArticle(article)
+            //     .then(data => {
+            //         return dispatch(clearAndDel_receive());
+            //     })
+            return clearAndDel_receive();
         }else{
             return{
                 type : 'NO_DELETE'
@@ -48,5 +50,11 @@ export function addIntro(value){
     return {
         type : ADD_ARTICLE_INTRO,
         value : value
+    }
+}
+
+function clearAndDel_receive(){
+    return {
+        type : DEL_ARTICLE
     }
 }

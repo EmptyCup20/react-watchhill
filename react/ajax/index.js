@@ -59,13 +59,17 @@ function ajax() {
         //新增文章
         addTempArticle: function(data){
             return req('POST','/article/addArticle',data);
-        }
+        },
 
         //获取文章内容
         article:function(data) {
             return req('POST','/article/getArticle',data);
-        }
+        },
 
+        //删除文章
+        delArticle:function(data){
+            return req('POST','/article/delArticle',data)
+        }
 
 
 
