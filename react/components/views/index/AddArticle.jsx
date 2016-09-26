@@ -38,11 +38,11 @@ export default class AddArticle extends Component{
                                     <label htmlFor="atricleDescribe">简介</label>
                                     <textarea id="atricleDescribe" className="form-control" rows="3" placeholder="简介..." onBlur={this.addIntro.bind(this)}  />
                                 </div>
-                                <div id = 'btn-div' className={addArticle._id?"clear":"add"}>
-                                    <button type="button" id="article-add" className="btn-primary btn-block btn-flat btn button" onClick={this.add_del.bind(this)} > {addArticle._id?"删除清空":"新建文章"} </button>
+                                <div id = 'btn-div' className={addArticle.articleId?"clear":"add"}>
+                                    <button type="button" id="article-add" className="btn-primary btn-block btn-flat btn button" onClick={this.add_del.bind(this)} > {addArticle.articleId?"删除清空":"新建文章"} </button>
                                 </div>
                                 <br></br>
-                                <div className={addArticle._id?"":"hidden"} id="article-detail">
+                                <div className={addArticle.articleId?"":"hidden"} id="article-detail">
                                     <div className="form-group">
                                         <label htmlFor="imgUrl">封面</label>
                                         <input id="imgUrl" name="imgUrl" type="file" className="file-loading"  />
@@ -92,7 +92,7 @@ export default class AddArticle extends Component{
             uploadUrl: '/article/uploadimg',
             uploadExtraData: {
                 type:'cover',
-                _id:this.props.addArticle._id
+                articleId:this.props.addArticle.articleId
             }
         });
         //初始化文章的表单
@@ -104,7 +104,7 @@ export default class AddArticle extends Component{
             uploadUrl: '/article/uploadimg',
             uploadExtraData: {
                 type:'article',
-                _id:this.props.addArticle._id
+                articleId:this.props.addArticle.articleId
             }
         });
 

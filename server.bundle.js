@@ -688,7 +688,9 @@
 
 	var db = __webpack_require__(13);
 	var Schema = db.Schema;
+	var ObjectId = db.Schema.Types.ObjectId;
 	var userSchema = new Schema({
+	    authorId: ObjectId,
 	    //用户名
 	    author: {
 	        type: String,
@@ -719,7 +721,10 @@
 	    },
 	    //部门
 	    team: String
+	}, {
+	    versionKey: false
 	});
+
 	var user = db.model('User', userSchema);
 	module.exports = user;
 
@@ -731,6 +736,7 @@
 
 	var db = __webpack_require__(13);
 	var Schema = db.Schema;
+	var ObjectId = db.Schema.Types.ObjectId;
 	var articleSchema = new Schema({
 	    title: {
 	        type: String,
@@ -739,6 +745,10 @@
 	        unique: true
 	    },
 	    tag: String,
+	    // articleId:{
+	    //    type:String,
+	    //    default:ObjectId
+	    // },
 	    author: String,
 	    createTime: String,
 	    content: String,
@@ -747,6 +757,9 @@
 	        default: '/images/default/article.jpg'
 	    },
 	    describe: String
+
+	}, {
+	    versionKey: false
 	});
 	var article = db.model('Article', articleSchema);
 	module.exports = article;
@@ -976,7 +989,7 @@
 	//获取文章列表
 	Article.getArticleList = function (obj) {
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.query('article', obj, '-content -__v').then(function (data) {
+	        _db_tools2.default.query('article', obj, '-content').then(function (data) {
 	            resolve(data);
 	        }, function (err) {
 	            reject(err);
@@ -1075,7 +1088,7 @@
 	            return;
 	        }
 	        //临时目录
-	        imgUrl = _path2.default.resolve('public/images', req.session.loginUser.author, 'article', fields._id, files.imgUrl.name);
+	        imgUrl = _path2.default.resolve('public/images', req.session.loginUser.author, 'article', fields.articleId, files.imgUrl.name);
 	        //读取文件
 	        _fs2.default.writeFile(imgUrl, _fs2.default.readFileSync(files.imgUrl.path), function (err) {
 	            if (err) {
@@ -2876,7 +2889,7 @@
 	}
 
 	function addTempArticle(article) {
-	    if (article._id) {
+	    if (article.articleId) {
 	        var delbool = window.confirm('是否确定删除清空');
 	        if (delbool) {
 	            // return ajax().delArticle(article)
@@ -3047,19 +3060,19 @@
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { id: 'btn-div', className: addArticle._id ? "clear" : "add" },
+	                                    { id: 'btn-div', className: addArticle.articleId ? "clear" : "add" },
 	                                    _react2.default.createElement(
 	                                        'button',
 	                                        { type: 'button', id: 'article-add', className: 'btn-primary btn-block btn-flat btn button', onClick: this.add_del.bind(this) },
 	                                        ' ',
-	                                        addArticle._id ? "删除清空" : "新建文章",
+	                                        addArticle.articleId ? "删除清空" : "新建文章",
 	                                        ' '
 	                                    )
 	                                ),
 	                                _react2.default.createElement('br', null),
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { className: addArticle._id ? "" : "hidden", id: 'article-detail' },
+	                                    { className: addArticle.articleId ? "" : "hidden", id: 'article-detail' },
 	                                    _react2.default.createElement(
 	                                        'div',
 	                                        { className: 'form-group' },
@@ -3138,7 +3151,7 @@
 	                uploadUrl: '/article/uploadimg',
 	                uploadExtraData: {
 	                    type: 'cover',
-	                    _id: this.props.addArticle._id
+	                    articleId: this.props.addArticle.articleId
 	                }
 	            });
 	            //初始化文章的表单
@@ -3150,7 +3163,7 @@
 	                uploadUrl: '/article/uploadimg',
 	                uploadExtraData: {
 	                    type: 'article',
-	                    _id: this.props.addArticle._id
+	                    articleId: this.props.addArticle.articleId
 	                }
 	            });
 
@@ -5667,7 +5680,7 @@
 	            });
 	        case _actionType.ADD_TEMP_ARTICLE:
 	            return _extends({}, state, {
-	                _id: action.value._id
+	                articleId: action.value._id
 	            });
 	        case _actionType.ADD_ARTICLE_TITLE:
 	            return _extends({}, state, {
@@ -5682,7 +5695,7 @@
 	                return _extends({}, state, {
 	                    title: '',
 	                    describe: '',
-	                    _id: '',
+	                    articleId: '',
 	                    preview: ''
 	                });
 	            }

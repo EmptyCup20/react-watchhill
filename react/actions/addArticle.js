@@ -8,7 +8,7 @@ export function preview(value){
 }
 
 export function addTempArticle(article){
-    if(article._id){
+    if(article.articleId){
         var delbool = window.confirm('是否确定删除清空');
         if(delbool){
             // return ajax().delArticle(article)

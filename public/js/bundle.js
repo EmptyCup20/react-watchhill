@@ -9235,7 +9235,7 @@ webpackJsonp([0,1],[
 	}
 
 	function addTempArticle(article) {
-	    if (article._id) {
+	    if (article.articleId) {
 	        var delbool = window.confirm('是否确定删除清空');
 	        if (delbool) {
 	            // return ajax().delArticle(article)
@@ -9406,19 +9406,19 @@ webpackJsonp([0,1],[
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { id: 'btn-div', className: addArticle._id ? "clear" : "add" },
+	                                    { id: 'btn-div', className: addArticle.articleId ? "clear" : "add" },
 	                                    _react2.default.createElement(
 	                                        'button',
 	                                        { type: 'button', id: 'article-add', className: 'btn-primary btn-block btn-flat btn button', onClick: this.add_del.bind(this) },
 	                                        ' ',
-	                                        addArticle._id ? "删除清空" : "新建文章",
+	                                        addArticle.articleId ? "删除清空" : "新建文章",
 	                                        ' '
 	                                    )
 	                                ),
 	                                _react2.default.createElement('br', null),
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { className: addArticle._id ? "" : "hidden", id: 'article-detail' },
+	                                    { className: addArticle.articleId ? "" : "hidden", id: 'article-detail' },
 	                                    _react2.default.createElement(
 	                                        'div',
 	                                        { className: 'form-group' },
@@ -9497,7 +9497,7 @@ webpackJsonp([0,1],[
 	                uploadUrl: '/article/uploadimg',
 	                uploadExtraData: {
 	                    type: 'cover',
-	                    _id: this.props.addArticle._id
+	                    articleId: this.props.addArticle.articleId
 	                }
 	            });
 	            //初始化文章的表单
@@ -9509,7 +9509,7 @@ webpackJsonp([0,1],[
 	                uploadUrl: '/article/uploadimg',
 	                uploadExtraData: {
 	                    type: 'article',
-	                    _id: this.props.addArticle._id
+	                    articleId: this.props.addArticle.articleId
 	                }
 	            });
 
@@ -12352,7 +12352,7 @@ webpackJsonp([0,1],[
 	            });
 	        case _actionType.ADD_TEMP_ARTICLE:
 	            return _extends({}, state, {
-	                _id: action.value._id
+	                articleId: action.value._id
 	            });
 	        case _actionType.ADD_ARTICLE_TITLE:
 	            return _extends({}, state, {
@@ -12367,7 +12367,7 @@ webpackJsonp([0,1],[
 	                return _extends({}, state, {
 	                    title: '',
 	                    describe: '',
-	                    _id: '',
+	                    articleId: '',
 	                    preview: ''
 	                });
 	            }

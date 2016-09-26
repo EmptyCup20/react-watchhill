@@ -13,7 +13,7 @@ const addArticle = (state = {
         case ADD_TEMP_ARTICLE:
             return {
                 ...state,
-                _id: action.value._id
+                articleId: action.value._id
             }
         case ADD_ARTICLE_TITLE:
             return {
@@ -30,7 +30,7 @@ const addArticle = (state = {
                 ...state,
                 title: '',
                 describe: '',
-                _id:'',
+                articleId:'',
                 preview:''
             }
         }
