@@ -1,4 +1,5 @@
 import {getArticleList,getArticle,addArticle,modfiyArticle} from '../controllers/article.controller';
+import {uploaderImg} from '../controllers/uploader.controller'
 
 import express from 'express';
 const router = express.Router();
@@ -14,5 +15,8 @@ router.post('/addArticle', addArticle);
 
 //修改文章
 router.post('/modfiyArticle', modfiyArticle);
+
+//上传文章封面和图片
+router.post('/uploadimg',uploaderImg);
 
 module.exports = router;
