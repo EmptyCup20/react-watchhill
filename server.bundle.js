@@ -493,6 +493,26 @@
 	    });
 	};
 
+	//获取该用户的所有文章列表及该用户的信息
+	User.getArticleList = function (obj) {
+	    var queryObj = {
+	        _id: obj.userId
+	    };
+	    return new Promise(function (resolve, reject) {
+	        _db_tools2.default.queryByCondition('user', queryObj, '-password').then(function (userData) {
+	            userData = userData[0].toObject();
+	            _db_tools2.default.queryByCondition('artcile', { author: userData.author }, 'title describe createTime').then(function (articleData) {
+	                userData.articleList = [];
+	                articleData.forEach(function (value, index) {
+	                    userData.articleList.push(value.toObject());
+	                });
+	                resolve(userData);
+	            });
+	        }, function (err) {
+	            reject(err);
+	        });
+	    });
+	};
 	module.exports = User;
 
 /***/ },
@@ -1102,9 +1122,11 @@
 	            return;
 	        }
 	        //临时目录
-	        imgUrl = _path2.default.resolve('public/images', req.session.loginUser.author, 'article', fields.articleId, files.imgUrl.name);
+	        var fileName = files.imgUrl ? files.imgUrl.name : files.articleFile.name;
+	        var filePath = files.imgUrl ? files.imgUrl.path : files.articleFile.path;
+	        imgUrl = _path2.default.resolve('public/images', req.session.loginUser.author, 'article', fields.articleId, fileName);
 	        //读取文件
-	        _fs2.default.writeFile(imgUrl, _fs2.default.readFileSync(files.imgUrl.path), function (err) {
+	        _fs2.default.writeFile(imgUrl, _fs2.default.readFileSync(filePath), function (err) {
 	            if (err) {
 	                res.send(err);
 	                return;
@@ -5883,6 +5905,10 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _actionType = __webpack_require__(38);
@@ -5910,6 +5936,8 @@
 	            return state;
 	    }
 	};
+
+	exports.default = user;
 
 /***/ }
 /******/ ]);
