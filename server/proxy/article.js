@@ -1,7 +1,7 @@
 ﻿import db_tools from '../../mongo/db_tools';
 import statusMsg from '../../mongo/statusMsg';
 import path from 'path';
-import fs form 'fs';
+import fs from 'fs';
 var Article = function() {};
 
 //获取文章列表

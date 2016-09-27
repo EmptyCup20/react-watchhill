@@ -69,6 +69,11 @@ function ajax() {
         //删除文章
         delArticle:function(data){
             return req('POST','/article/delArticle',data)
+        },
+
+        //获取个人文章列表
+        user: function(data) {
+            return req('POST','/user/getList',data)
         }
 
 

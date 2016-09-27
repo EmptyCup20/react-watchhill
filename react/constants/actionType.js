@@ -29,6 +29,10 @@ module.exports = {
     ARTICLE_REQUEST: 'ARTICLE_REQUEST',     //挂起获取文章请求
     ARTICLE_RECEIVE: 'ARTICLE_RECEIVE',     //获取文章内容处理
 
+    //user
+    USER_REQUEST: 'USER_REQUEST',           //获取个人文章列表
+    USER_RECEIVE: 'USER_RECEIVE',
+
     //addArticle
     PREVIEW: 'PREVIEW',          //预览功能
     ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE',  //新增文章
