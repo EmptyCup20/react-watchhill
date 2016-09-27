@@ -67,7 +67,7 @@ Article.getImgUrl = function(obj) {
     var user_dir;
     statusMsg.successMsg.data = [];
     return new Promise((resolve, reject) => {
-        user_dir = path.resolve('public/images', req.session.loginUser.author, 'article', obj.articleId);
+        user_dir = path.resolve('public/images', obj.author, 'article', obj.articleId);
         fs.readdir(user_dir, (err, data) => {
             data.forEach(function(value, index) {
                 statusMsg.successMsg.data.push(path.resolve(user_dir, value));
