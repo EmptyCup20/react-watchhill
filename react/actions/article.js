@@ -61,7 +61,8 @@ function article_request() {
  */
 function article_reveive(id,data) {
 
-    data._id = id.articleId;
+    data.userId = data._id;         //用户Id
+    data._id = id.articleId;        //文章Id
 
     return {
         type: ARTICLE_RECEIVE,

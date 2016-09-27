@@ -16,15 +16,17 @@ import IndexContainer from '../components/containers/IndexContainer';       //�
         import AvatarContainer from '../components/containers/AvatarContainer';
         import PassContainer from '../components/containers/PassContainer';
     import ArticleContainer from '../components/containers/ArticleContainer';
+    import UserContainer from '../components/containers/UserContainer';
 import LoginContainer from '../components/containers/LoginContainer';       //登录页
 import RegisterContainer from '../components/containers/RegisterContainer'; //注册页
 
-/*初始化action*/
+/*action*/
 import { login_init } from '../actions/login';
 import { register_init } from '../actions/register';
 import { modify_init } from '../actions/profile';
 import { addTempArticle } from '../actions/addArticle';
 import { article_getContent } from '../actions/article';
+import { user_getList } from  '../actions/user';
 
 
 const routes = (store) => {
@@ -67,6 +69,17 @@ const routes = (store) => {
     }
 
 
+    //获取个人文章列表
+    function getArticleList(nextState, replaceState) {
+        const id = {
+            userId:nextState.params.id
+        };
+
+        store.dispatch(user_getList(id));
+
+    }
+
+
     return(
         <Route>
             <Route path="/" component={AppContainer} />
@@ -84,6 +97,7 @@ const routes = (store) => {
                     <Route path="code" component={CodeContainer} />
                 </Route>
                 <Route path="/article/:id" onEnter={getArticleContent} component={ArticleContainer} />
+                <Route path="/user/:id" onEnter={getArticleList} component={UserContainer} />
             </Route>
             <Route path="/login" onEnter={loginViewStateInit} component={LoginContainer}/>
             <Route path="/register" onEnter={registerViewStateInit} component={RegisterContainer}/>
