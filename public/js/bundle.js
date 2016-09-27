@@ -7552,6 +7552,38 @@ webpackJsonp([0,1],[
 	            userId: nextState.params.id
 	        };
 
+	        var isListExist = false;
+	        var state = store.getState();
+	        var lists = state.user.articleList;
+
+	        var _iteratorNormalCompletion2 = true;
+	        var _didIteratorError2 = false;
+	        var _iteratorError2 = undefined;
+
+	        try {
+	            for (var _iterator2 = lists[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                var list = _step2.value;
+
+	                if (list.userId === nextState.params.id) {
+	                    isListExist = true;
+	                    break;
+	                }
+	            }
+	        } catch (err) {
+	            _didIteratorError2 = true;
+	            _iteratorError2 = err;
+	        } finally {
+	            try {
+	                if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                    _iterator2.return();
+	                }
+	            } finally {
+	                if (_didIteratorError2) {
+	                    throw _iteratorError2;
+	                }
+	            }
+	        }
+
 	        store.dispatch((0, _user.user_getList)(id));
 	    }
 
@@ -10877,10 +10909,52 @@ webpackJsonp([0,1],[
 	        key: "render",
 	        value: function render() {
 
+	            var loading = true;
+	            var _props = this.props;
+	            var user = _props.user;
+	            var params = _props.params;
+
+
+	            var showList = {}; //显示的文章列表
+
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+
+	            try {
+	                for (var _iterator = user.articleList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var articleList = _step.value;
+
+	                    if (articleList.userId === params.id) {
+	                        showList = articleList;
+	                        loading = false; //已经获取到文章
+	                        break;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "content-wrapper" },
-	                _react2.default.createElement(
+	                _react2.default.createElement("br", null),
+	                loading ? _react2.default.createElement(
+	                    "div",
+	                    { className: "alert alert-info", role: "alert" },
+	                    "信息正在加载,请稍后..."
+	                ) : _react2.default.createElement(
 	                    "div",
 	                    { className: "info-box" },
 	                    _react2.default.createElement(
@@ -12640,6 +12714,12 @@ webpackJsonp([0,1],[
 
 	var _actionType = __webpack_require__(94);
 
+	function addArticleList(state, data) {
+	    var lists = state.articleList;
+	    lists.push(data);
+	    return lists;
+	}
+
 	var user = function user() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
 	        articleList: [], //个人文章列表
@@ -12656,7 +12736,8 @@ webpackJsonp([0,1],[
 
 	        case _actionType.USER_RECEIVE:
 	            return _extends({}, state, {
-	                getting: false
+	                getting: false,
+	                articleList: addArticleList(state, action.data)
 	            });
 
 	        default:

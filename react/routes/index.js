@@ -75,6 +75,19 @@ const routes = (store) => {
             userId:nextState.params.id
         };
 
+        let isListExist = false;
+        const state = store.getState();
+        const lists = state.user.articleList;
+
+        for(let list of lists) {
+            if(list.userId === nextState.params.id) {
+                isListExist = true;
+                break;
+            }
+        }
+
+
+
         store.dispatch(user_getList(id));
 
     }

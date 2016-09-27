@@ -146,12 +146,7 @@ export function profile(req, res, next) {
 export function getArticleList(req, res, next) {
     User.getArticleList(req.body).then(
         function(data) {
-
-
             console.log(data);
-
-
-
         }, function(err) {
             console.log(err);
         }

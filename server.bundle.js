@@ -396,7 +396,6 @@
 	 */
 	function getArticleList(req, res, next) {
 	    _user2.default.getArticleList(req.body).then(function (data) {
-
 	        console.log(data);
 	    }, function (err) {
 	        console.log(err);
@@ -1453,6 +1452,10 @@
 
 	var _ArticleContainer2 = _interopRequireDefault(_ArticleContainer);
 
+	var _UserContainer = __webpack_require__(95);
+
+	var _UserContainer2 = _interopRequireDefault(_UserContainer);
+
 	var _LoginContainer = __webpack_require__(78);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
@@ -1466,7 +1469,11 @@
 	//注册页
 
 
-	//首页
+	//主页
+
+
+	/*容器组件*/
+	//基础库
 	var routes = function routes(store) {
 	    return _react2.default.createElement(
 	        _reactRouter.Route,
@@ -1490,17 +1497,13 @@
 	                _react2.default.createElement(_reactRouter.Route, { path: 'code', component: _CodeContainer2.default })
 	            ),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/article/:id', component: _ArticleContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/user/:id', component: _ArticleContainer2.default })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/user/:id', component: _UserContainer2.default })
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _RegisterContainer2.default })
 	    );
 	}; //登录页
-	//主页
-
-
-	/*容器组件*/
-	//基础库
+	//首页
 	exports.default = routes;
 
 /***/ },
@@ -5963,6 +5966,12 @@
 
 	var _actionType = __webpack_require__(38);
 
+	function addArticleList(state, data) {
+	    var lists = state.articleList;
+	    lists.push(data);
+	    return lists;
+	}
+
 	var user = function user() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
 	        articleList: [], //个人文章列表
@@ -5979,7 +5988,8 @@
 
 	        case _actionType.USER_RECEIVE:
 	            return _extends({}, state, {
-	                getting: false
+	                getting: false,
+	                articleList: addArticleList(state, action.data)
 	            });
 
 	        default:
@@ -5988,6 +5998,230 @@
 	};
 
 	exports.default = user;
+
+/***/ },
+/* 95 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactRedux = __webpack_require__(31);
+
+	var _User = __webpack_require__(96);
+
+	var _User2 = _interopRequireDefault(_User);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//绑定article store到Article组件
+	//function mapStateToProps(state) {
+	//    return {
+	//        articles: state.articles
+	//    }
+	//}
+
+
+	//基础库
+	exports.default = (0, _reactRedux.connect)()(_User2.default);
+
+	//action
+
+
+	//视图组件
+
+/***/ },
+/* 96 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(28);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var User = function (_Component) {
+	    _inherits(User, _Component);
+
+	    function User() {
+	        _classCallCheck(this, User);
+
+	        return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).apply(this, arguments));
+	    }
+
+	    _createClass(User, [{
+	        key: "render",
+	        value: function render() {
+
+	            var loading = true;
+	            var _props = this.props;
+	            var user = _props.user;
+	            var params = _props.params;
+
+
+	            var showList = {}; //显示的文章列表
+
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+
+	            try {
+	                for (var _iterator = user.articleList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var articleList = _step.value;
+
+	                    if (articleList.userId === params.id) {
+	                        showList = articleList;
+	                        loading = false; //已经获取到文章
+	                        break;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "content-wrapper" },
+	                _react2.default.createElement("br", null),
+	                loading ? _react2.default.createElement(
+	                    "div",
+	                    { className: "alert alert-info", role: "alert" },
+	                    "信息正在加载,请稍后..."
+	                ) : _react2.default.createElement(
+	                    "div",
+	                    { className: "info-box" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "info-box-content" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "container authors-info" },
+	                            _react2.default.createElement(
+	                                "blockquote",
+	                                null,
+	                                _react2.default.createElement(
+	                                    "p",
+	                                    { className: "module-list-item" },
+	                                    _react2.default.createElement(
+	                                        "a",
+	                                        null,
+	                                        _react2.default.createElement("img", { width: "60", height: "80", alt: "个人照片" })
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    "ul",
+	                                    { className: "module-list" },
+	                                    _react2.default.createElement(
+	                                        "li",
+	                                        { className: "module-list-item" },
+	                                        "作者:"
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "li",
+	                                        { className: "module-list-item" },
+	                                        "联系方式："
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "li",
+	                                        { className: "module-list-item" },
+	                                        "邮箱: "
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "container author-info-list" },
+	                            _react2.default.createElement(
+	                                "ul",
+	                                { className: "timeline" },
+	                                _react2.default.createElement(
+	                                    "li",
+	                                    { className: "time-label" },
+	                                    _react2.default.createElement(
+	                                        "span",
+	                                        { className: "bg-red" },
+	                                        "10 Feb. 2014"
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    "li",
+	                                    null,
+	                                    _react2.default.createElement("i", { className: "fa fa-comment-o bg-yellow" }),
+	                                    _react2.default.createElement(
+	                                        "div",
+	                                        { className: "timeline-item" },
+	                                        _react2.default.createElement(
+	                                            "span",
+	                                            { className: "time" },
+	                                            _react2.default.createElement("i", { className: "fa fa-clock-o" }),
+	                                            "4324312"
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "h3",
+	                                            { className: "timeline-header" },
+	                                            _react2.default.createElement(
+	                                                "a",
+	                                                { href: "<%= list.url %>" },
+	                                                "43214321432"
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "div",
+	                                            { className: "timeline-body" },
+	                                            "42314321......"
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            "div",
+	                                            { className: "timeline-footer" },
+	                                            _react2.default.createElement(
+	                                                "a",
+	                                                { className: "btn btn-primary btn-xs" },
+	                                                "阅读全文..."
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return User;
+	}(_react.Component);
+
+	exports.default = User;
 
 /***/ }
 /******/ ]);
