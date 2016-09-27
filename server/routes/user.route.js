@@ -17,7 +17,7 @@ router.get('/logout', logout);
 router.post('/profile/:type',profile);
 
 //获取个人文章列表
-router.post('/getList',getArticleList);
+router.get('/getList',getArticleList);
 
 
 

@@ -107,7 +107,7 @@ User.getArticleList = function(obj) {
     return new Promise((resolve, reject) => {
         db_tools.queryByCondition('user', queryObj, '-password').then(userData => {
             userData = userData[0].toObject();
-            db_tools.queryByCondition('artcile', { author: userData.author }, 'title describe createTime').then(articleData => {
+            db_tools.queryByCondition('article', { author: userData.author }, 'title describe createTime').then(articleData => {
                 userData.articleList = [];
                 articleData.forEach(function(value, index) {
                     userData.articleList.push(value.toObject());
