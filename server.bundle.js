@@ -224,6 +224,9 @@
 	//个人信息修改
 	router.post('/profile/:type', _user.profile);
 
+	//获取个人文章列表
+	router.post('/getList', _user.getArticleList);
+
 	module.exports = router;
 
 /***/ },
@@ -243,6 +246,7 @@
 	exports.register = register;
 	exports.logout = logout;
 	exports.profile = profile;
+	exports.getArticleList = getArticleList;
 
 	var _user = __webpack_require__(11);
 
@@ -382,6 +386,21 @@
 	            res.send({ status: data.status });
 	        });
 	    }
+	}
+
+	/**
+	 * 获取用户信息及相应的文章列表
+	 * @param req
+	 * @param res
+	 * @param next
+	 */
+	function getArticleList(req, res, next) {
+	    _user2.default.getArticleList(req.body).then(function (data) {
+
+	        console.log(data);
+	    }, function (err) {
+	        console.log(err);
+	    });
 	}
 
 /***/ },
@@ -919,6 +938,7 @@
 	exports.getArticle = getArticle;
 	exports.addArticle = addArticle;
 	exports.modfiyArticle = modfiyArticle;
+	exports.getImgUrl = getImgUrl;
 
 	var _express = __webpack_require__(1);
 
@@ -996,6 +1016,16 @@
 	    });
 	};
 
+	//获取文章中上传图片的url
+	function getImgUrl(req, res, next) {
+	    var query = req.query;
+	    _article2.default.getImgUrl(query).then(function (data) {
+	        res.send(data);
+	    }, function (data) {
+	        console.log(data);
+	    });
+	};
+
 /***/ },
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
@@ -1009,6 +1039,14 @@
 	var _statusMsg = __webpack_require__(18);
 
 	var _statusMsg2 = _interopRequireDefault(_statusMsg);
+
+	var _path = __webpack_require__(2);
+
+	var _path2 = _interopRequireDefault(_path);
+
+	var _fs = __webpack_require__(19);
+
+	var _fs2 = _interopRequireDefault(_fs);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1068,6 +1106,18 @@
 	    });
 	};
 
+	//获取文章中上传图片的url
+	Article.getImgUrl = function (obj) {
+	    var user_dir;
+	    _statusMsg2.default.data = [];
+	    return new Promise(function (resolve, reject) {
+	        user_dir = _path2.default.resolve('public/images', req.session.loginUser.author, obj.articleId, 'article');
+	        user_dir.forEach(function (value, index) {
+	            _statusMsg2.default.data.push(_path2.default.resolve(user_dir, value));
+	        });
+	        resolve(_statusMsg2.default);
+	    });
+	};
 	module.exports = Article;
 
 /***/ },

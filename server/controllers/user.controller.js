@@ -134,3 +134,27 @@ export function profile(req, res, next) {
         })
     }
 }
+
+
+
+/**
+ * 获取用户信息及相应的文章列表
+ * @param req
+ * @param res
+ * @param next
+ */
+export function getArticleList(req, res, next) {
+    User.getArticleList(req.body).then(
+        function(data) {
+
+
+            console.log(data);
+
+
+
+        }, function(err) {
+            console.log(err);
+        }
+    )
+}
+
