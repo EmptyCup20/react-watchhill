@@ -1,5 +1,7 @@
 ﻿import db_tools from '../../mongo/db_tools';
 import statusMsg from '../../mongo/statusMsg';
+import path from 'path';
+import fs form 'fs';
 var Article = function() {};
 
 //获取文章列表
@@ -60,4 +62,16 @@ Article.modfiyArticle = function(obj) {
     });
 };
 
+//获取文章中上传图片的url
+Article.getImgUrl = function(obj){
+    var user_dir;
+    statusMsg.data = [];
+    return new Promise((resolve,reject)=>{
+        user_dir = path.resolve('public/images',req.session.loginUser.author,obj.articleId,'article');
+        user_dir.forEach(function(value,index){
+            statusMsg.data.push(path.resolve(user_dir,value));
+        });
+        resolve(statusMsg);
+    });
+};
 module.exports = Article;
