@@ -78,36 +78,45 @@ export default class AddArticle extends Component{
         );
     }
     componentDidMount(){
+        var _this = this;
         var imgUrl = {
             filename : '',
             url : ''
         };
         var files = [];
 
+        //初始化文件插件
         $('#imgUrl').fileinput({
             language: "zh",
             allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
             uploadAsync: true,
             maxFileCount: 1,
             uploadUrl: '/article/uploadimg',
-            uploadExtraData: {
-                type:'cover',
-                articleId:this.props.addArticle.articleId
+            uploadExtraData : function (previewId, index) {
+                var obj = {
+                    type:'cover',
+                    articleId:_this.props.addArticle.articleId
+                };
+                return obj;
             }
+
         });
-        //初始化文章的表单
         $('#articleFile').fileinput({
             language: "zh",
             allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
             uploadAsync: true,
             maxFileSize:200,
             uploadUrl: '/article/uploadimg',
-            uploadExtraData: {
-                type:'article',
-                articleId:this.props.addArticle.articleId
+            uploadExtraData : function (previewId, index) {
+                var obj = {
+                    type:'article',
+                    articleId:_this.props.addArticle.articleId
+                };
+                return obj;
             }
         });
 
+        //文件上传事件
         $('#imgUrl').on('fileuploaded', function(event, data, previewId, index){
             imgUrl.filename = data.filenames[0];
             imgUrl.url = data.response.data.url;
@@ -116,6 +125,24 @@ export default class AddArticle extends Component{
         $('#articleFile').on('fileuploaded', function(event, data, previewId, index){
             files = data.files;
         });
+
+        //文件上传，ajax数据添加
+        // $('#imgUrl').on('filepreajax', function(event, previewId, index) {
+        //     $('#imgUrl').fileinput({
+        //         uploadExtraData: {
+        //             type:'cover',
+        //             articleId:_this.props.addArticle.articleId
+        //         }
+        //     });
+        // });
+        // $('#articleFile').on('filepreajax', function(event, previewId, index) {
+        //     $('#articleFile').fileinput({
+        //         uploadExtraData: {
+        //             type:'article',
+        //             articleId:_this.props.addArticle.articleId
+        //         }
+        //     });
+        // });
 
         $('#article-add').click(function(e){
             if($(e.target).parent().attr('class').indexOf('clear')>-1){

@@ -31,7 +31,7 @@ export function addArticle(req, res, next) {
         article_dir;
     article.addArticle(query).then(function(data) {
         //创建以文章标题为名称的文件夹
-        article_dir = path.resolve('public/images', req.session.loginUser.author, 'article',data.data.title);
+        article_dir = path.resolve('public/images', req.session.loginUser.author, 'article',data.data._id.toHexString());
         if (data.code == 0) {
             fs.mkdir(article_dir, err => {
                 res.send(data);
