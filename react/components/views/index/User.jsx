@@ -1,4 +1,5 @@
-import React,{ Component } from 'react'
+import React,{ Component } from 'react';
+import { Link } from 'react-router';
 
 export default class User extends Component{
 
@@ -6,13 +7,14 @@ export default class User extends Component{
 
         let loading = true;
         const { user,params } = this.props;
+        const  lists  = user.articleList;
 
         let showList = {};   //显示的文章列表
 
-        for(let articleList of user.articleList) {
-            if(articleList.userId === params.id) {
+        for(let articleList of lists) {
+            if(articleList._id === params.id) {
                 showList = articleList;
-                loading = false;        //已经获取到文章
+                loading = false;        //已经获取到用户列表
                 break;
             }
         }
@@ -34,12 +36,15 @@ export default class User extends Component{
                             <div className="info-box-content">
                                 <div className="container authors-info">
                                     <blockquote>
-                                        <p className="module-list-item"><a><img width="60" height="80" alt="个人照片" /></a>
+                                        <p className="module-list-item">
+                                            <a>
+                                                <img class="img-circle" width="60" height="80" alt="个人照片" />
+                                            </a>
                                         </p>
                                         <ul className="module-list">
-                                            <li className="module-list-item">作者:</li>
-                                            <li className="module-list-item">联系方式：</li>
-                                            <li className="module-list-item">邮箱: </li>
+                                            <li className="module-list-item">作者:{showList.author}</li>
+                                            <li className="module-list-item">联系方式：{showList.tel}</li>
+                                            <li className="module-list-item">邮箱: {showList.email}</li>
                                         </ul>
                                     </blockquote>
                                 </div>
@@ -50,27 +55,36 @@ export default class User extends Component{
                                                 10 Feb. 2014
                                             </span>
                                         </li>
-                                        <li>
-                                            <i className="fa fa-comment-o bg-yellow" />
-                                            <div className="timeline-item">
-                                                <span className="time"><i className="fa fa-clock-o" />4324312</span>
-                                                <h3 className="timeline-header"><a href="<%= list.url %>">43214321432</a></h3>
+                                        {
+                                            showList.articleList.map(function(article,index,lists) {
+                                                return (
+                                                    <li key={article._id}>
+                                                        <i className="fa fa-comment-o bg-yellow" />
+                                                        <div className="timeline-item">
+                                                            <span className="time"><i className="fa fa-clock-o" />article.createTime</span>
+                                                            <h3 className="timeline-header">
+                                                                <Link to={'/article/' + article._id}>
+                                                                    {article.title}
+                                                                </Link>
+                                                            </h3>
 
-                                                <div className="timeline-body">
-                                                    42314321......
-                                                </div>
+                                                            <div className="timeline-body">
+                                                                {article.describe}
+                                                            </div>
 
-                                                <div className="timeline-footer">
-                                                    <a className="btn btn-primary btn-xs">阅读全文...</a>
-                                                </div>
+                                                            <div className="timeline-footer">
+                                                                <Link to={'/article/' + article._id} className="btn btn-primary btn-xs">阅读全文...</Link>
+                                                            </div>
 
-                                            </div>
-                                        </li>
+                                                        </div>
+                                                    </li>
+                                                )
+                                            })
+                                        }
                                     </ul>
                                 </div>
                             </div>
                         </div>
-
                 }
             </div>
         )
