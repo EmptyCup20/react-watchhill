@@ -144,9 +144,13 @@ export function profile(req, res, next) {
  * @param next
  */
 export function getArticleList(req, res, next) {
-    User.getArticleList(req.body).then(
+    User.getArticleList(req.query).then(
         function(data) {
+<<<<<<< HEAD
             console.log(data);
+=======
+            res.send(data);
+>>>>>>> 379e5ee583638c8854b9a360b72468c43063617e
         }, function(err) {
             console.log(err);
         }

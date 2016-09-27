@@ -22,7 +22,7 @@ Article.getArticleList = function(obj) {
 //获取文章内容及作者信息(byArticleId)
 Article.getArticle = function(obj) {
     var queryObj = {
-        _id:obj.articleId
+        _id: obj.articleId
     };
     return new Promise((resolve, reject) => {
         db_tools.queryByCondition('article', queryObj, 'content author').then(articleData => {
@@ -63,15 +63,18 @@ Article.modfiyArticle = function(obj) {
 };
 
 //获取文章中上传图片的url
-Article.getImgUrl = function(obj){
+Article.getImgUrl = function(obj) {
     var user_dir;
-    statusMsg.data = [];
-    return new Promise((resolve,reject)=>{
-        user_dir = path.resolve('public/images',req.session.loginUser.author,obj.articleId,'article');
-        user_dir.forEach(function(value,index){
-            statusMsg.data.push(path.resolve(user_dir,value));
+    statusMsg.successMsg.data = [];
+    return new Promise((resolve, reject) => {
+        user_dir = path.resolve('public/images', req.session.loginUser.author, 'article', obj.articleId);
+        fs.readdir(user_dir, (err, data) => {
+            data.forEach(function(value, index) {
+                statusMsg.successMsg.data.push(path.resolve(user_dir, value));
+            });
+            resolve(statusMsg.successMsg);
         });
-        resolve(statusMsg);
+
     });
 };
 module.exports = Article;
