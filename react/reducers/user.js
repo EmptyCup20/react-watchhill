@@ -1,6 +1,12 @@
 import { USER_REQUEST,USER_RECEIVE } from '../constants/actionType';
 
 
+function addArticleList(state,data) {
+    let lists = state.articleList;
+    lists.push(data);
+    return lists;
+}
+
 
 const user = (state = {
     articleList:[],             //个人文章列表
@@ -17,7 +23,8 @@ const user = (state = {
         case USER_RECEIVE:
             return {
                 ...state,
-                getting:false
+                getting:false,
+                articleList:addArticleList(state,action.data)
             };
 
         default:

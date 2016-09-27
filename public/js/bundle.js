@@ -7781,7 +7781,41 @@ webpackJsonp([0,1],[
 	            userId: nextState.params.id
 	        };
 
-	        store.dispatch((0, _user.user_getList)(id));
+	        var isListExist = false;
+	        var state = store.getState();
+	        var lists = state.user.articleList;
+
+	        var _iteratorNormalCompletion2 = true;
+	        var _didIteratorError2 = false;
+	        var _iteratorError2 = undefined;
+
+	        try {
+	            for (var _iterator2 = lists[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                var list = _step2.value;
+
+	                if (list._id === nextState.params.id) {
+	                    isListExist = true;
+	                    break;
+	                }
+	            }
+	        } catch (err) {
+	            _didIteratorError2 = true;
+	            _iteratorError2 = err;
+	        } finally {
+	            try {
+	                if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                    _iterator2.return();
+	                }
+	            } finally {
+	                if (_didIteratorError2) {
+	                    throw _iteratorError2;
+	                }
+	            }
+	        }
+
+	        if (!isListExist) {
+	            store.dispatch((0, _user.user_getList)(id));
+	        }
 	    }
 
 	    return _react2.default.createElement(
@@ -11034,11 +11068,6 @@ webpackJsonp([0,1],[
 	                                            null,
 	                                            '更多文章...'
 	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'box-img' },
-	                                        _react2.default.createElement('img', { src: showArticle.codeUrl, alt: '扫二维码' })
 	                                    )
 	                                )
 	                            )
@@ -11051,6 +11080,16 @@ webpackJsonp([0,1],[
 	                            'div',
 	                            { className: 'content-wrapper bg-content' },
 	                            _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: showArticle.content } })
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'jumbotron' },
+	                            _react2.default.createElement(
+	                                'p',
+	                                null,
+	                                '扫二维码'
+	                            ),
+	                            _react2.default.createElement('img', { src: showArticle.codeUrl, alt: '扫二维码' })
 	                        )
 	                    )
 	                )
@@ -11070,7 +11109,7 @@ webpackJsonp([0,1],[
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _reactRedux = __webpack_require__(67);
@@ -11081,27 +11120,25 @@ webpackJsonp([0,1],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//绑定article store到Article组件
-	//function mapStateToProps(state) {
-	//    return {
-	//        articles: state.articles
-	//    }
-	//}
-
-
+	//绑定user store到user组件
 	//基础库
-	exports.default = (0, _reactRedux.connect)()(_User2.default);
+	function mapStateToProps(state) {
+	    return {
+	        user: state.user
+	    };
+	}
 
 	//action
 
 
 	//视图组件
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_User2.default);
 
 /***/ },
 /* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -11112,6 +11149,8 @@ webpackJsonp([0,1],[
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(3);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11131,107 +11170,155 @@ webpackJsonp([0,1],[
 	    }
 
 	    _createClass(User, [{
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 
+	            var loading = true;
+	            var _props = this.props;
+	            var user = _props.user;
+	            var params = _props.params;
+
+	            var lists = user.articleList;
+
+	            var showList = {}; //显示的文章列表
+
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+
+	            try {
+	                for (var _iterator = lists[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var articleList = _step.value;
+
+	                    if (articleList._id === params.id) {
+	                        showList = articleList;
+	                        loading = false; //已经获取到用户列表
+	                        break;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "content-wrapper" },
-	                _react2.default.createElement(
-	                    "div",
-	                    { className: "info-box" },
+	                'div',
+	                { className: 'content-wrapper' },
+	                _react2.default.createElement('br', null),
+	                loading ? _react2.default.createElement(
+	                    'div',
+	                    { className: 'alert alert-info', role: 'alert' },
+	                    '信息正在加载,请稍后...'
+	                ) : _react2.default.createElement(
+	                    'div',
+	                    { className: 'info-box' },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "info-box-content" },
+	                        'div',
+	                        { className: 'info-box-content' },
 	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "container authors-info" },
+	                            'div',
+	                            { className: 'container authors-info' },
 	                            _react2.default.createElement(
-	                                "blockquote",
+	                                'blockquote',
 	                                null,
 	                                _react2.default.createElement(
-	                                    "p",
-	                                    { className: "module-list-item" },
+	                                    'p',
+	                                    { className: 'module-list-item' },
 	                                    _react2.default.createElement(
-	                                        "a",
+	                                        'a',
 	                                        null,
-	                                        _react2.default.createElement("img", { width: "60", height: "80", alt: "个人照片" })
+	                                        _react2.default.createElement('img', { src: showList.avatarUrl, 'class': 'img-circle', width: '60', height: '80', alt: '个人照片' })
 	                                    )
 	                                ),
 	                                _react2.default.createElement(
-	                                    "ul",
-	                                    { className: "module-list" },
+	                                    'ul',
+	                                    { className: 'module-list' },
 	                                    _react2.default.createElement(
-	                                        "li",
-	                                        { className: "module-list-item" },
-	                                        "作者:"
+	                                        'li',
+	                                        { className: 'module-list-item' },
+	                                        '作者:',
+	                                        showList.author
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "li",
-	                                        { className: "module-list-item" },
-	                                        "联系方式："
+	                                        'li',
+	                                        { className: 'module-list-item' },
+	                                        '联系方式：',
+	                                        showList.tel
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "li",
-	                                        { className: "module-list-item" },
-	                                        "邮箱: "
+	                                        'li',
+	                                        { className: 'module-list-item' },
+	                                        '邮箱: ',
+	                                        showList.email
 	                                    )
 	                                )
 	                            )
 	                        ),
 	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "container author-info-list" },
+	                            'div',
+	                            { className: 'container author-info-list' },
 	                            _react2.default.createElement(
-	                                "ul",
-	                                { className: "timeline" },
+	                                'ul',
+	                                { className: 'timeline' },
 	                                _react2.default.createElement(
-	                                    "li",
-	                                    { className: "time-label" },
+	                                    'li',
+	                                    { className: 'time-label' },
 	                                    _react2.default.createElement(
-	                                        "span",
-	                                        { className: "bg-red" },
-	                                        "10 Feb. 2014"
+	                                        'span',
+	                                        { className: 'bg-red' },
+	                                        '10 Feb. 2014'
 	                                    )
 	                                ),
-	                                _react2.default.createElement(
-	                                    "li",
-	                                    null,
-	                                    _react2.default.createElement("i", { className: "fa fa-comment-o bg-yellow" }),
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "timeline-item" },
+	                                showList.articleList.map(function (article, index, lists) {
+	                                    return _react2.default.createElement(
+	                                        'li',
+	                                        { key: article._id },
+	                                        _react2.default.createElement('i', { className: 'fa fa-comment-o bg-yellow' }),
 	                                        _react2.default.createElement(
-	                                            "span",
-	                                            { className: "time" },
-	                                            _react2.default.createElement("i", { className: "fa fa-clock-o" }),
-	                                            "4324312"
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            "h3",
-	                                            { className: "timeline-header" },
+	                                            'div',
+	                                            { className: 'timeline-item' },
 	                                            _react2.default.createElement(
-	                                                "a",
-	                                                { href: "<%= list.url %>" },
-	                                                "43214321432"
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            { className: "timeline-body" },
-	                                            "42314321......"
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            { className: "timeline-footer" },
+	                                                'span',
+	                                                { className: 'time' },
+	                                                _react2.default.createElement('i', { className: 'fa fa-clock-o' }),
+	                                                'article.createTime'
+	                                            ),
 	                                            _react2.default.createElement(
-	                                                "a",
-	                                                { className: "btn btn-primary btn-xs" },
-	                                                "阅读全文..."
+	                                                'h3',
+	                                                { className: 'timeline-header' },
+	                                                _react2.default.createElement(
+	                                                    _reactRouter.Link,
+	                                                    { to: '/article/' + article._id },
+	                                                    article.title
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'timeline-body' },
+	                                                article.describe
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'timeline-footer' },
+	                                                _react2.default.createElement(
+	                                                    _reactRouter.Link,
+	                                                    { to: '/article/' + article._id, className: 'btn btn-primary btn-xs' },
+	                                                    '阅读全文...'
+	                                                )
 	                                            )
 	                                        )
-	                                    )
-	                                )
+	                                    );
+	                                })
 	                            )
 	                        )
 	                    )
@@ -12897,6 +12984,12 @@ webpackJsonp([0,1],[
 
 	var _actionType = __webpack_require__(99);
 
+	function addArticleList(state, data) {
+	    var lists = state.articleList;
+	    lists.push(data);
+	    return lists;
+	}
+
 	var user = function user() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
 	        articleList: [], //个人文章列表
@@ -12913,7 +13006,8 @@ webpackJsonp([0,1],[
 
 	        case _actionType.USER_RECEIVE:
 	            return _extends({}, state, {
-	                getting: false
+	                getting: false,
+	                articleList: addArticleList(state, action.data)
 	            });
 
 	        default:
