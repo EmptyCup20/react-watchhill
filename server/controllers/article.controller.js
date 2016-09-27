@@ -2,7 +2,10 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import article from '../proxy/article';
-var router = express.Router();
+
+import showdown from 'showdown';
+const converter = new showdown.Converter();
+
 
 
 //获取文章列表
@@ -19,7 +22,12 @@ export function getArticleList(req, res, next) {
 export function getArticle(req, res, next) {
     var query = req.body;
     article.getArticle(query).then(function(data) {
-        res.send(data);
+        let articleContent = {
+            ...data.userInfo,
+            content:converter.makeHtml(data.content)
+        };
+        res.send(articleContent);
+
     }, function(data) {
         console.log(data);
     });

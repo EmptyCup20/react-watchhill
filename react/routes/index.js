@@ -4,7 +4,6 @@ import { Route, IndexRoute } from 'react-router';
 
 /*容器组件*/
 import AppContainer from '../components/containers/AppContainer';           //首页
-
 import IndexContainer from '../components/containers/IndexContainer';       //主页
     import HomeContainer from '../components/containers/HomeContainer';
     import AboutContainer from '../components/containers/AboutContainer';
@@ -17,7 +16,6 @@ import IndexContainer from '../components/containers/IndexContainer';       //�
         import AvatarContainer from '../components/containers/AvatarContainer';
         import PassContainer from '../components/containers/PassContainer';
     import ArticleContainer from '../components/containers/ArticleContainer';
-
 import LoginContainer from '../components/containers/LoginContainer';       //登录页
 import RegisterContainer from '../components/containers/RegisterContainer'; //注册页
 
@@ -51,11 +49,22 @@ const routes = (store) => {
             articleId:nextState.params.id
         };
 
-        store.dispatch(article_getContent(id));
+        let isContentExist = false;
+
+        const state = store.getState();
+        const lists = state.articles.contentList;
+
+        for(let article of lists) {
+            if(article._id === nextState.params.id) {
+                isContentExist = true;
+                break;
+            }
+        }
+
+        if(!isContentExist) {   //如果文章不存在,则ajax获取文章
+            store.dispatch(article_getContent(id));
+        }
     }
-
-
-
 
 
     return(
