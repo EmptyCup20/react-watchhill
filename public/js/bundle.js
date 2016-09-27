@@ -9486,11 +9486,11 @@ webpackJsonp([0,1],[
 	                                                null,
 	                                                _react2.default.createElement(
 	                                                    'div',
-	                                                    { className: 'btn btn-primary' },
+	                                                    { className: 'btn btn-primary', id: 'getFileUrl' },
 	                                                    '获取图片的url路径'
 	                                                )
 	                                            ),
-	                                            _react2.default.createElement('ul', null)
+	                                            _react2.default.createElement('ul', { id: 'urlList' })
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
@@ -9564,26 +9564,10 @@ webpackJsonp([0,1],[
 
 	            $('#articleFile').on('fileuploaded', function (event, data, previewId, index) {
 	                files = data.files;
+	                var files = $('#articleFile').fileinput('getFileStack');
 	            });
 
-	            //文件上传，ajax数据添加
-	            // $('#imgUrl').on('filepreajax', function(event, previewId, index) {
-	            //     $('#imgUrl').fileinput({
-	            //         uploadExtraData: {
-	            //             type:'cover',
-	            //             articleId:_this.props.addArticle.articleId
-	            //         }
-	            //     });
-	            // });
-	            // $('#articleFile').on('filepreajax', function(event, previewId, index) {
-	            //     $('#articleFile').fileinput({
-	            //         uploadExtraData: {
-	            //             type:'article',
-	            //             articleId:_this.props.addArticle.articleId
-	            //         }
-	            //     });
-	            // });
-
+	            //清空事件
 	            $('#article-add').click(function (e) {
 	                if ($(e.target).parent().attr('class').indexOf('clear') > -1) {
 	                    $('#atricleTitle').val('');
@@ -9593,6 +9577,9 @@ webpackJsonp([0,1],[
 	                    $('#text-input').val('');
 	                }
 	            });
+
+	            //获取图片路径
+	            $('#getFileUrl').click(function (e) {});
 	        }
 	    }]);
 

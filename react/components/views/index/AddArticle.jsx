@@ -53,9 +53,9 @@ export default class AddArticle extends Component{
                                         <p className="help-block">请选择.jpg.jpeg.png.gif格式的文件上传</p>
                                         <div className="btn-group">
                                            <div>
-                                               <div className="btn btn-primary">获取图片的url路径</div>
+                                               <div className="btn btn-primary" id="getFileUrl">获取图片的url路径</div>
                                            </div>
-                                            <ul>
+                                            <ul id="urlList">
                                             </ul>
                                         </div>
                                     </div>
@@ -124,26 +124,10 @@ export default class AddArticle extends Component{
 
         $('#articleFile').on('fileuploaded', function(event, data, previewId, index){
             files = data.files;
+            var files = $('#articleFile').fileinput('getFileStack');
         });
 
-        //文件上传，ajax数据添加
-        // $('#imgUrl').on('filepreajax', function(event, previewId, index) {
-        //     $('#imgUrl').fileinput({
-        //         uploadExtraData: {
-        //             type:'cover',
-        //             articleId:_this.props.addArticle.articleId
-        //         }
-        //     });
-        // });
-        // $('#articleFile').on('filepreajax', function(event, previewId, index) {
-        //     $('#articleFile').fileinput({
-        //         uploadExtraData: {
-        //             type:'article',
-        //             articleId:_this.props.addArticle.articleId
-        //         }
-        //     });
-        // });
-
+        //清空事件
         $('#article-add').click(function(e){
             if($(e.target).parent().attr('class').indexOf('clear')>-1){
                 $('#atricleTitle').val('');
@@ -152,6 +136,11 @@ export default class AddArticle extends Component{
                 $('#articleFile').fileinput('clear');
                 $('#text-input').val('');
             }
+        });
+
+        //获取图片路径
+        $('#getFileUrl').click(function(e){
+            
         });
 
     }
