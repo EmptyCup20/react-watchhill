@@ -74,6 +74,10 @@ function ajax() {
         //获取个人文章列表
         user: function(data) {
             return req('GET','/user/getList',data)
+        },
+        //保存文章
+        save_article: function(data){
+            return req('POST','/article/modfiyArticle',data)
         }
 
 

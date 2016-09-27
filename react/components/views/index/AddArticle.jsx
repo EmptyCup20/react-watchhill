@@ -18,6 +18,15 @@ export default class AddArticle extends Component{
     add_del(){
         this.props.addTempArticle(this.props.addArticle);
     }
+    save_article(){
+        var obj = {
+            articleId=this.props.addArticle.articleId,
+            title=this.props.addArticle.title,
+            describe=this.props.addArticle.describe,
+            content=this.props.addArticle.preview
+        }
+        this.props.save_article(obj);
+    }
 
     render(){
         const { preview, addArticle } = this.props
@@ -65,7 +74,7 @@ export default class AddArticle extends Component{
                                         <Markdown preview={preview} addArticle={addArticle}></Markdown>
                                     </div>
 
-                                    <button type="button" id="article-upload" className="btn-primary btn-block btn-flat btn button">保存</button>
+                                    <button type="button" id="article-upload" className="btn-primary btn-block btn-flat btn button" onClick = { this.save_article.bind(this) } >保存</button>
                                 </div>
 
                             </form>
