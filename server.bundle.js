@@ -1104,9 +1104,11 @@
 	            return;
 	        }
 	        //临时目录
-	        imgUrl = _path2.default.resolve('public/images', req.session.loginUser.author, 'article', fields.articleId, files.imgUrl.name);
+	        var fileName = files.imgUrl ? files.imgUrl.name : files.articleFile.name;
+	        var filePath = files.imgUrl ? files.imgUrl.path : files.articleFile.path;
+	        imgUrl = _path2.default.resolve('public/images', req.session.loginUser.author, 'article', fields.articleId, fileName);
 	        //读取文件
-	        _fs2.default.writeFile(imgUrl, _fs2.default.readFileSync(files.imgUrl.path), function (err) {
+	        _fs2.default.writeFile(imgUrl, _fs2.default.readFileSync(filePath), function (err) {
 	            if (err) {
 	                res.send(err);
 	                return;

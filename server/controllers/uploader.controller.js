@@ -20,9 +20,11 @@ export function uploaderImg(req, res, next) {
             return;
         }
         //临时目录
-        imgUrl = path.resolve('public/images', req.session.loginUser.author, 'article', fields.articleId, files.imgUrl.name);
+        var fileName = files.imgUrl?files.imgUrl.name:files.articleFile.name;
+        var filePath = files.imgUrl?files.imgUrl.path:files.articleFile.path;
+        imgUrl = path.resolve('public/images', req.session.loginUser.author, 'article', fields.articleId, fileName);
         //读取文件
-        fs.writeFile(imgUrl, fs.readFileSync(files.imgUrl.path), (err) => {
+        fs.writeFile(imgUrl, fs.readFileSync(filePath), (err) => {
             if (err) {
                 res.send(err);
                 return;
