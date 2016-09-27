@@ -90,12 +90,23 @@ User.modifyPwd = function(obj) {
 //修改用户资料
 User.modfiyUserData = function(obj) {
     return new Promise((resolve, reject) => {
-        db_tools.edit('user',obj).then(data=>{
+        db_tools.edit('user', obj).then(data => {
             resolve(data);
-        },err=>{    
+        }, err => {
             reject(err);
         });
     });
-}
+};
 
+
+//获取该用户的所有文章列表
+User.getArticleList = function(obj) {
+    return new Promise((resolve, reject) => {
+        db_tools.queryByCondition('article',obj,'title describe createTime').then(data =>{
+            resolve(data);
+        },err=>{
+            reject(err);
+        });
+    });
+};
 module.exports = User;
