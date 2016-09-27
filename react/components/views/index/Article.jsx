@@ -1,4 +1,5 @@
-import React,{ Component } from 'react'
+import React,{ Component } from 'react';
+import { Link } from 'react-router';
 
 export default class Article extends Component{
 
@@ -50,7 +51,7 @@ export default class Article extends Component{
                                                     <a className="pull-right" title={showArticle.email} href={"mailto:"+ showArticle.email}>{showArticle.email}</a>
                                                 </li>
                                             </ul>
-                                            <a className="btn btn-primary btn-block"><b>更多文章...</b></a>
+                                            <Link to={'/user/' + showArticle.userId} className="btn btn-primary btn-block"><b>更多文章...</b></Link>
                                             <div className="box-img">
                                                 <img  src={showArticle.codeUrl} alt="扫二维码" />
                                             </div>

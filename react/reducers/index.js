@@ -11,13 +11,18 @@ import articles from './articles';
 import addArticle from './addArticle'
 //个人中心-用户修改
 import profile from './profile';
+//个人文章列表
+import user from './user';
+
+
 
 const reducer = combineReducers({
 	login,
 	register,
 	articles,
 	addArticle,
-	profile
+	profile,
+	user
 });
 
 export default reducer;

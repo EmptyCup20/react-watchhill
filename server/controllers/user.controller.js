@@ -112,7 +112,6 @@ export function profile(req, res, next) {
     let query = req.body;
     query.userId = req.session.loginUser._id;
 
-    console.log(query);
 
     //修改密码
     if (req.params.type === 'pass') {

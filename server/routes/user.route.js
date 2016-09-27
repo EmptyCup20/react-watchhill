@@ -13,9 +13,11 @@ router.post('/register',register);
 //注销
 router.get('/logout', logout);
 
-
 //个人信息修改
 router.post('/profile/:type',profile);
+
+
+
 
 
 

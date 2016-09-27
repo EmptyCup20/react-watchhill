@@ -38,6 +38,7 @@ const routes = (store) => {
                     <Route path="code" component={CodeContainer} />
                 </Route>
                 <Route path="/article/:id" component={ArticleContainer} />
+                <Route path="/user/:id"  component={ArticleContainer} />
             </Route>
             <Route path="/login"  component={LoginContainer}/>
             <Route path="/register"  component={RegisterContainer}/>

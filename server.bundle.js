@@ -364,8 +364,6 @@
 	    var query = req.body;
 	    query.userId = req.session.loginUser._id;
 
-	    console.log(query);
-
 	    //修改密码
 	    if (req.params.type === 'pass') {
 	        _user2.default.modifyPwd(query).then(function (data) {
@@ -1419,7 +1417,8 @@
 	                _react2.default.createElement(_reactRouter.Route, { path: 'avatar', component: _AvatarContainer2.default }),
 	                _react2.default.createElement(_reactRouter.Route, { path: 'code', component: _CodeContainer2.default })
 	            ),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/article/:id', component: _ArticleContainer2.default })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/article/:id', component: _ArticleContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/user/:id', component: _ArticleContainer2.default })
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginContainer2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _RegisterContainer2.default })
@@ -1667,6 +1666,10 @@
 	    ARTICLE_REQUEST: 'ARTICLE_REQUEST', //挂起获取文章请求
 	    ARTICLE_RECEIVE: 'ARTICLE_RECEIVE', //获取文章内容处理
 
+	    //user
+	    USER_REQUEST: 'USER_REQUEST', //获取个人文章列表
+	    USER_RECEIVE: 'USER_RECEIVE',
+
 	    //addArticle
 	    PREVIEW: 'PREVIEW', //预览功能
 	    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE', //新增文章
@@ -1779,6 +1782,11 @@
 	        //删除文章
 	        delArticle: function delArticle(data) {
 	            return req('POST', '/article/delArticle', data);
+	        },
+
+	        //获取个人文章列表
+	        user: function user(data) {
+	            return req('POST', '/user/getList', data);
 	        }
 
 	    };
@@ -2041,7 +2049,7 @@
 	                                                    { className: 'user-header' },
 	                                                    _react2.default.createElement(
 	                                                        _reactRouter.Link,
-	                                                        { to: '#' },
+	                                                        { to: '/user/' + login.loginUser._id },
 	                                                        _react2.default.createElement('img', { src: login.loginUser.avatarUrl, className: 'img-circle', alt: 'user image' })
 	                                                    ),
 	                                                    _react2.default.createElement(
@@ -4461,7 +4469,7 @@
 /* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -4472,6 +4480,8 @@
 	var _react = __webpack_require__(28);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(30);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4491,7 +4501,7 @@
 	    }
 
 	    _createClass(Article, [{
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            var _props = this.props;
 	            var articles = _props.articles;
@@ -4530,105 +4540,105 @@
 	            }
 
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "container" },
-	                _react2.default.createElement("br", null),
+	                'div',
+	                { className: 'container' },
+	                _react2.default.createElement('br', null),
 	                loading ? _react2.default.createElement(
-	                    "div",
-	                    { className: "alert alert-info", role: "alert" },
-	                    "文章正在加载,请稍后..."
+	                    'div',
+	                    { className: 'alert alert-info', role: 'alert' },
+	                    '文章正在加载,请稍后...'
 	                ) : _react2.default.createElement(
-	                    "div",
-	                    { className: "row" },
+	                    'div',
+	                    { className: 'row' },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "col-lg-4 col-md-4 col-sm-12" },
+	                        'div',
+	                        { className: 'col-lg-4 col-md-4 col-sm-12' },
 	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "module-categories module" },
+	                            'div',
+	                            { className: 'module-categories module' },
 	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "box box-primary row" },
+	                                'div',
+	                                { className: 'box box-primary row' },
 	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "box-body box-profile col-sm-12 col-md-12 col-lg-12" },
+	                                    'div',
+	                                    { className: 'box-body box-profile col-sm-12 col-md-12 col-lg-12' },
 	                                    _react2.default.createElement(
-	                                        "a",
+	                                        'a',
 	                                        null,
-	                                        _react2.default.createElement("img", { src: showArticle.avatarUrl, className: "profile-user-img img-responsive img-circle", alt: "个人照片" })
+	                                        _react2.default.createElement('img', { src: showArticle.avatarUrl, className: 'profile-user-img img-responsive img-circle', alt: '个人照片' })
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "h3",
-	                                        { className: "profile-username text-center" },
+	                                        'h3',
+	                                        { className: 'profile-username text-center' },
 	                                        showArticle.author
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "p",
-	                                        { className: "text-muted text-center" },
+	                                        'p',
+	                                        { className: 'text-muted text-center' },
 	                                        showArticle.brief
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "p",
-	                                        { className: "text-muted text-center" },
+	                                        'p',
+	                                        { className: 'text-muted text-center' },
 	                                        showArticle.team
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "ul",
-	                                        { className: "list-group list-group-unbordered" },
+	                                        'ul',
+	                                        { className: 'list-group list-group-unbordered' },
 	                                        _react2.default.createElement(
-	                                            "li",
-	                                            { className: "list-group-item" },
+	                                            'li',
+	                                            { className: 'list-group-item' },
 	                                            _react2.default.createElement(
-	                                                "b",
+	                                                'b',
 	                                                null,
-	                                                "联系方式:"
+	                                                '联系方式:'
 	                                            ),
 	                                            _react2.default.createElement(
-	                                                "a",
-	                                                { className: "pull-right", title: showArticle.tel },
+	                                                'a',
+	                                                { className: 'pull-right', title: showArticle.tel },
 	                                                showArticle.tel
 	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
-	                                            "li",
-	                                            { className: "list-group-item" },
+	                                            'li',
+	                                            { className: 'list-group-item' },
 	                                            _react2.default.createElement(
-	                                                "b",
+	                                                'b',
 	                                                null,
-	                                                "邮箱:"
+	                                                '邮箱:'
 	                                            ),
 	                                            _react2.default.createElement(
-	                                                "a",
-	                                                { className: "pull-right", title: showArticle.email, href: "mailto:" + showArticle.email },
+	                                                'a',
+	                                                { className: 'pull-right', title: showArticle.email, href: "mailto:" + showArticle.email },
 	                                                showArticle.email
 	                                            )
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "a",
-	                                        { className: "btn btn-primary btn-block" },
+	                                        _reactRouter.Link,
+	                                        { to: '/user/' + showArticle.userId, className: 'btn btn-primary btn-block' },
 	                                        _react2.default.createElement(
-	                                            "b",
+	                                            'b',
 	                                            null,
-	                                            "更多文章..."
+	                                            '更多文章...'
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "box-img" },
-	                                        _react2.default.createElement("img", { src: showArticle.codeUrl, alt: "扫二维码" })
+	                                        'div',
+	                                        { className: 'box-img' },
+	                                        _react2.default.createElement('img', { src: showArticle.codeUrl, alt: '扫二维码' })
 	                                    )
 	                                )
 	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "col-lg-8 col-md-8 col-sm-12" },
+	                        'div',
+	                        { className: 'col-lg-8 col-md-8 col-sm-12' },
 	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "content-wrapper bg-content" },
-	                            _react2.default.createElement("div", { dangerouslySetInnerHTML: { __html: showArticle.content } })
+	                            'div',
+	                            { className: 'content-wrapper bg-content' },
+	                            _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: showArticle.content } })
 	                        )
 	                    )
 	                )
@@ -5521,25 +5531,32 @@
 
 	var _profile2 = _interopRequireDefault(_profile);
 
+	var _user = __webpack_require__(94);
+
+	var _user2 = _interopRequireDefault(_user);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//添加文章
-
-	//注册
-	//基础库
-	var reducer = (0, _redux.combineReducers)({
-		login: _login2.default,
-		register: _register2.default,
-		articles: _articles2.default,
-		addArticle: _addArticle2.default,
-		profile: _profile2.default
-	});
 	//个人中心-用户修改
 
 	//文章
 
 
 	//登录
+	var reducer = (0, _redux.combineReducers)({
+		login: _login2.default,
+		register: _register2.default,
+		articles: _articles2.default,
+		addArticle: _addArticle2.default,
+		profile: _profile2.default,
+		user: _user2.default
+	});
+	//个人文章列表
+
+	//添加文章
+
+	//注册
+	//基础库
 	exports.default = reducer;
 
 /***/ },
@@ -5859,6 +5876,40 @@
 	};
 
 	exports.default = profile;
+
+/***/ },
+/* 94 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _actionType = __webpack_require__(38);
+
+	var user = function user() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
+	        articleList: [], //个人文章列表
+	        getting: false //有没有正在获取文章内容列表
+	    } : arguments[0];
+	    var action = arguments[1];
+
+
+	    switch (action.type) {
+	        case _actionType.USER_REQUEST:
+	            return _extends({}, state, {
+	                getting: true
+	            });
+
+	        case _actionType.USER_RECEIVE:
+	            return _extends({}, state, {
+	                getting: false
+	            });
+
+	        default:
+	            return state;
+	    }
+	};
 
 /***/ }
 /******/ ]);
