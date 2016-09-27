@@ -20,10 +20,10 @@ export default class AddArticle extends Component{
     }
     save_article(){
         var obj = {
-            articleId=this.props.addArticle.articleId,
-            title=this.props.addArticle.title,
-            describe=this.props.addArticle.describe,
-            content=this.props.addArticle.preview
+            articleId:this.props.addArticle.articleId,
+            title:this.props.addArticle.title,
+            describe:this.props.addArticle.describe,
+            content:this.props.addArticle.preview
         }
         this.props.save_article(obj);
     }
