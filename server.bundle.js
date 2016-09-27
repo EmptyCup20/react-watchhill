@@ -4702,11 +4702,6 @@
 	                                            null,
 	                                            '更多文章...'
 	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'box-img' },
-	                                        _react2.default.createElement('img', { src: showArticle.codeUrl, alt: '扫二维码' })
 	                                    )
 	                                )
 	                            )
@@ -4719,6 +4714,16 @@
 	                            'div',
 	                            { className: 'content-wrapper bg-content' },
 	                            _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: showArticle.content } })
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'jumbotron' },
+	                            _react2.default.createElement(
+	                                'p',
+	                                null,
+	                                '扫二维码'
+	                            ),
+	                            _react2.default.createElement('img', { src: showArticle.codeUrl, alt: '扫二维码' })
 	                        )
 	                    )
 	                )
@@ -4866,7 +4871,7 @@
 	                                    _react2.default.createElement(
 	                                        'a',
 	                                        null,
-	                                        _react2.default.createElement('img', { 'class': 'img-circle', width: '60', height: '80', alt: '个人照片' })
+	                                        _react2.default.createElement('img', { src: showList.avatarUrl, 'class': 'img-circle', width: '60', height: '80', alt: '个人照片' })
 	                                    )
 	                                ),
 	                                _react2.default.createElement(

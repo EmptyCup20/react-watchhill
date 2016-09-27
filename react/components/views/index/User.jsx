@@ -19,9 +19,7 @@ export default class User extends Component{
             }
         }
 
-
         return (
-
             <div className="content-wrapper">
                 <br/>
                 {
@@ -38,7 +36,7 @@ export default class User extends Component{
                                     <blockquote>
                                         <p className="module-list-item">
                                             <a>
-                                                <img class="img-circle" width="60" height="80" alt="个人照片" />
+                                                <img src={showList.avatarUrl} class="img-circle" width="60" height="80" alt="个人照片" />
                                             </a>
                                         </p>
                                         <ul className="module-list">

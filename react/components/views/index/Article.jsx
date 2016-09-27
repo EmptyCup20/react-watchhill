@@ -52,9 +52,6 @@ export default class Article extends Component{
                                                 </li>
                                             </ul>
                                             <Link to={'/user/' + showArticle.userId} className="btn btn-primary btn-block"><b>更多文章...</b></Link>
-                                            <div className="box-img">
-                                                <img  src={showArticle.codeUrl} alt="扫二维码" />
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +62,11 @@ export default class Article extends Component{
 
                                         <div dangerouslySetInnerHTML={{__html:showArticle.content }}>
                                         </div>
+                                </div>
 
+                                <div className="jumbotron">
+                                    <p>扫二维码</p>
+                                    <img  src={showArticle.codeUrl} alt="扫二维码" />
                                 </div>
                             </div>
                         </div>
