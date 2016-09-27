@@ -20,8 +20,8 @@ export function uploaderImg(req, res, next) {
             return;
         }
         //临时目录
-        var fileName = files.imgUrl?files.imgUrl.name:files.articleFile.name;
-        var filePath = files.imgUrl?files.imgUrl.path:files.articleFile.path;
+        var fileName = files.imgUrl ? files.imgUrl.name : files.articleFile.name;
+        var filePath = files.imgUrl ? files.imgUrl.path : files.articleFile.path;
         imgUrl = path.resolve('public/images', req.session.loginUser.author, 'article', fields.articleId, fileName);
         //读取文件
         fs.writeFile(imgUrl, fs.readFileSync(filePath), (err) => {
@@ -30,9 +30,9 @@ export function uploaderImg(req, res, next) {
                 return;
             }
             statusMsg.successMsg.data = {
-                imgUrl: imgUrl
-            }
-            //返回成功信息
+                    imgUrl: imgUrl
+                }
+                //返回成功信息
             res.send(statusMsg.successMsg);
         });
     });
