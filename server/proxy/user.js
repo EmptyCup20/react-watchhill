@@ -99,12 +99,22 @@ User.modfiyUserData = function(obj) {
 };
 
 
-//获取该用户的所有文章列表
+//获取该用户的所有文章列表及该用户的信息
 User.getArticleList = function(obj) {
+    var queryObj = {
+        _id: obj.userId
+    }
     return new Promise((resolve, reject) => {
-        db_tools.queryByCondition('article',obj,'title describe createTime').then(data =>{
-            resolve(data);
-        },err=>{
+        db_tools.queryByCondition('user', queryObj, '-password').then(userData => {
+            userData = userData[0].toObject();
+            db_tools.queryByCondition('artcile', { author: userData.author }, 'title describe createTime').then(articleData => {
+                userData.articleList = [];
+                articleData.forEach(function(value, index) {
+                    userData.articleList.push(value.toObject());
+                });
+                resolve(userData);
+            });
+        }, err => {
             reject(err);
         });
     });
