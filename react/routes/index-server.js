@@ -16,6 +16,7 @@ import IndexContainer from '../components/containers/IndexContainer';       //�
         import AvatarContainer from '../components/containers/AvatarContainer';
         import PassContainer from '../components/containers/PassContainer';
     import ArticleContainer from '../components/containers/ArticleContainer';
+    import UserContainer from '../components/containers/UserContainer';
 import LoginContainer from '../components/containers/LoginContainer';       //登录页
 import RegisterContainer from '../components/containers/RegisterContainer'; //注册页
 
@@ -38,7 +39,7 @@ const routes = (store) => {
                     <Route path="code" component={CodeContainer} />
                 </Route>
                 <Route path="/article/:id" component={ArticleContainer} />
-                <Route path="/user/:id"  component={ArticleContainer} />
+                <Route path="/user/:id"  component={UserContainer} />
             </Route>
             <Route path="/login"  component={LoginContainer}/>
             <Route path="/register"  component={RegisterContainer}/>
