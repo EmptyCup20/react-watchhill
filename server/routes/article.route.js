@@ -1,4 +1,4 @@
-import {getArticleList,getArticle,addArticle,modfiyArticle} from '../controllers/article.controller';
+import {getArticleList,getArticle,addArticle,modfiyArticle,getImgUrl} from '../controllers/article.controller';
 import {uploaderImg} from '../controllers/uploader.controller'
 
 import express from 'express';
@@ -18,5 +18,8 @@ router.post('/modfiyArticle', modfiyArticle);
 
 //上传文章封面和图片
 router.post('/uploadimg',uploaderImg);
+
+//获取文章中上传图片的url
+router.get('/getImgUrl',getImgUrl);
 
 module.exports = router;
