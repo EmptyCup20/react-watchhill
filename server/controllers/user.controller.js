@@ -144,14 +144,9 @@ export function profile(req, res, next) {
  * @param next
  */
 export function getArticleList(req, res, next) {
-    User.getArticleList(req.body).then(
+    User.getArticleList(req.query).then(
         function(data) {
-
-
-            console.log(data);
-
-
-
+            res.send(data);
         }, function(err) {
             console.log(err);
         }

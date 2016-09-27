@@ -7941,7 +7941,7 @@ webpackJsonp([0,1],[
 
 	        //获取个人文章列表
 	        user: function user(data) {
-	            return req('POST', '/user/getList', data);
+	            return req('GET', '/user/getList', data);
 	        }
 
 	    };
