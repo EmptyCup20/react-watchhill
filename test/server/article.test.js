@@ -7,7 +7,7 @@ describe('文章接口测试', function() {
             "pageSize": 10
         }).then(function(data) {
             expect(data.code).to.be.equal(0);
-            console.log(data);
+            // console.log(data);
             done();
         }));
     });
@@ -17,7 +17,7 @@ describe('文章接口测试', function() {
             "articleId": "57ac1dc6963da0301789865d"
         }).then(function(data) {
             expect(data.code).to.be.equal(0);
-            console.log(data);
+            // console.log(data);
             done();
         }));
     });
@@ -28,7 +28,7 @@ describe('文章接口测试', function() {
             "isGetInfo": true
         }).then(function(data) {
             expect(data.code).to.be.equal(0);
-            console.log(data);
+            // console.log(data);
             done();
         }));
     });
@@ -42,7 +42,7 @@ describe('文章接口测试', function() {
             "describe": "正则表达式是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。\n",
         }).then(function(data) {
             expect(data.code).to.be.equal(0);
-            console.log(data);
+            // console.log(data);
             done();
         }));
     });
@@ -53,7 +53,7 @@ describe('文章接口测试', function() {
             "content": "xxxxxxxxxxxxxx"
         }).then(function(data) {
             expect(data.code).to.be.equal(0);
-            console.log(data);
+            // console.log(data);
             done();
         }));
     });
@@ -63,7 +63,7 @@ describe('文章接口测试', function() {
      //        "articleId":"57e4ab79b21e4f03fce864da"
      //    }).then(function(data) {
      //        expect(data.code).to.be.equal(0);
-     //        console.log(data);
+            // console.log(data);
      //        done();
      //    }));
      //});

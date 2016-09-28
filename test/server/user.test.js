@@ -15,7 +15,7 @@ describe('用户接口测试', function() {
          "brief": " "
      }).then(function(data) {
          expect(data.code).to.be.equal(0);
-         console.log(data);
+         // console.log(data);
          done();
      }));
    });
@@ -30,7 +30,7 @@ describe('用户接口测试', function() {
          "brief": " "
      }).then(function(data) {
          expect(data.code).to.be.equal(11);
-         console.log(data);
+         // console.log(data);
          done();
      }));
    });
@@ -42,7 +42,7 @@ describe('用户接口测试', function() {
       }).then(function(data) {
            userId = data.data._id.toHexString();
           expect(data.code).to.be.equal(0);
-          console.log(data);
+          // console.log(data);
           done();
       }));
    });
@@ -53,7 +53,7 @@ describe('用户接口测试', function() {
          "password": "mocha"
      }).then(function(data) {
          expect(data.code).to.be.equal(21);
-         console.log(data);
+         // console.log(data);
          done();
      }));
    });
@@ -64,7 +64,7 @@ describe('用户接口测试', function() {
          "password": "mocha111",
      }).then(function(data) {
          expect(data.code).to.be.equal(22);
-         console.log(data);
+         // console.log(data);
          done();
      }));
    });
@@ -76,7 +76,7 @@ describe('用户接口测试', function() {
           "password": "mocha1111"
       }).then(function(data) {
           expect(data.code).to.be.equal(0);
-          console.log(data);
+          // console.log(data);
           done();
       }));
    });
@@ -88,7 +88,7 @@ describe('用户接口测试', function() {
           "password": "mocha111"
       }).then(function(data) {
           expect(data.code).to.be.equal(31);
-          console.log(data);
+          // console.log(data);
           done();
       }));
    });
@@ -99,7 +99,7 @@ describe('用户接口测试', function() {
           "email": "mocha@gmail.com"
       }).then(function(data) {
           expect(data.code).to.be.equal(0);
-          console.log(data);
+          // console.log(data);
           done();
       }));
    });
@@ -109,7 +109,7 @@ describe('用户接口测试', function() {
            "userId": "57e8c28e77d7a717a08eac5c"
        }).then(function(data) {
            expect(data.code).to.be.equal(0);
-           console.log(data);
+           // console.log(data);
            done();
        }));
    });
