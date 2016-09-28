@@ -14,27 +14,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _routes = __webpack_require__(88);
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(140);
-=======
-	var _routes = __webpack_require__(94);
-
-	var _routes2 = _interopRequireDefault(_routes);
-
-	var _store = __webpack_require__(150);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _routes = __webpack_require__(89);
-
-	var _routes2 = _interopRequireDefault(_routes);
-
-	var _store = __webpack_require__(143);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+	var _store = __webpack_require__(145);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -2873,8 +2857,6 @@ webpackJsonp([0,1],[
 
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 
-	var _Actions = __webpack_require__(16);
-
 	var _computeChangedRoutes2 = __webpack_require__(34);
 
 	var _computeChangedRoutes3 = _interopRequireDefault(_computeChangedRoutes2);
@@ -2921,10 +2903,6 @@ webpackJsonp([0,1],[
 	    }
 
 	    return (0, _isActive3.default)(location, indexOnly, state.location, state.routes, state.params);
-	  }
-
-	  function createLocationFromRedirectInfo(location) {
-	    return history.createLocation(location, _Actions.REPLACE);
 	  }
 
 	  var partialNextState = void 0;
@@ -2984,7 +2962,7 @@ webpackJsonp([0,1],[
 	    }
 
 	    function handleErrorOrRedirect(error, redirectInfo) {
-	      if (error) callback(error);else callback(null, createLocationFromRedirectInfo(redirectInfo));
+	      if (error) callback(error);else callback(null, redirectInfo);
 	    }
 	  }
 
@@ -3147,7 +3125,7 @@ webpackJsonp([0,1],[
 	          if (error) {
 	            listener(error);
 	          } else if (redirectLocation) {
-	            history.transitionTo(redirectLocation);
+	            history.replace(redirectLocation);
 	          } else if (nextState) {
 	            listener(null, nextState);
 	          } else {
@@ -4315,7 +4293,7 @@ webpackJsonp([0,1],[
 	  },
 
 	  propTypes: {
-	    to: oneOfType([string, object]).isRequired,
+	    to: oneOfType([string, object]),
 	    query: object,
 	    hash: string,
 	    state: object,
@@ -4376,6 +4354,11 @@ webpackJsonp([0,1],[
 
 
 	    if (router) {
+	      // If user does not specify a `to` prop, return an empty anchor tag.
+	      if (to == null) {
+	        return _react2.default.createElement('a', props);
+	      }
+
 	      var location = createLocationDescriptor(to, { query: query, hash: hash, state: state });
 	      props.href = router.createHref(location);
 
@@ -5130,6 +5113,8 @@ webpackJsonp([0,1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+	var _Actions = __webpack_require__(16);
+
 	var _invariant = __webpack_require__(12);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
@@ -5188,7 +5173,7 @@ webpackJsonp([0,1],[
 	  history = (0, _RouterUtils.createRoutingHistory)(history, transitionManager);
 
 	  transitionManager.match(location, function (error, redirectLocation, nextState) {
-	    callback(error, redirectLocation, nextState && _extends({}, nextState, {
+	    callback(error, redirectLocation && router.createLocation(redirectLocation, _Actions.REPLACE), nextState && _extends({}, nextState, {
 	      history: history,
 	      router: router,
 	      matchContext: { history: history, transitionManager: transitionManager, router: router }
@@ -6522,23 +6507,23 @@ webpackJsonp([0,1],[
 
 	var _createStore2 = _interopRequireDefault(_createStore);
 
-	var _combineReducers = __webpack_require__(84);
+	var _combineReducers = __webpack_require__(83);
 
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 
-	var _bindActionCreators = __webpack_require__(86);
+	var _bindActionCreators = __webpack_require__(85);
 
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 
-	var _applyMiddleware = __webpack_require__(87);
+	var _applyMiddleware = __webpack_require__(86);
 
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 
-	var _compose = __webpack_require__(88);
+	var _compose = __webpack_require__(87);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
-	var _warning = __webpack_require__(85);
+	var _warning = __webpack_require__(84);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -6575,7 +6560,7 @@ webpackJsonp([0,1],[
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _symbolObservable = __webpack_require__(81);
+	var _symbolObservable = __webpack_require__(80);
 
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 
@@ -6832,8 +6817,7 @@ webpackJsonp([0,1],[
 /***/ function(module, exports, __webpack_require__) {
 
 	var getPrototype = __webpack_require__(77),
-	    isHostObject = __webpack_require__(79),
-	    isObjectLike = __webpack_require__(80);
+	    isObjectLike = __webpack_require__(79);
 
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -6887,8 +6871,7 @@ webpackJsonp([0,1],[
 	 * // => true
 	 */
 	function isPlainObject(value) {
-	  if (!isObjectLike(value) ||
-	      objectToString.call(value) != objectTag || isHostObject(value)) {
+	  if (!isObjectLike(value) || objectToString.call(value) != objectTag) {
 	    return false;
 	  }
 	  var proto = getPrototype(value);
@@ -6941,32 +6924,6 @@ webpackJsonp([0,1],[
 /***/ function(module, exports) {
 
 	/**
-	 * Checks if `value` is a host object in IE < 9.
-	 *
-	 * @private
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
-	 */
-	function isHostObject(value) {
-	  // Many host objects are `Object` objects that can coerce to strings
-	  // despite having improperly defined `toString` methods.
-	  var result = false;
-	  if (value != null && typeof value.toString != 'function') {
-	    try {
-	      result = !!(value + '');
-	    } catch (e) {}
-	  }
-	  return result;
-	}
-
-	module.exports = isHostObject;
-
-
-/***/ },
-/* 80 */
-/***/ function(module, exports) {
-
-	/**
 	 * Checks if `value` is object-like. A value is object-like if it's not `null`
 	 * and has a `typeof` result of "object".
 	 *
@@ -6991,21 +6948,21 @@ webpackJsonp([0,1],[
 	 * // => false
 	 */
 	function isObjectLike(value) {
-	  return !!value && typeof value == 'object';
+	  return value != null && typeof value == 'object';
 	}
 
 	module.exports = isObjectLike;
 
 
 /***/ },
-/* 81 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(82);
+	module.exports = __webpack_require__(81);
 
 
 /***/ },
-/* 82 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -7014,7 +6971,7 @@ webpackJsonp([0,1],[
 		value: true
 	});
 
-	var _ponyfill = __webpack_require__(83);
+	var _ponyfill = __webpack_require__(82);
 
 	var _ponyfill2 = _interopRequireDefault(_ponyfill);
 
@@ -7033,7 +6990,7 @@ webpackJsonp([0,1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 83 */
+/* 82 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7061,7 +7018,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-/* 84 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -7075,7 +7032,7 @@ webpackJsonp([0,1],[
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _warning = __webpack_require__(85);
+	var _warning = __webpack_require__(84);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -7209,7 +7166,7 @@ webpackJsonp([0,1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 85 */
+/* 84 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7239,7 +7196,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 86 */
+/* 85 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7295,7 +7252,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 87 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7306,7 +7263,7 @@ webpackJsonp([0,1],[
 
 	exports['default'] = applyMiddleware;
 
-	var _compose = __webpack_require__(88);
+	var _compose = __webpack_require__(87);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
@@ -7358,7 +7315,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 88 */
+/* 87 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7401,7 +7358,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 89 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7410,296 +7367,87 @@ webpackJsonp([0,1],[
 	    value: true
 	});
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _AppContainer = __webpack_require__(89);
-=======
-	/** Used for built-in method references. */
-	var funcProto = Function.prototype,
-	    objectProto = Object.prototype;
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _react = __webpack_require__(1);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _IndexContainer = __webpack_require__(91);
-=======
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _reactRouter = __webpack_require__(3);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _AppContainer = __webpack_require__(90);
+	var _AppContainer = __webpack_require__(89);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _HomeContainer = __webpack_require__(102);
-=======
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objectToString = objectProto.toString;
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _IndexContainer = __webpack_require__(92);
+	var _IndexContainer = __webpack_require__(91);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _AboutContainer = __webpack_require__(106);
-=======
-	module.exports = isPlainObject;
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _HomeContainer = __webpack_require__(101);
+	var _HomeContainer = __webpack_require__(102);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _WebContainer = __webpack_require__(109);
-=======
-/***/ },
-/* 89 */
-/***/ function(module, exports, __webpack_require__) {
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _AboutContainer = __webpack_require__(105);
+	var _AboutContainer = __webpack_require__(106);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _NodeContainer = __webpack_require__(111);
-=======
-	/** Built-in value references. */
-	var getPrototype = overArg(Object.getPrototypeOf, Object);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _AboutContainer2 = _interopRequireDefault(_AboutContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _WebContainer = __webpack_require__(108);
+	var _WebContainer = __webpack_require__(109);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _AddArticleContainer = __webpack_require__(113);
-=======
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _WebContainer2 = _interopRequireDefault(_WebContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _NodeContainer = __webpack_require__(110);
+	var _NodeContainer = __webpack_require__(111);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _ProfileContainer = __webpack_require__(120);
-=======
-	/**
-	 * Creates a unary function that invokes `func` with its argument transformed.
-	 *
-	 * @private
-	 * @param {Function} func The function to wrap.
-	 * @param {Function} transform The argument transform.
-	 * @returns {Function} Returns the new function.
-	 */
-	function overArg(func, transform) {
-	  return function(arg) {
-	    return func(transform(arg));
-	  };
-	}
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _NodeContainer2 = _interopRequireDefault(_NodeContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _AddArticleContainer = __webpack_require__(112);
+	var _AddArticleContainer = __webpack_require__(113);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _InfoContainer = __webpack_require__(122);
-=======
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _ProfileContainer = __webpack_require__(119);
+	var _ProfileContainer = __webpack_require__(120);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _CodeContainer = __webpack_require__(125);
-=======
-	/**
-	 * Checks if `value` is object-like. A value is object-like if it's not `null`
-	 * and has a `typeof` result of "object".
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-	 * @example
-	 *
-	 * _.isObjectLike({});
-	 * // => true
-	 *
-	 * _.isObjectLike([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isObjectLike(_.noop);
-	 * // => false
-	 *
-	 * _.isObjectLike(null);
-	 * // => false
-	 */
-	function isObjectLike(value) {
-	  return value != null && typeof value == 'object';
-	}
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _InfoContainer = __webpack_require__(121);
+	var _InfoContainer = __webpack_require__(123);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _AvatarContainer = __webpack_require__(127);
-=======
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _InfoContainer2 = _interopRequireDefault(_InfoContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _CodeContainer = __webpack_require__(124);
+	var _CodeContainer = __webpack_require__(126);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _PassContainer = __webpack_require__(129);
-=======
-	/**
-	 * Copyright 2015, Yahoo! Inc.
-	 * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
-	 */
-	'use strict';
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _CodeContainer2 = _interopRequireDefault(_CodeContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _AvatarContainer = __webpack_require__(126);
+	var _AvatarContainer = __webpack_require__(128);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _ArticleContainer = __webpack_require__(131);
-=======
-	var KNOWN_STATICS = {
-	    name: true,
-	    length: true,
-	    prototype: true,
-	    caller: true,
-	    arguments: true,
-	    arity: true
-	};
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _AvatarContainer2 = _interopRequireDefault(_AvatarContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _PassContainer = __webpack_require__(128);
+	var _PassContainer = __webpack_require__(130);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _LoginContainer = __webpack_require__(133);
-=======
-	module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
-	    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
-	        var keys = Object.getOwnPropertyNames(sourceComponent);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _PassContainer2 = _interopRequireDefault(_PassContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _ArticleContainer = __webpack_require__(130);
+	var _ArticleContainer = __webpack_require__(132);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _RegisterContainer = __webpack_require__(137);
-=======
-	        for (var i = 0; i < keys.length; ++i) {
-	            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
-	                try {
-	                    targetComponent[keys[i]] = sourceComponent[keys[i]];
-	                } catch (error) {
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
 	var _ArticleContainer2 = _interopRequireDefault(_ArticleContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _UserContainer = __webpack_require__(132);
+	var _UserContainer = __webpack_require__(134);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _login = __webpack_require__(136);
-
-	var _register = __webpack_require__(139);
-
-	var _profile = __webpack_require__(123);
-
-	var _addArticle = __webpack_require__(114);
-=======
-	    return targetComponent;
-	};
-=======
 	var _UserContainer2 = _interopRequireDefault(_UserContainer);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _LoginContainer = __webpack_require__(134);
+	var _LoginContainer = __webpack_require__(136);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-<<<<<<< HEAD
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _RegisterContainer = __webpack_require__(138);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+	var _RegisterContainer = __webpack_require__(140);
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
-	var _login = __webpack_require__(137);
+	var _login = __webpack_require__(139);
 
-	var _register = __webpack_require__(140);
+	var _register = __webpack_require__(142);
 
-	var _profile = __webpack_require__(122);
+	var _profile = __webpack_require__(124);
 
-	var _addArticle = __webpack_require__(113);
+	var _addArticle = __webpack_require__(114);
 
-	var _article = __webpack_require__(141);
+	var _article = __webpack_require__(143);
 
-	var _user = __webpack_require__(142);
+	var _user = __webpack_require__(144);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7846,15 +7594,7 @@ webpackJsonp([0,1],[
 	exports.default = routes;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 89 */
-=======
-/* 95 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 90 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7865,15 +7605,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _App = __webpack_require__(90);
-=======
-	var _App = __webpack_require__(96);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _App = __webpack_require__(91);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -7885,15 +7617,7 @@ webpackJsonp([0,1],[
 	//视图组件
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 90 */
-=======
-/* 96 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 91 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7979,15 +7703,7 @@ webpackJsonp([0,1],[
 	exports.default = App;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 91 */
-=======
-/* 97 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 92 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8000,27 +7716,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _logout = __webpack_require__(92);
 
 	var LogoutActions = _interopRequireWildcard(_logout);
 
 	var _Index = __webpack_require__(96);
-=======
-	var _logout = __webpack_require__(98);
-
-	var LogoutActions = _interopRequireWildcard(_logout);
-
-	var _Index = __webpack_require__(102);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _logout = __webpack_require__(93);
-
-	var LogoutActions = _interopRequireWildcard(_logout);
-
-	var _Index = __webpack_require__(97);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Index2 = _interopRequireDefault(_Index);
 
@@ -8047,15 +7747,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Index2.default);
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 92 */
-=======
-/* 98 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 93 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8065,27 +7757,11 @@ webpackJsonp([0,1],[
 	});
 	exports.logout = logout;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _httpType = __webpack_require__(94);
 
 	var _ajax = __webpack_require__(95);
-=======
-	var _actionType = __webpack_require__(99);
-=======
-	var _actionType = __webpack_require__(94);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
-
-	var _httpType = __webpack_require__(95);
-
-<<<<<<< HEAD
-	var _ajax = __webpack_require__(101);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _ajax = __webpack_require__(96);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -8116,15 +7792,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 93 */
-=======
-/* 99 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 94 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	'use strict';
@@ -8176,15 +7844,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 94 */
-=======
-/* 100 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 95 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	'use strict';
@@ -8212,15 +7872,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 95 */
-=======
-/* 101 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 96 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	'use strict';
@@ -8345,15 +7997,7 @@ webpackJsonp([0,1],[
 	exports.default = ajax;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 96 */
-=======
-/* 102 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 97 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8368,8 +8012,6 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	__webpack_require__(97);
 
 	var _Header = __webpack_require__(98);
@@ -8377,22 +8019,6 @@ webpackJsonp([0,1],[
 	var _Header2 = _interopRequireDefault(_Header);
 
 	var _Footer = __webpack_require__(100);
-=======
-	__webpack_require__(103);
-=======
-	__webpack_require__(153);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
-
-	var _Header = __webpack_require__(98);
-
-	var _Header2 = _interopRequireDefault(_Header);
-
-<<<<<<< HEAD
-	var _Footer = __webpack_require__(106);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _Footer = __webpack_require__(99);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
@@ -8462,25 +8088,13 @@ webpackJsonp([0,1],[
 	exports.default = Index;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 97 */
-=======
-/* 103 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-<<<<<<< HEAD
 /* 98 */
-=======
-/* 104 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 98 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8497,15 +8111,7 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	__webpack_require__(99);
-=======
-	__webpack_require__(105);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	__webpack_require__(154);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8730,25 +8336,13 @@ webpackJsonp([0,1],[
 	exports.default = Header;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 99 */
-=======
-/* 105 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-<<<<<<< HEAD
 /* 100 */
-=======
-/* 106 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 99 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8763,15 +8357,7 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	__webpack_require__(101);
-=======
-	__webpack_require__(107);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	__webpack_require__(100);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8818,29 +8404,13 @@ webpackJsonp([0,1],[
 	exports.default = Footer;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 101 */
-=======
-/* 107 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 100 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 102 */
-=======
-/* 108 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 101 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8853,15 +8423,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _Home = __webpack_require__(103);
-=======
-	var _Home = __webpack_require__(109);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _Home = __webpack_require__(102);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Home2 = _interopRequireDefault(_Home);
 
@@ -8884,15 +8446,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Home2.default);
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 103 */
-=======
-/* 109 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 102 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8907,27 +8461,11 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	__webpack_require__(104);
 
 	var _reactRouter = __webpack_require__(3);
 
 	var _history = __webpack_require__(105);
-=======
-	__webpack_require__(110);
-
-	var _reactRouter = __webpack_require__(3);
-
-	var _history = __webpack_require__(111);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	__webpack_require__(103);
-
-	var _reactRouter = __webpack_require__(3);
-
-	var _history = __webpack_require__(104);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -9084,29 +8622,13 @@ webpackJsonp([0,1],[
 	exports.default = Home;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 104 */
-=======
-/* 110 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 103 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 105 */
-=======
-/* 111 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 104 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9120,15 +8642,7 @@ webpackJsonp([0,1],[
 	exports.default = _reactRouter.browserHistory;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 106 */
-=======
-/* 112 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 105 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9139,15 +8653,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _About = __webpack_require__(107);
-=======
-	var _About = __webpack_require__(113);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _About = __webpack_require__(106);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _About2 = _interopRequireDefault(_About);
 
@@ -9162,15 +8668,7 @@ webpackJsonp([0,1],[
 	//视图组件
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 107 */
-=======
-/* 113 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 106 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9185,15 +8683,7 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	__webpack_require__(108);
-=======
-	__webpack_require__(114);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	__webpack_require__(107);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9388,29 +8878,13 @@ webpackJsonp([0,1],[
 	exports.default = About;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 108 */
-=======
-/* 114 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 107 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 109 */
-=======
-/* 115 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 108 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9421,15 +8895,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _Web = __webpack_require__(110);
-=======
-	var _Web = __webpack_require__(116);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _Web = __webpack_require__(109);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Web2 = _interopRequireDefault(_Web);
 
@@ -9443,15 +8909,7 @@ webpackJsonp([0,1],[
 	//视图组件
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 110 */
-=======
-/* 116 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 109 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9504,15 +8962,7 @@ webpackJsonp([0,1],[
 	exports.default = Web;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 111 */
-=======
-/* 117 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 110 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9523,15 +8973,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _Node = __webpack_require__(112);
-=======
-	var _Node = __webpack_require__(118);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _Node = __webpack_require__(111);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Node2 = _interopRequireDefault(_Node);
 
@@ -9546,15 +8988,7 @@ webpackJsonp([0,1],[
 	//视图组件
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 112 */
-=======
-/* 118 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 111 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9607,15 +9041,7 @@ webpackJsonp([0,1],[
 	exports.default = Node;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 113 */
-=======
-/* 119 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 112 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9628,27 +9054,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _addArticle = __webpack_require__(114);
 
 	var addArticle = _interopRequireWildcard(_addArticle);
 
 	var _AddArticle = __webpack_require__(115);
-=======
-	var _addArticle = __webpack_require__(120);
-
-	var addArticle = _interopRequireWildcard(_addArticle);
-
-	var _AddArticle = __webpack_require__(121);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _addArticle = __webpack_require__(113);
-
-	var addArticle = _interopRequireWildcard(_addArticle);
-
-	var _AddArticle = __webpack_require__(114);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _AddArticle2 = _interopRequireDefault(_AddArticle);
 
@@ -9674,15 +9084,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_AddArticle2.default);
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 114 */
-=======
-/* 120 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 113 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9696,21 +9098,9 @@ webpackJsonp([0,1],[
 	exports.addIntro = addIntro;
 	exports.save_article = save_article;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _ajax = __webpack_require__(95);
-=======
-	var _actionType = __webpack_require__(99);
-
-	var _ajax = __webpack_require__(101);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _actionType = __webpack_require__(94);
-
-	var _ajax = __webpack_require__(96);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -9760,24 +9150,12 @@ webpackJsonp([0,1],[
 	    };
 	}
 
-<<<<<<< HEAD
-/***/ },
-/* 115 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-=======
 	function addTitle(value) {
 	    return {
 	        type: _actionType.ADD_ARTICLE_TITLE,
 	        value: value
 	    };
 	}
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
 
 	function addIntro(value) {
 	    return {
@@ -9815,7 +9193,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 114 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9830,8 +9208,6 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	__webpack_require__(116);
 
 	var _Input = __webpack_require__(117);
@@ -9843,26 +9219,6 @@ webpackJsonp([0,1],[
 	var _Button2 = _interopRequireDefault(_Button);
 
 	var _Markdown = __webpack_require__(119);
-=======
-	__webpack_require__(122);
-=======
-	__webpack_require__(115);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
-
-	var _Input = __webpack_require__(116);
-
-	var _Input2 = _interopRequireDefault(_Input);
-
-	var _Button = __webpack_require__(117);
-
-	var _Button2 = _interopRequireDefault(_Button);
-
-<<<<<<< HEAD
-	var _Markdown = __webpack_require__(125);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _Markdown = __webpack_require__(118);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Markdown2 = _interopRequireDefault(_Markdown);
 
@@ -10158,29 +9514,13 @@ webpackJsonp([0,1],[
 	exports.default = AddArticle;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 116 */
-=======
-/* 122 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 115 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 117 */
-=======
-/* 123 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 116 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10259,15 +9599,7 @@ webpackJsonp([0,1],[
 	exports.default = Input;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 118 */
-=======
-/* 124 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 117 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10329,15 +9661,7 @@ webpackJsonp([0,1],[
 	exports.default = Button;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 119 */
-=======
-/* 125 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 118 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10437,15 +9761,7 @@ webpackJsonp([0,1],[
 	exports.default = Markdown;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 120 */
-=======
-/* 126 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 119 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10458,15 +9774,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _Profile = __webpack_require__(121);
-=======
-	var _Profile = __webpack_require__(127);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _Profile = __webpack_require__(120);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
@@ -10486,15 +9794,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Profile2.default);
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 121 */
-=======
-/* 127 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 120 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10511,7 +9811,7 @@ webpackJsonp([0,1],[
 
 	var _reactRouter = __webpack_require__(3);
 
-	__webpack_require__(155);
+	__webpack_require__(122);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10621,15 +9921,13 @@ webpackJsonp([0,1],[
 	exports.default = Profile;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* 122 */
-=======
-/* 128 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 121 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10642,27 +9940,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _profile = __webpack_require__(123);
+	var _profile = __webpack_require__(124);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
 
-	var _Info = __webpack_require__(124);
-=======
-	var _profile = __webpack_require__(129);
-
-	var ProfileActions = _interopRequireWildcard(_profile);
-
-	var _Info = __webpack_require__(130);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _profile = __webpack_require__(122);
-
-	var ProfileActions = _interopRequireWildcard(_profile);
-
-	var _Info = __webpack_require__(123);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+	var _Info = __webpack_require__(125);
 
 	var _Info2 = _interopRequireDefault(_Info);
 
@@ -10693,15 +9975,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Info2.default);
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 123 */
-=======
-/* 129 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 122 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10712,21 +9986,9 @@ webpackJsonp([0,1],[
 	exports.modify_init = modify_init;
 	exports.modify_start = modify_start;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _ajax = __webpack_require__(95);
-=======
-	var _actionType = __webpack_require__(99);
-
-	var _ajax = __webpack_require__(101);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _actionType = __webpack_require__(94);
-
-	var _ajax = __webpack_require__(96);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -10882,15 +10144,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 124 */
-=======
-/* 130 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 123 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10905,15 +10159,7 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
-=======
-	var _actionType = __webpack_require__(99);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _actionType = __webpack_require__(94);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11165,15 +10411,7 @@ webpackJsonp([0,1],[
 	exports.default = Info;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 125 */
-=======
-/* 131 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 124 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11186,19 +10424,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _Code = __webpack_require__(126);
-=======
-	var _Code = __webpack_require__(132);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _profile = __webpack_require__(122);
+	var _profile = __webpack_require__(124);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
 
-	var _Code = __webpack_require__(125);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+	var _Code = __webpack_require__(127);
 
 	var _Code2 = _interopRequireDefault(_Code);
 
@@ -11229,15 +10459,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Code2.default);
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 126 */
-=======
-/* 132 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 125 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11252,7 +10474,7 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _actionType = __webpack_require__(99);
+	var _actionType = __webpack_require__(93);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11369,15 +10591,7 @@ webpackJsonp([0,1],[
 	exports.default = Code;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 127 */
-=======
-/* 133 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 126 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11390,19 +10604,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _Avatar = __webpack_require__(128);
-=======
-	var _Avatar = __webpack_require__(134);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _profile = __webpack_require__(122);
+	var _profile = __webpack_require__(124);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
 
-	var _Avatar = __webpack_require__(127);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+	var _Avatar = __webpack_require__(129);
 
 	var _Avatar2 = _interopRequireDefault(_Avatar);
 
@@ -11433,15 +10639,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Avatar2.default);
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 128 */
-=======
-/* 134 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 127 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11456,7 +10654,7 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _actionType = __webpack_require__(99);
+	var _actionType = __webpack_require__(93);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11574,15 +10772,7 @@ webpackJsonp([0,1],[
 	exports.default = Avatar;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 129 */
-=======
-/* 135 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 128 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11595,27 +10785,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _profile = __webpack_require__(123);
+	var _profile = __webpack_require__(124);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
 
-	var _Pass = __webpack_require__(130);
-=======
-	var _profile = __webpack_require__(129);
-
-	var ProfileActions = _interopRequireWildcard(_profile);
-
-	var _Pass = __webpack_require__(136);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _profile = __webpack_require__(122);
-
-	var ProfileActions = _interopRequireWildcard(_profile);
-
-	var _Pass = __webpack_require__(129);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+	var _Pass = __webpack_require__(131);
 
 	var _Pass2 = _interopRequireDefault(_Pass);
 
@@ -11645,15 +10819,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Pass2.default);
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 130 */
-=======
-/* 136 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 129 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11668,21 +10834,9 @@ webpackJsonp([0,1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _httpType = __webpack_require__(94);
-=======
-	var _actionType = __webpack_require__(99);
-
-	var _httpType = __webpack_require__(100);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _actionType = __webpack_require__(94);
-
-	var _httpType = __webpack_require__(95);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11832,15 +10986,7 @@ webpackJsonp([0,1],[
 	exports.default = Code;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 131 */
-=======
-/* 137 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 130 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11851,15 +10997,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _Article = __webpack_require__(132);
-=======
-	var _Article = __webpack_require__(138);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _Article = __webpack_require__(131);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+	var _Article = __webpack_require__(133);
 
 	var _Article2 = _interopRequireDefault(_Article);
 
@@ -11880,15 +11018,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Article2.default);
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 132 */
-=======
-/* 138 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 131 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12079,15 +11209,7 @@ webpackJsonp([0,1],[
 	exports.default = Article;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 133 */
-=======
-/* 139 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 132 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12098,21 +11220,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _Login = __webpack_require__(134);
-
-	var _Login2 = _interopRequireDefault(_Login);
-
-	var _login = __webpack_require__(136);
-
-	var LoginActions = _interopRequireWildcard(_login);
-=======
-	var _User = __webpack_require__(140);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _User = __webpack_require__(133);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+	var _User = __webpack_require__(135);
 
 	var _User2 = _interopRequireDefault(_User);
 
@@ -12133,15 +11241,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_User2.default);
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 134 */
-=======
-/* 140 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 133 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12158,25 +11258,6 @@ webpackJsonp([0,1],[
 
 	var _reactRouter = __webpack_require__(3);
 
-<<<<<<< HEAD
-	var _Input = __webpack_require__(117);
-
-	var _Input2 = _interopRequireDefault(_Input);
-
-	var _Button = __webpack_require__(118);
-
-	var _Button2 = _interopRequireDefault(_Button);
-
-	var _privateType = __webpack_require__(135);
-
-	var _httpType = __webpack_require__(94);
-
-	var _history = __webpack_require__(105);
-
-	var _history2 = _interopRequireDefault(_history);
-
-=======
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12358,7 +11439,7 @@ webpackJsonp([0,1],[
 	exports.default = User;
 
 /***/ },
-/* 134 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12371,11 +11452,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Login = __webpack_require__(135);
+	var _Login = __webpack_require__(137);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(137);
+	var _login = __webpack_require__(139);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -12406,7 +11487,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 135 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12423,19 +11504,19 @@ webpackJsonp([0,1],[
 
 	var _reactRouter = __webpack_require__(3);
 
-	var _Input = __webpack_require__(116);
+	var _Input = __webpack_require__(117);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(117);
+	var _Button = __webpack_require__(118);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(136);
+	var _privateType = __webpack_require__(138);
 
-	var _httpType = __webpack_require__(95);
+	var _httpType = __webpack_require__(94);
 
-	var _history = __webpack_require__(104);
+	var _history = __webpack_require__(105);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -12616,15 +11697,7 @@ webpackJsonp([0,1],[
 	exports.default = Login;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 135 */
-=======
-/* 143 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 136 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 138 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -12636,15 +11709,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 136 */
-=======
-/* 144 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 137 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12655,23 +11720,12 @@ webpackJsonp([0,1],[
 	exports.login_init = login_init;
 	exports.login_start = login_start;
 	exports.login_authen = login_authen;
+	exports.login_ajax = login_ajax;
 	exports.login_reveive = login_reveive;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _ajax = __webpack_require__(95);
-=======
-	var _actionType = __webpack_require__(99);
-
-	var _ajax = __webpack_require__(101);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _actionType = __webpack_require__(94);
-
-	var _ajax = __webpack_require__(96);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -12785,15 +11839,7 @@ webpackJsonp([0,1],[
 	//}
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 137 */
-=======
-/* 145 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 138 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12806,27 +11852,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _Register = __webpack_require__(138);
+	var _Register = __webpack_require__(141);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
-	var _register = __webpack_require__(139);
-=======
-	var _Register = __webpack_require__(146);
-
-	var _Register2 = _interopRequireDefault(_Register);
-
-	var _register = __webpack_require__(147);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _Register = __webpack_require__(139);
-
-	var _Register2 = _interopRequireDefault(_Register);
-
-	var _register = __webpack_require__(140);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+	var _register = __webpack_require__(142);
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -12857,15 +11887,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 138 */
-=======
-/* 146 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 139 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12882,8 +11904,6 @@ webpackJsonp([0,1],[
 
 	var _reactRouter = __webpack_require__(3);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _Input = __webpack_require__(117);
 
 	var _Input2 = _interopRequireDefault(_Input);
@@ -12892,33 +11912,11 @@ webpackJsonp([0,1],[
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(135);
+	var _privateType = __webpack_require__(138);
 
 	var _httpType = __webpack_require__(94);
 
 	var _history = __webpack_require__(105);
-=======
-	var _Input = __webpack_require__(123);
-=======
-	var _Input = __webpack_require__(116);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
-
-	var _Input2 = _interopRequireDefault(_Input);
-
-	var _Button = __webpack_require__(117);
-
-	var _Button2 = _interopRequireDefault(_Button);
-
-	var _privateType = __webpack_require__(136);
-
-	var _httpType = __webpack_require__(95);
-
-<<<<<<< HEAD
-	var _history = __webpack_require__(111);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _history = __webpack_require__(104);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -13126,15 +12124,7 @@ webpackJsonp([0,1],[
 	exports.default = Login;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 139 */
-=======
-/* 147 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 140 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13145,8 +12135,6 @@ webpackJsonp([0,1],[
 	exports.register_init = register_init;
 	exports.register_start = register_start;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _ajax = __webpack_require__(95);
@@ -13155,25 +12143,7 @@ webpackJsonp([0,1],[
 
 	var _httpType = __webpack_require__(94);
 
-	var _login = __webpack_require__(136);
-=======
-	var _actionType = __webpack_require__(99);
-=======
-	var _actionType = __webpack_require__(94);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
-
-	var _ajax = __webpack_require__(96);
-
-	var _ajax2 = _interopRequireDefault(_ajax);
-
-	var _httpType = __webpack_require__(95);
-
-<<<<<<< HEAD
-	var _login = __webpack_require__(144);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _login = __webpack_require__(137);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+	var _login = __webpack_require__(139);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13268,14 +12238,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 140 */
-=======
-/* 148 */
-=======
-/* 141 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13285,9 +12248,9 @@ webpackJsonp([0,1],[
 	});
 	exports.article_getContent = article_getContent;
 
-	var _actionType = __webpack_require__(94);
+	var _actionType = __webpack_require__(93);
 
-	var _ajax = __webpack_require__(96);
+	var _ajax = __webpack_require__(95);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -13358,7 +12321,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 142 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13368,9 +12331,9 @@ webpackJsonp([0,1],[
 	});
 	exports.user_getList = user_getList;
 
-	var _actionType = __webpack_require__(94);
+	var _actionType = __webpack_require__(93);
 
-	var _ajax = __webpack_require__(96);
+	var _ajax = __webpack_require__(95);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -13438,12 +12401,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-<<<<<<< HEAD
-/* 150 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 143 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13455,35 +12413,15 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _reduxThunk = __webpack_require__(141);
+	var _reduxThunk = __webpack_require__(146);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(142);
+	var _reduxLogger = __webpack_require__(147);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(143);
-=======
-	var _reduxThunk = __webpack_require__(151);
-=======
-	var _reduxThunk = __webpack_require__(144);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
-
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-	var _reduxLogger = __webpack_require__(145);
-
-	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
-
-<<<<<<< HEAD
-	var _reducers = __webpack_require__(153);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _reducers = __webpack_require__(146);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+	var _reducers = __webpack_require__(148);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -13503,15 +12441,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 141 */
-=======
-/* 151 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 144 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 146 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -13539,15 +12469,7 @@ webpackJsonp([0,1],[
 	exports['default'] = thunk;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 142 */
-=======
-/* 152 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 145 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 147 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -13780,15 +12702,7 @@ webpackJsonp([0,1],[
 	module.exports = createLogger;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 143 */
-=======
-/* 153 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 146 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13799,55 +12713,27 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _login = __webpack_require__(144);
+	var _login = __webpack_require__(149);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(145);
+	var _register = __webpack_require__(150);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(146);
+	var _articles = __webpack_require__(151);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
-	var _addArticle = __webpack_require__(147);
+	var _addArticle = __webpack_require__(152);
 
 	var _addArticle2 = _interopRequireDefault(_addArticle);
 
-	var _profile = __webpack_require__(148);
-=======
-	var _login = __webpack_require__(154);
-=======
-	var _login = __webpack_require__(147);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
-
-	var _login2 = _interopRequireDefault(_login);
-
-	var _register = __webpack_require__(148);
-
-	var _register2 = _interopRequireDefault(_register);
-
-	var _articles = __webpack_require__(149);
-
-	var _articles2 = _interopRequireDefault(_articles);
-
-	var _addArticle = __webpack_require__(150);
-
-	var _addArticle2 = _interopRequireDefault(_addArticle);
-
-<<<<<<< HEAD
-	var _profile = __webpack_require__(158);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _profile = __webpack_require__(151);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+	var _profile = __webpack_require__(153);
 
 	var _profile2 = _interopRequireDefault(_profile);
 
-	var _user = __webpack_require__(152);
+	var _user = __webpack_require__(154);
 
 	var _user2 = _interopRequireDefault(_user);
 
@@ -13876,15 +12762,7 @@ webpackJsonp([0,1],[
 	exports.default = reducer;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 144 */
-=======
-/* 154 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 147 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13895,21 +12773,9 @@ webpackJsonp([0,1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _httpType = __webpack_require__(94);
-=======
-	var _actionType = __webpack_require__(99);
-
-	var _httpType = __webpack_require__(100);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _actionType = __webpack_require__(94);
-
-	var _httpType = __webpack_require__(95);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	/**
 	 * 登录状态设置
@@ -14009,15 +12875,7 @@ webpackJsonp([0,1],[
 	exports.default = login;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 145 */
-=======
-/* 155 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 148 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14028,21 +12886,9 @@ webpackJsonp([0,1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _httpType = __webpack_require__(94);
 
 	var _actionType = __webpack_require__(93);
-=======
-	var _httpType = __webpack_require__(100);
-
-	var _actionType = __webpack_require__(99);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _httpType = __webpack_require__(95);
-
-	var _actionType = __webpack_require__(94);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var register = function register() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
@@ -14080,17 +12926,8 @@ webpackJsonp([0,1],[
 	exports.default = register;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 146 */
-/***/ function(module, exports) {
-=======
-/* 156 */
-=======
-/* 149 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
 
 	'use strict';
 
@@ -14100,7 +12937,7 @@ webpackJsonp([0,1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _actionType = __webpack_require__(94);
+	var _actionType = __webpack_require__(93);
 
 	/**
 	 * 存入文章
@@ -14143,15 +12980,7 @@ webpackJsonp([0,1],[
 	exports.default = article;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 147 */
-=======
-/* 157 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 150 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14162,15 +12991,7 @@ webpackJsonp([0,1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
-=======
-	var _actionType = __webpack_require__(99);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _actionType = __webpack_require__(94);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var addArticle = function addArticle() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
@@ -14217,15 +13038,7 @@ webpackJsonp([0,1],[
 	exports.default = addArticle;
 
 /***/ },
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 148 */
-=======
-/* 158 */
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-/* 151 */
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14236,21 +13049,9 @@ webpackJsonp([0,1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _httpType = __webpack_require__(94);
-=======
-	var _actionType = __webpack_require__(99);
-
-	var _httpType = __webpack_require__(100);
->>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-=======
-	var _actionType = __webpack_require__(94);
-
-	var _httpType = __webpack_require__(95);
->>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var profile = function profile() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
@@ -14286,7 +13087,7 @@ webpackJsonp([0,1],[
 	exports.default = profile;
 
 /***/ },
-/* 152 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14297,7 +13098,7 @@ webpackJsonp([0,1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _actionType = __webpack_require__(94);
+	var _actionType = __webpack_require__(93);
 
 	function addArticleList(state, data) {
 	    var lists = state.articleList;
@@ -14331,24 +13132,6 @@ webpackJsonp([0,1],[
 	};
 
 	exports.default = user;
-
-/***/ },
-/* 153 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 154 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 155 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
 
 /***/ }
 ]);

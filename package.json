@@ -9,7 +9,7 @@
     "node": "webpack --config ./webpack.node.config.js --progress --watch --colors",
     "build": "babel-node server.js",
     "test-server": "mocha ./test/server --reporter mochawesome",
-    "test-client": "mocha ./test/client/{,**/}*.{js,jsx} --watch --recursive --compilers js:babel-core/register"
+    "test-client": "mocha ./test/client --watch --recursive --compilers js:babel-core/register"
   },
   "dependencies": {
     "ansi-styles": "^2.2.1",
@@ -66,12 +66,28 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "chai-enzyme": "^0.5.1",
     "enzyme": "^2.4.1",
+    "jquery": "^3.1.1",
     "jsdom": "^9.5.0",
+    "karma": "^1.3.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-cli": "^1.0.1",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-ie-launcher": "^1.0.0",
+    "karma-mocha": "^1.2.0",
+    "karma-opera-launcher": "^1.0.0",
+    "karma-requirejs": "^1.1.0",
+    "karma-safari-launcher": "^1.0.0",
+    "karma-webpack": "^1.8.0",
     "mocha": "~2.3.4",
     "mochawesome": "^1.5.2",
     "react": "^15.3.1",
+    "react-addons-test-utils": "^15.3.2",
     "react-dom": "^15.3.1",
-    "sinon": "^1.17.6"
+    "sinon": "^1.17.6",
+    "sinon-chai": "^2.8.0"
   }
 }
