@@ -7,7 +7,8 @@
     "browser-compress": "webpack --config ./webpack.browser.config.js  --optimize-minimize",
     "browser": "webpack --config ./webpack.browser.config.js --progress --watch --colors",
     "node": "webpack --config ./webpack.node.config.js --progress --watch --colors",
-    "build": "babel-node server.js"
+    "build": "babel-node server.js",
+    "test-server": "mocha ./test/server --reporter mochawesome" 
   },
   "dependencies": {
     "ansi-styles": "^2.2.1",
@@ -63,6 +64,8 @@
     "babel-cli": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
+    "chai": "^3.5.0",
+    "mochawesome": "^1.5.2",
     "react": "^15.3.1",
     "react-dom": "^15.3.1"
   }

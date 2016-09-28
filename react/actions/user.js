@@ -63,7 +63,7 @@ function user_reveive(id,data) {
 
     return {
         type: USER_RECEIVE,
-        data: data
+        data: data.data
     }
 }
 
