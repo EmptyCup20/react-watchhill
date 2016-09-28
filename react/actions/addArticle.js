@@ -1,4 +1,4 @@
-import { PREVIEW , ADD_TEMP_ARTICLE , ADD_ARTICLE_TITLE ,ADD_ARTICLE_INTRO,DEL_ARTICLE} from '../constants/actionType';
+import { PREVIEW , ADD_TEMP_ARTICLE , ADD_ARTICLE_TITLE ,ADD_ARTICLE_INTRO,DEL_ARTICLE,SAVE_ARTICLE} from '../constants/actionType';
 import ajax from '../ajax';
 export function preview(value){
     return {
@@ -56,5 +56,21 @@ export function addIntro(value){
 function clearAndDel_receive(){
     return {
         type : DEL_ARTICLE
+    }
+}
+
+export function save_article(article){
+    return dispatch => {
+        return ajax().save_article(article)
+            .then(data => {
+                return dispatch(saveArticle_receive(data));
+            })
+    }
+}
+
+function saveArticle_receive(data){
+    return {
+        type : SAVE_ARTICLE,
+        value : data
     }
 }
