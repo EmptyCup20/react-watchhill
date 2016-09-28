@@ -149,3 +149,55 @@ body {
 .add-article form .urlList li:hover {
   background-color: #f4f4f4;
 }
+.profile-style {
+  background-color: #fff;
+  margin-left: auto;
+}
+.profile-style .row section:nth-of-type(2) {
+  display: none;
+}
+.profile-style .row section:nth-of-type(3) {
+  display: none;
+}
+.profile-style .row section:nth-of-type(4) {
+  display: none;
+}
+.profile-style .row section:nth-of-type(4) textarea {
+  width: 100%;
+}
+.profile-style .row section:nth-of-type(5) {
+  display: none;
+}
+.profile-style .row section:nth-of-type(6) {
+  display: none;
+}
+.profile-style .row .box-primary {
+  border-top-color: #367fa9;
+}
+.profile-style .row .box-primary .box-header {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.profile-style .row .box-primary .box-header form button {
+  margin-top: 20px;
+}
+.profile-style .row .box-primary .box-header form .has-feedback .form-control-feedback {
+  top: 44px;
+}
+.profile-style .box-body {
+  border-top: none;
+}
+.profile-style .box-body .flie-container {
+  padding: 10px;
+}
+.profile-style .box-body .img-circle {
+  width: 220px;
+  height: 220px;
+}
+.profile-style .box-body .box-solid .active > a {
+  border-left-color: #367fa9;
+}
+.profile-style .content-header {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

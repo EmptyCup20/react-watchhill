@@ -9824,7 +9824,7 @@ webpackJsonp([0,1],[
 
 	var _reactRouter = __webpack_require__(3);
 
-	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../../../public/css/profile.less\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	__webpack_require__(155);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11692,6 +11692,7 @@ webpackJsonp([0,1],[
 	});
 	exports.login_init = login_init;
 	exports.login_start = login_start;
+	exports.login_authen = login_authen;
 	exports.login_reveive = login_reveive;
 
 	var _actionType = __webpack_require__(94);
@@ -11741,6 +11742,7 @@ webpackJsonp([0,1],[
 	 * @param pass
 	 * @returns {Function}
 	 */
+
 	function login_ajax(user) {
 	    return function (dispatch) {
 	        dispatch(login_request()); //挂起登录请求,防止重复请求
@@ -13111,6 +13113,12 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 154 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 155 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
