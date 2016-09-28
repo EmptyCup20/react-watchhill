@@ -18,7 +18,7 @@ webpackJsonp([0,1],[
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _store = __webpack_require__(150);
+	var _store = __webpack_require__(151);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -7661,49 +7661,49 @@ webpackJsonp([0,1],[
 
 	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
 
-	var _InfoContainer = __webpack_require__(128);
+	var _InfoContainer = __webpack_require__(129);
 
 	var _InfoContainer2 = _interopRequireDefault(_InfoContainer);
 
-	var _CodeContainer = __webpack_require__(131);
+	var _CodeContainer = __webpack_require__(132);
 
 	var _CodeContainer2 = _interopRequireDefault(_CodeContainer);
 
-	var _AvatarContainer = __webpack_require__(133);
+	var _AvatarContainer = __webpack_require__(134);
 
 	var _AvatarContainer2 = _interopRequireDefault(_AvatarContainer);
 
-	var _PassContainer = __webpack_require__(135);
+	var _PassContainer = __webpack_require__(136);
 
 	var _PassContainer2 = _interopRequireDefault(_PassContainer);
 
-	var _ArticleContainer = __webpack_require__(137);
+	var _ArticleContainer = __webpack_require__(138);
 
 	var _ArticleContainer2 = _interopRequireDefault(_ArticleContainer);
 
-	var _UserContainer = __webpack_require__(139);
+	var _UserContainer = __webpack_require__(140);
 
 	var _UserContainer2 = _interopRequireDefault(_UserContainer);
 
-	var _LoginContainer = __webpack_require__(141);
+	var _LoginContainer = __webpack_require__(142);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _RegisterContainer = __webpack_require__(145);
+	var _RegisterContainer = __webpack_require__(146);
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
-	var _login = __webpack_require__(144);
+	var _login = __webpack_require__(145);
 
-	var _register = __webpack_require__(147);
+	var _register = __webpack_require__(148);
 
-	var _profile = __webpack_require__(129);
+	var _profile = __webpack_require__(130);
 
 	var _addArticle = __webpack_require__(120);
 
-	var _article = __webpack_require__(148);
+	var _article = __webpack_require__(149);
 
-	var _user = __webpack_require__(149);
+	var _user = __webpack_require__(150);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9382,11 +9382,18 @@ webpackJsonp([0,1],[
 	            };
 	        }
 	    } else {
-	        return function (dispatch) {
-	            return (0, _ajax2.default)().addTempArticle(article).then(function (data) {
-	                return dispatch(addTempArticle_receive(data));
-	            });
-	        };
+	        if (article.title) {
+	            return function (dispatch) {
+	                return (0, _ajax2.default)().addTempArticle(article).then(function (data) {
+	                    return dispatch(addTempArticle_receive(data));
+	                });
+	            };
+	        } else {
+	            alert('标题不可为空');
+	            return {
+	                type: 'NO_TITLE'
+	            };
+	        }
 	    }
 	}
 
@@ -9418,11 +9425,18 @@ webpackJsonp([0,1],[
 	}
 
 	function save_article(article) {
-	    return function (dispatch) {
-	        return (0, _ajax2.default)().save_article(article).then(function (data) {
-	            return dispatch(saveArticle_receive(data));
-	        });
-	    };
+	    if (article.title) {
+	        return function (dispatch) {
+	            return (0, _ajax2.default)().save_article(article).then(function (data) {
+	                return dispatch(saveArticle_receive(data));
+	            });
+	        };
+	    } else {
+	        alert('标题不可为空');
+	        return {
+	            type: 'NO_TITLE'
+	        };
+	    }
 	}
 
 	function saveArticle_receive(data) {
@@ -9977,7 +9991,7 @@ webpackJsonp([0,1],[
 	                    ),
 	                    _react2.default.createElement(
 	                        "div",
-	                        { className: "tab-pane", id: "preview" },
+	                        { className: "tab-pane md-preview", id: "preview" },
 	                        _react2.default.createElement("div", { id: "preview", dangerouslySetInnerHTML: this.tohtml() })
 	                    )
 	                )
@@ -10007,7 +10021,7 @@ webpackJsonp([0,1],[
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _redux = __webpack_require__(74);
@@ -10020,13 +10034,18 @@ webpackJsonp([0,1],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = (0, _reactRedux.connect)()(_Profile2.default);
+	function mapStateToProps(state) {
+	    return {
+	        login: state.login
+	    };
+	}
 
 	//action
 
 
 	//视图组件
 	//基础库
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Profile2.default);
 
 /***/ },
 /* 127 */
@@ -10045,6 +10064,8 @@ webpackJsonp([0,1],[
 	var _react2 = _interopRequireDefault(_react);
 
 	var _reactRouter = __webpack_require__(3);
+
+	__webpack_require__(128);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10066,42 +10087,83 @@ webpackJsonp([0,1],[
 	    _createClass(Profile, [{
 	        key: 'render',
 	        value: function render() {
+	            var pathname = this.props.location.pathname;
+	            var login = this.props.login;
+
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'container' },
-	                _react2.default.createElement('br', null),
+	                { className: 'container profile-style' },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-xs-3 col-sm-3 col-md-3 col-lg-3' },
+	                    'section',
+	                    { className: 'content-header' },
 	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'list-group' },
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/profile/info', className: 'list-group-item' },
-	                            '个人信息'
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/profile/pass', className: 'list-group-item' },
-	                            '密码'
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/profile/avatar', className: 'list-group-item' },
-	                            '头像'
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/profile/code', className: 'list-group-item' },
-	                            '二维码'
-	                        )
+	                        'h1',
+	                        null,
+	                        '个人基本信息'
 	                    )
 	                ),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'col-xs-7 col-sm-7 col-md-7 col-lg-7' },
-	                    this.props.children
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-lg-3 col-md-3 col-sm-12 box-body' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box box-solid' },
+	                            _react2.default.createElement(
+	                                'ul',
+	                                { className: 'nav nav-pills nav-stacked' },
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: pathname == '/profile/info' ? 'active' : '' },
+	                                    ' ',
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/profile/info', className: 'list-group-item' },
+	                                        '个人信息'
+	                                    ),
+	                                    ' '
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: pathname == '/profile/pass' ? 'active' : '' },
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/profile/pass', className: 'list-group-item' },
+	                                        '密码'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: pathname == '/profile/avatar' ? 'active' : '' },
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/profile/avatar', className: 'list-group-item' },
+	                                        '头像'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: pathname == '/profile/code' ? 'active' : '' },
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/profile/code', className: 'list-group-item' },
+	                                        '二维码'
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-lg-9 col-md-9 col-sm-12 content' },
+	                        _react2.default.createElement(
+	                            'section',
+	                            null,
+	                            this.props.children
+	                        )
+	                    )
 	                )
 	            );
 	        }
@@ -10114,6 +10176,12 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 128 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10126,11 +10194,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _profile = __webpack_require__(129);
+	var _profile = __webpack_require__(130);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
 
-	var _Info = __webpack_require__(130);
+	var _Info = __webpack_require__(131);
 
 	var _Info2 = _interopRequireDefault(_Info);
 
@@ -10161,7 +10229,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Info2.default);
 
 /***/ },
-/* 129 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10171,6 +10239,7 @@ webpackJsonp([0,1],[
 	});
 	exports.modify_init = modify_init;
 	exports.modify_start = modify_start;
+	exports.modify_login = modify_login;
 
 	var _actionType = __webpack_require__(99);
 
@@ -10314,7 +10383,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 130 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10407,7 +10476,7 @@ webpackJsonp([0,1],[
 	                }(),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'box box-info' },
+	                    { className: 'box box-primary' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'box-header with-border' },
@@ -10457,7 +10526,7 @@ webpackJsonp([0,1],[
 	                            { className: 'box-footer' },
 	                            _react2.default.createElement(
 	                                'button',
-	                                { id: _actionType.MODIFY_BRIEF, type: 'submit', className: 'btn btn-info pull-right', onClick: this._onClick.bind(this) },
+	                                { id: _actionType.MODIFY_BRIEF, type: 'submit', className: 'btn btn-primary pull-right', onClick: this._onClick.bind(this) },
 	                                '修 改'
 	                            )
 	                        )
@@ -10511,7 +10580,7 @@ webpackJsonp([0,1],[
 	                            { className: 'box-footer' },
 	                            _react2.default.createElement(
 	                                'button',
-	                                { id: _actionType.MODIFY_EMAIL, type: 'submit', className: 'btn btn-info pull-right', onClick: this._onClick.bind(this) },
+	                                { id: _actionType.MODIFY_EMAIL, type: 'submit', className: 'btn btn-primary pull-right', onClick: this._onClick.bind(this) },
 	                                '修 改'
 	                            )
 	                        )
@@ -10565,7 +10634,7 @@ webpackJsonp([0,1],[
 	                            { className: 'box-footer' },
 	                            _react2.default.createElement(
 	                                'button',
-	                                { id: _actionType.MODIFY_TEL, type: 'submit', className: 'btn btn-info pull-right', onClick: this._onClick.bind(this) },
+	                                { id: _actionType.MODIFY_TEL, type: 'submit', className: 'btn btn-primary pull-right', onClick: this._onClick.bind(this) },
 	                                '修 改'
 	                            )
 	                        )
@@ -10581,33 +10650,55 @@ webpackJsonp([0,1],[
 	exports.default = Info;
 
 /***/ },
-/* 131 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
+
+	var _redux = __webpack_require__(74);
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Code = __webpack_require__(132);
+	var _profile = __webpack_require__(130);
+
+	var ProfileActions = _interopRequireWildcard(_profile);
+
+	var _Code = __webpack_require__(133);
 
 	var _Code2 = _interopRequireDefault(_Code);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//基础库
-	exports.default = (0, _reactRedux.connect)()(_Code2.default);
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	//绑定state
+
 
 	//action
+	//基础库
+	function mapStateToProps(state) {
+	    return {
+	        login: state.login,
+	        profile: state.profile
+	    };
+	}
+
+	//绑定action
 
 
 	//视图组件
+	function mapDispatchToProps(dispatch) {
+	    return (0, _redux.bindActionCreators)(ProfileActions, dispatch);
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Code2.default);
 
 /***/ },
-/* 132 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10640,13 +10731,87 @@ webpackJsonp([0,1],[
 	    }
 
 	    _createClass(Code, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {}
+	    }, {
+	        key: "_onClick",
+	        value: function _onClick() {}
+	    }, {
 	        key: "render",
 	        value: function render() {
+	            var codeUrl = this.props.login.loginUser.codeUrl;
+
 	            return _react2.default.createElement(
 	                "div",
-	                { className: "container" },
-	                "二维码"
+	                { className: "box box-primary" },
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "box-header with-border" },
+	                    _react2.default.createElement(
+	                        "h3",
+	                        { className: "box-title" },
+	                        "修改二维码"
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "form",
+	                    { className: "form-horizontal" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "box-body" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "form-group flie-container" },
+	                            _react2.default.createElement(
+	                                "label",
+	                                null,
+	                                "初始二维码"
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "row" },
+	                                _react2.default.createElement("img", { src: codeUrl, alt: "二维码", className: "img-circle col-sm-offset-2" })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "form-group flie-container" },
+	                            _react2.default.createElement(
+	                                "label",
+	                                { htmlFor: "imgUrl" },
+	                                "二维码"
+	                            ),
+	                            _react2.default.createElement("input", { id: "imgUrl", name: "imgUrl", type: "file", className: "file-loading" })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "box-footer" },
+	                        _react2.default.createElement(
+	                            "button",
+	                            { type: "submit", className: "btn btn-primary pull-right", onClick: this._onClick.bind(this) },
+	                            "修 改"
+	                        )
+	                    )
+	                )
 	            );
+	        }
+	    }, {
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	            var _this = this;
+	            //初始化文件插件
+	            $('#imgUrl').fileinput({
+	                language: "zh",
+	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+	                uploadAsync: true,
+	                maxFileCount: 1,
+	                uploadUrl: '/user/userImg'
+	            });
+	            //文件上传事件
+	            $('#imgUrl').on('fileuploaded', function (event, data, previewId, index) {
+	                _this.props.modify_login({ codeUrl: data.response.data.imgUrl });
+	            });
 	        }
 	    }]);
 
@@ -10656,33 +10821,55 @@ webpackJsonp([0,1],[
 	exports.default = Code;
 
 /***/ },
-/* 133 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
+
+	var _redux = __webpack_require__(74);
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Avatar = __webpack_require__(134);
+	var _profile = __webpack_require__(130);
+
+	var ProfileActions = _interopRequireWildcard(_profile);
+
+	var _Avatar = __webpack_require__(135);
 
 	var _Avatar2 = _interopRequireDefault(_Avatar);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//基础库
-	exports.default = (0, _reactRedux.connect)()(_Avatar2.default);
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	//绑定state
+
 
 	//action
+	//基础库
+	function mapStateToProps(state) {
+	    return {
+	        login: state.login,
+	        profile: state.profile
+	    };
+	}
+
+	//绑定action
 
 
 	//视图组件
+	function mapDispatchToProps(dispatch) {
+	    return (0, _redux.bindActionCreators)(ProfileActions, dispatch);
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Avatar2.default);
 
 /***/ },
-/* 134 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10715,13 +10902,87 @@ webpackJsonp([0,1],[
 	    }
 
 	    _createClass(Avatar, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {}
+	    }, {
+	        key: "_onClick",
+	        value: function _onClick() {}
+	    }, {
 	        key: "render",
 	        value: function render() {
+	            var avatarUrl = this.props.login.loginUser.avatarUrl;
+
 	            return _react2.default.createElement(
 	                "div",
-	                { className: "container" },
-	                "头像"
+	                { className: "box box-primary" },
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "box-header with-border" },
+	                    _react2.default.createElement(
+	                        "h3",
+	                        { className: "box-title" },
+	                        "修改头像"
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "form",
+	                    { className: "form-horizontal" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "box-body" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "form-group flie-container" },
+	                            _react2.default.createElement(
+	                                "label",
+	                                null,
+	                                "初始头像"
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "row" },
+	                                _react2.default.createElement("img", { src: avatarUrl, alt: "头像", className: "img-circle col-sm-offset-2" })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "form-group flie-container" },
+	                            _react2.default.createElement(
+	                                "label",
+	                                { htmlFor: "imgUrl" },
+	                                "上传头像"
+	                            ),
+	                            _react2.default.createElement("input", { id: "imgUrl", name: "imgUrl", type: "file", className: "file-loading" })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "box-footer" },
+	                        _react2.default.createElement(
+	                            "button",
+	                            { type: "submit", className: "btn btn-primary pull-right", onClick: this._onClick.bind(this) },
+	                            "修 改"
+	                        )
+	                    )
+	                )
 	            );
+	        }
+	    }, {
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	            var _this = this;
+	            //初始化文件插件
+	            $('#imgUrl').fileinput({
+	                language: "zh",
+	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+	                uploadAsync: true,
+	                maxFileCount: 1,
+	                uploadUrl: '/user/userImg'
+	            });
+	            //文件上传事件
+	            $('#imgUrl').on('fileuploaded', function (event, data, previewId, index) {
+	                _this.props.modify_login({ avatarUrl: data.response.data.imgUrl });
+	            });
 	        }
 	    }]);
 
@@ -10731,7 +10992,7 @@ webpackJsonp([0,1],[
 	exports.default = Avatar;
 
 /***/ },
-/* 135 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10744,11 +11005,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _profile = __webpack_require__(129);
+	var _profile = __webpack_require__(130);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
 
-	var _Pass = __webpack_require__(136);
+	var _Pass = __webpack_require__(137);
 
 	var _Pass2 = _interopRequireDefault(_Pass);
 
@@ -10778,7 +11039,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Pass2.default);
 
 /***/ },
-/* 136 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10847,7 +11108,7 @@ webpackJsonp([0,1],[
 
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'box box-info' },
+	                { className: 'box box-primary' },
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'box-header with-border' },
@@ -10930,7 +11191,7 @@ webpackJsonp([0,1],[
 	                        { className: 'box-footer' },
 	                        _react2.default.createElement(
 	                            'button',
-	                            { type: 'submit', className: 'btn btn-info pull-right', onClick: this._onClick.bind(this) },
+	                            { type: 'submit', className: 'btn btn-primary pull-right', onClick: this._onClick.bind(this) },
 	                            '修 改'
 	                        )
 	                    )
@@ -10945,7 +11206,7 @@ webpackJsonp([0,1],[
 	exports.default = Code;
 
 /***/ },
-/* 137 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10956,7 +11217,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Article = __webpack_require__(138);
+	var _Article = __webpack_require__(139);
 
 	var _Article2 = _interopRequireDefault(_Article);
 
@@ -10977,7 +11238,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Article2.default);
 
 /***/ },
-/* 138 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11168,7 +11429,7 @@ webpackJsonp([0,1],[
 	exports.default = Article;
 
 /***/ },
-/* 139 */
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11179,7 +11440,7 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _User = __webpack_require__(140);
+	var _User = __webpack_require__(141);
 
 	var _User2 = _interopRequireDefault(_User);
 
@@ -11200,7 +11461,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_User2.default);
 
 /***/ },
-/* 140 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11398,7 +11659,7 @@ webpackJsonp([0,1],[
 	exports.default = User;
 
 /***/ },
-/* 141 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11411,11 +11672,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Login = __webpack_require__(142);
+	var _Login = __webpack_require__(143);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(144);
+	var _login = __webpack_require__(145);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -11446,7 +11707,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 142 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11471,7 +11732,7 @@ webpackJsonp([0,1],[
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(143);
+	var _privateType = __webpack_require__(144);
 
 	var _httpType = __webpack_require__(100);
 
@@ -11656,7 +11917,7 @@ webpackJsonp([0,1],[
 	exports.default = Login;
 
 /***/ },
-/* 143 */
+/* 144 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -11668,7 +11929,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-/* 144 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11795,7 +12056,7 @@ webpackJsonp([0,1],[
 	//}
 
 /***/ },
-/* 145 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11808,11 +12069,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Register = __webpack_require__(146);
+	var _Register = __webpack_require__(147);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
-	var _register = __webpack_require__(147);
+	var _register = __webpack_require__(148);
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -11843,7 +12104,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
-/* 146 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11868,7 +12129,7 @@ webpackJsonp([0,1],[
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(143);
+	var _privateType = __webpack_require__(144);
 
 	var _httpType = __webpack_require__(100);
 
@@ -12080,7 +12341,7 @@ webpackJsonp([0,1],[
 	exports.default = Login;
 
 /***/ },
-/* 147 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12099,7 +12360,7 @@ webpackJsonp([0,1],[
 
 	var _httpType = __webpack_require__(100);
 
-	var _login = __webpack_require__(144);
+	var _login = __webpack_require__(145);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12194,7 +12455,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 148 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12277,7 +12538,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 149 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12357,7 +12618,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 150 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12369,15 +12630,15 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
-	var _reduxThunk = __webpack_require__(151);
+	var _reduxThunk = __webpack_require__(152);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(152);
+	var _reduxLogger = __webpack_require__(153);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(153);
+	var _reducers = __webpack_require__(154);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -12397,7 +12658,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 151 */
+/* 152 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -12425,7 +12686,7 @@ webpackJsonp([0,1],[
 	exports['default'] = thunk;
 
 /***/ },
-/* 152 */
+/* 153 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -12658,7 +12919,7 @@ webpackJsonp([0,1],[
 	module.exports = createLogger;
 
 /***/ },
-/* 153 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12669,27 +12930,27 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
-	var _login = __webpack_require__(154);
+	var _login = __webpack_require__(155);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(155);
+	var _register = __webpack_require__(156);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(156);
+	var _articles = __webpack_require__(157);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
-	var _addArticle = __webpack_require__(157);
+	var _addArticle = __webpack_require__(158);
 
 	var _addArticle2 = _interopRequireDefault(_addArticle);
 
-	var _profile = __webpack_require__(158);
+	var _profile = __webpack_require__(159);
 
 	var _profile2 = _interopRequireDefault(_profile);
 
-	var _user = __webpack_require__(159);
+	var _user = __webpack_require__(160);
 
 	var _user2 = _interopRequireDefault(_user);
 
@@ -12718,7 +12979,7 @@ webpackJsonp([0,1],[
 	exports.default = reducer;
 
 /***/ },
-/* 154 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12828,7 +13089,7 @@ webpackJsonp([0,1],[
 	exports.default = login;
 
 /***/ },
-/* 155 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12879,7 +13140,7 @@ webpackJsonp([0,1],[
 	exports.default = register;
 
 /***/ },
-/* 156 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12933,7 +13194,7 @@ webpackJsonp([0,1],[
 	exports.default = article;
 
 /***/ },
-/* 157 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12991,7 +13252,7 @@ webpackJsonp([0,1],[
 	exports.default = addArticle;
 
 /***/ },
-/* 158 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13040,7 +13301,7 @@ webpackJsonp([0,1],[
 	exports.default = profile;
 
 /***/ },
-/* 159 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

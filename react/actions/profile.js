@@ -119,7 +119,7 @@ function modify_process(type,data,user) {
  * @param user
  */
 
-function modify_login(user) {
+export function modify_login(user) {
     return {
         type:MODIFY_LOGIN,
         user:user
