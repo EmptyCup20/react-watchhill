@@ -21,7 +21,7 @@ function init(model) {
         'article': article,
         'comment': comment
     };
-    for (let item in modelList) {
+    for (var item in modelList) {
         if (item === model) {
             model = modelList[item];
             return model;

@@ -408,34 +408,27 @@
 
 	'use strict';
 
-	var _db_tools = __webpack_require__(12);
-
-	var _db_tools2 = _interopRequireDefault(_db_tools);
-
-	var _statusMsg = __webpack_require__(18);
-
-	var _statusMsg2 = _interopRequireDefault(_statusMsg);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var db_tools = __webpack_require__(12);
+	var statusMsg = __webpack_require__(18);
 
 	var User = function User() {};
 
 	//用户注册
 	User.addUser = function (obj) {
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.queryByCondition('user', { author: obj.author }).then(function (data) {
+	        db_tools.queryByCondition('user', { author: obj.author }).then(function (data) {
 	            //用户存在
 	            if (data.length !== 0) {
-	                resolve(_statusMsg2.default.registerErr);
+	                resolve(statusMsg.registerErr);
 	                return;
 	            }
-	            _db_tools2.default.add('user', obj).then(function (data) {
-	                _statusMsg2.default.successMsg.data = data.toObject();
-	                if (_statusMsg2.default.successMsg.data.password) {
+	            db_tools.add('user', obj).then(function (data) {
+	                statusMsg.successMsg.data = data.toObject();
+	                if (statusMsg.successMsg.data.password) {
 	                    // 不返回用户密码
-	                    delete _statusMsg2.default.successMsg.data.password;
+	                    delete statusMsg.successMsg.data.password;
 	                }
-	                resolve(_statusMsg2.default.successMsg);
+	                resolve(statusMsg.successMsg);
 	            }, function (err) {
 	                reject(err);
 	            });
@@ -449,22 +442,22 @@
 	User.login = function (obj) {
 	    return new Promise(function (resolve, reject) {
 	        //查询用户是否存在
-	        _db_tools2.default.queryByCondition('user', { author: obj.author }).then(function (data) {
+	        db_tools.queryByCondition('user', { author: obj.author }).then(function (data) {
 	            if (data.length === 0) {
 	                //返回用户不存在信息
-	                resolve(_statusMsg2.default.loginNoExistErr);
+	                resolve(statusMsg.loginNoExistErr);
 	                return;
 	            }
 	            //查询用户的密码是否错误
-	            _db_tools2.default.queryByCondition('user', { author: obj.author, password: obj.password }, '-password').then(function (data) {
+	            db_tools.queryByCondition('user', { author: obj.author, password: obj.password }, '-password').then(function (data) {
 	                if (data.length === 0) {
 	                    //返回密码错误信息
-	                    resolve(_statusMsg2.default.loginPwdErr);
+	                    resolve(statusMsg.loginPwdErr);
 	                    return;
 	                }
 	                //返回登录成功
-	                _statusMsg2.default.successMsg.data = data[0].toObject();
-	                resolve(_statusMsg2.default.successMsg);
+	                statusMsg.successMsg.data = data[0].toObject();
+	                resolve(statusMsg.successMsg);
 	            }, function (err) {
 	                reject(err);
 	            });
@@ -478,17 +471,17 @@
 	User.modifyPwd = function (obj) {
 	    return new Promise(function (resolve, reject) {
 	        //判断旧密码是否正确
-	        _db_tools2.default.queryByCondition('user', { _id: obj.userId }, 'password').then(function (data) {
+	        db_tools.queryByCondition('user', { _id: obj.userId }, 'password').then(function (data) {
 	            data = data[0].toObject();
 	            if (data.password !== obj.oldPwd) {
-	                resolve(_statusMsg2.default.modfiyPwdErr);
+	                resolve(statusMsg.modfiyPwdErr);
 	                return;
 	            }
 
 	            delete obj.oldPwd;
 
 	            //修改密码
-	            _db_tools2.default.edit('user', obj).then(function (data) {
+	            db_tools.edit('user', obj).then(function (data) {
 	                //返回成功信息
 	                resolve(data);
 	            }, function (err) {
@@ -503,7 +496,7 @@
 	//修改用户资料
 	User.modfiyUserData = function (obj) {
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.edit('user', obj).then(function (data) {
+	        db_tools.edit('user', obj).then(function (data) {
 	            resolve(data);
 	        }, function (err) {
 	            reject(err);
@@ -517,14 +510,15 @@
 	        _id: obj.userId
 	    };
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.queryByCondition('user', queryObj, '-password').then(function (userData) {
+	        db_tools.queryByCondition('user', queryObj, '-password').then(function (userData) {
 	            userData = userData[0].toObject();
-	            _db_tools2.default.queryByCondition('article', { author: userData.author }, 'title describe createTime').then(function (articleData) {
+	            db_tools.queryByCondition('article', { author: userData.author }, 'title describe createTime').then(function (articleData) {
 	                userData.articleList = [];
 	                articleData.forEach(function (value, index) {
 	                    userData.articleList.push(value.toObject());
 	                });
-	                resolve(userData);
+	                statusMsg.successMsg.data = userData;
+	                resolve(statusMsg.successMsg);
 	            });
 	        }, function (err) {
 	            reject(err);
@@ -1021,6 +1015,7 @@
 	//获取文章中上传图片的url
 	function getImgUrl(req, res, next) {
 	    var query = req.query;
+	    query.author = req.session.loginUser.author;
 	    _article2.default.getImgUrl(query).then(function (data) {
 	        res.send(data);
 	    }, function (data) {
@@ -1034,30 +1029,16 @@
 
 	'use strict';
 
-	var _db_tools = __webpack_require__(12);
-
-	var _db_tools2 = _interopRequireDefault(_db_tools);
-
-	var _statusMsg = __webpack_require__(18);
-
-	var _statusMsg2 = _interopRequireDefault(_statusMsg);
-
-	var _path = __webpack_require__(2);
-
-	var _path2 = _interopRequireDefault(_path);
-
-	var _fs = __webpack_require__(19);
-
-	var _fs2 = _interopRequireDefault(_fs);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+	var db_tools = __webpack_require__(12);
+	var statusMsg = __webpack_require__(18);
+	var path = __webpack_require__(2);
+	var fs = __webpack_require__(19);
 	var Article = function Article() {};
 
 	//获取文章列表
 	Article.getArticleList = function (obj) {
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.query('article', obj, '-content').then(function (data) {
+	        db_tools.query('article', obj, '-content').then(function (data) {
 	            resolve(data);
 	        }, function (err) {
 	            reject(err);
@@ -1071,14 +1052,18 @@
 	        _id: obj.articleId
 	    };
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.queryByCondition('article', queryObj, 'content author').then(function (articleData) {
+	        db_tools.queryByCondition('article', queryObj, 'content author').then(function (articleData) {
 	            articleData = articleData[0].toObject(); //转成对象字面量
-	            //根据author字段查询作者信息，过滤密码字段
-	            _db_tools2.default.queryByCondition('user', { author: articleData.author }, '-password').then(function (userData) {
-	                userData = !!userData.length ? userData[0].toObject() : [];
-	                articleData.userInfo = userData;
+	            if (!obj.isGetInfo) {
+	                //根据author字段查询作者信息，过滤密码字段
+	                db_tools.queryByCondition('user', { author: articleData.author }, '-password').then(function (userData) {
+	                    userData = !!userData.length ? userData[0].toObject() : [];
+	                    articleData.userInfo = userData;
+	                    resolve(articleData);
+	                });
+	            } else {
 	                resolve(articleData);
-	            });
+	            }
 	        }, function (err) {
 	            reject(err);
 	        });
@@ -1088,9 +1073,9 @@
 	//新增文章
 	Article.addArticle = function (obj) {
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.add('article', obj).then(function (data) {
-	            _statusMsg2.default.successMsg.data = data.toObject();
-	            resolve(_statusMsg2.default.successMsg);
+	        db_tools.add('article', obj).then(function (data) {
+	            statusMsg.successMsg.data = data.toObject();
+	            resolve(statusMsg.successMsg);
 	        }, function (err) {
 	            reject(err);
 	        });
@@ -1100,7 +1085,7 @@
 	//修改文章
 	Article.modfiyArticle = function (obj) {
 	    return new Promise(function (resolve, reject) {
-	        _db_tools2.default.edit('article', obj).then(function (data) {
+	        db_tools.edit('article', obj).then(function (data) {
 	            resolve(data);
 	        }, function (err) {
 	            reject(err);
@@ -1111,14 +1096,14 @@
 	//获取文章中上传图片的url
 	Article.getImgUrl = function (obj) {
 	    var user_dir;
-	    _statusMsg2.default.successMsg.data = [];
+	    statusMsg.successMsg.data = [];
 	    return new Promise(function (resolve, reject) {
-	        user_dir = _path2.default.resolve('public/images', req.session.loginUser.author, 'article', obj.articleId);
-	        _fs2.default.readdir(user_dir, function (err, data) {
+	        user_dir = path.resolve('public/images', obj.author, 'article', obj.articleId);
+	        fs.readdir(user_dir, function (err, data) {
 	            data.forEach(function (value, index) {
-	                _statusMsg2.default.successMsg.data.push(_path2.default.resolve(user_dir, value));
+	                statusMsg.successMsg.data.push(path.resolve(user_dir, value));
 	            });
-	            resolve(_statusMsg2.default.successMsg);
+	            resolve(statusMsg.successMsg);
 	        });
 	    });
 	};
@@ -1254,7 +1239,7 @@
 
 	var _indexServer2 = _interopRequireDefault(_indexServer);
 
-	var _store = __webpack_require__(87);
+	var _store = __webpack_require__(85);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -1457,15 +1442,15 @@
 
 	var _ArticleContainer2 = _interopRequireDefault(_ArticleContainer);
 
-	var _UserContainer = __webpack_require__(78);
+	var _UserContainer = __webpack_require__(95);
 
 	var _UserContainer2 = _interopRequireDefault(_UserContainer);
 
-	var _LoginContainer = __webpack_require__(80);
+	var _LoginContainer = __webpack_require__(78);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _RegisterContainer = __webpack_require__(84);
+	var _RegisterContainer = __webpack_require__(82);
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
@@ -1755,7 +1740,8 @@
 	    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE', //新增文章
 	    ADD_ARTICLE_TITLE: 'ADD_ARTICLE_TITLE', //新增标题
 	    ADD_ARTICLE_INTRO: 'ADD_ARTICLE_INTRO', //新增简介
-	    DEL_ARTICLE: 'DEL_ARTICLE'
+	    DEL_ARTICLE: 'DEL_ARTICLE', //删除文章
+	    SAVE_ARTICLE: 'SAVE_ARTICLE' //保存文章
 	};
 
 /***/ },
@@ -1800,19 +1786,8 @@
 	 */
 
 	function ajax() {
-	    function req(method, url, data) {
+	    function req(request) {
 	        var defered = $.Deferred();
-
-	        var request = {
-	            type: method,
-	            url: url
-	            //dataType: "json"?
-	            //data: data
-	        };
-
-	        if (data) {
-	            request.data = data;
-	        }
 
 	        $.ajax(request).done(function (data) {
 	            defered.resolve(data);
@@ -1826,47 +1801,95 @@
 	    return {
 	        //登录
 	        login: function login(data) {
-	            return req('POST', '/user/login', data);
+	            return req({
+	                type: 'POST',
+	                url: '/user/login',
+	                data: data
+	            });
 	        },
 
 	        //注销
 	        logout: function logout() {
-	            return req('GET', '/user/logout');
+	            return req({
+	                type: 'GET',
+	                url: '/user/logout'
+	            });
 	        },
 
 	        //注册
 	        register: function register(data) {
-	            return req('POST', '/user/register', data);
+	            return req({
+	                type: 'POST',
+	                url: '/user/register',
+	                data: data
+	            });
 	        },
 
 	        //个人中心-密码修改
 	        modifyPass: function modifyPass(data) {
-	            return req('POST', '/user/profile/pass', data);
+	            return req({
+	                type: 'POST',
+	                url: '/user/profile/pass',
+	                data: data
+	            });
 	        },
 
 	        //个人中心-个签,电话,邮箱修改
 	        modifyInfo: function modifyInfo(data) {
-	            return req('POST', '/user/profile/info', data);
+	            return req({
+	                type: 'POST',
+	                url: '/user/profile/info',
+	                data: data
+	            });
 	        },
 
 	        //新增文章
 	        addTempArticle: function addTempArticle(data) {
-	            return req('POST', '/article/addArticle', data);
+	            return req({
+	                type: 'POST',
+	                url: '/article/addArticle',
+	                data: data
+	            });
 	        },
 
 	        //获取文章内容
 	        article: function article(data) {
-	            return req('POST', '/article/getArticle', data);
+	            return req({
+	                type: 'POST',
+	                url: '/article/getArticle',
+	                data: data
+	            });
 	        },
 
 	        //删除文章
 	        delArticle: function delArticle(data) {
-	            return req('POST', '/article/delArticle', data);
+	            return req({
+	                type: 'POST',
+	                url: '/article/delArticle',
+	                data: data
+	            });
 	        },
 
 	        //获取个人文章列表
 	        user: function user(data) {
-	            return req('GET', '/user/getList', data);
+	            return req({
+	                type: 'GET',
+	                url: '/user/getList',
+	                data: data
+	            });
+	        },
+	        //保存文章
+	        save_article: function save_article(data) {
+	            return req({
+	                type: 'POST',
+	                url: '/article/modfiyArticle',
+	                data: data,
+	                success: function success(data) {
+	                    if (data.status === 'success') {
+	                        alert('保存成功');
+	                    }
+	                }
+	            });
 	        }
 
 	    };
@@ -2974,6 +2997,7 @@
 	exports.addTempArticle = addTempArticle;
 	exports.addTitle = addTitle;
 	exports.addIntro = addIntro;
+	exports.save_article = save_article;
 
 	var _actionType = __webpack_require__(38);
 
@@ -3037,6 +3061,21 @@
 	function clearAndDel_receive() {
 	    return {
 	        type: _actionType.DEL_ARTICLE
+	    };
+	}
+
+	function save_article(article) {
+	    return function (dispatch) {
+	        return (0, _ajax2.default)().save_article(article).then(function (data) {
+	            return dispatch(saveArticle_receive(data));
+	        });
+	    };
+	}
+
+	function saveArticle_receive(data) {
+	    return {
+	        type: _actionType.SAVE_ARTICLE,
+	        value: data
 	    };
 	}
 
@@ -3108,6 +3147,17 @@
 	        key: 'add_del',
 	        value: function add_del() {
 	            this.props.addTempArticle(this.props.addArticle);
+	        }
+	    }, {
+	        key: 'save_article',
+	        value: function save_article() {
+	            var obj = {
+	                articleId: this.props.addArticle.articleId,
+	                title: this.props.addArticle.title,
+	                describe: this.props.addArticle.describe,
+	                content: this.props.addArticle.preview
+	            };
+	            this.props.save_article(obj);
 	        }
 	    }, {
 	        key: 'render',
@@ -3201,17 +3251,17 @@
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
-	                                            { className: 'btn-group' },
+	                                            { className: 'btn-group get-url' },
 	                                            _react2.default.createElement(
 	                                                'div',
 	                                                null,
 	                                                _react2.default.createElement(
 	                                                    'div',
-	                                                    { className: 'btn btn-primary' },
+	                                                    { className: 'btn btn-primary', id: 'getFileUrl' },
 	                                                    '获取图片的url路径'
 	                                                )
 	                                            ),
-	                                            _react2.default.createElement('ul', null)
+	                                            _react2.default.createElement('ul', { id: 'urlList', className: 'list-group urlList' })
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
@@ -3226,7 +3276,7 @@
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        'button',
-	                                        { type: 'button', id: 'article-upload', className: 'btn-primary btn-block btn-flat btn button' },
+	                                        { type: 'button', id: 'article-upload', className: 'btn-primary btn-block btn-flat btn button', onClick: this.save_article.bind(this) },
 	                                        '保存'
 	                                    )
 	                                )
@@ -3285,26 +3335,10 @@
 
 	            $('#articleFile').on('fileuploaded', function (event, data, previewId, index) {
 	                files = data.files;
+	                var files = $('#articleFile').fileinput('getFileStack');
 	            });
 
-	            //文件上传，ajax数据添加
-	            // $('#imgUrl').on('filepreajax', function(event, previewId, index) {
-	            //     $('#imgUrl').fileinput({
-	            //         uploadExtraData: {
-	            //             type:'cover',
-	            //             articleId:_this.props.addArticle.articleId
-	            //         }
-	            //     });
-	            // });
-	            // $('#articleFile').on('filepreajax', function(event, previewId, index) {
-	            //     $('#articleFile').fileinput({
-	            //         uploadExtraData: {
-	            //             type:'article',
-	            //             articleId:_this.props.addArticle.articleId
-	            //         }
-	            //     });
-	            // });
-
+	            //清空事件
 	            $('#article-add').click(function (e) {
 	                if ($(e.target).parent().attr('class').indexOf('clear') > -1) {
 	                    $('#atricleTitle').val('');
@@ -3314,6 +3348,50 @@
 	                    $('#text-input').val('');
 	                }
 	            });
+
+	            //获取图片路径
+	            $('#getFileUrl').click(function (e) {
+	                $.ajax({
+	                    url: '/article/getImgUrl',
+	                    type: 'GET',
+	                    data: {
+	                        articleId: _this.props.addArticle.articleId
+	                    },
+	                    success: function success(data) {
+	                        var node = '';
+	                        $('#urlList').hide('normal');
+	                        for (var url in data.data) {
+	                            var str = '<li class="list-group-item" >' + '<span class="url-content">' + data.data[url] + '</span>' + '<span class="url-edit fa fa-fw fa-copy"  data-toggle="tooltip" data-placement="top" title="复制URL"></span>' + '</li>';
+	                            node = node + str;
+	                        }
+	                        $('#urlList').html(node).show('normal');
+	                    }
+	                });
+	            });
+	            //绑定复制事件
+	            var copy = new Clipboard('#urlList .url-edit', {
+	                text: function text(trigger) {
+	                    return $(trigger).prev().text();
+	                }
+	            });
+	            copy.on('success', function (e) {
+	                $(e.trigger).attr('data-original-title', '复制成功');
+	                // $(e.trigger).tooltip('hide');
+	                $(e.trigger).tooltip('show');
+	                setTimeout(function () {
+	                    $(e.trigger).attr('data-original-title', '复制URL');
+	                    $(e.trigger).tooltip('hide');
+	                }, 2000);
+	            });
+	            // $('#urlList').on('click','.url-edit',function(event){
+	            //     var str = $(event.target).prev().text();
+	            //     var clipboard = new Clipboard()
+	            //     str.clone();
+	            //     $(event.target).prev().attr('title','复制成功');
+	            //     setTimeout(function(){
+	            //         $(event.target).prev().attr('title','复制URL');
+	            //     },1000);
+	            // });
 	        }
 	    }]);
 
@@ -4746,245 +4824,15 @@
 	    value: true
 	});
 
-	var _reactRedux = __webpack_require__(31);
-
-	var _User = __webpack_require__(79);
-
-	var _User2 = _interopRequireDefault(_User);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//绑定user store到user组件
-	//基础库
-	function mapStateToProps(state) {
-	    return {
-	        user: state.user
-	    };
-	}
-
-	//action
-
-
-	//视图组件
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_User2.default);
-
-/***/ },
-/* 79 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(28);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(30);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var User = function (_Component) {
-	    _inherits(User, _Component);
-
-	    function User() {
-	        _classCallCheck(this, User);
-
-	        return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).apply(this, arguments));
-	    }
-
-	    _createClass(User, [{
-	        key: 'render',
-	        value: function render() {
-
-	            var loading = true;
-	            var _props = this.props;
-	            var user = _props.user;
-	            var params = _props.params;
-
-	            var lists = user.articleList;
-
-	            var showList = {}; //显示的文章列表
-
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-
-	            try {
-	                for (var _iterator = lists[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var articleList = _step.value;
-
-	                    if (articleList._id === params.id) {
-	                        showList = articleList;
-	                        loading = false; //已经获取到用户列表
-	                        break;
-	                    }
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'content-wrapper' },
-	                _react2.default.createElement('br', null),
-	                loading ? _react2.default.createElement(
-	                    'div',
-	                    { className: 'alert alert-info', role: 'alert' },
-	                    '信息正在加载,请稍后...'
-	                ) : _react2.default.createElement(
-	                    'div',
-	                    { className: 'info-box' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'info-box-content' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'container authors-info' },
-	                            _react2.default.createElement(
-	                                'blockquote',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'p',
-	                                    { className: 'module-list-item' },
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        null,
-	                                        _react2.default.createElement('img', { src: showList.avatarUrl, 'class': 'img-circle', width: '60', height: '80', alt: '个人照片' })
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    { className: 'module-list' },
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'module-list-item' },
-	                                        '作者:',
-	                                        showList.author
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'module-list-item' },
-	                                        '联系方式：',
-	                                        showList.tel
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'module-list-item' },
-	                                        '邮箱: ',
-	                                        showList.email
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'container author-info-list' },
-	                            _react2.default.createElement(
-	                                'ul',
-	                                { className: 'timeline' },
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { className: 'time-label' },
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: 'bg-red' },
-	                                        '10 Feb. 2014'
-	                                    )
-	                                ),
-	                                showList.articleList.map(function (article, index, lists) {
-	                                    return _react2.default.createElement(
-	                                        'li',
-	                                        { key: article._id },
-	                                        _react2.default.createElement('i', { className: 'fa fa-comment-o bg-yellow' }),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'timeline-item' },
-	                                            _react2.default.createElement(
-	                                                'span',
-	                                                { className: 'time' },
-	                                                _react2.default.createElement('i', { className: 'fa fa-clock-o' }),
-	                                                'article.createTime'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'h3',
-	                                                { className: 'timeline-header' },
-	                                                _react2.default.createElement(
-	                                                    _reactRouter.Link,
-	                                                    { to: '/article/' + article._id },
-	                                                    article.title
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'timeline-body' },
-	                                                article.describe
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'timeline-footer' },
-	                                                _react2.default.createElement(
-	                                                    _reactRouter.Link,
-	                                                    { to: '/article/' + article._id, className: 'btn btn-primary btn-xs' },
-	                                                    '阅读全文...'
-	                                                )
-	                                            )
-	                                        )
-	                                    );
-	                                })
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return User;
-	}(_react.Component);
-
-	exports.default = User;
-
-/***/ },
-/* 80 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
 	var _redux = __webpack_require__(32);
 
 	var _reactRedux = __webpack_require__(31);
 
-	var _Login = __webpack_require__(81);
+	var _Login = __webpack_require__(79);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(83);
+	var _login = __webpack_require__(81);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -5015,7 +4863,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 81 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5040,7 +4888,7 @@
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(82);
+	var _privateType = __webpack_require__(80);
 
 	var _httpType = __webpack_require__(39);
 
@@ -5225,7 +5073,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 82 */
+/* 80 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5237,7 +5085,7 @@
 	};
 
 /***/ },
-/* 83 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5364,7 +5212,7 @@
 	//}
 
 /***/ },
-/* 84 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5377,11 +5225,11 @@
 
 	var _reactRedux = __webpack_require__(31);
 
-	var _Register = __webpack_require__(85);
+	var _Register = __webpack_require__(83);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
-	var _register = __webpack_require__(86);
+	var _register = __webpack_require__(84);
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -5412,7 +5260,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
-/* 85 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5437,7 +5285,7 @@
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(82);
+	var _privateType = __webpack_require__(80);
 
 	var _httpType = __webpack_require__(39);
 
@@ -5649,7 +5497,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 86 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5668,7 +5516,7 @@
 
 	var _httpType = __webpack_require__(39);
 
-	var _login = __webpack_require__(83);
+	var _login = __webpack_require__(81);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5763,7 +5611,7 @@
 	}
 
 /***/ },
-/* 87 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5775,15 +5623,15 @@
 
 	var _redux = __webpack_require__(32);
 
-	var _reduxThunk = __webpack_require__(88);
+	var _reduxThunk = __webpack_require__(86);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(89);
+	var _reduxLogger = __webpack_require__(87);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(90);
+	var _reducers = __webpack_require__(88);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -5803,19 +5651,19 @@
 	}
 
 /***/ },
-/* 88 */
+/* 86 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 89 */
+/* 87 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-logger");
 
 /***/ },
-/* 90 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5826,27 +5674,27 @@
 
 	var _redux = __webpack_require__(32);
 
-	var _login = __webpack_require__(91);
+	var _login = __webpack_require__(89);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(92);
+	var _register = __webpack_require__(90);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(93);
+	var _articles = __webpack_require__(91);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
-	var _addArticle = __webpack_require__(94);
+	var _addArticle = __webpack_require__(92);
 
 	var _addArticle2 = _interopRequireDefault(_addArticle);
 
-	var _profile = __webpack_require__(95);
+	var _profile = __webpack_require__(93);
 
 	var _profile2 = _interopRequireDefault(_profile);
 
-	var _user = __webpack_require__(96);
+	var _user = __webpack_require__(94);
 
 	var _user2 = _interopRequireDefault(_user);
 
@@ -5875,7 +5723,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 91 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5985,7 +5833,7 @@
 	exports.default = login;
 
 /***/ },
-/* 92 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6036,7 +5884,7 @@
 	exports.default = register;
 
 /***/ },
-/* 93 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6090,7 +5938,7 @@
 	exports.default = article;
 
 /***/ },
-/* 94 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6136,6 +5984,10 @@
 	                    preview: ''
 	                });
 	            }
+	        case _actionType.SAVE_ARTICLE:
+	            {
+	                return state;
+	            }
 	        default:
 	            return state;
 	    }
@@ -6144,7 +5996,7 @@
 	exports.default = addArticle;
 
 /***/ },
-/* 95 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6193,7 +6045,7 @@
 	exports.default = profile;
 
 /***/ },
-/* 96 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6238,6 +6090,236 @@
 	};
 
 	exports.default = user;
+
+/***/ },
+/* 95 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _reactRedux = __webpack_require__(31);
+
+	var _User = __webpack_require__(96);
+
+	var _User2 = _interopRequireDefault(_User);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//绑定user store到user组件
+	//基础库
+	function mapStateToProps(state) {
+	    return {
+	        user: state.user
+	    };
+	}
+
+	//action
+
+
+	//视图组件
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_User2.default);
+
+/***/ },
+/* 96 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(28);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(30);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var User = function (_Component) {
+	    _inherits(User, _Component);
+
+	    function User() {
+	        _classCallCheck(this, User);
+
+	        return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).apply(this, arguments));
+	    }
+
+	    _createClass(User, [{
+	        key: 'render',
+	        value: function render() {
+
+	            var loading = true;
+	            var _props = this.props;
+	            var user = _props.user;
+	            var params = _props.params;
+
+	            var lists = user.articleList;
+
+	            var showList = {}; //显示的文章列表
+
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+
+	            try {
+	                for (var _iterator = lists[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var articleList = _step.value;
+
+	                    if (articleList._id === params.id) {
+	                        showList = articleList;
+	                        loading = false; //已经获取到用户列表
+	                        break;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'content-wrapper' },
+	                _react2.default.createElement('br', null),
+	                loading ? _react2.default.createElement(
+	                    'div',
+	                    { className: 'alert alert-info', role: 'alert' },
+	                    '信息正在加载,请稍后...'
+	                ) : _react2.default.createElement(
+	                    'div',
+	                    { className: 'info-box' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'info-box-content' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container authors-info' },
+	                            _react2.default.createElement(
+	                                'blockquote',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    { className: 'module-list-item' },
+	                                    _react2.default.createElement(
+	                                        'a',
+	                                        null,
+	                                        _react2.default.createElement('img', { src: showList.avatarUrl, 'class': 'img-circle', width: '60', height: '80', alt: '个人照片' })
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'ul',
+	                                    { className: 'module-list' },
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        { className: 'module-list-item' },
+	                                        '作者:',
+	                                        showList.author
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        { className: 'module-list-item' },
+	                                        '联系方式：',
+	                                        showList.tel
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        { className: 'module-list-item' },
+	                                        '邮箱: ',
+	                                        showList.email
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container author-info-list' },
+	                            _react2.default.createElement(
+	                                'ul',
+	                                { className: 'timeline' },
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: 'time-label' },
+	                                    _react2.default.createElement(
+	                                        'span',
+	                                        { className: 'bg-red' },
+	                                        '10 Feb. 2014'
+	                                    )
+	                                ),
+	                                showList.articleList.map(function (article, index, lists) {
+	                                    return _react2.default.createElement(
+	                                        'li',
+	                                        { key: article._id },
+	                                        _react2.default.createElement('i', { className: 'fa fa-comment-o bg-yellow' }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'timeline-item' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'time' },
+	                                                _react2.default.createElement('i', { className: 'fa fa-clock-o' }),
+	                                                'article.createTime'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'h3',
+	                                                { className: 'timeline-header' },
+	                                                _react2.default.createElement(
+	                                                    _reactRouter.Link,
+	                                                    { to: '/article/' + article._id },
+	                                                    article.title
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'timeline-body' },
+	                                                article.describe
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'timeline-footer' },
+	                                                _react2.default.createElement(
+	                                                    _reactRouter.Link,
+	                                                    { to: '/article/' + article._id, className: 'btn btn-primary btn-xs' },
+	                                                    '阅读全文...'
+	                                                )
+	                                            )
+	                                        )
+	                                    );
+	                                })
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return User;
+	}(_react.Component);
+
+	exports.default = User;
 
 /***/ }
 /******/ ]);

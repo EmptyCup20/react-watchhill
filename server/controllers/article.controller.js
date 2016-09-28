@@ -65,6 +65,7 @@ export function modfiyArticle(req, res, next) {
 //获取文章中上传图片的url
 export function getImgUrl(req, res, next) {
     var query = req.query;
+    query.author = req.session.loginUser.author;
     article.getImgUrl(query).then(function(data) {
         res.send(data);
     }, function(data) {

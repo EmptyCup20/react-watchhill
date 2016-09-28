@@ -129,3 +129,20 @@ body {
   display: none;
   list-style: none;
 }
+.add-article form .get-url {
+  width: 100%;
+}
+.add-article form .urlList {
+  width: 100%;
+  margin-top: 10px;
+}
+.add-article form .urlList li .url-edit {
+  float: right;
+}
+.add-article form .urlList li .url-edit:hover {
+  color: #3c8dbc;
+  cursor: pointer;
+}
+.add-article form .urlList li:hover {
+  background-color: #f4f4f4;
+}

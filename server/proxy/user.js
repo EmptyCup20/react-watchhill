@@ -1,5 +1,5 @@
-import db_tools from '../../mongo/db_tools';
-import statusMsg from '../../mongo/statusMsg';
+var db_tools = require('../../mongo/db_tools') ;
+var statusMsg = require('../../mongo/statusMsg') ;
 
 var User = function() {};
 
@@ -112,7 +112,8 @@ User.getArticleList = function(obj) {
                 articleData.forEach(function(value, index) {
                     userData.articleList.push(value.toObject());
                 });
-                resolve(userData);
+                statusMsg.successMsg.data = userData;
+                resolve(statusMsg.successMsg);
             });
         }, err => {
             reject(err);
