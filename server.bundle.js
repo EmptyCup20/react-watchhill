@@ -1047,6 +1047,7 @@
 	};
 
 	//获取文章内容及作者信息(byArticleId)
+	//isGetInfo 为true时，只获取文章内容
 	Article.getArticle = function (obj) {
 	    var queryObj = {
 	        _id: obj.articleId
@@ -1059,10 +1060,12 @@
 	                db_tools.queryByCondition('user', { author: articleData.author }, '-password').then(function (userData) {
 	                    userData = !!userData.length ? userData[0].toObject() : [];
 	                    articleData.userInfo = userData;
-	                    resolve(articleData);
+	                    statusMsg.successMsg.data = articleData;
+	                    resolve(statusMsg.successMsg);
 	                });
 	            } else {
-	                resolve(articleData);
+	                statusMsg.successMsg.data = articleData;
+	                resolve(statusMsg.successMsg);
 	            }
 	        }, function (err) {
 	            reject(err);
