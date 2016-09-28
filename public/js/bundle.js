@@ -15,6 +15,7 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _routes = __webpack_require__(88);
 
 	var _routes2 = _interopRequireDefault(_routes);
@@ -27,6 +28,13 @@ webpackJsonp([0,1],[
 
 	var _store = __webpack_require__(150);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _routes = __webpack_require__(89);
+
+	var _routes2 = _interopRequireDefault(_routes);
+
+	var _store = __webpack_require__(143);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -2865,6 +2873,8 @@ webpackJsonp([0,1],[
 
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 
+	var _Actions = __webpack_require__(16);
+
 	var _computeChangedRoutes2 = __webpack_require__(34);
 
 	var _computeChangedRoutes3 = _interopRequireDefault(_computeChangedRoutes2);
@@ -2911,6 +2921,10 @@ webpackJsonp([0,1],[
 	    }
 
 	    return (0, _isActive3.default)(location, indexOnly, state.location, state.routes, state.params);
+	  }
+
+	  function createLocationFromRedirectInfo(location) {
+	    return history.createLocation(location, _Actions.REPLACE);
 	  }
 
 	  var partialNextState = void 0;
@@ -2970,7 +2984,7 @@ webpackJsonp([0,1],[
 	    }
 
 	    function handleErrorOrRedirect(error, redirectInfo) {
-	      if (error) callback(error);else callback(null, redirectInfo);
+	      if (error) callback(error);else callback(null, createLocationFromRedirectInfo(redirectInfo));
 	    }
 	  }
 
@@ -3133,7 +3147,7 @@ webpackJsonp([0,1],[
 	          if (error) {
 	            listener(error);
 	          } else if (redirectLocation) {
-	            history.replace(redirectLocation);
+	            history.transitionTo(redirectLocation);
 	          } else if (nextState) {
 	            listener(null, nextState);
 	          } else {
@@ -4301,7 +4315,7 @@ webpackJsonp([0,1],[
 	  },
 
 	  propTypes: {
-	    to: oneOfType([string, object]),
+	    to: oneOfType([string, object]).isRequired,
 	    query: object,
 	    hash: string,
 	    state: object,
@@ -4362,11 +4376,6 @@ webpackJsonp([0,1],[
 
 
 	    if (router) {
-	      // If user does not specify a `to` prop, return an empty anchor tag.
-	      if (to == null) {
-	        return _react2.default.createElement('a', props);
-	      }
-
 	      var location = createLocationDescriptor(to, { query: query, hash: hash, state: state });
 	      props.href = router.createHref(location);
 
@@ -5121,8 +5130,6 @@ webpackJsonp([0,1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _Actions = __webpack_require__(16);
-
 	var _invariant = __webpack_require__(12);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
@@ -5181,7 +5188,7 @@ webpackJsonp([0,1],[
 	  history = (0, _RouterUtils.createRoutingHistory)(history, transitionManager);
 
 	  transitionManager.match(location, function (error, redirectLocation, nextState) {
-	    callback(error, redirectLocation && router.createLocation(redirectLocation, _Actions.REPLACE), nextState && _extends({}, nextState, {
+	    callback(error, redirectLocation, nextState && _extends({}, nextState, {
 	      history: history,
 	      router: router,
 	      matchContext: { history: history, transitionManager: transitionManager, router: router }
@@ -6084,15 +6091,15 @@ webpackJsonp([0,1],[
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _isPlainObject = __webpack_require__(88);
+	var _isPlainObject = __webpack_require__(76);
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _hoistNonReactStatics = __webpack_require__(92);
+	var _hoistNonReactStatics = __webpack_require__(47);
 
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-	var _invariant = __webpack_require__(93);
+	var _invariant = __webpack_require__(12);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -6515,23 +6522,23 @@ webpackJsonp([0,1],[
 
 	var _createStore2 = _interopRequireDefault(_createStore);
 
-	var _combineReducers = __webpack_require__(83);
+	var _combineReducers = __webpack_require__(84);
 
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 
-	var _bindActionCreators = __webpack_require__(85);
+	var _bindActionCreators = __webpack_require__(86);
 
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 
-	var _applyMiddleware = __webpack_require__(86);
+	var _applyMiddleware = __webpack_require__(87);
 
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 
-	var _compose = __webpack_require__(87);
+	var _compose = __webpack_require__(88);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
-	var _warning = __webpack_require__(84);
+	var _warning = __webpack_require__(85);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -6568,7 +6575,7 @@ webpackJsonp([0,1],[
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _symbolObservable = __webpack_require__(80);
+	var _symbolObservable = __webpack_require__(81);
 
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 
@@ -6825,7 +6832,8 @@ webpackJsonp([0,1],[
 /***/ function(module, exports, __webpack_require__) {
 
 	var getPrototype = __webpack_require__(77),
-	    isObjectLike = __webpack_require__(79);
+	    isHostObject = __webpack_require__(79),
+	    isObjectLike = __webpack_require__(80);
 
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -6879,7 +6887,8 @@ webpackJsonp([0,1],[
 	 * // => true
 	 */
 	function isPlainObject(value) {
-	  if (!isObjectLike(value) || objectToString.call(value) != objectTag) {
+	  if (!isObjectLike(value) ||
+	      objectToString.call(value) != objectTag || isHostObject(value)) {
 	    return false;
 	  }
 	  var proto = getPrototype(value);
@@ -6932,6 +6941,32 @@ webpackJsonp([0,1],[
 /***/ function(module, exports) {
 
 	/**
+	 * Checks if `value` is a host object in IE < 9.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+	 */
+	function isHostObject(value) {
+	  // Many host objects are `Object` objects that can coerce to strings
+	  // despite having improperly defined `toString` methods.
+	  var result = false;
+	  if (value != null && typeof value.toString != 'function') {
+	    try {
+	      result = !!(value + '');
+	    } catch (e) {}
+	  }
+	  return result;
+	}
+
+	module.exports = isHostObject;
+
+
+/***/ },
+/* 80 */
+/***/ function(module, exports) {
+
+	/**
 	 * Checks if `value` is object-like. A value is object-like if it's not `null`
 	 * and has a `typeof` result of "object".
 	 *
@@ -6956,21 +6991,21 @@ webpackJsonp([0,1],[
 	 * // => false
 	 */
 	function isObjectLike(value) {
-	  return value != null && typeof value == 'object';
+	  return !!value && typeof value == 'object';
 	}
 
 	module.exports = isObjectLike;
 
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(81);
+	module.exports = __webpack_require__(82);
 
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -6979,7 +7014,7 @@ webpackJsonp([0,1],[
 		value: true
 	});
 
-	var _ponyfill = __webpack_require__(82);
+	var _ponyfill = __webpack_require__(83);
 
 	var _ponyfill2 = _interopRequireDefault(_ponyfill);
 
@@ -6998,7 +7033,7 @@ webpackJsonp([0,1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7026,7 +7061,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -7040,7 +7075,7 @@ webpackJsonp([0,1],[
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _warning = __webpack_require__(84);
+	var _warning = __webpack_require__(85);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -7174,7 +7209,7 @@ webpackJsonp([0,1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 84 */
+/* 85 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7204,7 +7239,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 85 */
+/* 86 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7260,7 +7295,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 86 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7271,7 +7306,7 @@ webpackJsonp([0,1],[
 
 	exports['default'] = applyMiddleware;
 
-	var _compose = __webpack_require__(87);
+	var _compose = __webpack_require__(88);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
@@ -7323,7 +7358,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 87 */
+/* 88 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7366,15 +7401,16 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 88 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getPrototype = __webpack_require__(89),
-	    isObjectLike = __webpack_require__(91);
+	'use strict';
 
-	/** `Object#toString` result references. */
-	var objectTag = '[object Object]';
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _AppContainer = __webpack_require__(89);
 =======
@@ -7382,20 +7418,26 @@ webpackJsonp([0,1],[
 	var funcProto = Function.prototype,
 	    objectProto = Object.prototype;
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _react = __webpack_require__(1);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	/** Used to resolve the decompiled source of functions. */
-	var funcToString = funcProto.toString;
+	var _react2 = _interopRequireDefault(_react);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _IndexContainer = __webpack_require__(91);
 =======
 	/** Used to check objects for own properties. */
 	var hasOwnProperty = objectProto.hasOwnProperty;
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _reactRouter = __webpack_require__(3);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	/** Used to infer the `Object` constructor. */
-	var objectCtorString = funcToString.call(Object);
+	var _AppContainer = __webpack_require__(90);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _HomeContainer = __webpack_require__(102);
 =======
@@ -7406,55 +7448,25 @@ webpackJsonp([0,1],[
 	 */
 	var objectToString = objectProto.toString;
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _AppContainer2 = _interopRequireDefault(_AppContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	/**
-	 * Checks if `value` is a plain object, that is, an object created by the
-	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.8.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
-	 * @example
-	 *
-	 * function Foo() {
-	 *   this.a = 1;
-	 * }
-	 *
-	 * _.isPlainObject(new Foo);
-	 * // => false
-	 *
-	 * _.isPlainObject([1, 2, 3]);
-	 * // => false
-	 *
-	 * _.isPlainObject({ 'x': 0, 'y': 0 });
-	 * // => true
-	 *
-	 * _.isPlainObject(Object.create(null));
-	 * // => true
-	 */
-	function isPlainObject(value) {
-	  if (!isObjectLike(value) || objectToString.call(value) != objectTag) {
-	    return false;
-	  }
-	  var proto = getPrototype(value);
-	  if (proto === null) {
-	    return true;
-	  }
-	  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-	  return (typeof Ctor == 'function' &&
-	    Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString);
-	}
+	var _IndexContainer = __webpack_require__(92);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _AboutContainer = __webpack_require__(106);
 =======
 	module.exports = isPlainObject;
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
+	var _HomeContainer = __webpack_require__(101);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _WebContainer = __webpack_require__(109);
 =======
@@ -7462,27 +7474,37 @@ webpackJsonp([0,1],[
 /* 89 */
 /***/ function(module, exports, __webpack_require__) {
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var overArg = __webpack_require__(90);
+	var _AboutContainer = __webpack_require__(105);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _NodeContainer = __webpack_require__(111);
 =======
 	/** Built-in value references. */
 	var getPrototype = overArg(Object.getPrototypeOf, Object);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _AboutContainer2 = _interopRequireDefault(_AboutContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	module.exports = getPrototype;
+	var _WebContainer = __webpack_require__(108);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _AddArticleContainer = __webpack_require__(113);
 =======
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _WebContainer2 = _interopRequireDefault(_WebContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-/***/ },
-/* 90 */
-/***/ function(module, exports) {
+	var _NodeContainer = __webpack_require__(110);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _ProfileContainer = __webpack_require__(120);
 =======
@@ -7500,18 +7522,24 @@ webpackJsonp([0,1],[
 	  };
 	}
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _NodeContainer2 = _interopRequireDefault(_NodeContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	module.exports = overArg;
+	var _AddArticleContainer = __webpack_require__(112);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _InfoContainer = __webpack_require__(122);
 =======
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-/***/ },
-/* 91 */
-/***/ function(module, exports) {
+	var _ProfileContainer = __webpack_require__(119);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _CodeContainer = __webpack_require__(125);
 =======
@@ -7543,18 +7571,24 @@ webpackJsonp([0,1],[
 	  return value != null && typeof value == 'object';
 	}
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	module.exports = isObjectLike;
+	var _InfoContainer = __webpack_require__(121);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _AvatarContainer = __webpack_require__(127);
 =======
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _InfoContainer2 = _interopRequireDefault(_InfoContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-/***/ },
-/* 92 */
-/***/ function(module, exports) {
+	var _CodeContainer = __webpack_require__(124);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _PassContainer = __webpack_require__(129);
 =======
@@ -7564,18 +7598,13 @@ webpackJsonp([0,1],[
 	 */
 	'use strict';
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _CodeContainer2 = _interopRequireDefault(_CodeContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var REACT_STATICS = {
-	    childContextTypes: true,
-	    contextTypes: true,
-	    defaultProps: true,
-	    displayName: true,
-	    getDefaultProps: true,
-	    mixins: true,
-	    propTypes: true,
-	    type: true
-	};
+	var _AvatarContainer = __webpack_require__(126);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _ArticleContainer = __webpack_require__(131);
 =======
@@ -7588,9 +7617,13 @@ webpackJsonp([0,1],[
 	    arity: true
 	};
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _AvatarContainer2 = _interopRequireDefault(_AvatarContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
+	var _PassContainer = __webpack_require__(128);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _LoginContainer = __webpack_require__(133);
 =======
@@ -7598,12 +7631,13 @@ webpackJsonp([0,1],[
 	    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
 	        var keys = Object.getOwnPropertyNames(sourceComponent);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _PassContainer2 = _interopRequireDefault(_PassContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	        /* istanbul ignore else */
-	        if (isGetOwnPropertySymbolsAvailable) {
-	            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
-	        }
+	var _ArticleContainer = __webpack_require__(130);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _RegisterContainer = __webpack_require__(137);
 =======
@@ -7613,12 +7647,13 @@ webpackJsonp([0,1],[
 	                    targetComponent[keys[i]] = sourceComponent[keys[i]];
 	                } catch (error) {
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _ArticleContainer2 = _interopRequireDefault(_ArticleContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	                }
-	            }
-	        }
-	    }
+	var _UserContainer = __webpack_require__(132);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _login = __webpack_require__(136);
 
@@ -7630,12 +7665,15 @@ webpackJsonp([0,1],[
 =======
 	    return targetComponent;
 	};
+=======
+	var _UserContainer2 = _interopRequireDefault(_UserContainer);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
+	var _LoginContainer = __webpack_require__(134);
 
-/***/ },
-/* 93 */
-/***/ function(module, exports, __webpack_require__) {
+	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
+<<<<<<< HEAD
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-2015, Facebook, Inc.
 	 * All rights reserved.
@@ -7645,143 +7683,23 @@ webpackJsonp([0,1],[
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
-
-	'use strict';
-
-	/**
-	 * Use invariant() to assert state which your program assumes to be true.
-	 *
-	 * Provide sprintf-style format (only %s is supported) and arguments
-	 * to provide information about what broke and what you were
-	 * expecting.
-	 *
-	 * The invariant message will be stripped in production, but the invariant
-	 * will remain to ensure logic does not differ in production.
-	 */
-
-	var invariant = function(condition, format, a, b, c, d, e, f) {
-	  if (process.env.NODE_ENV !== 'production') {
-	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
-	    }
-	  }
-
-	  if (!condition) {
-	    var error;
-	    if (format === undefined) {
-	      error = new Error(
-	        'Minified exception occurred; use the non-minified dev environment ' +
-	        'for the full error message and additional helpful warnings.'
-	      );
-	    } else {
-	      var args = [a, b, c, d, e, f];
-	      var argIndex = 0;
-	      error = new Error(
-	        format.replace(/%s/g, function() { return args[argIndex++]; })
-	      );
-	      error.name = 'Invariant Violation';
-	    }
-
-	    error.framesToPop = 1; // we don't care about invariant's own frame
-	    throw error;
-	  }
-	};
-
-	module.exports = invariant;
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
-
-/***/ },
-/* 94 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(3);
-
-	var _AppContainer = __webpack_require__(95);
-
-	var _AppContainer2 = _interopRequireDefault(_AppContainer);
-
-	var _IndexContainer = __webpack_require__(97);
-
-	var _IndexContainer2 = _interopRequireDefault(_IndexContainer);
-
-	var _HomeContainer = __webpack_require__(108);
-
-	var _HomeContainer2 = _interopRequireDefault(_HomeContainer);
-
-	var _AboutContainer = __webpack_require__(112);
-
-	var _AboutContainer2 = _interopRequireDefault(_AboutContainer);
-
-	var _WebContainer = __webpack_require__(115);
-
-	var _WebContainer2 = _interopRequireDefault(_WebContainer);
-
-	var _NodeContainer = __webpack_require__(117);
-
-	var _NodeContainer2 = _interopRequireDefault(_NodeContainer);
-
-	var _AddArticleContainer = __webpack_require__(119);
-
-	var _AddArticleContainer2 = _interopRequireDefault(_AddArticleContainer);
-
-	var _ProfileContainer = __webpack_require__(126);
-
-	var _ProfileContainer2 = _interopRequireDefault(_ProfileContainer);
-
-	var _InfoContainer = __webpack_require__(128);
-
-	var _InfoContainer2 = _interopRequireDefault(_InfoContainer);
-
-	var _CodeContainer = __webpack_require__(131);
-
-	var _CodeContainer2 = _interopRequireDefault(_CodeContainer);
-
-	var _AvatarContainer = __webpack_require__(133);
-
-	var _AvatarContainer2 = _interopRequireDefault(_AvatarContainer);
-
-	var _PassContainer = __webpack_require__(135);
-
-	var _PassContainer2 = _interopRequireDefault(_PassContainer);
-
-	var _ArticleContainer = __webpack_require__(137);
-
-	var _ArticleContainer2 = _interopRequireDefault(_ArticleContainer);
-
-	var _UserContainer = __webpack_require__(139);
-
-	var _UserContainer2 = _interopRequireDefault(_UserContainer);
-
-	var _LoginContainer = __webpack_require__(141);
-
-	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
-
-	var _RegisterContainer = __webpack_require__(145);
+=======
+	var _RegisterContainer = __webpack_require__(138);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
-	var _login = __webpack_require__(144);
+	var _login = __webpack_require__(137);
 
-	var _register = __webpack_require__(147);
+	var _register = __webpack_require__(140);
 
-	var _profile = __webpack_require__(129);
+	var _profile = __webpack_require__(122);
 
-	var _addArticle = __webpack_require__(120);
+	var _addArticle = __webpack_require__(113);
 
-	var _article = __webpack_require__(148);
+	var _article = __webpack_require__(141);
 
-	var _user = __webpack_require__(149);
+	var _user = __webpack_require__(142);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7929,10 +7847,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 89 */
 =======
 /* 95 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 90 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7944,10 +7866,14 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _App = __webpack_require__(90);
 =======
 	var _App = __webpack_require__(96);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _App = __webpack_require__(91);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -7960,10 +7886,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 90 */
 =======
 /* 96 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 91 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8050,10 +7980,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 91 */
 =======
 /* 97 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 92 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8067,6 +8001,7 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _logout = __webpack_require__(92);
 
 	var LogoutActions = _interopRequireWildcard(_logout);
@@ -8079,6 +8014,13 @@ webpackJsonp([0,1],[
 
 	var _Index = __webpack_require__(102);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _logout = __webpack_require__(93);
+
+	var LogoutActions = _interopRequireWildcard(_logout);
+
+	var _Index = __webpack_require__(97);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Index2 = _interopRequireDefault(_Index);
 
@@ -8106,10 +8048,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 92 */
 =======
 /* 98 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 93 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8120,6 +8066,7 @@ webpackJsonp([0,1],[
 	exports.logout = logout;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _httpType = __webpack_require__(94);
@@ -8127,11 +8074,18 @@ webpackJsonp([0,1],[
 	var _ajax = __webpack_require__(95);
 =======
 	var _actionType = __webpack_require__(99);
+=======
+	var _actionType = __webpack_require__(94);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _httpType = __webpack_require__(100);
+	var _httpType = __webpack_require__(95);
 
+<<<<<<< HEAD
 	var _ajax = __webpack_require__(101);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _ajax = __webpack_require__(96);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -8163,10 +8117,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 93 */
 =======
 /* 99 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 94 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	'use strict';
@@ -8192,6 +8150,8 @@ webpackJsonp([0,1],[
 	    MODIFY_EMAIL: 'MODIFY_EMAIL', //修改邮箱
 	    MODIFY_BRIEF: 'MODIFY_BRIEF', //修改简介
 	    MODIFY_TEL: 'MODIFY_TEL', //修改电话
+	    MODIFY_AVATAR: 'MODIFY_AVATAR', //修改头像
+	    MODIFY_CODE: 'MODIFY_CODE', //修改二维码
 	    MODIFY_RECEIVE: 'MODIFY_RECEIVE', //接收修改状况处理
 	    MODIFY_LOGIN: 'MODIFY_LOGIN', //修改信息的同时更新视图个人信息
 
@@ -8217,10 +8177,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 94 */
 =======
 /* 100 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 95 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	'use strict';
@@ -8249,10 +8213,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 95 */
 =======
 /* 101 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 96 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	'use strict';
@@ -8378,10 +8346,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 96 */
 =======
 /* 102 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 97 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8397,6 +8369,7 @@ webpackJsonp([0,1],[
 	var _react2 = _interopRequireDefault(_react);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__webpack_require__(97);
 
 	var _Header = __webpack_require__(98);
@@ -8406,13 +8379,20 @@ webpackJsonp([0,1],[
 	var _Footer = __webpack_require__(100);
 =======
 	__webpack_require__(103);
+=======
+	__webpack_require__(153);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _Header = __webpack_require__(104);
+	var _Header = __webpack_require__(98);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
+<<<<<<< HEAD
 	var _Footer = __webpack_require__(106);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _Footer = __webpack_require__(99);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
@@ -8483,6 +8463,7 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 97 */
 =======
 /* 103 */
@@ -8497,6 +8478,9 @@ webpackJsonp([0,1],[
 =======
 /* 104 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 98 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8514,10 +8498,14 @@ webpackJsonp([0,1],[
 	var _react2 = _interopRequireDefault(_react);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__webpack_require__(99);
 =======
 	__webpack_require__(105);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	__webpack_require__(154);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8743,6 +8731,7 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 99 */
 =======
 /* 105 */
@@ -8757,6 +8746,9 @@ webpackJsonp([0,1],[
 =======
 /* 106 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 99 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8772,10 +8764,14 @@ webpackJsonp([0,1],[
 	var _react2 = _interopRequireDefault(_react);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__webpack_require__(101);
 =======
 	__webpack_require__(107);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	__webpack_require__(100);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8823,20 +8819,28 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 101 */
 =======
 /* 107 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 100 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 102 */
 =======
 /* 108 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 101 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8850,10 +8854,14 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _Home = __webpack_require__(103);
 =======
 	var _Home = __webpack_require__(109);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _Home = __webpack_require__(102);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Home2 = _interopRequireDefault(_Home);
 
@@ -8877,10 +8885,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 103 */
 =======
 /* 109 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 102 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8896,6 +8908,7 @@ webpackJsonp([0,1],[
 	var _react2 = _interopRequireDefault(_react);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__webpack_require__(104);
 
 	var _reactRouter = __webpack_require__(3);
@@ -8908,6 +8921,13 @@ webpackJsonp([0,1],[
 
 	var _history = __webpack_require__(111);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	__webpack_require__(103);
+
+	var _reactRouter = __webpack_require__(3);
+
+	var _history = __webpack_require__(104);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -9065,20 +9085,28 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 104 */
 =======
 /* 110 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 103 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 105 */
 =======
 /* 111 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 104 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9093,10 +9121,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 106 */
 =======
 /* 112 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 105 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9108,10 +9140,14 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _About = __webpack_require__(107);
 =======
 	var _About = __webpack_require__(113);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _About = __webpack_require__(106);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _About2 = _interopRequireDefault(_About);
 
@@ -9127,10 +9163,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 107 */
 =======
 /* 113 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 106 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9146,10 +9186,14 @@ webpackJsonp([0,1],[
 	var _react2 = _interopRequireDefault(_react);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__webpack_require__(108);
 =======
 	__webpack_require__(114);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	__webpack_require__(107);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9345,20 +9389,28 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 108 */
 =======
 /* 114 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 107 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 109 */
 =======
 /* 115 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 108 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9370,10 +9422,14 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _Web = __webpack_require__(110);
 =======
 	var _Web = __webpack_require__(116);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _Web = __webpack_require__(109);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Web2 = _interopRequireDefault(_Web);
 
@@ -9388,10 +9444,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 110 */
 =======
 /* 116 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 109 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9445,10 +9505,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 111 */
 =======
 /* 117 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 110 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9460,10 +9524,14 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _Node = __webpack_require__(112);
 =======
 	var _Node = __webpack_require__(118);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _Node = __webpack_require__(111);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Node2 = _interopRequireDefault(_Node);
 
@@ -9479,10 +9547,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 112 */
 =======
 /* 118 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 111 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9536,10 +9608,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 113 */
 =======
 /* 119 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 112 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9553,6 +9629,7 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _addArticle = __webpack_require__(114);
 
 	var addArticle = _interopRequireWildcard(_addArticle);
@@ -9565,6 +9642,13 @@ webpackJsonp([0,1],[
 
 	var _AddArticle = __webpack_require__(121);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _addArticle = __webpack_require__(113);
+
+	var addArticle = _interopRequireWildcard(_addArticle);
+
+	var _AddArticle = __webpack_require__(114);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _AddArticle2 = _interopRequireDefault(_AddArticle);
 
@@ -9591,10 +9675,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 114 */
 =======
 /* 120 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 113 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9609,6 +9697,7 @@ webpackJsonp([0,1],[
 	exports.save_article = save_article;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _ajax = __webpack_require__(95);
@@ -9617,6 +9706,11 @@ webpackJsonp([0,1],[
 
 	var _ajax = __webpack_require__(101);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _actionType = __webpack_require__(94);
+
+	var _ajax = __webpack_require__(96);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -9644,11 +9738,18 @@ webpackJsonp([0,1],[
 	            };
 	        }
 	    } else {
-	        return function (dispatch) {
-	            return (0, _ajax2.default)().addTempArticle(article).then(function (data) {
-	                return dispatch(addTempArticle_receive(data));
-	            });
-	        };
+	        if (article.title) {
+	            return function (dispatch) {
+	                return (0, _ajax2.default)().addTempArticle(article).then(function (data) {
+	                    return dispatch(addTempArticle_receive(data));
+	                });
+	            };
+	        } else {
+	            alert('标题不可为空');
+	            return {
+	                type: 'NO_TITLE'
+	            };
+	        }
 	    }
 	}
 
@@ -9692,11 +9793,18 @@ webpackJsonp([0,1],[
 	}
 
 	function save_article(article) {
-	    return function (dispatch) {
-	        return (0, _ajax2.default)().save_article(article).then(function (data) {
-	            return dispatch(saveArticle_receive(data));
-	        });
-	    };
+	    if (article.title) {
+	        return function (dispatch) {
+	            return (0, _ajax2.default)().save_article(article).then(function (data) {
+	                return dispatch(saveArticle_receive(data));
+	            });
+	        };
+	    } else {
+	        alert('标题不可为空');
+	        return {
+	            type: 'NO_TITLE'
+	        };
+	    }
 	}
 
 	function saveArticle_receive(data) {
@@ -9707,7 +9815,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 121 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9723,6 +9831,7 @@ webpackJsonp([0,1],[
 	var _react2 = _interopRequireDefault(_react);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__webpack_require__(116);
 
 	var _Input = __webpack_require__(117);
@@ -9736,17 +9845,24 @@ webpackJsonp([0,1],[
 	var _Markdown = __webpack_require__(119);
 =======
 	__webpack_require__(122);
+=======
+	__webpack_require__(115);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _Input = __webpack_require__(123);
+	var _Input = __webpack_require__(116);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(124);
+	var _Button = __webpack_require__(117);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
+<<<<<<< HEAD
 	var _Markdown = __webpack_require__(125);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _Markdown = __webpack_require__(118);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Markdown2 = _interopRequireDefault(_Markdown);
 
@@ -10043,20 +10159,28 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 116 */
 =======
 /* 122 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 115 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 117 */
 =======
 /* 123 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 116 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10136,10 +10260,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 118 */
 =======
 /* 124 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 117 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10202,10 +10330,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 119 */
 =======
 /* 125 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 118 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10281,7 +10413,7 @@ webpackJsonp([0,1],[
 	                    ),
 	                    _react2.default.createElement(
 	                        "div",
-	                        { className: "tab-pane", id: "preview" },
+	                        { className: "tab-pane md-preview", id: "preview" },
 	                        _react2.default.createElement("div", { id: "preview", dangerouslySetInnerHTML: this.tohtml() })
 	                    )
 	                )
@@ -10306,16 +10438,20 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 120 */
 =======
 /* 126 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 119 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _redux = __webpack_require__(74);
@@ -10323,29 +10459,42 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _Profile = __webpack_require__(121);
 =======
 	var _Profile = __webpack_require__(127);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _Profile = __webpack_require__(120);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = (0, _reactRedux.connect)()(_Profile2.default);
+	function mapStateToProps(state) {
+	    return {
+	        login: state.login
+	    };
+	}
 
 	//action
 
 
 	//视图组件
 	//基础库
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Profile2.default);
 
 /***/ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* 121 */
 =======
 /* 127 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 120 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10361,6 +10510,8 @@ webpackJsonp([0,1],[
 	var _react2 = _interopRequireDefault(_react);
 
 	var _reactRouter = __webpack_require__(3);
+
+	__webpack_require__(155);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10382,42 +10533,83 @@ webpackJsonp([0,1],[
 	    _createClass(Profile, [{
 	        key: 'render',
 	        value: function render() {
+	            var pathname = this.props.location.pathname;
+	            var login = this.props.login;
+
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'container' },
-	                _react2.default.createElement('br', null),
+	                { className: 'container profile-style' },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-xs-3 col-sm-3 col-md-3 col-lg-3' },
+	                    'section',
+	                    { className: 'content-header' },
 	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'list-group' },
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/profile/info', className: 'list-group-item' },
-	                            '个人信息'
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/profile/pass', className: 'list-group-item' },
-	                            '密码'
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/profile/avatar', className: 'list-group-item' },
-	                            '头像'
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/profile/code', className: 'list-group-item' },
-	                            '二维码'
-	                        )
+	                        'h1',
+	                        null,
+	                        '个人基本信息'
 	                    )
 	                ),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'col-xs-7 col-sm-7 col-md-7 col-lg-7' },
-	                    this.props.children
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-lg-3 col-md-3 col-sm-12 box-body' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'box box-solid' },
+	                            _react2.default.createElement(
+	                                'ul',
+	                                { className: 'nav nav-pills nav-stacked' },
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: pathname == '/profile/info' ? 'active' : '' },
+	                                    ' ',
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/profile/info', className: 'list-group-item' },
+	                                        '个人信息'
+	                                    ),
+	                                    ' '
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: pathname == '/profile/pass' ? 'active' : '' },
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/profile/pass', className: 'list-group-item' },
+	                                        '密码'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: pathname == '/profile/avatar' ? 'active' : '' },
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/profile/avatar', className: 'list-group-item' },
+	                                        '头像'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: pathname == '/profile/code' ? 'active' : '' },
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/profile/code', className: 'list-group-item' },
+	                                        '二维码'
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-lg-9 col-md-9 col-sm-12 content' },
+	                        _react2.default.createElement(
+	                            'section',
+	                            null,
+	                            this.props.children
+	                        )
+	                    )
 	                )
 	            );
 	        }
@@ -10430,10 +10622,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 122 */
 =======
 /* 128 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 121 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10447,6 +10643,7 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _profile = __webpack_require__(123);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
@@ -10459,6 +10656,13 @@ webpackJsonp([0,1],[
 
 	var _Info = __webpack_require__(130);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _profile = __webpack_require__(122);
+
+	var ProfileActions = _interopRequireWildcard(_profile);
+
+	var _Info = __webpack_require__(123);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Info2 = _interopRequireDefault(_Info);
 
@@ -10490,10 +10694,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 123 */
 =======
 /* 129 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 122 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10505,6 +10713,7 @@ webpackJsonp([0,1],[
 	exports.modify_start = modify_start;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _ajax = __webpack_require__(95);
@@ -10513,6 +10722,11 @@ webpackJsonp([0,1],[
 
 	var _ajax = __webpack_require__(101);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _actionType = __webpack_require__(94);
+
+	var _ajax = __webpack_require__(96);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -10573,11 +10787,12 @@ webpackJsonp([0,1],[
 	            //修改邮箱,简介,电话
 	            case _actionType.MODIFY_EMAIL:
 	            case _actionType.MODIFY_BRIEF:
+	            case _actionType.MODIFY_AVATAR:
+	            case _actionType.MODIFY_CODE:
 	            case _actionType.MODIFY_TEL:
 	                return (0, _ajax2.default)().modifyInfo(user).then(function (data) {
 	                    return dispatch(modify_process(type, data, user));
 	                }); //接受到数据后重新更新state
-
 	            default:
 	                return dispatch(modify_receive());
 	        }
@@ -10620,7 +10835,22 @@ webpackJsonp([0,1],[
 	                }
 	                return dispatch(modify_receive(data.status));
 	                break;
-
+	            case _actionType.MODIFY_AVATAR:
+	                if (data.status === 'success') {
+	                    //一般来说肯定会返回成功,但是数据库那边没有反馈err处理
+	                    dispatch(modify_login(user));
+	                    alert('修改成功');
+	                }
+	                return dispatch(modify_receive(data.status));
+	                break;
+	            case _actionType.MODIFY_CODE:
+	                if (data.status === 'success') {
+	                    //一般来说肯定会返回成功,但是数据库那边没有反馈err处理
+	                    dispatch(modify_login(user));
+	                    alert('修改成功');
+	                }
+	                return dispatch(modify_receive(data.status));
+	                break;
 	            default:
 	                break;
 	        }
@@ -10653,10 +10883,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 124 */
 =======
 /* 130 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 123 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10672,10 +10906,14 @@ webpackJsonp([0,1],[
 	var _react2 = _interopRequireDefault(_react);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 =======
 	var _actionType = __webpack_require__(99);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _actionType = __webpack_require__(94);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10753,7 +10991,7 @@ webpackJsonp([0,1],[
 	                }(),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'box box-info' },
+	                    { className: 'box box-primary' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'box-header with-border' },
@@ -10803,7 +11041,7 @@ webpackJsonp([0,1],[
 	                            { className: 'box-footer' },
 	                            _react2.default.createElement(
 	                                'button',
-	                                { id: _actionType.MODIFY_BRIEF, type: 'submit', className: 'btn btn-info pull-right', onClick: this._onClick.bind(this) },
+	                                { id: _actionType.MODIFY_BRIEF, type: 'submit', className: 'btn btn-primary pull-right', onClick: this._onClick.bind(this) },
 	                                '修 改'
 	                            )
 	                        )
@@ -10857,7 +11095,7 @@ webpackJsonp([0,1],[
 	                            { className: 'box-footer' },
 	                            _react2.default.createElement(
 	                                'button',
-	                                { id: _actionType.MODIFY_EMAIL, type: 'submit', className: 'btn btn-info pull-right', onClick: this._onClick.bind(this) },
+	                                { id: _actionType.MODIFY_EMAIL, type: 'submit', className: 'btn btn-primary pull-right', onClick: this._onClick.bind(this) },
 	                                '修 改'
 	                            )
 	                        )
@@ -10911,7 +11149,7 @@ webpackJsonp([0,1],[
 	                            { className: 'box-footer' },
 	                            _react2.default.createElement(
 	                                'button',
-	                                { id: _actionType.MODIFY_TEL, type: 'submit', className: 'btn btn-info pull-right', onClick: this._onClick.bind(this) },
+	                                { id: _actionType.MODIFY_TEL, type: 'submit', className: 'btn btn-primary pull-right', onClick: this._onClick.bind(this) },
 	                                '修 改'
 	                            )
 	                        )
@@ -10928,47 +11166,81 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 125 */
 =======
 /* 131 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 124 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
+
+	var _redux = __webpack_require__(74);
 
 	var _reactRedux = __webpack_require__(67);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _Code = __webpack_require__(126);
 =======
 	var _Code = __webpack_require__(132);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _profile = __webpack_require__(122);
+
+	var ProfileActions = _interopRequireWildcard(_profile);
+
+	var _Code = __webpack_require__(125);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Code2 = _interopRequireDefault(_Code);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//基础库
-	exports.default = (0, _reactRedux.connect)()(_Code2.default);
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	//绑定state
+
 
 	//action
+	//基础库
+	function mapStateToProps(state) {
+	    return {
+	        login: state.login,
+	        profile: state.profile
+	    };
+	}
+
+	//绑定action
 
 
 	//视图组件
+	function mapDispatchToProps(dispatch) {
+	    return (0, _redux.bindActionCreators)(ProfileActions, dispatch);
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Code2.default);
 
 /***/ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* 126 */
 =======
 /* 132 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 125 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -10979,6 +11251,8 @@ webpackJsonp([0,1],[
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _actionType = __webpack_require__(99);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10998,13 +11272,94 @@ webpackJsonp([0,1],[
 	    }
 
 	    _createClass(Code, [{
-	        key: "render",
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.setState({ codeUrl: this.props.login.loginUser.codeUrl });
+	        }
+	    }, {
+	        key: '_onCodeClick',
+	        value: function _onCodeClick() {
+	            var data = {
+	                codeUrl: this.state.codeUrl
+	            };
+	            this.props.modify_start(_actionType.MODIFY_CODE, data);
+	        }
+	    }, {
+	        key: 'render',
 	        value: function render() {
+	            var codeUrl = this.state.codeUrl;
+
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "container" },
-	                "二维码"
+	                'div',
+	                { className: 'box box-primary' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'box-header with-border' },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        { className: 'box-title' },
+	                        '修改二维码'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'form',
+	                    { className: 'form-horizontal' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'box-body' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group flie-container' },
+	                            _react2.default.createElement(
+	                                'label',
+	                                null,
+	                                '初始二维码'
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement('img', { src: codeUrl, alt: '二维码', className: 'img-circle col-sm-offset-2' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group flie-container' },
+	                            _react2.default.createElement(
+	                                'label',
+	                                { htmlFor: 'imgUrl' },
+	                                '二维码'
+	                            ),
+	                            _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading' })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'box-footer' },
+	                        _react2.default.createElement(
+	                            'button',
+	                            { type: 'button', className: 'btn btn-primary pull-right', onClick: this._onCodeClick.bind(this) },
+	                            '修 改'
+	                        )
+	                    )
+	                )
 	            );
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this = this;
+	            //初始化文件插件
+	            $('#imgUrl').fileinput({
+	                language: "zh",
+	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+	                uploadAsync: true,
+	                maxFileCount: 1,
+	                uploadUrl: '/user/userImg'
+	            });
+	            //文件上传事件
+	            $('#imgUrl').on('fileuploaded', function (event, data, previewId, index) {
+	                _this.setState({ codeUrl: data.response.data.imgUrl });
+	            });
 	        }
 	    }]);
 
@@ -11015,47 +11370,81 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 127 */
 =======
 /* 133 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 126 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
+
+	var _redux = __webpack_require__(74);
 
 	var _reactRedux = __webpack_require__(67);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _Avatar = __webpack_require__(128);
 =======
 	var _Avatar = __webpack_require__(134);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _profile = __webpack_require__(122);
+
+	var ProfileActions = _interopRequireWildcard(_profile);
+
+	var _Avatar = __webpack_require__(127);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Avatar2 = _interopRequireDefault(_Avatar);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//基础库
-	exports.default = (0, _reactRedux.connect)()(_Avatar2.default);
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	//绑定state
+
 
 	//action
+	//基础库
+	function mapStateToProps(state) {
+	    return {
+	        login: state.login,
+	        profile: state.profile
+	    };
+	}
+
+	//绑定action
 
 
 	//视图组件
+	function mapDispatchToProps(dispatch) {
+	    return (0, _redux.bindActionCreators)(ProfileActions, dispatch);
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Avatar2.default);
 
 /***/ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* 128 */
 =======
 /* 134 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 127 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -11066,6 +11455,8 @@ webpackJsonp([0,1],[
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _actionType = __webpack_require__(99);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11085,13 +11476,95 @@ webpackJsonp([0,1],[
 	    }
 
 	    _createClass(Avatar, [{
-	        key: "render",
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.setState({ avatarUrl: this.props.login.loginUser.avatarUrl });
+	        }
+	    }, {
+	        key: '_onAvatarClick',
+	        value: function _onAvatarClick(e) {
+	            e.preventDefault();
+	            var data = {
+	                avatarUrl: this.state.avatarUrl
+	            };
+	            this.props.modify_start(_actionType.MODIFY_AVATAR, data);
+	        }
+	    }, {
+	        key: 'render',
 	        value: function render() {
+	            var avatarUrl = this.state.avatarUrl;
+
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "container" },
-	                "头像"
+	                'div',
+	                { className: 'box box-primary' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'box-header with-border' },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        { className: 'box-title' },
+	                        '修改头像'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'form',
+	                    { className: 'form-horizontal' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'box-body' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group flie-container' },
+	                            _react2.default.createElement(
+	                                'label',
+	                                null,
+	                                '初始头像'
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement('img', { src: avatarUrl, alt: '头像', className: 'img-circle col-sm-offset-2' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group flie-container' },
+	                            _react2.default.createElement(
+	                                'label',
+	                                { htmlFor: 'imgUrl' },
+	                                '上传头像'
+	                            ),
+	                            _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading' })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'box-footer' },
+	                        _react2.default.createElement(
+	                            'button',
+	                            { type: 'button', className: 'btn btn-primary pull-right', onClick: this._onAvatarClick.bind(this) },
+	                            '修 改'
+	                        )
+	                    )
+	                )
 	            );
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this = this;
+	            //初始化文件插件
+	            $('#imgUrl').fileinput({
+	                language: "zh",
+	                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+	                uploadAsync: true,
+	                maxFileCount: 1,
+	                uploadUrl: '/user/userImg'
+	            });
+	            //文件上传事件
+	            $('#imgUrl').on('fileuploaded', function (event, data, previewId, index) {
+	                _this.setState({ avatarUrl: data.response.data.imgUrl });
+	            });
 	        }
 	    }]);
 
@@ -11102,10 +11575,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 129 */
 =======
 /* 135 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 128 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11119,6 +11596,7 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _profile = __webpack_require__(123);
 
 	var ProfileActions = _interopRequireWildcard(_profile);
@@ -11131,6 +11609,13 @@ webpackJsonp([0,1],[
 
 	var _Pass = __webpack_require__(136);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _profile = __webpack_require__(122);
+
+	var ProfileActions = _interopRequireWildcard(_profile);
+
+	var _Pass = __webpack_require__(129);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Pass2 = _interopRequireDefault(_Pass);
 
@@ -11161,10 +11646,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 130 */
 =======
 /* 136 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 129 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11180,6 +11669,7 @@ webpackJsonp([0,1],[
 	var _react2 = _interopRequireDefault(_react);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _httpType = __webpack_require__(94);
@@ -11188,6 +11678,11 @@ webpackJsonp([0,1],[
 
 	var _httpType = __webpack_require__(100);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _actionType = __webpack_require__(94);
+
+	var _httpType = __webpack_require__(95);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11239,7 +11734,7 @@ webpackJsonp([0,1],[
 
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'box box-info' },
+	                { className: 'box box-primary' },
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'box-header with-border' },
@@ -11322,7 +11817,7 @@ webpackJsonp([0,1],[
 	                        { className: 'box-footer' },
 	                        _react2.default.createElement(
 	                            'button',
-	                            { type: 'submit', className: 'btn btn-info pull-right', onClick: this._onClick.bind(this) },
+	                            { type: 'submit', className: 'btn btn-primary pull-right', onClick: this._onClick.bind(this) },
 	                            '修 改'
 	                        )
 	                    )
@@ -11338,10 +11833,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 131 */
 =======
 /* 137 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 130 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11353,10 +11852,14 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _Article = __webpack_require__(132);
 =======
 	var _Article = __webpack_require__(138);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _Article = __webpack_require__(131);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Article2 = _interopRequireDefault(_Article);
 
@@ -11378,10 +11881,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 132 */
 =======
 /* 138 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 131 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11573,10 +12080,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 133 */
 =======
 /* 139 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 132 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11588,6 +12099,7 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _Login = __webpack_require__(134);
 
 	var _Login2 = _interopRequireDefault(_Login);
@@ -11598,6 +12110,9 @@ webpackJsonp([0,1],[
 =======
 	var _User = __webpack_require__(140);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _User = __webpack_require__(133);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _User2 = _interopRequireDefault(_User);
 
@@ -11619,10 +12134,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 134 */
 =======
 /* 140 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 133 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11839,7 +12358,7 @@ webpackJsonp([0,1],[
 	exports.default = User;
 
 /***/ },
-/* 141 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11852,11 +12371,11 @@ webpackJsonp([0,1],[
 
 	var _reactRedux = __webpack_require__(67);
 
-	var _Login = __webpack_require__(142);
+	var _Login = __webpack_require__(135);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(144);
+	var _login = __webpack_require__(137);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -11887,7 +12406,7 @@ webpackJsonp([0,1],[
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 142 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11904,19 +12423,19 @@ webpackJsonp([0,1],[
 
 	var _reactRouter = __webpack_require__(3);
 
-	var _Input = __webpack_require__(123);
+	var _Input = __webpack_require__(116);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(124);
+	var _Button = __webpack_require__(117);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(143);
+	var _privateType = __webpack_require__(136);
 
-	var _httpType = __webpack_require__(100);
+	var _httpType = __webpack_require__(95);
 
-	var _history = __webpack_require__(111);
+	var _history = __webpack_require__(104);
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -12098,10 +12617,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 135 */
 =======
 /* 143 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 136 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	'use strict';
@@ -12114,10 +12637,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 136 */
 =======
 /* 144 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 137 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12127,8 +12654,10 @@ webpackJsonp([0,1],[
 	});
 	exports.login_init = login_init;
 	exports.login_start = login_start;
+	exports.login_authen = login_authen;
 	exports.login_reveive = login_reveive;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
@@ -12138,6 +12667,11 @@ webpackJsonp([0,1],[
 
 	var _ajax = __webpack_require__(101);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _actionType = __webpack_require__(94);
+
+	var _ajax = __webpack_require__(96);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -12182,6 +12716,7 @@ webpackJsonp([0,1],[
 	 * @param pass
 	 * @returns {Function}
 	 */
+
 	function login_ajax(user) {
 	    return function (dispatch) {
 	        dispatch(login_request()); //挂起登录请求,防止重复请求
@@ -12251,10 +12786,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 137 */
 =======
 /* 145 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 138 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12268,6 +12807,7 @@ webpackJsonp([0,1],[
 	var _reactRedux = __webpack_require__(67);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _Register = __webpack_require__(138);
 
 	var _Register2 = _interopRequireDefault(_Register);
@@ -12280,6 +12820,13 @@ webpackJsonp([0,1],[
 
 	var _register = __webpack_require__(147);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _Register = __webpack_require__(139);
+
+	var _Register2 = _interopRequireDefault(_Register);
+
+	var _register = __webpack_require__(140);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -12311,10 +12858,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 138 */
 =======
 /* 146 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 139 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12332,6 +12883,7 @@ webpackJsonp([0,1],[
 	var _reactRouter = __webpack_require__(3);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _Input = __webpack_require__(117);
 
 	var _Input2 = _interopRequireDefault(_Input);
@@ -12347,19 +12899,26 @@ webpackJsonp([0,1],[
 	var _history = __webpack_require__(105);
 =======
 	var _Input = __webpack_require__(123);
+=======
+	var _Input = __webpack_require__(116);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Button = __webpack_require__(124);
+	var _Button = __webpack_require__(117);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(143);
+	var _privateType = __webpack_require__(136);
 
-	var _httpType = __webpack_require__(100);
+	var _httpType = __webpack_require__(95);
 
+<<<<<<< HEAD
 	var _history = __webpack_require__(111);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _history = __webpack_require__(104);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _history2 = _interopRequireDefault(_history);
 
@@ -12568,10 +13127,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 139 */
 =======
 /* 147 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 140 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12582,6 +13145,7 @@ webpackJsonp([0,1],[
 	exports.register_init = register_init;
 	exports.register_start = register_start;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
@@ -12594,15 +13158,22 @@ webpackJsonp([0,1],[
 	var _login = __webpack_require__(136);
 =======
 	var _actionType = __webpack_require__(99);
+=======
+	var _actionType = __webpack_require__(94);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
-	var _ajax = __webpack_require__(101);
+	var _ajax = __webpack_require__(96);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
-	var _httpType = __webpack_require__(100);
+	var _httpType = __webpack_require__(95);
 
+<<<<<<< HEAD
 	var _login = __webpack_require__(144);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _login = __webpack_require__(137);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12698,9 +13269,13 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 140 */
 =======
 /* 148 */
+=======
+/* 141 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12710,9 +13285,9 @@ webpackJsonp([0,1],[
 	});
 	exports.article_getContent = article_getContent;
 
-	var _actionType = __webpack_require__(99);
+	var _actionType = __webpack_require__(94);
 
-	var _ajax = __webpack_require__(101);
+	var _ajax = __webpack_require__(96);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -12783,7 +13358,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 149 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12793,9 +13368,9 @@ webpackJsonp([0,1],[
 	});
 	exports.user_getList = user_getList;
 
-	var _actionType = __webpack_require__(99);
+	var _actionType = __webpack_require__(94);
 
-	var _ajax = __webpack_require__(101);
+	var _ajax = __webpack_require__(96);
 
 	var _ajax2 = _interopRequireDefault(_ajax);
 
@@ -12858,13 +13433,17 @@ webpackJsonp([0,1],[
 
 	    return {
 	        type: _actionType.USER_RECEIVE,
-	        data: data
+	        data: data.data
 	    };
 	}
 
 /***/ },
+<<<<<<< HEAD
 /* 150 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 143 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12877,6 +13456,7 @@ webpackJsonp([0,1],[
 	var _redux = __webpack_require__(74);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _reduxThunk = __webpack_require__(141);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
@@ -12888,15 +13468,22 @@ webpackJsonp([0,1],[
 	var _reducers = __webpack_require__(143);
 =======
 	var _reduxThunk = __webpack_require__(151);
+=======
+	var _reduxThunk = __webpack_require__(144);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(152);
+	var _reduxLogger = __webpack_require__(145);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
+<<<<<<< HEAD
 	var _reducers = __webpack_require__(153);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _reducers = __webpack_require__(146);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -12917,10 +13504,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 141 */
 =======
 /* 151 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 144 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	'use strict';
@@ -12949,10 +13540,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 142 */
 =======
 /* 152 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 145 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports) {
 
 	"use strict";
@@ -13186,10 +13781,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 143 */
 =======
 /* 153 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 146 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13200,6 +13799,7 @@ webpackJsonp([0,1],[
 
 	var _redux = __webpack_require__(74);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _login = __webpack_require__(144);
 
@@ -13220,27 +13820,34 @@ webpackJsonp([0,1],[
 	var _profile = __webpack_require__(148);
 =======
 	var _login = __webpack_require__(154);
+=======
+	var _login = __webpack_require__(147);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(155);
+	var _register = __webpack_require__(148);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(156);
+	var _articles = __webpack_require__(149);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
-	var _addArticle = __webpack_require__(157);
+	var _addArticle = __webpack_require__(150);
 
 	var _addArticle2 = _interopRequireDefault(_addArticle);
 
+<<<<<<< HEAD
 	var _profile = __webpack_require__(158);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _profile = __webpack_require__(151);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var _profile2 = _interopRequireDefault(_profile);
 
-	var _user = __webpack_require__(159);
+	var _user = __webpack_require__(152);
 
 	var _user2 = _interopRequireDefault(_user);
 
@@ -13270,10 +13877,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 144 */
 =======
 /* 154 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 147 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13285,6 +13896,7 @@ webpackJsonp([0,1],[
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _httpType = __webpack_require__(94);
@@ -13293,6 +13905,11 @@ webpackJsonp([0,1],[
 
 	var _httpType = __webpack_require__(100);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _actionType = __webpack_require__(94);
+
+	var _httpType = __webpack_require__(95);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	/**
 	 * 登录状态设置
@@ -13354,7 +13971,10 @@ webpackJsonp([0,1],[
 			case _actionType.LOGIN_INIT:
 				//初始化视图
 				return _extends({}, state, {
-					loginStatus: _httpType.init
+					logined: false,
+					loginStatus: _httpType.init, //登录状态
+					logining: false, //有没有正在登录标志
+					loginUser: {}
 				});
 
 			case _actionType.LOGIN_REQUEST:
@@ -13390,10 +14010,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 145 */
 =======
 /* 155 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 148 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13405,6 +14029,7 @@ webpackJsonp([0,1],[
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _httpType = __webpack_require__(94);
 
 	var _actionType = __webpack_require__(93);
@@ -13413,6 +14038,11 @@ webpackJsonp([0,1],[
 
 	var _actionType = __webpack_require__(99);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _httpType = __webpack_require__(95);
+
+	var _actionType = __webpack_require__(94);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var register = function register() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
@@ -13451,10 +14081,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 146 */
 /***/ function(module, exports) {
 =======
 /* 156 */
+=======
+/* 149 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
 
@@ -13466,7 +14100,7 @@ webpackJsonp([0,1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _actionType = __webpack_require__(99);
+	var _actionType = __webpack_require__(94);
 
 	/**
 	 * 存入文章
@@ -13510,10 +14144,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 147 */
 =======
 /* 157 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 150 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13525,10 +14163,14 @@ webpackJsonp([0,1],[
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 =======
 	var _actionType = __webpack_require__(99);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _actionType = __webpack_require__(94);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var addArticle = function addArticle() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
@@ -13576,10 +14218,14 @@ webpackJsonp([0,1],[
 
 /***/ },
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 148 */
 =======
 /* 158 */
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+/* 151 */
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13591,6 +14237,7 @@ webpackJsonp([0,1],[
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _actionType = __webpack_require__(93);
 
 	var _httpType = __webpack_require__(94);
@@ -13599,6 +14246,11 @@ webpackJsonp([0,1],[
 
 	var _httpType = __webpack_require__(100);
 >>>>>>> 279eaaa7d251f687f4c95459c40a9f8af3cc26f2
+=======
+	var _actionType = __webpack_require__(94);
+
+	var _httpType = __webpack_require__(95);
+>>>>>>> e28ee61d78a7929bd18554534093c74f67dc676e
 
 	var profile = function profile() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? {
@@ -13634,7 +14286,7 @@ webpackJsonp([0,1],[
 	exports.default = profile;
 
 /***/ },
-/* 159 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13645,7 +14297,7 @@ webpackJsonp([0,1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _actionType = __webpack_require__(99);
+	var _actionType = __webpack_require__(94);
 
 	function addArticleList(state, data) {
 	    var lists = state.articleList;
@@ -13679,6 +14331,24 @@ webpackJsonp([0,1],[
 	};
 
 	exports.default = user;
+
+/***/ },
+/* 153 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 154 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 155 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 ]);

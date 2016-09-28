@@ -1,4 +1,4 @@
-import { MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_PASS,MODIFY_EMAIL,MODIFY_BRIEF,MODIFY_TEL,MODIFY_INIT,MODIFY_LOGIN } from '../constants/actionType';
+import { MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_PASS,MODIFY_EMAIL,MODIFY_BRIEF,MODIFY_TEL,MODIFY_INIT,MODIFY_LOGIN,MODIFY_AVATAR,MODIFY_CODE} from '../constants/actionType';
 import ajax  from '../ajax';
 
 
@@ -60,10 +60,11 @@ function modify_ajax(type,user) {
             //修改邮箱,简介,电话
             case MODIFY_EMAIL:
             case MODIFY_BRIEF:
+            case MODIFY_AVATAR:
+            case MODIFY_CODE:
             case MODIFY_TEL:
                 return ajax().modifyInfo(user)
                     .then(data => dispatch(modify_process(type,data,user)));   //接受到数据后重新更新state
-
             default:
                 return dispatch(modify_receive());
         }
@@ -106,7 +107,20 @@ function modify_process(type,data,user) {
                 }
                 return dispatch(modify_receive(data.status));
                 break;
-
+            case MODIFY_AVATAR:
+                if(data.status === 'success') { //一般来说肯定会返回成功,但是数据库那边没有反馈err处理
+                    dispatch(modify_login(user));
+                    alert('修改成功');
+                }
+                return dispatch(modify_receive(data.status));
+                break;
+            case MODIFY_CODE:
+                if(data.status === 'success') { //一般来说肯定会返回成功,但是数据库那边没有反馈err处理
+                    dispatch(modify_login(user));
+                    alert('修改成功');
+                }
+                return dispatch(modify_receive(data.status));
+                break;
             default:
                 break;
         }

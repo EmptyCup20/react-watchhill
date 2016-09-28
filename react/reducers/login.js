@@ -64,7 +64,10 @@ const login = (state = {
 		case LOGIN_INIT:		//初始化视图
 			return {
 				...state,
-				loginStatus:init
+				logined:false,
+				loginStatus:init,			//登录状态
+				logining:false,				//有没有正在登录标志
+				loginUser:{}
 			};
 
 		case LOGIN_REQUEST:		//发起登录请求

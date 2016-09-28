@@ -20,6 +20,7 @@ Article.getArticleList = function(obj) {
 };
 
 //获取文章内容及作者信息(byArticleId)
+//isGetInfo 为true时，只获取文章内容
 Article.getArticle = function(obj) {
     var queryObj = {
         _id: obj.articleId
@@ -32,10 +33,12 @@ Article.getArticle = function(obj) {
                 db_tools.queryByCondition('user', { author: articleData.author }, '-password').then(userData => {
                     userData = !!userData.length ? userData[0].toObject() : [];
                     articleData.userInfo = userData;
-                    resolve(articleData);
+                    statusMsg.successMsg.data = articleData;
+                    resolve(statusMsg.successMsg);
                 })
             } else {
-                resolve(articleData);
+                statusMsg.successMsg.data = articleData;
+                resolve(statusMsg.successMsg);
             }
         }, err => {
             reject(err);
@@ -74,7 +77,7 @@ Article.getImgUrl = function(obj) {
         user_dir = path.resolve('public/images', obj.author, 'article', obj.articleId);
         fs.readdir(user_dir, (err, data) => {
             data.forEach(function(value, index) {
-                statusMsg.successMsg.data.push(path.resolve(user_dir, value));
+                statusMsg.successMsg.data.push('/images/'+ obj.author+'/article/'+ obj.articleId +'/'+value);
             });
             resolve(statusMsg.successMsg);
         });

@@ -59,7 +59,7 @@ export default class Info extends Component{
                     }())
                 }
 
-                <div className="box box-info">
+                <div className="box box-primary">
                     <div className="box-header with-border">
                         <h3 className="box-title">个签修改</h3>
                     </div>
@@ -80,7 +80,7 @@ export default class Info extends Component{
                             </div>
                         </div>
                         <div className="box-footer">
-                            <button id={MODIFY_BRIEF} type="submit" className="btn btn-info pull-right" onClick={this._onClick.bind(this)} >修 改</button>
+                            <button id={MODIFY_BRIEF} type="submit" className="btn btn-primary pull-right" onClick={this._onClick.bind(this)} >修 改</button>
                         </div>
                     </form>
 
@@ -106,7 +106,7 @@ export default class Info extends Component{
                             </div>
                         </div>
                         <div className="box-footer">
-                            <button id={MODIFY_EMAIL} type="submit" className="btn btn-info pull-right" onClick={this._onClick.bind(this)} >修 改</button>
+                            <button id={MODIFY_EMAIL} type="submit" className="btn btn-primary pull-right" onClick={this._onClick.bind(this)} >修 改</button>
                         </div>
                     </form>
 
@@ -132,7 +132,7 @@ export default class Info extends Component{
                             </div>
                         </div>
                         <div className="box-footer">
-                            <button id={MODIFY_TEL} type="submit" className="btn btn-info pull-right" onClick={this._onClick.bind(this)} >修 改</button>
+                            <button id={MODIFY_TEL} type="submit" className="btn btn-primary pull-right" onClick={this._onClick.bind(this)} >修 改</button>
                         </div>
                     </form>
                 </div>
@@ -140,4 +140,3 @@ export default class Info extends Component{
         )
     }
 }
-
