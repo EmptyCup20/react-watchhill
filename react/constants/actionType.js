@@ -19,6 +19,8 @@ module.exports = {
         MODIFY_EMAIL: 'MODIFY_EMAIL',       //修改邮箱
         MODIFY_BRIEF: 'MODIFY_BRIEF',       //修改简介
         MODIFY_TEL: 'MODIFY_TEL',           //修改电话
+        MODIFY_AVATAR: 'MODIFY_AVATAR',     //修改头像
+        MODIFY_CODE: 'MODIFY_CODE',         //修改二维码
     MODIFY_RECEIVE: 'MODIFY_RECEIVE',       //接收修改状况处理
     MODIFY_LOGIN:  'MODIFY_LOGIN',          //修改信息的同时更新视图个人信息
 

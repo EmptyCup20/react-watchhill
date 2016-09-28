@@ -1,14 +1,18 @@
 import React,{ Component } from 'react';
+import { MODIFY_AVATAR,MODIFY_CODE } from '../../../../constants/actionType';
 
 export default class Code extends Component{
     componentWillMount(){
-
+        this.setState({codeUrl:this.props.login.loginUser.codeUrl});
     }
-    _onClick(){
-
+    _onCodeClick(){
+        var data = {
+            codeUrl:this.state.codeUrl
+        }
+        this.props.modify_start(MODIFY_CODE,data)
     }
     render() {
-        const {codeUrl} = this.props.login.loginUser;
+        const {codeUrl} = this.state;
         return (
             <div className="box box-primary">
                 <div className="box-header with-border">
@@ -28,7 +32,7 @@ export default class Code extends Component{
                         </div>
                     </div>
                     <div className="box-footer">
-                        <button type="submit" className="btn btn-primary pull-right" onClick={this._onClick.bind(this)}>修 改</button>
+                        <button type="button" className="btn btn-primary pull-right" onClick={this._onCodeClick.bind(this)}>修 改</button>
                     </div>
                 </form>
             </div>
@@ -46,7 +50,7 @@ export default class Code extends Component{
         });
         //文件上传事件
         $('#imgUrl').on('fileuploaded', function(event, data, previewId, index){
-            _this.props.modify_login({codeUrl:data.response.data.imgUrl});
+            _this.setState({codeUrl:data.response.data.imgUrl});
         });
     }
 }

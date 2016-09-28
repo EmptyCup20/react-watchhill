@@ -8074,6 +8074,8 @@ webpackJsonp([0,1],[
 	    MODIFY_EMAIL: 'MODIFY_EMAIL', //修改邮箱
 	    MODIFY_BRIEF: 'MODIFY_BRIEF', //修改简介
 	    MODIFY_TEL: 'MODIFY_TEL', //修改电话
+	    MODIFY_AVATAR: 'MODIFY_AVATAR', //修改头像
+	    MODIFY_CODE: 'MODIFY_CODE', //修改二维码
 	    MODIFY_RECEIVE: 'MODIFY_RECEIVE', //接收修改状况处理
 	    MODIFY_LOGIN: 'MODIFY_LOGIN', //修改信息的同时更新视图个人信息
 
@@ -10239,7 +10241,6 @@ webpackJsonp([0,1],[
 	});
 	exports.modify_init = modify_init;
 	exports.modify_start = modify_start;
-	exports.modify_login = modify_login;
 
 	var _actionType = __webpack_require__(99);
 
@@ -10304,11 +10305,12 @@ webpackJsonp([0,1],[
 	            //修改邮箱,简介,电话
 	            case _actionType.MODIFY_EMAIL:
 	            case _actionType.MODIFY_BRIEF:
+	            case _actionType.MODIFY_AVATAR:
+	            case _actionType.MODIFY_CODE:
 	            case _actionType.MODIFY_TEL:
 	                return (0, _ajax2.default)().modifyInfo(user).then(function (data) {
 	                    return dispatch(modify_process(type, data, user));
 	                }); //接受到数据后重新更新state
-
 	            default:
 	                return dispatch(modify_receive());
 	        }
@@ -10351,7 +10353,22 @@ webpackJsonp([0,1],[
 	                }
 	                return dispatch(modify_receive(data.status));
 	                break;
-
+	            case _actionType.MODIFY_AVATAR:
+	                if (data.status === 'success') {
+	                    //一般来说肯定会返回成功,但是数据库那边没有反馈err处理
+	                    dispatch(modify_login(user));
+	                    alert('修改成功');
+	                }
+	                return dispatch(modify_receive(data.status));
+	                break;
+	            case _actionType.MODIFY_CODE:
+	                if (data.status === 'success') {
+	                    //一般来说肯定会返回成功,但是数据库那边没有反馈err处理
+	                    dispatch(modify_login(user));
+	                    alert('修改成功');
+	                }
+	                return dispatch(modify_receive(data.status));
+	                break;
 	            default:
 	                break;
 	        }
@@ -10701,7 +10718,7 @@ webpackJsonp([0,1],[
 /* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -10712,6 +10729,8 @@ webpackJsonp([0,1],[
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _actionType = __webpack_require__(99);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10731,73 +10750,80 @@ webpackJsonp([0,1],[
 	    }
 
 	    _createClass(Code, [{
-	        key: "componentWillMount",
-	        value: function componentWillMount() {}
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.setState({ codeUrl: this.props.login.loginUser.codeUrl });
+	        }
 	    }, {
-	        key: "_onClick",
-	        value: function _onClick() {}
+	        key: '_onCodeClick',
+	        value: function _onCodeClick() {
+	            var data = {
+	                codeUrl: this.state.codeUrl
+	            };
+	            this.props.modify_start(_actionType.MODIFY_CODE, data);
+	        }
 	    }, {
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
-	            var codeUrl = this.props.login.loginUser.codeUrl;
+	            var codeUrl = this.state.codeUrl;
 
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "box box-primary" },
+	                'div',
+	                { className: 'box box-primary' },
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "box-header with-border" },
+	                    'div',
+	                    { className: 'box-header with-border' },
 	                    _react2.default.createElement(
-	                        "h3",
-	                        { className: "box-title" },
-	                        "修改二维码"
+	                        'h3',
+	                        { className: 'box-title' },
+	                        '修改二维码'
 	                    )
 	                ),
 	                _react2.default.createElement(
-	                    "form",
-	                    { className: "form-horizontal" },
+	                    'form',
+	                    { className: 'form-horizontal' },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "box-body" },
+	                        'div',
+	                        { className: 'box-body' },
 	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "form-group flie-container" },
+	                            'div',
+	                            { className: 'form-group flie-container' },
 	                            _react2.default.createElement(
-	                                "label",
+	                                'label',
 	                                null,
-	                                "初始二维码"
+	                                '初始二维码'
 	                            ),
 	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
-	                                _react2.default.createElement("img", { src: codeUrl, alt: "二维码", className: "img-circle col-sm-offset-2" })
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement('img', { src: codeUrl, alt: '二维码', className: 'img-circle col-sm-offset-2' })
 	                            )
 	                        ),
 	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "form-group flie-container" },
+	                            'div',
+	                            { className: 'form-group flie-container' },
 	                            _react2.default.createElement(
-	                                "label",
-	                                { htmlFor: "imgUrl" },
-	                                "二维码"
+	                                'label',
+	                                { htmlFor: 'imgUrl' },
+	                                '二维码'
 	                            ),
-	                            _react2.default.createElement("input", { id: "imgUrl", name: "imgUrl", type: "file", className: "file-loading" })
+	                            _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading' })
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "box-footer" },
+	                        'div',
+	                        { className: 'box-footer' },
 	                        _react2.default.createElement(
-	                            "button",
-	                            { type: "submit", className: "btn btn-primary pull-right", onClick: this._onClick.bind(this) },
-	                            "修 改"
+	                            'button',
+	                            { type: 'button', className: 'btn btn-primary pull-right', onClick: this._onCodeClick.bind(this) },
+	                            '修 改'
 	                        )
 	                    )
 	                )
 	            );
 	        }
 	    }, {
-	        key: "componentDidMount",
+	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var _this = this;
 	            //初始化文件插件
@@ -10810,7 +10836,7 @@ webpackJsonp([0,1],[
 	            });
 	            //文件上传事件
 	            $('#imgUrl').on('fileuploaded', function (event, data, previewId, index) {
-	                _this.props.modify_login({ codeUrl: data.response.data.imgUrl });
+	                _this.setState({ codeUrl: data.response.data.imgUrl });
 	            });
 	        }
 	    }]);
@@ -10872,7 +10898,7 @@ webpackJsonp([0,1],[
 /* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -10883,6 +10909,8 @@ webpackJsonp([0,1],[
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _actionType = __webpack_require__(99);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10902,73 +10930,81 @@ webpackJsonp([0,1],[
 	    }
 
 	    _createClass(Avatar, [{
-	        key: "componentWillMount",
-	        value: function componentWillMount() {}
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.setState({ avatarUrl: this.props.login.loginUser.avatarUrl });
+	        }
 	    }, {
-	        key: "_onClick",
-	        value: function _onClick() {}
+	        key: '_onAvatarClick',
+	        value: function _onAvatarClick(e) {
+	            e.preventDefault();
+	            var data = {
+	                avatarUrl: this.state.avatarUrl
+	            };
+	            this.props.modify_start(_actionType.MODIFY_AVATAR, data);
+	        }
 	    }, {
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
-	            var avatarUrl = this.props.login.loginUser.avatarUrl;
+	            var avatarUrl = this.state.avatarUrl;
 
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "box box-primary" },
+	                'div',
+	                { className: 'box box-primary' },
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "box-header with-border" },
+	                    'div',
+	                    { className: 'box-header with-border' },
 	                    _react2.default.createElement(
-	                        "h3",
-	                        { className: "box-title" },
-	                        "修改头像"
+	                        'h3',
+	                        { className: 'box-title' },
+	                        '修改头像'
 	                    )
 	                ),
 	                _react2.default.createElement(
-	                    "form",
-	                    { className: "form-horizontal" },
+	                    'form',
+	                    { className: 'form-horizontal' },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "box-body" },
+	                        'div',
+	                        { className: 'box-body' },
 	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "form-group flie-container" },
+	                            'div',
+	                            { className: 'form-group flie-container' },
 	                            _react2.default.createElement(
-	                                "label",
+	                                'label',
 	                                null,
-	                                "初始头像"
+	                                '初始头像'
 	                            ),
 	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
-	                                _react2.default.createElement("img", { src: avatarUrl, alt: "头像", className: "img-circle col-sm-offset-2" })
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement('img', { src: avatarUrl, alt: '头像', className: 'img-circle col-sm-offset-2' })
 	                            )
 	                        ),
 	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "form-group flie-container" },
+	                            'div',
+	                            { className: 'form-group flie-container' },
 	                            _react2.default.createElement(
-	                                "label",
-	                                { htmlFor: "imgUrl" },
-	                                "上传头像"
+	                                'label',
+	                                { htmlFor: 'imgUrl' },
+	                                '上传头像'
 	                            ),
-	                            _react2.default.createElement("input", { id: "imgUrl", name: "imgUrl", type: "file", className: "file-loading" })
+	                            _react2.default.createElement('input', { id: 'imgUrl', name: 'imgUrl', type: 'file', className: 'file-loading' })
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "box-footer" },
+	                        'div',
+	                        { className: 'box-footer' },
 	                        _react2.default.createElement(
-	                            "button",
-	                            { type: "submit", className: "btn btn-primary pull-right", onClick: this._onClick.bind(this) },
-	                            "修 改"
+	                            'button',
+	                            { type: 'button', className: 'btn btn-primary pull-right', onClick: this._onAvatarClick.bind(this) },
+	                            '修 改'
 	                        )
 	                    )
 	                )
 	            );
 	        }
 	    }, {
-	        key: "componentDidMount",
+	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var _this = this;
 	            //初始化文件插件
@@ -10981,7 +11017,7 @@ webpackJsonp([0,1],[
 	            });
 	            //文件上传事件
 	            $('#imgUrl').on('fileuploaded', function (event, data, previewId, index) {
-	                _this.props.modify_login({ avatarUrl: data.response.data.imgUrl });
+	                _this.setState({ avatarUrl: data.response.data.imgUrl });
 	            });
 	        }
 	    }]);
@@ -12613,7 +12649,7 @@ webpackJsonp([0,1],[
 
 	    return {
 	        type: _actionType.USER_RECEIVE,
-	        data: data
+	        data: data.data
 	    };
 	}
 

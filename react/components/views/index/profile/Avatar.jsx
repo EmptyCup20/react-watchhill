@@ -1,14 +1,19 @@
 import React,{ Component } from 'react';
+import { MODIFY_AVATAR,MODIFY_CODE } from '../../../../constants/actionType';
 
 export default class Avatar extends Component{
     componentWillMount(){
-
+        this.setState({avatarUrl:this.props.login.loginUser.avatarUrl});
     }
-    _onClick(){
-
+    _onAvatarClick(e){
+        e.preventDefault();
+        var data = {
+            avatarUrl:this.state.avatarUrl
+        }
+        this.props.modify_start(MODIFY_AVATAR,data)
     }
     render() {
-        const {avatarUrl} = this.props.login.loginUser;
+        const {avatarUrl} = this.state;
         return (
             <div className="box box-primary">
                 <div className="box-header with-border">
@@ -28,7 +33,7 @@ export default class Avatar extends Component{
                         </div>
                     </div>
                     <div className="box-footer">
-                        <button type="submit" className="btn btn-primary pull-right" onClick={this._onClick.bind(this)}>修 改</button>
+                        <button type="button" className="btn btn-primary pull-right" onClick={this._onAvatarClick.bind(this)}>修 改</button>
                     </div>
                 </form>
             </div>
@@ -46,7 +51,7 @@ export default class Avatar extends Component{
         });
         //文件上传事件
         $('#imgUrl').on('fileuploaded', function(event, data, previewId, index){
-            _this.props.modify_login({avatarUrl:data.response.data.imgUrl});
+            _this.setState({avatarUrl:data.response.data.imgUrl});
         });
     }
 }
