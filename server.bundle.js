@@ -1239,7 +1239,7 @@
 
 	var _indexServer2 = _interopRequireDefault(_indexServer);
 
-	var _store = __webpack_require__(85);
+	var _store = __webpack_require__(87);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -1442,15 +1442,15 @@
 
 	var _ArticleContainer2 = _interopRequireDefault(_ArticleContainer);
 
-	var _UserContainer = __webpack_require__(95);
+	var _UserContainer = __webpack_require__(78);
 
 	var _UserContainer2 = _interopRequireDefault(_UserContainer);
 
-	var _LoginContainer = __webpack_require__(78);
+	var _LoginContainer = __webpack_require__(80);
 
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 
-	var _RegisterContainer = __webpack_require__(82);
+	var _RegisterContainer = __webpack_require__(84);
 
 	var _RegisterContainer2 = _interopRequireDefault(_RegisterContainer);
 
@@ -4824,15 +4824,245 @@
 	    value: true
 	});
 
+	var _reactRedux = __webpack_require__(31);
+
+	var _User = __webpack_require__(79);
+
+	var _User2 = _interopRequireDefault(_User);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//绑定user store到user组件
+	//基础库
+	function mapStateToProps(state) {
+	    return {
+	        user: state.user
+	    };
+	}
+
+	//action
+
+
+	//视图组件
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_User2.default);
+
+/***/ },
+/* 79 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(28);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(30);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var User = function (_Component) {
+	    _inherits(User, _Component);
+
+	    function User() {
+	        _classCallCheck(this, User);
+
+	        return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).apply(this, arguments));
+	    }
+
+	    _createClass(User, [{
+	        key: 'render',
+	        value: function render() {
+
+	            var loading = true;
+	            var _props = this.props;
+	            var user = _props.user;
+	            var params = _props.params;
+
+	            var lists = user.articleList;
+
+	            var showList = {}; //显示的文章列表
+
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+
+	            try {
+	                for (var _iterator = lists[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var articleList = _step.value;
+
+	                    if (articleList._id === params.id) {
+	                        showList = articleList;
+	                        loading = false; //已经获取到用户列表
+	                        break;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'content-wrapper' },
+	                _react2.default.createElement('br', null),
+	                loading ? _react2.default.createElement(
+	                    'div',
+	                    { className: 'alert alert-info', role: 'alert' },
+	                    '信息正在加载,请稍后...'
+	                ) : _react2.default.createElement(
+	                    'div',
+	                    { className: 'info-box' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'info-box-content' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container authors-info' },
+	                            _react2.default.createElement(
+	                                'blockquote',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    { className: 'module-list-item' },
+	                                    _react2.default.createElement(
+	                                        'a',
+	                                        null,
+	                                        _react2.default.createElement('img', { src: showList.avatarUrl, 'class': 'img-circle', width: '60', height: '80', alt: '个人照片' })
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'ul',
+	                                    { className: 'module-list' },
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        { className: 'module-list-item' },
+	                                        '作者:',
+	                                        showList.author
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        { className: 'module-list-item' },
+	                                        '联系方式：',
+	                                        showList.tel
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        { className: 'module-list-item' },
+	                                        '邮箱: ',
+	                                        showList.email
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container author-info-list' },
+	                            _react2.default.createElement(
+	                                'ul',
+	                                { className: 'timeline' },
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: 'time-label' },
+	                                    _react2.default.createElement(
+	                                        'span',
+	                                        { className: 'bg-red' },
+	                                        '10 Feb. 2014'
+	                                    )
+	                                ),
+	                                showList.articleList.map(function (article, index, lists) {
+	                                    return _react2.default.createElement(
+	                                        'li',
+	                                        { key: article._id },
+	                                        _react2.default.createElement('i', { className: 'fa fa-comment-o bg-yellow' }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'timeline-item' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'time' },
+	                                                _react2.default.createElement('i', { className: 'fa fa-clock-o' }),
+	                                                'article.createTime'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'h3',
+	                                                { className: 'timeline-header' },
+	                                                _react2.default.createElement(
+	                                                    _reactRouter.Link,
+	                                                    { to: '/article/' + article._id },
+	                                                    article.title
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'timeline-body' },
+	                                                article.describe
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'timeline-footer' },
+	                                                _react2.default.createElement(
+	                                                    _reactRouter.Link,
+	                                                    { to: '/article/' + article._id, className: 'btn btn-primary btn-xs' },
+	                                                    '阅读全文...'
+	                                                )
+	                                            )
+	                                        )
+	                                    );
+	                                })
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return User;
+	}(_react.Component);
+
+	exports.default = User;
+
+/***/ },
+/* 80 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	var _redux = __webpack_require__(32);
 
 	var _reactRedux = __webpack_require__(31);
 
-	var _Login = __webpack_require__(79);
+	var _Login = __webpack_require__(81);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _login = __webpack_require__(81);
+	var _login = __webpack_require__(83);
 
 	var LoginActions = _interopRequireWildcard(_login);
 
@@ -4863,7 +5093,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
-/* 79 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4888,7 +5118,7 @@
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(80);
+	var _privateType = __webpack_require__(82);
 
 	var _httpType = __webpack_require__(39);
 
@@ -5073,7 +5303,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 80 */
+/* 82 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5085,7 +5315,7 @@
 	};
 
 /***/ },
-/* 81 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5212,7 +5442,7 @@
 	//}
 
 /***/ },
-/* 82 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5225,11 +5455,11 @@
 
 	var _reactRedux = __webpack_require__(31);
 
-	var _Register = __webpack_require__(83);
+	var _Register = __webpack_require__(85);
 
 	var _Register2 = _interopRequireDefault(_Register);
 
-	var _register = __webpack_require__(84);
+	var _register = __webpack_require__(86);
 
 	var RegisterActions = _interopRequireWildcard(_register);
 
@@ -5260,7 +5490,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Register2.default);
 
 /***/ },
-/* 83 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5285,7 +5515,7 @@
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _privateType = __webpack_require__(80);
+	var _privateType = __webpack_require__(82);
 
 	var _httpType = __webpack_require__(39);
 
@@ -5497,7 +5727,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 84 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5516,7 +5746,7 @@
 
 	var _httpType = __webpack_require__(39);
 
-	var _login = __webpack_require__(81);
+	var _login = __webpack_require__(83);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5611,7 +5841,7 @@
 	}
 
 /***/ },
-/* 85 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5623,15 +5853,15 @@
 
 	var _redux = __webpack_require__(32);
 
-	var _reduxThunk = __webpack_require__(86);
+	var _reduxThunk = __webpack_require__(88);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(87);
+	var _reduxLogger = __webpack_require__(89);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reducers = __webpack_require__(88);
+	var _reducers = __webpack_require__(90);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -5651,19 +5881,19 @@
 	}
 
 /***/ },
-/* 86 */
+/* 88 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 87 */
+/* 89 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-logger");
 
 /***/ },
-/* 88 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5674,27 +5904,27 @@
 
 	var _redux = __webpack_require__(32);
 
-	var _login = __webpack_require__(89);
+	var _login = __webpack_require__(91);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _register = __webpack_require__(90);
+	var _register = __webpack_require__(92);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _articles = __webpack_require__(91);
+	var _articles = __webpack_require__(93);
 
 	var _articles2 = _interopRequireDefault(_articles);
 
-	var _addArticle = __webpack_require__(92);
+	var _addArticle = __webpack_require__(94);
 
 	var _addArticle2 = _interopRequireDefault(_addArticle);
 
-	var _profile = __webpack_require__(93);
+	var _profile = __webpack_require__(95);
 
 	var _profile2 = _interopRequireDefault(_profile);
 
-	var _user = __webpack_require__(94);
+	var _user = __webpack_require__(96);
 
 	var _user2 = _interopRequireDefault(_user);
 
@@ -5723,7 +5953,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 89 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5833,7 +6063,7 @@
 	exports.default = login;
 
 /***/ },
-/* 90 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5884,7 +6114,7 @@
 	exports.default = register;
 
 /***/ },
-/* 91 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5938,7 +6168,7 @@
 	exports.default = article;
 
 /***/ },
-/* 92 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5996,7 +6226,7 @@
 	exports.default = addArticle;
 
 /***/ },
-/* 93 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6045,7 +6275,7 @@
 	exports.default = profile;
 
 /***/ },
-/* 94 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6090,236 +6320,6 @@
 	};
 
 	exports.default = user;
-
-/***/ },
-/* 95 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _reactRedux = __webpack_require__(31);
-
-	var _User = __webpack_require__(96);
-
-	var _User2 = _interopRequireDefault(_User);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//绑定user store到user组件
-	//基础库
-	function mapStateToProps(state) {
-	    return {
-	        user: state.user
-	    };
-	}
-
-	//action
-
-
-	//视图组件
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_User2.default);
-
-/***/ },
-/* 96 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(28);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(30);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var User = function (_Component) {
-	    _inherits(User, _Component);
-
-	    function User() {
-	        _classCallCheck(this, User);
-
-	        return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).apply(this, arguments));
-	    }
-
-	    _createClass(User, [{
-	        key: 'render',
-	        value: function render() {
-
-	            var loading = true;
-	            var _props = this.props;
-	            var user = _props.user;
-	            var params = _props.params;
-
-	            var lists = user.articleList;
-
-	            var showList = {}; //显示的文章列表
-
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-
-	            try {
-	                for (var _iterator = lists[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var articleList = _step.value;
-
-	                    if (articleList._id === params.id) {
-	                        showList = articleList;
-	                        loading = false; //已经获取到用户列表
-	                        break;
-	                    }
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'content-wrapper' },
-	                _react2.default.createElement('br', null),
-	                loading ? _react2.default.createElement(
-	                    'div',
-	                    { className: 'alert alert-info', role: 'alert' },
-	                    '信息正在加载,请稍后...'
-	                ) : _react2.default.createElement(
-	                    'div',
-	                    { className: 'info-box' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'info-box-content' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'container authors-info' },
-	                            _react2.default.createElement(
-	                                'blockquote',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'p',
-	                                    { className: 'module-list-item' },
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        null,
-	                                        _react2.default.createElement('img', { src: showList.avatarUrl, 'class': 'img-circle', width: '60', height: '80', alt: '个人照片' })
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    { className: 'module-list' },
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'module-list-item' },
-	                                        '作者:',
-	                                        showList.author
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'module-list-item' },
-	                                        '联系方式：',
-	                                        showList.tel
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'module-list-item' },
-	                                        '邮箱: ',
-	                                        showList.email
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'container author-info-list' },
-	                            _react2.default.createElement(
-	                                'ul',
-	                                { className: 'timeline' },
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { className: 'time-label' },
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: 'bg-red' },
-	                                        '10 Feb. 2014'
-	                                    )
-	                                ),
-	                                showList.articleList.map(function (article, index, lists) {
-	                                    return _react2.default.createElement(
-	                                        'li',
-	                                        { key: article._id },
-	                                        _react2.default.createElement('i', { className: 'fa fa-comment-o bg-yellow' }),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'timeline-item' },
-	                                            _react2.default.createElement(
-	                                                'span',
-	                                                { className: 'time' },
-	                                                _react2.default.createElement('i', { className: 'fa fa-clock-o' }),
-	                                                'article.createTime'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'h3',
-	                                                { className: 'timeline-header' },
-	                                                _react2.default.createElement(
-	                                                    _reactRouter.Link,
-	                                                    { to: '/article/' + article._id },
-	                                                    article.title
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'timeline-body' },
-	                                                article.describe
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'timeline-footer' },
-	                                                _react2.default.createElement(
-	                                                    _reactRouter.Link,
-	                                                    { to: '/article/' + article._id, className: 'btn btn-primary btn-xs' },
-	                                                    '阅读全文...'
-	                                                )
-	                                            )
-	                                        )
-	                                    );
-	                                })
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return User;
-	}(_react.Component);
-
-	exports.default = User;
 
 /***/ }
 /******/ ]);
