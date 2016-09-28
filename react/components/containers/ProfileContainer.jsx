@@ -8,6 +8,10 @@ import { connect } from 'react-redux';
 //视图组件
 import Profile from '../views/index/Profile';
 
+function mapStateToProps(state) {
+    return {
+        login: state.login
+    }
+}
 
-
-export default connect()(Profile);
+export default connect(mapStateToProps)(Profile);

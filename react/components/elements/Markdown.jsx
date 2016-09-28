@@ -14,7 +14,7 @@ export default class Markdown extends  React.Component {
                             <textarea  className="form-control"  id="text-input" rows="3" placeholder="请在此输入文本 ..." onBlur={this.update.bind(this)}></textarea>
                         </div>
                     </div>
-                    <div className="tab-pane" id="preview">
+                    <div className="tab-pane md-preview" id="preview">
 
                         <div id="preview" dangerouslySetInnerHTML={ this.tohtml() }>
 

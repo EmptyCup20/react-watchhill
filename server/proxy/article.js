@@ -77,7 +77,7 @@ Article.getImgUrl = function(obj) {
         user_dir = path.resolve('public/images', obj.author, 'article', obj.articleId);
         fs.readdir(user_dir, (err, data) => {
             data.forEach(function(value, index) {
-                statusMsg.successMsg.data.push(path.resolve(user_dir, value));
+                statusMsg.successMsg.data.push('/images/'+ obj.author+'/article/'+ obj.articleId +'/'+value);
             });
             resolve(statusMsg.successMsg);
         });

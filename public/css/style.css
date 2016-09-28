@@ -111,6 +111,9 @@ body {
 .add-article textarea {
   height: 526px;
 }
+.add-article .md-preview img {
+  max-width: 100%;
+}
 .add-article form .file-preview {
   background-color: #fff;
 }

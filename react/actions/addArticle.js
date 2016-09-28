@@ -22,11 +22,18 @@ export function addTempArticle(article){
             }
         }
     }else{
-        return dispatch => {
-            return ajax().addTempArticle(article)
-                .then(data => {
-                    return dispatch(addTempArticle_receive(data));
-                })
+        if(article.title){
+            return dispatch => {
+                return ajax().addTempArticle(article)
+                    .then(data => {
+                        return dispatch(addTempArticle_receive(data));
+                    })
+            }
+        }else{
+            alert('标题不可为空');
+            return {
+                type: 'NO_TITLE'
+            }
         }
     }
 
@@ -60,11 +67,18 @@ function clearAndDel_receive(){
 }
 
 export function save_article(article){
-    return dispatch => {
-        return ajax().save_article(article)
-            .then(data => {
-                return dispatch(saveArticle_receive(data));
-            })
+    if(article.title){
+        return dispatch => {
+            return ajax().save_article(article)
+                .then(data => {
+                    return dispatch(saveArticle_receive(data));
+                })
+        }
+    }else{
+        alert('标题不可为空');
+        return {
+            type : 'NO_TITLE'
+        }
     }
 }
 
