@@ -1,5 +1,5 @@
-import db_tools from '../../mongo/db_tools';
-import statusMsg from '../../mongo/statusMsg';
+var db_tools = require('../../mongo/db_tools') ;
+var statusMsg = require('../../mongo/statusMsg') ;
 
 var User = function() {};
 
@@ -90,12 +90,34 @@ User.modifyPwd = function(obj) {
 //修改用户资料
 User.modfiyUserData = function(obj) {
     return new Promise((resolve, reject) => {
-        db_tools.edit('user',obj).then(data=>{
+        db_tools.edit('user', obj).then(data => {
             resolve(data);
-        },err=>{    
+        }, err => {
             reject(err);
         });
     });
-}
+};
 
+
+//获取该用户的所有文章列表及该用户的信息
+User.getArticleList = function(obj) {
+    var queryObj = {
+        _id: obj.userId
+    }
+    return new Promise((resolve, reject) => {
+        db_tools.queryByCondition('user', queryObj, '-password').then(userData => {
+            userData = userData[0].toObject();
+            db_tools.queryByCondition('article', { author: userData.author }, 'title describe createTime').then(articleData => {
+                userData.articleList = [];
+                articleData.forEach(function(value, index) {
+                    userData.articleList.push(value.toObject());
+                });
+                statusMsg.successMsg.data = userData;
+                resolve(statusMsg.successMsg);
+            });
+        }, err => {
+            reject(err);
+        });
+    });
+};
 module.exports = User;

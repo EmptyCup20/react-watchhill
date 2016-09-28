@@ -63,7 +63,7 @@ export default class Header extends Component{
                                                     </a>
                                                      <ul className="dropdown-menu">
                                                          <li className="user-header">
-                                                             <Link to="#">
+                                                             <Link to={'/user/'+ login.loginUser._id}>
                                                                  <img src={login.loginUser.avatarUrl} className="img-circle" alt="user image" />
                                                              </Link>
                                                              <p>

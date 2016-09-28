@@ -8,5 +8,12 @@ import { connect } from 'react-redux';
 import Article from '../views/index/Article';
 
 
+//绑定article store到Article组件
+function mapStateToProps(state) {
+    return {
+        articles: state.articles
+    }
+}
 
-export default connect()(Article);
+
+export default connect(mapStateToProps)(Article);

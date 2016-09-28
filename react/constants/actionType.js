@@ -23,9 +23,21 @@ module.exports = {
     MODIFY_LOGIN:  'MODIFY_LOGIN',          //修改信息的同时更新视图个人信息
 
     //logout
-    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE',        //注销
+    LOGOUT_RECEIVE: 'LOGOUT_RECEIVE',       //注销
+
+    //article
+    ARTICLE_REQUEST: 'ARTICLE_REQUEST',     //挂起获取文章请求
+    ARTICLE_RECEIVE: 'ARTICLE_RECEIVE',     //获取文章内容处理
+
+    //user
+    USER_REQUEST: 'USER_REQUEST',           //获取个人文章列表
+    USER_RECEIVE: 'USER_RECEIVE',
 
     //addArticle
     PREVIEW: 'PREVIEW',          //预览功能
-    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE'  //新增文章
+    ADD_TEMP_ARTICLE: 'ADD_TEMP_ARTICLE',  //新增文章
+    ADD_ARTICLE_TITLE: 'ADD_ARTICLE_TITLE',//新增标题
+    ADD_ARTICLE_INTRO: 'ADD_ARTICLE_INTRO',//新增简介
+    DEL_ARTICLE: 'DEL_ARTICLE',             //删除文章
+    SAVE_ARTICLE: 'SAVE_ARTICLE'            //保存文章
 };

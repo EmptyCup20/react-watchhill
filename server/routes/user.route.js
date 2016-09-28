@@ -1,5 +1,5 @@
 
-import { loginAuthen,logout,register,profile } from '../controllers/user.controller';
+import { loginAuthen,logout,register,profile,getArticleList } from '../controllers/user.controller';
 
 import express from 'express';
 const router = express.Router();
@@ -13,9 +13,12 @@ router.post('/register',register);
 //注销
 router.get('/logout', logout);
 
-
 //个人信息修改
 router.post('/profile/:type',profile);
+
+//获取个人文章列表
+router.get('/getList',getArticleList);
+
 
 
 
