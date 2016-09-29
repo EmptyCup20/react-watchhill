@@ -37,7 +37,7 @@ app.use('/article', require('./server/routes/article.route'));
 
 
 //react服务器渲染路由
-// app.use('/', require('./server/routes/react.route'));
+app.use('/', require('./server/routes/react.route'));
 
 
 
