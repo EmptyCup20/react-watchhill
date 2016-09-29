@@ -1,6 +1,6 @@
-var article = require('../../server/proxy/article');
+var article = require('../../../server/proxy/article');
 var expect = require('chai').expect;
-describe('文章接口测试', function() {
+describe('(PROXY)文章接口测试', function() {
     it('获取文章列表（成功）', function(done) {
         expect(article.getArticleList({
             "pageNo": 1,

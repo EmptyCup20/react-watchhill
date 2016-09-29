@@ -6,7 +6,7 @@ import sinon from 'sinon';
 describe('actions',function() {
     describe('login.js', function () {
 
-        let actions,dispatchSpy,getStateSpy;
+        let actions,dispatchSpy,getStateSpy,xhr,requests;
 
         beforeEach(function() { //beforeEach方法在describe中每个Spec(it)执行之前运行
             actions = [];
@@ -19,6 +19,20 @@ describe('actions',function() {
             dispatchSpy = sinon.spy(action => {
                 actions.push(action)
             });
+
+
+            //测试ajax请求
+            xhr = sinon.useFakeXMLHttpRequest();
+            requests = [];
+            xhr.onCreate = (xhr) => {
+                requests.push(xhr);
+            };
+
+
+        });
+
+        afterEach(function() {
+            xhr.restore();
         });
 
 
@@ -45,23 +59,12 @@ describe('actions',function() {
                     logining:true
                 }
             };
-
             const bool_ok = loginActions.login_authen(ok);
             const bool_notOk = loginActions.login_authen(notOk);
 
-
             expect(bool_ok).to.be.ok;
             expect(bool_notOk).to.not.be.ok;
-
-
-
         });
-
-
-
-
-
-
     });
 });
 

@@ -1,4 +1,4 @@
-import { ARTICLE_REQUEST,ARTICLE_RECEIVE } from '../constants/actionType';
+import { ARTICLE_REQUEST,ARTICLE_RECEIVE,ARTICLE_HOME_RECEIVE } from '../constants/actionType';
 
 
 /**
@@ -33,6 +33,13 @@ const article = (state = {
                 ...state,
                 getting:false,
                 contentList:addContentList(state,action.data)
+            };
+
+        case ARTICLE_HOME_RECEIVE:
+            return {
+                ...state,
+                getting:false,
+                list:action.data
             };
 
         default:

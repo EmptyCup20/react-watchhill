@@ -1,7 +1,7 @@
-var user = require('../../server/proxy/user');
+var user = require('../../../server/proxy/user');
 var expect = require('chai').expect;
 
-describe('用户接口测试', function() {
+describe('(PROXY)用户接口测试', function() {
    var userId,
        author = "mocha_"+(new Date()).getTime();
 

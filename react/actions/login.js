@@ -1,7 +1,6 @@
 import { LOGIN_REQUEST,LOGIN_RECEIVE,LOGIN_INIT } from '../constants/actionType';
 import ajax from '../ajax';
 
-
 /**
  * 视图初始化
  */
@@ -44,7 +43,7 @@ export function login_authen(state) {
  * @returns {Function}
  */
 
-function login_ajax(user) {
+export function login_ajax(user) {
     return dispatch => {
         dispatch(login_request());                                  //挂起登录请求,防止重复请求
         return ajax().login(user)

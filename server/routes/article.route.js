@@ -1,4 +1,4 @@
-import {getArticleList,getArticle,addArticle,modfiyArticle,getImgUrl} from '../controllers/article.controller';
+import {getArticleList,getArticle,addArticle,modfiyArticle,getImgUrl,homeArticle} from '../controllers/article.controller';
 import {uploaderImg} from '../controllers/uploader.controller'
 
 import express from 'express';
@@ -9,6 +9,9 @@ router.get('/getArticleList', getArticleList);
 
 //获取文章内容
 router.post('/getArticle', getArticle);
+
+//获取主页文章列表
+router.get('/homeArticle', homeArticle);
 
 //新增文章
 router.post('/addArticle', addArticle);

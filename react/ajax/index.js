@@ -81,6 +81,15 @@ function ajax() {
             });
         },
 
+
+        //获取主页文章列表
+        homeArticle: function() {
+            return req({
+                type: 'GET',
+                url: '/article/homeArticle'
+            });
+        },
+
         //删除文章
         delArticle:function(data){
             return req({
