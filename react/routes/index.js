@@ -92,11 +92,19 @@ const routes = (store) => {
     }
 
 
+    //获取主页文章列表
+    function getHomeArticleList() {
+        //alert(1);
+    }
+
+
+
+
     return(
         <Route>
             <Route path="/" component={AppContainer} />
             <Route path="/index" component={IndexContainer}>
-                <IndexRoute component={HomeContainer} />
+                <IndexRoute onEnter={getHomeArticleList} component={HomeContainer} />
                 <Route path='/web' component={WebContainer}  />
                 <Route path='/node' component={NodeContainer}  />
                 <Route path='/about' component={AboutContainer}  />

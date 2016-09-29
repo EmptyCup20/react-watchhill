@@ -698,8 +698,8 @@
 	 */
 	var mongoose = __webpack_require__(14);
 	//连接数据库
-	// var db = mongoose.connect('mongodb://10.33.31.234/watchhill',function(err){
-	var db = mongoose.connect('mongodb://localhost/watchhill', function (err) {
+	var db = mongoose.connect('mongodb://10.33.31.234/watchhill', function (err) {
+	    //var db = mongoose.connect('mongodb://localhost/watchhill',function(err){
 	    if (err) {
 	        console.log(err);
 	    }
