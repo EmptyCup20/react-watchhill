@@ -9,7 +9,8 @@
     "node": "webpack --config ./webpack.node.config.js --progress --watch --colors",
     "build": "babel-node server.js",
     "test-server": "mocha ./test/server --recursive --reporter mochawesome",
-    "test-client": "mocha ./test/client --watch --recursive --compilers js:babel-core/register"
+    "test-client": "mocha ./test/client --watch --recursive --compilers js:babel-core/register",
+    "karma-test-client":"karma start"
   },
   "dependencies": {
     "ansi-styles": "^2.2.1",
