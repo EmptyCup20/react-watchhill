@@ -26,7 +26,7 @@ describe('(CONTROLLER)用户接口测试', function() {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err);
-                console.log(JSON.parse(res.text));
+                //console.log(JSON.parse(res.text));
                 done();
             });
     });
@@ -188,7 +188,7 @@ describe('(CONTROLLER)用户接口测试', function() {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err);
-                console.log((JSON.parse(res.text)));
+               // console.log((JSON.parse(res.text)));
                 done();
             });
     });
