@@ -75,20 +75,20 @@ const routes = (store) => {
             userId:nextState.params.id
         };
 
-        let isListExist = false;
-        const state = store.getState();
-        const lists = state.user.articleList;
+        //let isListExist = false;
+        //const state = store.getState();
+        //const lists = state.user.articleList;
 
-        for(let list of lists) {
-            if(list._id === nextState.params.id) {
-                isListExist = true;
-                break;
-            }
-        }
+        //for(let list of lists) {
+        //    if(list._id === nextState.params.id) {
+        //        isListExist = true;
+        //        break;
+        //    }
+        //}
 
-        if(!isListExist) {
+        //if(!isListExist) {
             store.dispatch(user_getList(id));
-        }
+        //}
     }
 
 
@@ -97,10 +97,7 @@ const routes = (store) => {
         let isListExist = false;
         const state = store.getState();
         const list = state.articles.list;
-
-        if(!list.length) {
-            store.dispatch(article_getHomeList());
-        }
+        store.dispatch(article_getHomeList());
     }
 
 

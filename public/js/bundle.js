@@ -7552,41 +7552,20 @@ webpackJsonp([0,1],[
 	            userId: nextState.params.id
 	        };
 
-	        var isListExist = false;
-	        var state = store.getState();
-	        var lists = state.user.articleList;
+	        //let isListExist = false;
+	        //const state = store.getState();
+	        //const lists = state.user.articleList;
 
-	        var _iteratorNormalCompletion2 = true;
-	        var _didIteratorError2 = false;
-	        var _iteratorError2 = undefined;
+	        //for(let list of lists) {
+	        //    if(list._id === nextState.params.id) {
+	        //        isListExist = true;
+	        //        break;
+	        //    }
+	        //}
 
-	        try {
-	            for (var _iterator2 = lists[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                var list = _step2.value;
-
-	                if (list._id === nextState.params.id) {
-	                    isListExist = true;
-	                    break;
-	                }
-	            }
-	        } catch (err) {
-	            _didIteratorError2 = true;
-	            _iteratorError2 = err;
-	        } finally {
-	            try {
-	                if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                    _iterator2.return();
-	                }
-	            } finally {
-	                if (_didIteratorError2) {
-	                    throw _iteratorError2;
-	                }
-	            }
-	        }
-
-	        if (!isListExist) {
-	            store.dispatch((0, _user.user_getList)(id));
-	        }
+	        //if(!isListExist) {
+	        store.dispatch((0, _user.user_getList)(id));
+	        //}
 	    }
 
 	    //获取主页文章列表
@@ -7594,10 +7573,7 @@ webpackJsonp([0,1],[
 	        var isListExist = false;
 	        var state = store.getState();
 	        var list = state.articles.list;
-
-	        if (!list.length) {
-	            store.dispatch((0, _article.article_getHomeList)());
-	        }
+	        store.dispatch((0, _article.article_getHomeList)());
 	    }
 
 	    return _react2.default.createElement(
