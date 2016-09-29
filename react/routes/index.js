@@ -25,7 +25,7 @@ import { login_init } from '../actions/login';
 import { register_init } from '../actions/register';
 import { modify_init } from '../actions/profile';
 import { addTempArticle } from '../actions/addArticle';
-import { article_getContent } from '../actions/article';
+import { article_getContent,article_getHomeList } from '../actions/article';
 import { user_getList } from  '../actions/user';
 
 
@@ -75,28 +75,39 @@ const routes = (store) => {
             userId:nextState.params.id
         };
 
+        //let isListExist = false;
+        //const state = store.getState();
+        //const lists = state.user.articleList;
+
+        //for(let list of lists) {
+        //    if(list._id === nextState.params.id) {
+        //        isListExist = true;
+        //        break;
+        //    }
+        //}
+
+        //if(!isListExist) {
+            store.dispatch(user_getList(id));
+        //}
+    }
+
+
+    //获取主页文章列表
+    function getHomeArticleList() {
         let isListExist = false;
         const state = store.getState();
-        const lists = state.user.articleList;
-
-        for(let list of lists) {
-            if(list._id === nextState.params.id) {
-                isListExist = true;
-                break;
-            }
-        }
-
-        if(!isListExist) {
-            store.dispatch(user_getList(id));
-        }
+        const list = state.articles.list;
+        store.dispatch(article_getHomeList());
     }
+
+
 
 
     return(
         <Route>
             <Route path="/" component={AppContainer} />
             <Route path="/index" component={IndexContainer}>
-                <IndexRoute component={HomeContainer} />
+                <IndexRoute onEnter={getHomeArticleList} component={HomeContainer} />
                 <Route path='/web' component={WebContainer}  />
                 <Route path='/node' component={NodeContainer}  />
                 <Route path='/about' component={AboutContainer}  />

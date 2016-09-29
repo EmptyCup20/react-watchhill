@@ -1,4 +1,4 @@
-import { PREVIEW , ADD_TEMP_ARTICLE , ADD_ARTICLE_TITLE ,ADD_ARTICLE_INTRO,DEL_ARTICLE} from '../constants/actionType';
+import { PREVIEW , ADD_TEMP_ARTICLE , ADD_ARTICLE_TITLE ,ADD_ARTICLE_INTRO,DEL_ARTICLE,SAVE_ARTICLE} from '../constants/actionType';
 import ajax from '../ajax';
 export function preview(value){
     return {
@@ -22,11 +22,18 @@ export function addTempArticle(article){
             }
         }
     }else{
-        return dispatch => {
-            return ajax().addTempArticle(article)
-                .then(data => {
-                    return dispatch(addTempArticle_receive(data));
-                })
+        if(article.title){
+            return dispatch => {
+                return ajax().addTempArticle(article)
+                    .then(data => {
+                        return dispatch(addTempArticle_receive(data));
+                    })
+            }
+        }else{
+            alert('标题不可为空');
+            return {
+                type: 'NO_TITLE'
+            }
         }
     }
 
@@ -56,5 +63,28 @@ export function addIntro(value){
 function clearAndDel_receive(){
     return {
         type : DEL_ARTICLE
+    }
+}
+
+export function save_article(article){
+    if(article.title){
+        return dispatch => {
+            return ajax().save_article(article)
+                .then(data => {
+                    return dispatch(saveArticle_receive(data));
+                })
+        }
+    }else{
+        alert('标题不可为空');
+        return {
+            type : 'NO_TITLE'
+        }
+    }
+}
+
+function saveArticle_receive(data){
+    return {
+        type : SAVE_ARTICLE,
+        value : data
     }
 }

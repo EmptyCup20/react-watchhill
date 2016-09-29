@@ -21,7 +21,7 @@ import LoginContainer from '../components/containers/LoginContainer';       //�
 import RegisterContainer from '../components/containers/RegisterContainer'; //注册页
 
 
-const routes = (store) => {
+const routes = () => {
     return(
         <Route>
             <Route path="/" component={AppContainer} />

@@ -21,7 +21,7 @@ function init(model) {
         'article': article,
         'comment': comment
     };
-    for (let item in modelList) {
+    for (var item in modelList) {
         if (item === model) {
             model = modelList[item];
             return model;
@@ -104,6 +104,7 @@ Db_tools.query = function(model, queryObj, fields, options, callback) {
     var pageNo = Number(queryObj.pageNo);
     model = init(model);
     var query = model.find({}, fields, options, callback);
+    query.sort({createTime: 1});
     //开头跳过查询的调试
     query.skip((pageNo - 1) * pageSize);
     //最多显示条数

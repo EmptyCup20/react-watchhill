@@ -30,7 +30,7 @@ export function uploaderImg(req, res, next) {
                 return;
             }
             statusMsg.successMsg.data = {
-                    imgUrl: imgUrl
+                    imgUrl: '/images/' + req.session.loginUser.author+'/article/'+fields.articleId + '/' + fileName
                 }
                 //返回成功信息
             res.send(statusMsg.successMsg);
@@ -58,7 +58,7 @@ export function userImg(req, res, next) {
                 return;
             }
             statusMsg.successMsg.data = {
-                imgUrl: imgUrl
+                imgUrl: '/images/'+req.session.loginUser.author+ '/userInfo/'+ files.imgUrl.name
             };
             //返回成功信息
             res.send(statusMsg.successMsg);

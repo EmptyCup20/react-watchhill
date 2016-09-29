@@ -22,16 +22,46 @@ export function getArticleList(req, res, next) {
 export function getArticle(req, res, next) {
     var query = req.body;
     article.getArticle(query).then(function(data) {
-        let articleContent = {
-            ...data.userInfo,
-            content:converter.makeHtml(data.content)
-        };
+        //let articleContent = {
+        //    ...data.userInfo,
+        //    content:converter.makeHtml(data.content)
+        //};
+
+        let articleContent = {};
+
+        Object.assign(articleContent,data.data.userInfo,{
+            content:converter.makeHtml(data.data.content)
+        });
+
         res.send(articleContent);
 
     }, function(data) {
         console.log(data);
     });
 };
+
+
+//获取主页文章列表
+export function homeArticle(req, res, next) {
+
+    article.getArticleList({
+        pageSize:9,                     //首页只需要获取9篇文章
+        pageNo:1
+    }).then(
+        function(data) {
+            if(data.rows) {
+                res.send({data:data.rows});
+            } else {
+                res.send({data:{}})
+            }
+        },function(err) {
+            console.log(err);
+        }
+    )
+};
+
+
+
 
 //新增文章
 export function addArticle(req, res, next) {
@@ -65,6 +95,7 @@ export function modfiyArticle(req, res, next) {
 //获取文章中上传图片的url
 export function getImgUrl(req, res, next) {
     var query = req.query;
+    query.author = req.session.loginUser.author;
     article.getImgUrl(query).then(function(data) {
         res.send(data);
     }, function(data) {

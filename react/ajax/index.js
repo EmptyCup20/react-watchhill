@@ -3,20 +3,8 @@
  */
 
 function ajax() {
-    function req(method,url,data) {
+    function req(request) {
         var defered = $.Deferred();
-
-
-        var request = {
-            type: method,
-            url: url
-            //dataType: "json"?
-            //data: data
-        };
-
-        if(data) {
-            request.data = data;
-        }
 
         $.ajax(request)
             .done(function(data){
@@ -32,48 +20,105 @@ function ajax() {
     return {
         //登录
         login: function(data){
-            return req('POST','/user/login',data);
+            return req({
+                type: 'POST',
+                url: '/user/login',
+                data: data
+            });
         },
 
         //注销
         logout: function() {
-            return req('GET','/user/logout');
+            return req({
+                type: 'GET',
+                url: '/user/logout'
+            });
         },
 
 
         //注册
         register: function(data) {
-            return req('POST','/user/register',data);
+            return req({
+                type: 'POST',
+                url: '/user/register',
+                data: data
+            });
         },
 
         //个人中心-密码修改
         modifyPass:function(data) {
-            return req('POST', '/user/profile/pass',data);
+            return req({
+                type: 'POST',
+                url: '/user/profile/pass',
+                data: data
+            });
         },
 
         //个人中心-个签,电话,邮箱修改
         modifyInfo:function(data) {
-            return req('POST', '/user/profile/info',data);
+            return req({
+                type: 'POST',
+                url: '/user/profile/info',
+                data: data
+            });
         },
 
         //新增文章
         addTempArticle: function(data){
-            return req('POST','/article/addArticle',data);
+            return req({
+                type: 'POST',
+                url: '/article/addArticle',
+                data: data
+            });
         },
 
         //获取文章内容
         article:function(data) {
-            return req('POST','/article/getArticle',data);
+            return req({
+                type: 'POST',
+                url: '/article/getArticle',
+                data: data
+            });
+        },
+
+
+        //获取主页文章列表
+        homeArticle: function() {
+            return req({
+                type: 'GET',
+                url: '/article/homeArticle'
+            });
         },
 
         //删除文章
         delArticle:function(data){
-            return req('POST','/article/delArticle',data)
+            return req({
+                type: 'POST',
+                url: '/article/delArticle',
+                data: data
+            });
         },
 
         //获取个人文章列表
         user: function(data) {
-            return req('GET','/user/getList',data)
+            return req({
+                type: 'GET',
+                url: '/user/getList',
+                data: data
+            });
+        },
+        //保存文章
+        save_article: function(data){
+            return req({
+                type: 'POST',
+                url: '/article/modfiyArticle',
+                data: data,
+                success: function(data){
+                    if(data.status==='success'){
+                        alert('保存成功');
+                    }
+                }
+            });
         }
 
 

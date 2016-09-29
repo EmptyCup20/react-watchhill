@@ -1,7 +1,6 @@
 import { LOGIN_REQUEST,LOGIN_RECEIVE,LOGIN_INIT } from '../constants/actionType';
 import ajax from '../ajax';
 
-
 /**
  * 视图初始化
  */
@@ -32,7 +31,7 @@ export function login_start(user) {
  * @param state
  * @returns {boolean} true -> 可以进行登录操作,这一步可以控制HTTP请求数,防止恶意的重复请求
  */
-function login_authen(state) {
+export function login_authen(state) {
     return !state.login.logined && !state.login.logining;
 }
 
@@ -43,7 +42,8 @@ function login_authen(state) {
  * @param pass
  * @returns {Function}
  */
-function login_ajax(user) {
+
+export function login_ajax(user) {
     return dispatch => {
         dispatch(login_request());                                  //挂起登录请求,防止重复请求
         return ajax().login(user)

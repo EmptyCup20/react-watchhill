@@ -3,7 +3,7 @@ var Schema = db.Schema;
 var ObjectId = db.Schema.Types.ObjectId;
 var articleSchema = new Schema({
     title: {
-        type:String,
+        type: String,
         index: 1,
         require: true,
         unique: true
@@ -14,16 +14,16 @@ var articleSchema = new Schema({
     //    default:ObjectId
     // },
     author: String,
-    createTime: String,
+    createTime: { type: Date, default: new Date() },
     content: String,
     image: {
         type: String,
         default: '/images/default/article.jpg'
     },
     describe: String
-    
-},{
-    versionKey:false
+
+}, {
+    versionKey: false
 });
-var article = db.model('Article',articleSchema);
+var article = db.model('Article', articleSchema);
 module.exports = article;

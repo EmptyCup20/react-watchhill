@@ -12,7 +12,12 @@ module.exports = {
         "data": null,
         "status": 'success'
     },
-
+    /* 失败信息 */
+    failMsg: {
+        "code": -1,
+        "data": null,
+        "status": 'fail'
+    },
     /* 注册失败(用户名已存在) */
     registerErr: {
         "code": 11,
