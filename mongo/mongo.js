@@ -4,7 +4,7 @@
  * @Date   2016/7/19
  *
  */
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
 //连接数据库
 var db = mongoose.connect('mongodb://10.33.31.234/watchhill',function(err){
 //var db = mongoose.connect('mongodb://localhost/watchhill',function(err){
