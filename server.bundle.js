@@ -5630,6 +5630,7 @@
 	});
 	exports.login_init = login_init;
 	exports.login_start = login_start;
+	exports.login_authen = login_authen;
 	exports.login_reveive = login_reveive;
 
 	var _actionType = __webpack_require__(38);
@@ -5679,6 +5680,7 @@
 	 * @param pass
 	 * @returns {Function}
 	 */
+
 	function login_ajax(user) {
 	    return function (dispatch) {
 	        dispatch(login_request()); //挂起登录请求,防止重复请求
@@ -6333,7 +6335,10 @@
 			case _actionType.LOGIN_INIT:
 				//初始化视图
 				return _extends({}, state, {
-					loginStatus: _httpType.init
+					logined: false,
+					loginStatus: _httpType.init, //登录状态
+					logining: false, //有没有正在登录标志
+					loginUser: {}
 				});
 
 			case _actionType.LOGIN_REQUEST:

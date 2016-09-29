@@ -103,12 +103,7 @@ function ajax() {
             return req({
                 type: 'POST',
                 url: '/article/modfiyArticle',
-                data: data,
-                success: function(data){
-                    if(data.status==='success'){
-                        alert('保存成功');
-                    }
-                }
+                data: data
             });
         }
 
