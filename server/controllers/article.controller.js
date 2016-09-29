@@ -49,7 +49,6 @@ export function homeArticle(req, res, next) {
         pageNo:1
     }).then(
         function(data) {
-
             if(data.rows) {
                 res.send({data:data.rows});
             } else {
