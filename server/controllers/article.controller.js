@@ -23,11 +23,10 @@ export function getArticle(req, res, next) {
     var query = req.body;
     article.getArticle(query).then(function(data) {
         let articleContent = {
-            ...data.userInfo,
-            content:converter.makeHtml(data.content)
+            ...data.data.userInfo,
+            content: converter.makeHtml(data.data.content)
         };
         res.send(articleContent);
-
     }, function(data) {
         console.log(data);
     });
@@ -39,7 +38,9 @@ export function addArticle(req, res, next) {
         article_dir;
     article.addArticle(query).then(function(data) {
         //创建以文章标题为名称的文件夹
-        article_dir = path.resolve('public/images', req.session.loginUser.author, 'article',data.data._id.toHexString());
+        console.log(data);
+        article_dir = path.resolve('public/images', req.session.loginUser.author, 'article', data.data._id.toHexString());
+        console.log(article_dir);
         if (data.code == 0) {
             fs.mkdir(article_dir, err => {
                 res.send(data);

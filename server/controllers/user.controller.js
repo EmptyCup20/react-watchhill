@@ -1,4 +1,3 @@
-// import { user_no_exist,password_err,user_exist,success } from '../../react/constants/httpType';
 import User from '../proxy/user';
 import path from 'path';
 import fs from 'fs';
@@ -152,4 +151,3 @@ export function getArticleList(req, res, next) {
         }
     )
 }
-
