@@ -40,7 +40,7 @@ export default class Code extends Component{
         const { profile } = this.props;
 
         return (
-            <div className="box box-info">
+            <div className="box box-primary">
                 <div className="box-header with-border">
                     <h3 className="box-title">密码修改</h3>
                 </div>
@@ -94,7 +94,7 @@ export default class Code extends Component{
 
 
                     <div className="box-footer">
-                        <button type="submit" className="btn btn-info pull-right" onClick={this._onClick.bind(this)}>修 改</button>
+                        <button type="submit" className="btn btn-primary pull-right" onClick={this._onClick.bind(this)}>修 改</button>
                     </div>
                 </form>
             </div>
