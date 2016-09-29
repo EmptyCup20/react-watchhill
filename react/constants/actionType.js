@@ -30,6 +30,7 @@ module.exports = {
     //article
     ARTICLE_REQUEST: 'ARTICLE_REQUEST',     //挂起获取文章请求
     ARTICLE_RECEIVE: 'ARTICLE_RECEIVE',     //获取文章内容处理
+    ARTICLE_HOME_RECEIVE:'ARTICLE_HOME_RECEIVE', //获取主页文章列表
 
     //user
     USER_REQUEST: 'USER_REQUEST',           //获取个人文章列表

@@ -1007,6 +1007,9 @@
 	//获取文章内容
 	router.post('/getArticle', _article.getArticle);
 
+	//获取主页文章列表
+	router.get('/homeArticle', _article.homeArticle);
+
 	//新增文章
 	router.post('/addArticle', _article.addArticle);
 
@@ -1030,11 +1033,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	exports.getArticleList = getArticleList;
 	exports.getArticle = getArticle;
+	exports.homeArticle = homeArticle;
 	exports.addArticle = addArticle;
 	exports.modfiyArticle = modfiyArticle;
 	exports.getImgUrl = getImgUrl;
@@ -1077,12 +1078,38 @@
 	function getArticle(req, res, next) {
 	    var query = req.body;
 	    _article2.default.getArticle(query).then(function (data) {
-	        var articleContent = _extends({}, data.userInfo, {
-	            content: converter.makeHtml(data.content)
+	        //let articleContent = {
+	        //    ...data.userInfo,
+	        //    content:converter.makeHtml(data.content)
+	        //};
+
+	        var articleContent = {};
+
+	        Object.assign(articleContent, data.data.userInfo, {
+	            content: converter.makeHtml(data.data.content)
 	        });
+
 	        res.send(articleContent);
 	    }, function (data) {
 	        console.log(data);
+	    });
+	};
+
+	//获取主页文章列表
+	function homeArticle(req, res, next) {
+
+	    _article2.default.getArticleList({
+	        pageSize: 9, //首页只需要获取9篇文章
+	        pageNo: 1
+	    }).then(function (data) {
+
+	        if (data.rows) {
+	            res.send({ data: data.rows });
+	        } else {
+	            res.send({ data: {} });
+	        }
+	    }, function (err) {
+	        console.log(err);
 	    });
 	};
 
@@ -1251,10 +1278,6 @@
 
 	var _store2 = _interopRequireDefault(_store);
 
-	var _article = __webpack_require__(25);
-
-	var _article2 = _interopRequireDefault(_article);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var router = _express2.default.Router();
@@ -1269,7 +1292,8 @@
 	//redux store
 
 
-	//mongo article
+	////mongo article
+	//import article from '../proxy/article';
 
 
 	router.get('/*', function (req, res, next) {
@@ -1289,19 +1313,18 @@
 	        }
 	    }
 
-	    /**
-	     * 获取文章列表
-	     */
-	    function getArticleList() {
-	        return _article2.default.getArticleList({
-	            pageSize: 9, //首页只需要获取9篇文章
-	            pageNo: 1
-	        });
-	    }
+	    ///**
+	    // * 获取文章列表
+	    // */
+	    //function getArticleList() {
+	    //    return article.getArticleList({
+	    //        pageSize:9,                     //首页只需要获取9篇文章
+	    //        pageNo:1
+	    //    });
+	    //}
 
-	    var store = (0, _store2.default)(); //这里需要传入需要的state tree
 
-	    (0, _reactRouter.match)({ routes: (0, _indexServer2.default)(store), location: req.url }, function (err, redirect, props) {
+	    (0, _reactRouter.match)({ routes: (0, _indexServer2.default)(), location: req.url }, function (err, redirect, props) {
 
 	        if (err) {
 	            res.status(500).send(err.message);
@@ -1309,40 +1332,46 @@
 	            res.redirect(redirect.pathname + redirect.search);
 	        } else if (props) {
 
-	            Promise.all([
-	            //getLoginStatus()
-	            getArticleList()]).then(function (datas) {
-
-	                /*1. state tree 获取登录状态*/
-	                getLoginStatus();
-
-	                /*2. state tree 获取文章列表*/
-	                if (datas && datas[0] && datas[0].rows) {
-	                    req.session.stateTree.articles = {
-	                        list: [],
-	                        contentList: [],
-	                        getting: false
-	                    };
-
-	                    datas[0].rows.forEach(function (item) {
-	                        req.session.stateTree.articles.list.push(item._doc);
-	                    });
-	                }
-
-	                var store = (0, _store2.default)(req.session.stateTree);
-	                console.log('node finally store:', store.getState()); //需要注意与客户端的store统一
+	            //Promise.all([
+	            //    //getLoginStatus()
+	            //    getArticleList()
+	            //])
+	            //.then( (datas) => {
 
 
-	                var appHtml = (0, _server.renderToString)(_react2.default.createElement(
-	                    _reactRedux.Provider,
-	                    { store: store },
-	                    _react2.default.createElement(_reactRouter.RouterContext, props)
-	                ));
-	                res.render('index', {
-	                    html: appHtml,
-	                    serverState: JSON.stringify(store.getState())
-	                });
-	            }).catch();
+	            /*1. state tree 获取登录状态*/
+	            getLoginStatus();
+
+	            ///*2. state tree 获取文章列表*/
+	            //if(datas && datas[0] && datas[0].rows) {
+	            //    req.session.stateTree.articles = {
+	            //        list:[],
+	            //        contentList:[],
+	            //        getting:false
+	            //    };
+	            //
+	            //    datas[0].rows.forEach(function(item){
+	            //        req.session.stateTree.articles.list.push(item._doc);
+	            //    })
+	            //}
+
+
+	            var store = (0, _store2.default)(req.session.stateTree);
+	            console.log('node finally store:', store.getState()); //需要注意与客户端的store统一
+
+
+	            var appHtml = (0, _server.renderToString)(_react2.default.createElement(
+	                _reactRedux.Provider,
+	                { store: store },
+	                _react2.default.createElement(_reactRouter.RouterContext, props)
+	            ));
+	            res.render('index', {
+	                html: appHtml,
+	                serverState: JSON.stringify(store.getState())
+	            });
+	            //})
+	            //.catch();
+
 	        } else {
 	            //路由匹配不到,这里这个提示页面暂时不做
 	            res.status(404).send('Not Found');
@@ -1472,7 +1501,7 @@
 
 	/*容器组件*/
 	//基础库
-	var routes = function routes(store) {
+	var routes = function routes() {
 	    return _react2.default.createElement(
 	        _reactRouter.Route,
 	        null,
@@ -1740,6 +1769,7 @@
 	    //article
 	    ARTICLE_REQUEST: 'ARTICLE_REQUEST', //挂起获取文章请求
 	    ARTICLE_RECEIVE: 'ARTICLE_RECEIVE', //获取文章内容处理
+	    ARTICLE_HOME_RECEIVE: 'ARTICLE_HOME_RECEIVE', //获取主页文章列表
 
 	    //user
 	    USER_REQUEST: 'USER_REQUEST', //获取个人文章列表
@@ -1868,6 +1898,14 @@
 	                type: 'POST',
 	                url: '/article/getArticle',
 	                data: data
+	            });
+	        },
+
+	        //获取主页文章列表
+	        homeArticle: function homeArticle() {
+	            return req({
+	                type: 'GET',
+	                url: '/article/homeArticle'
 	            });
 	        },
 
@@ -6469,6 +6507,12 @@
 	            return _extends({}, state, {
 	                getting: false,
 	                contentList: addContentList(state, action.data)
+	            });
+
+	        case _actionType.ARTICLE_HOME_RECEIVE:
+	            return _extends({}, state, {
+	                getting: false,
+	                list: action.data
 	            });
 
 	        default:

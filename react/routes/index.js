@@ -25,7 +25,7 @@ import { login_init } from '../actions/login';
 import { register_init } from '../actions/register';
 import { modify_init } from '../actions/profile';
 import { addTempArticle } from '../actions/addArticle';
-import { article_getContent } from '../actions/article';
+import { article_getContent,article_getHomeList } from '../actions/article';
 import { user_getList } from  '../actions/user';
 
 
@@ -94,7 +94,13 @@ const routes = (store) => {
 
     //获取主页文章列表
     function getHomeArticleList() {
-        //alert(1);
+        let isListExist = false;
+        const state = store.getState();
+        const list = state.articles.list;
+
+        if(!list.length) {
+            store.dispatch(article_getHomeList());
+        }
     }
 
 
