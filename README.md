@@ -21,6 +21,12 @@ npm run node
 npm run test-client
 ```
 
+客户端karma
+```javascript
+npm run karma-test-client
+```
+
+
 服务端
 ```javascript
 npm run test-server
