@@ -1,5 +1,5 @@
 import React,{ Component } from 'react'
-import '../../../../public/css/blogList.less'
+//import '../../../../public/css/blogList.less'
 import { Link } from 'react-router';
 
 //导航

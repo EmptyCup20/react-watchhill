@@ -1,6 +1,6 @@
 import React,{ Component } from 'react';
 import { Link } from 'react-router';
-import '../../../../public/css/profile.less'
+//import '../../../../public/css/profile.less'
 
 
 export default class Profile extends Component{

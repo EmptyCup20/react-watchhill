@@ -1,6 +1,6 @@
 //基础库
 import React,{ Component,PropTypes } from 'react';
-import '../../../public/css/common.less'
+//import '../../../public/css/common.less'
 
 
 //主要组件

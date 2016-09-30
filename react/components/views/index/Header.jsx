@@ -1,7 +1,7 @@
 //基础库
 import { Link } from 'react-router';
 import React,{ Component,PropTypes } from 'react';
-import '../../../../public/css/header.less';
+//import '../../../../public/css/header.less';
 
 export default class Header extends Component{
 

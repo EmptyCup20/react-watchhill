@@ -12,6 +12,12 @@
     "test-client": "mocha ./test/client --watch --recursive --compilers js:babel-core/register",
     "karma-test-client":"karma start"
   },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  },
   "dependencies": {
     "ansi-styles": "^2.2.1",
     "babel": "^6.5.2",
@@ -56,7 +62,6 @@
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.1.0",
     "serve-favicon": "^2.3.0",
-    "showdown": "^1.4.3",
     "style-loader": "^0.13.1",
     "supervisor": "^0.11.0",
     "vinyl-source-stream": "^1.1.0",
@@ -89,6 +94,10 @@
     "react-addons-test-utils": "^15.3.2",
     "react-dom": "^15.3.1",
     "sinon": "^1.17.6",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "babel-register": "^6.14.0",
+    "showdown": "^1.4.3",
+    "webpack-dev-middleware": "^1.8.2",
+    "webpack-hot-middleware": "^2.12.2"
   }
 }

@@ -1,15 +1,15 @@
-import express from 'express';
-import fs from 'fs';
-import path from 'path';
-import article from '../proxy/article';
+var express = require('express');
+var fs = require('fs');
+var path = require('path');
+var article = require('../proxy/article');
+var showdown = require('showdown');
 
-import showdown from 'showdown';
 const converter = new showdown.Converter();
 
-
+var controller = {};
 
 //获取文章列表
-export function getArticleList(req, res, next) {
+controller.getArticleList = function(req, res, next) {
     var query = req.query;
     article.getArticleList(query).then(function(data) {
         res.send(data);
@@ -19,7 +19,7 @@ export function getArticleList(req, res, next) {
 };
 
 //获取文章内容
-export function getArticle(req, res, next) {
+controller.getArticle = function(req, res, next) {
     var query = req.body;
     article.getArticle(query).then(function(data) {
         //let articleContent = {
@@ -42,7 +42,7 @@ export function getArticle(req, res, next) {
 
 
 //获取主页文章列表
-export function homeArticle(req, res, next) {
+controller.homeArticle = function(req, res, next) {
 
     article.getArticleList({
         pageSize:9,                     //首页只需要获取9篇文章
@@ -64,7 +64,7 @@ export function homeArticle(req, res, next) {
 
 
 //新增文章
-export function addArticle(req, res, next) {
+controller.addArticle = function(req, res, next) {
     var query = req.body,
         article_dir;
     article.addArticle(query).then(function(data) {
@@ -83,7 +83,7 @@ export function addArticle(req, res, next) {
 };
 
 //修改文章
-export function modfiyArticle(req, res, next) {
+controller.modfiyArticle = function(req, res, next) {
     var query = req.body;
     article.modfiyArticle(query).then(function(data) {
         res.send(data);
@@ -93,7 +93,7 @@ export function modfiyArticle(req, res, next) {
 };
 
 //获取文章中上传图片的url
-export function getImgUrl(req, res, next) {
+controller.getImgUrl = function(req, res, next) {
     var query = req.query;
     query.author = req.session.loginUser.author;
     article.getImgUrl(query).then(function(data) {
@@ -102,3 +102,5 @@ export function getImgUrl(req, res, next) {
         console.log(data);
     });
 };
+
+module.exports = controller;

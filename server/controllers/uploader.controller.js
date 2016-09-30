@@ -1,11 +1,11 @@
-import formidable from 'formidable';
-import fs from 'fs';
-import path from 'path';
-import statusMsg from '../../mongo/statusMsg';
+var formidable = require('formidable');
+var fs = require('fs');
+var path = require('path');
+var statusMsg = require('../../mongo/statusMsg');
 
-
+var controller = {};
 //文件上传
-export function uploaderImg(req, res, next) {
+controller.uploaderImg = function(req, res, next) {
     var form = formidable.IncomingForm(),
         imgUrl;
     form.encoding = 'utf-8';
@@ -39,7 +39,7 @@ export function uploaderImg(req, res, next) {
 };
 
 //上传头像与二维码
-export function userImg(req, res, next) {
+controller.userImg = function(req, res, next) {
     var form = formidable.IncomingForm(),
         imgUrl;
 
@@ -65,3 +65,5 @@ export function userImg(req, res, next) {
         });
     });
 }
+
+module.exports = controller;

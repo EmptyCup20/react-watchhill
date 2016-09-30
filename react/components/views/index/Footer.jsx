@@ -1,6 +1,6 @@
 //基础库
 import React,{ Component,PropTypes } from 'react';
-import '../../../../public/css/footer.less';
+//import '../../../../public/css/footer.less';
 
 export default class Footer extends Component{
     render(){

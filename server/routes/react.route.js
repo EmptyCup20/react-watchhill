@@ -15,11 +15,6 @@ import routes from '../../react/routes/index-server';
 //redux store
 import configureStore from '../../react/store';
 
-////mongo article
-//import article from '../proxy/article';
-
-
-
 router.get('/*', (req, res,next) => {
 
     //state tree
@@ -37,15 +32,6 @@ router.get('/*', (req, res,next) => {
         }
     }
 
-    ///**
-    // * 获取文章列表
-    // */
-    //function getArticleList() {
-    //    return article.getArticleList({
-    //        pageSize:9,                     //首页只需要获取9篇文章
-    //        pageNo:1
-    //    });
-    //}
 
 
     match({ routes:routes(), location: req.url }, (err, redirect, props) => {
@@ -55,30 +41,8 @@ router.get('/*', (req, res,next) => {
         } else if (redirect) {
             res.redirect(redirect.pathname + redirect.search)
         } else if (props) {
-
-            //Promise.all([
-            //    //getLoginStatus()
-            //    getArticleList()
-            //])
-            //.then( (datas) => {
-
-
                 /*1. state tree 获取登录状态*/
                 getLoginStatus();
-
-
-                ///*2. state tree 获取文章列表*/
-                //if(datas && datas[0] && datas[0].rows) {
-                //    req.session.stateTree.articles = {
-                //        list:[],
-                //        contentList:[],
-                //        getting:false
-                //    };
-                //
-                //    datas[0].rows.forEach(function(item){
-                //        req.session.stateTree.articles.list.push(item._doc);
-                //    })
-                //}
 
 
                 let store = configureStore(req.session.stateTree);
@@ -94,11 +58,6 @@ router.get('/*', (req, res,next) => {
                     html:appHtml,
                     serverState:JSON.stringify(store.getState())
                 });
-            //})
-            //.catch();
-
-
-
         } else {
             //路由匹配不到,这里这个提示页面暂时不做
             res.status(404).send('Not Found')

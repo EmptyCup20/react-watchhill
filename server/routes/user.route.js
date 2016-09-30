@@ -1,27 +1,26 @@
+var controller = require('../controllers/user.controller')
+var uploaderController = require('../controllers/uploader.controller')
+var express = require('express')
 
-import { loginAuthen,logout,register,profile,getArticleList } from '../controllers/user.controller';
-import { userImg } from '../controllers/uploader.controller.js';
-
-import express from 'express';
 const router = express.Router();
 
 //登录认证
-router.post('/login', loginAuthen);
+router.post('/login', controller.loginAuthen);
 
 //注册
-router.post('/register',register);
+router.post('/register',controller.register);
 
 //注销
-router.get('/logout', logout);
+router.get('/logout', controller.logout);
 
 //个人信息修改
-router.post('/profile/:type',profile);
+router.post('/profile/:type', controller.profile);
 
 //上传头像和二维码
-router.post('/userImg',userImg);
+router.post('/userImg',uploaderController.userImg);
 
 //获取个人文章列表
-router.get('/getList',getArticleList);
+router.get('/getList', controller.getArticleList);
 
 
 

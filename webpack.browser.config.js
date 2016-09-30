@@ -8,16 +8,18 @@ var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 console.log('webpack.browser.config start running...' );
 
 module.exports = {
-
+    devtool: 'inline-source-map',
     target: 'web',
 
-    entry: {
-        'bundle': './react/index.js'
-    },
+    entry: [
+        'webpack-hot-middleware/client',
+        './react/index'
+    ],
 
     output: {
-        path: './public/js',
-        filename: "[name].js"
+        path: __dirname + '/public/js',
+        filename: "bundle.js",
+        publicPath: '/static/'
     },
 
     externals: {
@@ -33,25 +35,20 @@ module.exports = {
     module: {
         loaders: [
             {
-
                 test: /\.js[x]?$/,
                 exclude: /node_modules/,
-
-                loader: 'babel-loader',
-                query: {
-                    //plugins: ['babel-plugin-transform-runtime'],
-                    presets: ['es2015', 'stage-0', 'react']
-                }
+                loader: 'babel-loader'
             },
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract('style', 'css!less')
+                loader: "style!css!less?presets[]=es2015&presets[]=react"
             }
         ]
     },
 
     plugins: [
         commonsPlugin,
+        new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin('../../public/css/style.css',{allChunks: true})
     ]
 };

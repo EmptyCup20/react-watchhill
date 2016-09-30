@@ -1,16 +1,16 @@
-import User from '../proxy/user';
-import path from 'path';
-import fs from 'fs';
-import EventProxy from 'eventproxy';
+var User = require('../proxy/user');
+var path = require('path');
+var fs = require('fs');
+var EventProxy = require('eventproxy');
 
-
+var controller = {};
 /**
  * 登录验证
  * @param req
  * @param res
  * @param next
  */
-export function loginAuthen(req, res, next) {
+controller.loginAuthen = function(req, res, next) {
 
     var query = req.body;
     User.login(query).then(function(data) {
@@ -34,7 +34,7 @@ export function loginAuthen(req, res, next) {
  * @param res
  * @param next
  */
-export function register(req, res, next) {
+controller.register = function(req, res, next) {
     var query = req.body,
         ep = new EventProxy(),
         user_dir;
@@ -88,7 +88,7 @@ export function register(req, res, next) {
  * @param res
  * @param next
  */
-export function logout(req, res, next) {
+controller.logout = function(req, res, next) {
     req.session.destroy(function() { //移除会话
         res.json({
             "code": 0,
@@ -105,7 +105,7 @@ export function logout(req, res, next) {
  * @param res
  * @param next
  */
-export function profile(req, res, next) {
+controller.profile = function(req, res, next) {
 
     let user = {};
     let query = req.body;
@@ -142,7 +142,7 @@ export function profile(req, res, next) {
  * @param res
  * @param next
  */
-export function getArticleList(req, res, next) {
+controller.getArticleList = function(req, res, next) {
     User.getArticleList(req.query).then(
         function(data) {
             res.send(data);
@@ -151,3 +151,5 @@ export function getArticleList(req, res, next) {
         }
     )
 }
+
+module.exports = controller;

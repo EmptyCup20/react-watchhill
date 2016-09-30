@@ -32,14 +32,14 @@ const routes = () => {
                 <Route path='/about' component={AboutContainer}  />
                 <Route path='/add_article'  component={AddArticleContainer}  />
                 <Route path='/profile' component={ProfileContainer}>
-                    <IndexRoute  component={InfoContainer}/>
-                    <Route path="info"   component={InfoContainer} />
-                    <Route path="pass"  component={PassContainer} />
-                    <Route path="avatar" component={AvatarContainer} />
-                    <Route path="code" component={CodeContainer} />
-                </Route>
-                <Route path="/article/:id" component={ArticleContainer} />
-                <Route path="/user/:id"  component={UserContainer} />
+                <IndexRoute  component={InfoContainer}/>
+                <Route path="info"   component={InfoContainer} />
+                <Route path="pass"  component={PassContainer} />
+                <Route path="avatar" component={AvatarContainer} />
+                <Route path="code" component={CodeContainer} />
+            </Route>
+            <Route path="/article/:id" component={ArticleContainer} />
+            <Route path="/user/:id"  component={UserContainer} />
             </Route>
             <Route path="/login"  component={LoginContainer}/>
             <Route path="/register"  component={RegisterContainer}/>
@@ -49,3 +49,4 @@ const routes = () => {
 
 
 export default routes;
+

@@ -1,5 +1,5 @@
-var db_tools = require('../../mongo/db_tools') ;
-var statusMsg = require('../../mongo/statusMsg') ;
+var db_tools = require('../../mongo/db_tools')
+var statusMsg = require('../../mongo/statusMsg')
 
 var User = function() {};
 

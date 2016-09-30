@@ -1,7 +1,8 @@
-﻿var db_tools = require('../../mongo/db_tools');
+﻿﻿var db_tools = require('../../mongo/db_tools');
 var statusMsg = require('../../mongo/statusMsg');
 var path = require('path');
 var fs = require('fs');
+
 var Article = function() {};
 
 //获取文章列表
