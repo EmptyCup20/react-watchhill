@@ -59,7 +59,7 @@ export default class User extends Component{
                                                     <li key={article._id}>
                                                         <i className="fa fa-comment-o bg-yellow" />
                                                         <div className="timeline-item">
-                                                            <span className="time"><i className="fa fa-clock-o" />article.createTime</span>
+                                                            <span className="time"><i className="fa fa-clock-o" />{article.createTime}</span>
                                                             <h3 className="timeline-header">
                                                                 <Link to={'/article/' + article._id}>
                                                                     {article.title}
