@@ -67,6 +67,7 @@ controller.homeArticle = function(req, res, next) {
 controller.addArticle = function(req, res, next) {
     var query = req.body,
         article_dir;
+    query.author = req.session.loginUser.author;
     article.addArticle(query).then(function(data) {
         //创建以文章标题为名称的文件夹
         article_dir = path.resolve('public/images', req.session.loginUser.author, 'article',data.data._id.toHexString());
