@@ -29,8 +29,8 @@ export function getArticle(req, res, next) {
 
         let articleContent = {};
 
-        Object.assign(articleContent,data.data.userInfo,{
-            content:converter.makeHtml(data.data.content)
+        Object.assign(articleContent, data.data.userInfo, {
+            content: converter.makeHtml(data.data.content)
         });
 
         res.send(articleContent);
@@ -45,16 +45,17 @@ export function getArticle(req, res, next) {
 export function homeArticle(req, res, next) {
 
     article.getArticleList({
-        pageSize:9,                     //首页只需要获取9篇文章
-        pageNo:1
+        pageSize: 9, //首页只需要获取9篇文章
+        pageNo: 1
     }).then(
         function(data) {
-            if(data.rows) {
-                res.send({data:data.rows});
+            if (data.rows) {
+                res.send({ data: data.rows });
             } else {
-                res.send({data:{}})
+                res.send({ data: {} })
             }
-        },function(err) {
+        },
+        function(err) {
             console.log(err);
         }
     )
@@ -66,12 +67,11 @@ export function homeArticle(req, res, next) {
 //新增文章
 export function addArticle(req, res, next) {
     var query = req.body,
-        query.author = req.session.loginUser.author,
         article_dir;
-
+    query.author = req.session.loginUser.author;
     article.addArticle(query).then(function(data) {
         //创建以文章标题为名称的文件夹
-        article_dir = path.resolve('public/images', req.session.loginUser.author, 'article',data.data._id.toHexString());
+        article_dir = path.resolve('public/images', req.session.loginUser.author, 'article', data.data._id.toHexString());
         if (data.code == 0) {
             fs.mkdir(article_dir, err => {
                 res.send(data);
