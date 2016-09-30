@@ -71,6 +71,11 @@ export function save_article(article){
         return dispatch => {
             return ajax().save_article(article)
                 .then(data => {
+                    if(data.status==='success'){
+                        alert('保存成功');
+                    }else{
+                        alert('保存失败');
+                    }
                     return dispatch(saveArticle_receive(data));
                 })
         }

@@ -94,11 +94,11 @@
 	app.use(_bodyParser2.default.urlencoded({ extended: false }));
 	app.use((0, _cookieParser2.default)('MAGICString')); //开启cookie
 	app.use((0, _expressSession2.default)({
-		secret: '12345',
-		name: 'testapp',
-		//cookie: {maxAge: 80000 },  	//设置maxAge是80000ms，即80s后session和相应的cookie失效过期
-		resave: false, //是指每次请求都重新设置session cookie，假设你的cookie是10分钟过期，每次请求都会再设置10分钟
-		saveUninitialized: true //是指无论有没有session cookie，每次请求都设置个session cookie ，默认给个标示为 connect.sid
+	    secret: '12345',
+	    name: 'testapp',
+	    //cookie: {maxAge: 80000 },     //设置maxAge是80000ms，即80s后session和相应的cookie失效过期
+	    resave: false, //是指每次请求都重新设置session cookie，假设你的cookie是10分钟过期，每次请求都会再设置10分钟
+	    saveUninitialized: true //是指无论有没有session cookie，每次请求都设置个session cookie ，默认给个标示为 connect.sid
 	})); //开启session
 
 	app.use(_express2.default.static(_path2.default.join(__dirname, 'public')));
@@ -145,8 +145,12 @@
 
 	var PORT = process.env.PORT || 3000;
 	app.listen(PORT, function () {
-		console.log('Production Express server running at localhost:' + PORT);
+	    console.log('Production Express server running at localhost:' + PORT);
 	});
+
+	if (app.get('env') === 'development') {
+	    module.exports = app;
+	}
 
 /***/ },
 /* 1 */
@@ -244,8 +248,7 @@
 	    value: true
 	});
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; // import { user_no_exist,password_err,user_exist,success } from '../../react/constants/httpType';
-
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	exports.loginAuthen = loginAuthen;
 	exports.register = register;
@@ -643,6 +646,7 @@
 	    var pageNo = Number(queryObj.pageNo);
 	    model = init(model);
 	    var query = model.find({}, fields, options, callback);
+	    query.sort({ createTime: 1 });
 	    //开头跳过查询的调试
 	    query.skip((pageNo - 1) * pageSize);
 	    //最多显示条数
@@ -785,7 +789,7 @@
 	    //    default:ObjectId
 	    // },
 	    author: String,
-	    createTime: String,
+	    createTime: { type: Date, default: new Date() },
 	    content: String,
 	    image: {
 	        type: String,
@@ -842,7 +846,12 @@
 	        "data": null,
 	        "status": 'success'
 	    },
-
+	    /* 失败信息 */
+	    failMsg: {
+	        "code": -1,
+	        "data": null,
+	        "status": 'fail'
+	    },
 	    /* 注册失败(用户名已存在) */
 	    registerErr: {
 	        "code": 11,
@@ -1102,7 +1111,6 @@
 	        pageSize: 9, //首页只需要获取9篇文章
 	        pageNo: 1
 	    }).then(function (data) {
-
 	        if (data.rows) {
 	            res.send({ data: data.rows });
 	        } else {
@@ -1233,6 +1241,10 @@
 	    return new Promise(function (resolve, reject) {
 	        user_dir = path.resolve('public/images', obj.author, 'article', obj.articleId);
 	        fs.readdir(user_dir, function (err, data) {
+	            if (!data) {
+	                resolve(statusMsg.failMsg);
+	                return;
+	            }
 	            data.forEach(function (value, index) {
 	                statusMsg.successMsg.data.push('/images/' + obj.author + '/article/' + obj.articleId + '/' + value);
 	            });
@@ -1931,12 +1943,7 @@
 	            return req({
 	                type: 'POST',
 	                url: '/article/modfiyArticle',
-	                data: data,
-	                success: function success(data) {
-	                    if (data.status === 'success') {
-	                        alert('保存成功');
-	                    }
-	                }
+	                data: data
 	            });
 	        }
 
@@ -3123,6 +3130,11 @@
 	    if (article.title) {
 	        return function (dispatch) {
 	            return (0, _ajax2.default)().save_article(article).then(function (data) {
+	                if (data.status === 'success') {
+	                    alert('保存成功');
+	                } else {
+	                    alert('保存失败');
+	                }
 	                return dispatch(saveArticle_receive(data));
 	            });
 	        };
@@ -3695,12 +3707,12 @@
 	    }, {
 	        key: "update",
 	        value: function update(event) {
-	            this.props.preview(markdown.toHTML(event.target.value));
+	            this.props.preview(event.target.value);
 	        }
 	    }, {
 	        key: "tohtml",
 	        value: function tohtml() {
-	            return { __html: this.props.addArticle.preview };
+	            return { __html: markdown.toHTML(this.props.addArticle.preview) };
 	        }
 	    }]);
 
