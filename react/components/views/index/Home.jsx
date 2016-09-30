@@ -35,6 +35,7 @@ export default class Home extends Component{
 
     render() {
         const { articles } = this.props;
+        console.log(articles.list);
 
         return (
             <div className="content-wrapped blog-list">

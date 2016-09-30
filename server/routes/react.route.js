@@ -24,6 +24,7 @@ router.get('/*', (req, res,next) => {
      * 获取登录状态
      */
     function getLoginStatus() {
+        console.log(req.session.loginUser);
         if(req.session.loginUser) {
             req.session.stateTree.login = {
                 loginUser:req.session.loginUser,
@@ -54,6 +55,9 @@ router.get('/*', (req, res,next) => {
                         <RouterContext {...props}/>
                     </Provider>
                 );
+
+
+
                 res.render('index',{
                     html:appHtml,
                     serverState:JSON.stringify(store.getState())
