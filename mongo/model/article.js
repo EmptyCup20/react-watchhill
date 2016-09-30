@@ -1,6 +1,7 @@
 var db = require('../mongo');
 var Schema = db.Schema;
 var ObjectId = db.Schema.Types.ObjectId;
+var date = (new Date()).getTime();
 var articleSchema = new Schema({
     title: {
         type: String,
@@ -9,12 +10,8 @@ var articleSchema = new Schema({
         unique: true
     },
     tag: String,
-    // articleId:{
-    //    type:String,
-    //    default:ObjectId
-    // },
     author: String,
-    createTime: { type: Date, default: new Date() },
+    createTime: { type: Date, default: date },
     content: String,
     image: {
         type: String,
