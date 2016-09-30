@@ -63,3 +63,14 @@ npm start
 [https://github.com/xxholly32/Blog/issues/6](https://github.com/xxholly32/Blog/issues/6)
 
 [https://github.com/sahat/newedenfaces-react](https://github.com/sahat/newedenfaces-react)
+
+[http://www.nodeclass.com/api/mongoose.html#guide](http://www.nodeclass.com/api/mongoose.html#guide)
+
+[http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html](http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html)
+
+[https://github.com/mochajs/mocha](https://github.com/mochajs/mocha)
+
+[https://github.com/visionmedia/supertest](https://github.com/visionmedia/supertest)
+
+[https://github.com/visionmedia/supertest/issues/26](https://github.com/visionmedia/supertest/issues/26)
+
