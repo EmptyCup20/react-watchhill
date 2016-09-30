@@ -57,3 +57,9 @@ npm start
 | `server.bundle.js`    | 服务端打包问题   |
 | `webpack`打包    | 前端打包文件过大问题   |
 | `img`元素    | `src`找不到路径时会向服务端发起当前组件的重新渲染请求   |
+
+## 参考文献
+
+[https://github.com/xxholly32/Blog/issues/6](https://github.com/xxholly32/Blog/issues/6)
+
+[https://github.com/sahat/newedenfaces-react](https://github.com/sahat/newedenfaces-react)
