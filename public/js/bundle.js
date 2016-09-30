@@ -7781,41 +7781,28 @@ webpackJsonp([0,1],[
 	            userId: nextState.params.id
 	        };
 
+	        //let isListExist = false;
+	        //const state = store.getState();
+	        //const lists = state.user.articleList;
+
+	        //for(let list of lists) {
+	        //    if(list._id === nextState.params.id) {
+	        //        isListExist = true;
+	        //        break;
+	        //    }
+	        //}
+
+	        //if(!isListExist) {
+	        store.dispatch((0, _user.user_getList)(id));
+	        //}
+	    }
+
+	    //获取主页文章列表
+	    function getHomeArticleList() {
 	        var isListExist = false;
 	        var state = store.getState();
-	        var lists = state.user.articleList;
-
-	        var _iteratorNormalCompletion2 = true;
-	        var _didIteratorError2 = false;
-	        var _iteratorError2 = undefined;
-
-	        try {
-	            for (var _iterator2 = lists[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                var list = _step2.value;
-
-	                if (list._id === nextState.params.id) {
-	                    isListExist = true;
-	                    break;
-	                }
-	            }
-	        } catch (err) {
-	            _didIteratorError2 = true;
-	            _iteratorError2 = err;
-	        } finally {
-	            try {
-	                if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                    _iterator2.return();
-	                }
-	            } finally {
-	                if (_didIteratorError2) {
-	                    throw _iteratorError2;
-	                }
-	            }
-	        }
-
-	        if (!isListExist) {
-	            store.dispatch((0, _user.user_getList)(id));
-	        }
+	        var list = state.articles.list;
+	        store.dispatch((0, _article.article_getHomeList)());
 	    }
 
 	    return _react2.default.createElement(
@@ -7825,7 +7812,7 @@ webpackJsonp([0,1],[
 	        _react2.default.createElement(
 	            _reactRouter.Route,
 	            { path: '/index', component: _IndexContainer2.default },
-	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _HomeContainer2.default }),
+	            _react2.default.createElement(_reactRouter.IndexRoute, { onEnter: getHomeArticleList, component: _HomeContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/web', component: _WebContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/node', component: _NodeContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _AboutContainer2.default }),
@@ -8085,6 +8072,7 @@ webpackJsonp([0,1],[
 	    //article
 	    ARTICLE_REQUEST: 'ARTICLE_REQUEST', //挂起获取文章请求
 	    ARTICLE_RECEIVE: 'ARTICLE_RECEIVE', //获取文章内容处理
+	    ARTICLE_HOME_RECEIVE: 'ARTICLE_HOME_RECEIVE', //获取主页文章列表
 
 	    //user
 	    USER_REQUEST: 'USER_REQUEST', //获取个人文章列表
@@ -8216,6 +8204,14 @@ webpackJsonp([0,1],[
 	            });
 	        },
 
+	        //获取主页文章列表
+	        homeArticle: function homeArticle() {
+	            return req({
+	                type: 'GET',
+	                url: '/article/homeArticle'
+	            });
+	        },
+
 	        //删除文章
 	        delArticle: function delArticle(data) {
 	            return req({
@@ -8238,12 +8234,7 @@ webpackJsonp([0,1],[
 	            return req({
 	                type: 'POST',
 	                url: '/article/modfiyArticle',
-	                data: data,
-	                success: function success(data) {
-	                    if (data.status === 'success') {
-	                        alert('保存成功');
-	                    }
-	                }
+	                data: data
 	            });
 	        }
 
@@ -9430,6 +9421,11 @@ webpackJsonp([0,1],[
 	    if (article.title) {
 	        return function (dispatch) {
 	            return (0, _ajax2.default)().save_article(article).then(function (data) {
+	                if (data.status === 'success') {
+	                    alert('保存成功');
+	                } else {
+	                    alert('保存失败');
+	                }
 	                return dispatch(saveArticle_receive(data));
 	            });
 	        };
@@ -10002,12 +9998,12 @@ webpackJsonp([0,1],[
 	    }, {
 	        key: "update",
 	        value: function update(event) {
-	            this.props.preview(markdown.toHTML(event.target.value));
+	            this.props.preview(event.target.value);
 	        }
 	    }, {
 	        key: "tohtml",
 	        value: function tohtml() {
-	            return { __html: this.props.addArticle.preview };
+	            return { __html: markdown.toHTML(this.props.addArticle.preview) };
 	        }
 	    }]);
 
@@ -11976,6 +11972,7 @@ webpackJsonp([0,1],[
 	exports.login_init = login_init;
 	exports.login_start = login_start;
 	exports.login_authen = login_authen;
+	exports.login_ajax = login_ajax;
 	exports.login_reveive = login_reveive;
 
 	var _actionType = __webpack_require__(99);
@@ -12502,6 +12499,7 @@ webpackJsonp([0,1],[
 	    value: true
 	});
 	exports.article_getContent = article_getContent;
+	exports.article_getHomeList = article_getHomeList;
 
 	var _actionType = __webpack_require__(99);
 
@@ -12520,6 +12518,20 @@ webpackJsonp([0,1],[
 	    return function (dispatch, getState) {
 	        if (article_authen(getState())) {
 	            return dispatch(article_ajax(id)); //发起一个http请求
+	        } else {
+	            return Promise.resolve(); //告诉thunk无需等待,从而跳过dispatch,进入reducers?
+	        }
+	    };
+	}
+
+	/**
+	 * 获取主页文章列表
+	 * @returns {Function}
+	 */
+	function article_getHomeList() {
+	    return function (dispatch, getState) {
+	        if (article_authen(getState())) {
+	            return dispatch(article_getHomeList_ajax()); //发起一个http请求
 	        } else {
 	            return Promise.resolve(); //告诉thunk无需等待,从而跳过dispatch,进入reducers?
 	        }
@@ -12549,7 +12561,20 @@ webpackJsonp([0,1],[
 	}
 
 	/**
-	 * 挂起获取文章内容请求
+	 * 获取主页文章列表的ajax
+	 * @returns {Function}
+	 */
+	function article_getHomeList_ajax() {
+	    return function (dispatch) {
+	        dispatch(article_request()); //挂起登录请求,防止重复请求
+	        return (0, _ajax2.default)().homeArticle().then(function (data) {
+	            return dispatch(article_home_reveive(data.data));
+	        }); //接受到数据后重新更新state
+	    };
+	}
+
+	/**
+	 * 挂起获取文章内容和列表的请求
 	 * @returns {{type: string}}
 	 */
 	function article_request() {
@@ -12571,6 +12596,19 @@ webpackJsonp([0,1],[
 
 	    return {
 	        type: _actionType.ARTICLE_RECEIVE,
+	        data: data
+	    };
+	}
+
+	/**
+	 * 获取主页列表内容
+	 * @param data
+	 * @returns {{type: string, data: *}}
+	 */
+
+	function article_home_reveive(data) {
+	    return {
+	        type: _actionType.ARTICLE_HOME_RECEIVE,
 	        data: data
 	    };
 	}
@@ -13225,6 +13263,12 @@ webpackJsonp([0,1],[
 	            return _extends({}, state, {
 	                getting: false,
 	                contentList: addContentList(state, action.data)
+	            });
+
+	        case _actionType.ARTICLE_HOME_RECEIVE:
+	            return _extends({}, state, {
+	                getting: false,
+	                list: action.data
 	            });
 
 	        default:

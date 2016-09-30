@@ -26,10 +26,10 @@ export default class Markdown extends  React.Component {
     }
 
     update(event){
-        this.props.preview(markdown.toHTML(event.target.value));
+        this.props.preview(event.target.value);
     }
 
     tohtml(){
-        return {__html:this.props.addArticle.preview}
+        return {__html:markdown.toHTML(this.props.addArticle.preview)}
     }
 }
