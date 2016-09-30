@@ -10,7 +10,8 @@ import routes from './routes';
 //redux store
 import configureStore from './store';
 
-const store = configureStore();		//传入服务端请求的state,使前后端Store tree统一
+
+const store = configureStore(window.__INITIAL_STATE__);		//传入服务端请求的state,使前后端Store tree统一
 console.log('browser store:', store.getState());
 
 const app = document.getElementById('app');
