@@ -13,3 +13,7 @@ npm-debug.log.*
 #Webpack bundle
 public/js
 server.bundle.js
+
+#Test reports
+coverage
+mochawesome-reports

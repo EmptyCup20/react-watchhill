@@ -14,7 +14,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha'],
+    frameworks: ['mocha','chai'],
 
 
     // list of files / patterns to load in the browser
@@ -46,7 +46,8 @@ module.exports = function(config) {
           loader: "babel-loader",
           query: {
             compact: false,
-            presets: ['es2015', 'stage-2', 'react']
+            presets: ['es2015', 'stage-2', 'react'],
+            plugins: ['istanbul']
           }
         }]
       }
@@ -56,7 +57,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress','coverage'],
 
 
     // web server port
@@ -93,7 +94,8 @@ module.exports = function(config) {
       require("karma-webpack"),
       require("karma-mocha"),
       require("karma-chrome-launcher"),
-      require("karma-chai")
+      require("karma-chai"),
+      require("karma-coverage")
     ]
 
   })
