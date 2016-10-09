@@ -10,6 +10,8 @@ const addContentList = (state,data) => {
     let lists = state.contentList;
     lists.push(data);
     return lists;
+
+    //return [...state.contentList,...data]???
 };
 
 
