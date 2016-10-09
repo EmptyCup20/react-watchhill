@@ -57,9 +57,24 @@ npm start
 | `server.bundle.js`    | 服务端打包问题   |
 | `webpack`打包    | 前端打包文件过大问题   |
 | `img`元素    | `src`找不到路径时会向服务端发起当前组件的重新渲染请求   |
+| `mongodb` 存储| mongodb存储时默认生成一个`_id`字段，现在还无法将该字段赋值给其他字段，导致返回回来的都是`_id`,区别性不大 |
+|`es6`语法| 在测试时需要使用babel转码，导致文件内容变化（不可见），造成调试困难 |
+|`less`解析| 使用热部署时，less文件解析失败 |
+
 
 ## 参考文献
 
 [https://github.com/xxholly32/Blog/issues/6](https://github.com/xxholly32/Blog/issues/6)
 
 [https://github.com/sahat/newedenfaces-react](https://github.com/sahat/newedenfaces-react)
+
+[http://www.nodeclass.com/api/mongoose.html#guide](http://www.nodeclass.com/api/mongoose.html#guide)
+
+[http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html](http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html)
+
+[https://github.com/mochajs/mocha](https://github.com/mochajs/mocha)
+
+[https://github.com/visionmedia/supertest](https://github.com/visionmedia/supertest)
+
+[https://github.com/visionmedia/supertest/issues/26](https://github.com/visionmedia/supertest/issues/26)
+

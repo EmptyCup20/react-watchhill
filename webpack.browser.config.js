@@ -13,6 +13,7 @@ module.exports = {
 
     entry: [
         'webpack-hot-middleware/client',
+        './public/css/my-style.less',
         './react/index'
     ],
 
@@ -41,7 +42,7 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                loader: "style!css!less?presets[]=es2015&presets[]=react"
+                loader: ExtractTextPlugin.extract('style', 'css!less')
             }
         ]
     },
@@ -49,6 +50,6 @@ module.exports = {
     plugins: [
         commonsPlugin,
         new webpack.HotModuleReplacementPlugin(),
-        new ExtractTextPlugin('../../public/css/style.css',{allChunks: true})
+        new ExtractTextPlugin('style.css',{allChunks: true})
     ]
 };
