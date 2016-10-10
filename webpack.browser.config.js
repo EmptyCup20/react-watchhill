@@ -5,16 +5,14 @@ var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 
-console.log('webpack.browser.config start running...' );
+console.log('webpack.browser.config start running...');
 
-module.exports = {
+var WebpackConfig = {
     devtool: 'inline-source-map',
     target: 'web',
 
     entry: [
-        'webpack-hot-middleware/client',
-        './public/css/my-style.less',
-        './react/index'
+        'webpack-hot-middleware/client', './public/css/my-style.less', './react/index'
     ],
 
     output: {
@@ -32,24 +30,39 @@ module.exports = {
         extensions: ['', '.js', '.jsx']
     },
 
-
     module: {
         loaders: [
             {
                 test: /\.js[x]?$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader'
-            },
-            {
+            }, {
                 test: /\.less$/,
                 loader: ExtractTextPlugin.extract('style', 'css!less')
             }
         ]
-    },
+    }
+};
 
-    plugins: [
+if (process.env.NODE_ENV.trim() === 'production') {
+    WebpackConfig.plugins = [
         commonsPlugin,
         new webpack.HotModuleReplacementPlugin(),
-        new ExtractTextPlugin('style.css',{allChunks: true})
+        new ExtractTextPlugin('style.css', {allChunks: true}),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.optimize.OccurenceOrderPlugin()
     ]
-};
+}else{
+    WebpackConfig.plugins = [
+        commonsPlugin,
+        new webpack.HotModuleReplacementPlugin(),
+        new ExtractTextPlugin('style.css', {allChunks: true})
+    ]
+}
+
+
+module.exports = WebpackConfig;

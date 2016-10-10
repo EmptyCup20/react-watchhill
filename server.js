@@ -7,11 +7,13 @@ var logger = require('morgan');
 var ejs = require('ejs');
 var expressSession = require('express-session');
 var cookieParser = require('cookie-parser');
-var webpack = require('webpack')
-var webpackDevMiddleware = require('webpack-dev-middleware')
-var WebpackConfig = require('./webpack.browser.config')
+var webpack = require('webpack');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var WebpackConfig = require('./webpack.browser.config');
+var config = require('./config');
 
 const app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'view'));
@@ -58,6 +60,4 @@ app.listen(PORT, function() {
 
 
 
-if (app.get('env') === 'development') {
-    module.exports = app;
-}
+module.exports = app;

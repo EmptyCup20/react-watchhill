@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node server.bundle.js",
+    "start": "set NODE_ENV=development && node server.js",
+    "pro_start": "set NODE_ENV=production && node server.js",
     "browser-compress": "webpack --config ./webpack.browser.config.js  --optimize-minimize",
     "browser": "webpack --config ./webpack.browser.config.js --progress --watch --colors",
     "node": "webpack --config ./webpack.node.config.js --progress --watch --colors",
