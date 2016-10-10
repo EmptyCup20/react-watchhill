@@ -8,7 +8,6 @@ var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 console.log('webpack.browser.config start running...');
 
 var WebpackConfig = {
-    devtool: 'inline-source-map',
     target: 'web',
 
     entry: [
@@ -49,19 +48,23 @@ if (process.env.NODE_ENV.trim() === 'production') {
         commonsPlugin,
         new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin('style.css', {allChunks: true}),
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
+                unused: true,
+                dead_code: true,
                 warnings: false
             }
         })
     ]
-}else{
+} else {
     WebpackConfig.plugins = [
         commonsPlugin,
         new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin('style.css', {allChunks: true})
-    ]
+    ];
+    WebpackConfig.devtool = 'inline-source-map'
 }
-
 
 module.exports = WebpackConfig;
