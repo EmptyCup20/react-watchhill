@@ -53,8 +53,7 @@ if (process.env.NODE_ENV.trim() === 'production') {
             compress: {
                 warnings: false
             }
-        }),
-        new webpack.optimize.OccurenceOrderPlugin()
+        })
     ]
 }else{
     WebpackConfig.plugins = [
