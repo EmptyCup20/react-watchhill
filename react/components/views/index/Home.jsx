@@ -5,6 +5,8 @@ import { Link } from 'react-router';
 //导航
 import history from '../../../history';
 
+//elements
+import Button from '../../elements/Button';
 
 
 export default class Home extends Component{
@@ -15,30 +17,16 @@ export default class Home extends Component{
     //};
 
 
-    //_onClick(e) {
-    //    e.preventDefault();
-    //
-    //    let id = e.target.getAttribute('data-id');
-    //
-    //
-    //    console.log(id);
-    //
-    //    //alert(1);
-    //
-    //    ////to={'/article/' + article._id}
-    //    //history.replace({
-    //    //    pathname:`/article/${id}`
-    //    //});
-    //
-    //    this.context.router.push(`/article/${id}`);
-    //}
+    _onClick() {
+       let page = this.props.articles.list.length / 9 + 1;
+       this.props.article_getHomeList({pageNo:page});
+    }
 
     render() {
         const { articles } = this.props;
-        console.log(articles.list);
 
         return (
-            <div className="content-wrapped blog-list">
+            <div className="skin-home content-wrapped blog-list">
                 <div className="info-box head-response">
                     <div className="info-box-content">
                         <div className="container">
@@ -80,6 +68,22 @@ export default class Home extends Component{
                         })
                     }
                     </div>
+
+
+                    <div className="view row head-response-article">
+                    {
+                        (function (_this){
+                            if(!(articles.list.length % 9) && (!articles.listIsDone)) {
+                                return (
+                                    <Button type="button" className="more btn btn-block btn-primary btn-lg" onClick={_this._onClick.bind(_this)}>查看更多</Button>
+                                )
+                            }
+                        }(this))
+                    }
+                    </div>
+
+                    <br/>
+
                 </div>
             </div>
         )

@@ -97,7 +97,7 @@ const routes = (store) => {
         let isListExist = false;
         const state = store.getState();
         const list = state.articles.list;
-        store.dispatch(article_getHomeList());
+        store.dispatch(article_getHomeList({pageNo:1}));
     }
 
 

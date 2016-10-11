@@ -83,10 +83,11 @@ function ajax() {
 
 
         //获取主页文章列表
-        homeArticle: function() {
+        homeArticle: function(data) {
             return req({
-                type: 'GET',
-                url: '/article/homeArticle'
+                type: 'POST',
+                url: '/article/homeArticle',
+                data:data
             });
         },
 

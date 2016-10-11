@@ -11,7 +11,7 @@ router.get('/getArticleList', controller.getArticleList);
 router.post('/getArticle', controller.getArticle);
 
 //获取主页文章列表
-router.get('/homeArticle', controller.homeArticle);
+router.post('/homeArticle', controller.homeArticle);
 
 //新增文章
 router.post('/addArticle', controller.addArticle);
