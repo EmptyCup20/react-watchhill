@@ -31,13 +31,6 @@ let initUsers = [
         team:'Web前端组'
     },
     {
-        author:'wangzhipei',
-        password:'1111',
-        email:'wangzhipei@hikvision.com.cn',
-        tel:'11111111111',
-        team:'Web前端组'
-    },
-    {
         author:'zouxiumei',
         password:'1111',
         email:'zouxiumei@hikvision.com.cn',
@@ -45,32 +38,11 @@ let initUsers = [
         team:'Web前端组'
     },
     {
-        author:'zhengjunling',
+        author:'zhangxin14',
         password:'1111',
-        email:'zhengjunling@hikvision.com.cn',
+        email:'zhangxin14@hikvision.com.cn',
         tel:'11111111111',
         team:'Web前端组'
-    },
-    {
-        author:'zhangxin',
-        password:'1111',
-        email:'zhangxin@hikvision.com.cn',
-        tel:'11111111111',
-        team:'Web前端组'
-    },
-    {
-        author:'liumeng6',
-        password:'1111',
-        email:'liumeng6@hikvision.com.cn',
-        tel:'11111111111',
-        team:'Web前端组'
-    },
-    {
-        author: 'zhuxiankang',
-        password: '1111',
-        email: 'zhuxiankang@hikvision.com.cn',
-        tel: '18768107826',
-        team: 'web前端组'
     }
 ];
 
