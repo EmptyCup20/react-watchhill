@@ -29,7 +29,8 @@ if(app.get('env').trim()==='production'){
 
 	app.use(compression());//开启gzip压缩
 } else {
-	require('./server/inits/user.init');	//其他环境下账号初始化设置
+	require('./server/inits/user.init');	//开发环境下账号初始化设置
+	require('./server/inits/article.init');	//文章初始化
 }
 
 

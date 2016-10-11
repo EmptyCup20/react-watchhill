@@ -46,19 +46,24 @@ let initUsers = [
     }
 ];
 
-user.remove({},(err) => {
-    if(err) {
-        console.log('Clear user model db data failed!');
-    } else {
-        user.create(initUsers,function(err){
-            if(err) {
-                console.log(err);
-            } else {
-                console.log('Init user model db data successed!');
-            }
 
-        })
-    }
+let query = user.remove();
+
+query.exec((err,docs) => {
+   if(err) {
+       console.log('Clear user model db data failed!');
+   } else {
+       user.create(initUsers,(err) => {
+           if(err) {
+               console.log('Clear user model db data failed!');
+           } else {
+               console.log('Clear user model db data successed!');
+           }
+       });
+   }
 });
+
+
+
 
 
