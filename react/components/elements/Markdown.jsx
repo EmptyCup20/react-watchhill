@@ -11,7 +11,7 @@ export default class Markdown extends  React.Component {
                 <div className="tab-content">
                     <div className="active tab-pane" id="edit">
                         <div className="form-group">
-                            <textarea  className="form-control"  id="text-input" rows="3" placeholder="请在此输入文本 ..." onBlur={this.update.bind(this)}></textarea>
+                            <textarea  className="form-control"  id="text-input" rows="3" placeholder="请在此输入文本 ..." onBlur={this.update.bind(this)} ref="articleMd"></textarea>
                         </div>
                     </div>
                     <div className="tab-pane md-preview" id="preview">
@@ -30,6 +30,15 @@ export default class Markdown extends  React.Component {
     }
 
     tohtml(){
-        return {__html:markdown.toHTML(this.props.addArticle.preview)}
+        if(this.props.addArticle.preview){
+            return {__html:markdown.toHTML(this.props.addArticle.preview)}
+        }else{
+            return {__html: ' '}
+        }
     }
+
+    clearMd(){
+        this.refs.articleMd.value='';
+    }
+
 }

@@ -1,4 +1,4 @@
-import { PREVIEW , ADD_TEMP_ARTICLE , ADD_ARTICLE_TITLE ,ADD_ARTICLE_INTRO,DEL_ARTICLE,SAVE_ARTICLE} from '../constants/actionType';
+import { PREVIEW , ADD_TEMP_ARTICLE , ADD_ARTICLE_TITLE ,ADD_ARTICLE_INTRO,CLEAR_ARTICLE,SAVE_ARTICLE} from '../constants/actionType';
 import ajax from '../ajax';
 export function preview(value){
     return {
@@ -8,20 +8,6 @@ export function preview(value){
 }
 
 export function addTempArticle(article){
-    if(article.articleId){
-        var delbool = window.confirm('是否确定删除清空');
-        if(delbool){
-            // return ajax().delArticle(article)
-            //     .then(data => {
-            //         return dispatch(clearAndDel_receive());
-            //     })
-            return clearAndDel_receive();
-        }else{
-            return{
-                type : 'NO_DELETE'
-            }
-        }
-    }else{
         if(article.title){
             return dispatch => {
                 return ajax().addTempArticle(article)
@@ -35,7 +21,6 @@ export function addTempArticle(article){
                 type: 'NO_TITLE'
             }
         }
-    }
 
 }
 
@@ -62,7 +47,13 @@ export function addIntro(value){
 
 function clearAndDel_receive(){
     return {
-        type : DEL_ARTICLE
+        type : CLEAR_ARTICLE
+    }
+}
+
+export function clearArticle(){
+    return {
+        type : CLEAR_ARTICLE
     }
 }
 

@@ -7,16 +7,13 @@ import Markdown from '../../elements/Markdown.jsx'
 
 export default class AddArticle extends Component{
     componentWillMount(){
-        this.props.preview('');
+        this.props.clearArticle();
     }
     addTitle(event){
         this.props.addTitle(event.target.value);
     }
     addIntro(event){
         this.props.addIntro(event.target.value);
-    }
-    add_del(){
-        this.props.addTempArticle(this.props.addArticle);
     }
     save_article(){
         var obj = {
@@ -29,7 +26,7 @@ export default class AddArticle extends Component{
     }
 
     render(){
-        const { preview, addArticle } = this.props
+        const { preview, addArticle } = this.props;
         return(
             <div className="content-wrapper add-article">
                 <div id="container">
@@ -41,14 +38,14 @@ export default class AddArticle extends Component{
                             <form  id="articleForm">
                                 <div className="form-group">
                                     <label htmlFor="atricleTitle">标题</label>
-                                    <input type="text" className="form-control" id="atricleTitle" name="atricleTitle" onBlur={this.addTitle.bind(this)} />
+                                    <input type="text" className="form-control" id="atricleTitle" name="atricleTitle" onBlur={this.addTitle.bind(this)} ref="atricleTitle"/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="atricleDescribe">简介</label>
-                                    <textarea id="atricleDescribe" className="form-control" rows="3" placeholder="简介..." onBlur={this.addIntro.bind(this)}  />
+                                    <textarea id="atricleDescribe" className="form-control" rows="3" placeholder="简介..." onBlur={this.addIntro.bind(this)} ref="atricleDescribe" />
                                 </div>
                                 <div id = 'btn-div' className={addArticle.articleId?"clear":"add"}>
-                                    <button type="button" id="article-add" className="btn-primary btn-block btn-flat btn button" onClick={this.add_del.bind(this)} > {addArticle.articleId?"删除清空":"新建文章"} </button>
+                                    <button type="button" id="article-add" className="btn-primary btn-block btn-flat btn button"  > {addArticle.articleId?"删除清空":"新建文章"} </button>
                                 </div>
                                 <br></br>
                                 <div className={addArticle.articleId?"":"hidden"} id="article-detail">
@@ -71,7 +68,7 @@ export default class AddArticle extends Component{
 
                                     <div className="form-group">
                                         <label htmlFor="text-input">文章</label>
-                                        <Markdown preview={preview} addArticle={addArticle}></Markdown>
+                                        <Markdown preview={preview} addArticle={addArticle} ref='articleMd'></Markdown>
                                     </div>
 
                                     <button type="button" id="article-upload" className="btn-primary btn-block btn-flat btn button" onClick = { this.save_article.bind(this) } >保存</button>
@@ -138,14 +135,21 @@ export default class AddArticle extends Component{
 
         //清空事件
         $('#article-add').click(function(e){
-            if($(e.target).parent().attr('class').indexOf('clear')>-1){
-                $('#atricleTitle').val('');
-                $('#atricleDescribe').val('');
-                $('#imgUrl').fileinput('clear');
-                $('#articleFile').fileinput('clear');
-                $('#text-input').val('');
+            if(_this.props.addArticle.articleId){
+                var delbool = window.confirm('是否确定删除清空');
+                if(delbool){
+                    _this.refs.atricleTitle.value='';
+                    _this.refs.atricleDescribe.value='';
+                    _this.refs.articleMd.clearMd();
+                    _this.props.clearArticle();
+                    $('#imgUrl').fileinput('clear');
+                    $('#articleFile').fileinput('clear');
+                }
+            }else{
+                _this.props.addTempArticle(_this.props.addArticle);
             }
         });
+
 
         //获取图片路径
         $('#getFileUrl').click(function(e){
