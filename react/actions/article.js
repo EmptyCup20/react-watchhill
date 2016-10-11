@@ -1,6 +1,18 @@
 
-import { ARTICLE_REQUEST,ARTICLE_RECEIVE,ARTICLE_HOME_RECEIVE } from '../constants/actionType';
+import { ARTICLE_INIT,ARTICLE_REQUEST,ARTICLE_RECEIVE,ARTICLE_HOME_RECEIVE } from '../constants/actionType';
 import ajax from '../ajax';
+
+
+/**
+ * 视图初始化
+ */
+export function article_init() {
+    return {
+        type: ARTICLE_INIT
+    };
+}
+
+
 
 
 

@@ -28,6 +28,7 @@ module.exports = {
     LOGOUT_RECEIVE: 'LOGOUT_RECEIVE',       //注销
 
     //article
+    ARTICLE_INIT:'ARTICLE_INIT',            //视图初始化
     ARTICLE_REQUEST: 'ARTICLE_REQUEST',     //挂起获取文章请求
     ARTICLE_RECEIVE: 'ARTICLE_RECEIVE',     //获取文章内容处理
     ARTICLE_HOME_RECEIVE:'ARTICLE_HOME_RECEIVE', //获取主页文章列表

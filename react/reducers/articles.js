@@ -1,4 +1,4 @@
-import { ARTICLE_REQUEST,ARTICLE_RECEIVE,ARTICLE_HOME_RECEIVE } from '../constants/actionType';
+import { ARTICLE_INIT,ARTICLE_REQUEST,ARTICLE_RECEIVE,ARTICLE_HOME_RECEIVE } from '../constants/actionType';
 
 
 /**
@@ -45,6 +45,12 @@ const article = (state = {
 
 }, action) => {
     switch(action.type) {
+        case ARTICLE_INIT:
+            return {
+                list:[],
+                listIsDone:false,
+                getting:false
+            };
         case ARTICLE_REQUEST:
             return {
                 ...state,
