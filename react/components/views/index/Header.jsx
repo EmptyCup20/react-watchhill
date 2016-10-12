@@ -37,12 +37,6 @@ export default class Header extends Component{
                                     <Link to="/index">主页</Link>
                                 </li>
                                 <li>
-                                    <Link to="/web">web前端</Link>
-                                </li>
-                                <li>
-                                    <Link to="/node">Nodejs</Link>
-                                </li>
-                                <li>
                                     <Link to="/about">关于</Link>
                                 </li>
                             </ul>
