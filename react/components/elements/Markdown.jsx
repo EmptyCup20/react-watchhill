@@ -37,8 +37,9 @@ export default class Markdown extends  React.Component {
         }
     }
 
-    clearMd(){
-        this.refs.articleMd.value='';
+    clearMd(value){
+        this.refs.articleMd.value=value;
+        this.props.preview(value);
     }
 
 }

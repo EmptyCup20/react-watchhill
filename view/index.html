@@ -3,10 +3,13 @@
   <head>
     <title>watchill</title>
 
+
+
     <!-- bootstrap css -->
     <link href="/lib/adminLTE/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/lib/adminLTE/bootstrap/css/font-awesome.css">
+
     <!-- Ionicons -->
     <link rel="stylesheet" href="/lib/adminLTE/bootstrap/css/ionicons.css">
     <!-- Theme style -->
@@ -16,8 +19,13 @@
     <link rel="stylesheet" href="/lib/adminLTE/css/skins/_all-skins.min.css">
     <!-- 文件上传 -->
     <link rel="stylesheet" href="/lib/adminLTE/bootstrap/css/fileinput.min.css">
+    <!-- 图片预览 -->
+    <link rel="stylesheet" href="/lib/plugin/lightBox/css/lightbox.css">
+    <!--开场动画-->
+    <link rel="stylesheet" href="/lib/plugin/animate/animate.min.css">
     <!-- 自定义样式 -->
     <link rel="stylesheet" href="/static/style.css">
+
 
   </head>
 
@@ -29,6 +37,10 @@
     <script>
       window.__INITIAL_STATE__ = <%- serverState %>;
     </script>
+
+    <!--开场动画-->
+    <script src="/lib/plugin/animate/particles.js"></script>
+    <script src="/lib/plugin/animate/stats.js"></script>
 
     <!-- jquery-->
     <script src="/lib/jquery/jQuery-2.2.0.min.js"></script>
@@ -44,8 +56,13 @@
 
     <!--copy-->
     <script src="/lib/plugin/clipboard.min.js"></script>
+    <!--图片预览-->
+    <script src="/lib/plugin/lightBox/js/lightbox.js"></script>
 
-    <!--react -->
+
+    </script>
+
+    <!--react-->
     <script src="/lib/react/react.min.js"></script>
     <script src="/lib/react/react-dom.min.js"></script>
 

@@ -103,5 +103,13 @@ controller.getImgUrl = function(req, res, next) {
         console.log(data);
     });
 };
-
+//获取文章信息(byArticleId)
+controller.getArticleById = function(req, res, next) {
+    var query = req.query;
+    article.getArticleById(query).then(function(data) {
+        res.send(data);
+    }, function(data) {
+        console.log(data);
+    });
+};
 module.exports = controller;

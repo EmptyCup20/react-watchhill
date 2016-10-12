@@ -1,4 +1,4 @@
-import { PREVIEW , ADD_TEMP_ARTICLE , ADD_ARTICLE_TITLE , ADD_ARTICLE_INTRO , CLEAR_ARTICLE,SAVE_ARTICLE} from '../constants/actionType';
+import { PREVIEW , ADD_TEMP_ARTICLE , ADD_ARTICLE_TITLE , ADD_ARTICLE_INTRO , CLEAR_ARTICLE,SAVE_ARTICLE,INIT_ARTICLE} from '../constants/actionType';
 
 const addArticle = (state = {
    preview:''
@@ -36,6 +36,15 @@ const addArticle = (state = {
         }
         case SAVE_ARTICLE:{
             return state;
+        }
+        case INIT_ARTICLE:{
+            return {
+                ...state,
+                title: action.value.title,
+                describe: action.value.describe,
+                articleId:action.value.articleId,
+                preview:action.value.describe
+            }
         }
         default:
             return state;

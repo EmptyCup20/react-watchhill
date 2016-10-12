@@ -20,7 +20,7 @@ export default class User extends Component{
         }
 
         return (
-            <div className="content-wrapper">
+            <div className="content-wrapper user_article">
                 <br/>
                 {
                     loading
@@ -70,8 +70,9 @@ export default class User extends Component{
                                                                 {article.describe}
                                                             </div>
 
-                                                            <div className="timeline-footer">
+                                                            <div className="timeline-footer article-list">
                                                                 <Link to={'/article/' + article._id} className="btn btn-primary btn-xs">阅读全文...</Link>
+                                                                <Link to={'/edit_article/' + article._id} className="btn btn-primary btn-xs">修改文章</Link>
                                                             </div>
 
                                                         </div>
@@ -88,5 +89,3 @@ export default class User extends Component{
         )
     }
 }
-
-

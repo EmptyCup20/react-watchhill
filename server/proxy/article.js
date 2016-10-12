@@ -47,6 +47,22 @@ Article.getArticle = function(obj) {
     });
 };
 
+//获取文章信息(byArticleId)
+Article.getArticleById = function(obj) {
+    var queryObj = {
+        _id: obj.articleId
+    };
+    return new Promise((resolve, reject) => {
+        db_tools.queryByCondition('article', queryObj).then(articleData => {
+            articleData = articleData[0].toObject(); //转成对象字面量
+            statusMsg.successMsg.data = articleData;
+            resolve(statusMsg.successMsg);
+        }, err => {
+            reject(err);
+        });
+    });
+};
+
 //新增文章
 Article.addArticle = function(obj) {
     return new Promise((resolve, reject) => {

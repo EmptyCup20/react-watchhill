@@ -25,4 +25,6 @@ router.post('/uploadimg',uploader.uploaderImg);
 //获取文章中上传图片的url
 router.get('/getImgUrl', controller.getImgUrl);
 
+//获取文章信息(byArticleId)
+router.get('/getArticleById', controller.getArticleById);
 module.exports = router;
