@@ -39,8 +39,9 @@ controller.register = function(req, res, next) {
         ep = new EventProxy(),
         user_dir;
     User.addUser(query).then(function(data) {
-        user_dir = path.resolve('public/images', data.data.author);
+        console.log(data)
         if (data.code === 0) {
+            user_dir = path.resolve('public/images', data.data.author);
             req.session.loginUser = data.data;
             //创建用户文件夹
             fs.mkdir(user_dir, err => {
