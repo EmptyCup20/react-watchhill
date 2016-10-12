@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST,LOGIN_RECEIVE,LOGIN_INIT } from '../constants/actionType';
+import { LOGIN_ERROR,LOGIN_USER_ERROR, LOGIN_PASS_ERROR,LOGIN_REQUEST,LOGIN_RECEIVE,LOGIN_INIT } from '../constants/actionType';
 import ajax from '../ajax';
 
 /**
@@ -9,6 +9,36 @@ export function login_init() {
         type: LOGIN_INIT
     };
 }
+
+/**
+ * 没有填写完整
+ * @returns {{type: string}}
+ */
+export function login_error() {
+    return {
+        type: LOGIN_ERROR
+    };
+}
+
+
+/**
+ * 账号格式错误
+ * @returns {{type: string}}
+ */
+export function login_userError() {
+    return {
+        type: LOGIN_USER_ERROR
+    };
+}
+
+
+export function login_passError() {
+    return {
+        type: LOGIN_PASS_ERROR
+    };
+}
+
+
 
 
 /**

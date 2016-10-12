@@ -4,6 +4,9 @@ module.exports = {
 
     //login
     LOGIN_INIT:'LOGIN_INIT',                //登录视图初始化
+    LOGIN_ERROR:'LOGIN_ERROR',              //账号密码未填写完整
+    LOGIN_USER_ERROR:'LOGIN_USER_ERROR',    //用户名格式错误
+    LOGIN_PASS_ERROR: 'LOGIN_PASS_ERROR',   //密码格式错误
     LOGIN_REQUEST: 'LOGIN_REQUEST',         //挂起登录请求
     LOGIN_RECEIVE: 'LOGIN_RECEIVE',         //接收登录状况处理
 

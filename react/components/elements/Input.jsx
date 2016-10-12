@@ -15,6 +15,10 @@ export default class Input extends  React.Component {
         name: PropTypes.string,
         autocomplete: PropTypes.oneOf(['on', 'off']),
         onChange: PropTypes.func,
+        onFocus: PropTypes.func,
+        onBlur:PropTypes.func,
+        ref:PropTypes.string,
+        maxlength:PropTypes.string
         //ref: PropTypes.string,
         //value: PropTypes.string
         //当然我们只选择我们想要的属性
@@ -30,7 +34,10 @@ export default class Input extends  React.Component {
             placeholder,
             name,
             autocomplete,
-            onChange} = this.props;
+            onChange,
+            onFocus,
+            onBlur
+            } = this.props;
 
         return (
             <input
@@ -41,6 +48,9 @@ export default class Input extends  React.Component {
                 name={name}
                 autocomplete={autocomplete}
                 onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                maxlength="16"
             />
         );
     }

@@ -1,6 +1,7 @@
 //基础库
 import React,{ Component,PropTypes } from 'react';
 import { Link } from 'react-router';
+import { login_error,user_error,pass_error,init,success } from '../../constants/httpType';
 
 
 //基础组件
@@ -17,7 +18,11 @@ import history from '../../history';
 export default class Login extends Component{
 
     static propTypes = {
-        login_start: PropTypes.func.isRequired,
+        login_init:PropTypes.func.isRequired,           //登录视图初始化
+        login_error:PropTypes.func.isRequired,          //填写不完整
+        login_userError:PropTypes.func.isRequired,      //用户格式错误
+        login_passError:PropTypes.func.isRequired,      //密码格式错误
+        login_start: PropTypes.func.isRequired,         //发起登录请求
         login: PropTypes.object.isRequired
     };
 
@@ -33,35 +38,55 @@ export default class Login extends Component{
         }
     }
 
+    _onFocus(e) {
+        //去掉警示框
+        let status = this.props.login.loginStatus;
+        if(status !== 'init' && status !== 'success') {
+            this.props.login_init();
+        }
+    }
 
     _onClick(e) {
         e.preventDefault();
-        //console.log(this.refs.username.value);
-        //console.log(this.refs.password.value);    //使用此种方式主要用于制作可控表单
-        //let username = document.getElementById('username'),
-        //    password = document.getElementById('password');
-
 
         let username = $('#login_username').val(),
-            password = $('#login_password').val();
+            password = $('#login_password').val(),
+            usernameReg =/^[\w]{1,15}$/,            //[A-Za-z0-9_] 账号必须为数字字母或者是下划线
+            passwordReg = /^[A-Za-z0-9]{1,15}$/;    //密码必须为数字或字母
 
-        //这里还要做一个登录格式验证
-
-        if(username.trim() && password.trim()) {
-            //console.log(username.value);
-            //console.log(password.value);
-            let user = {
-                author: username.trim(),
-                password: password.trim()
-            };
-
-            //console.log('user:',user);
-            this.props.login_start(user);
-            //console.log('this.props.login:',this.props.login);
-
+        //1.如果账号密码都填写了
+        if(username && password) {
+            if(!usernameReg.test(username)) {
+                this.props.login_userError();
+            } else if(!passwordReg.test(password)) {
+                this.props.login_passError();
+            } else {
+                let user = {
+                    author: username,
+                    password: password
+                };
+                this.props.login_start(user);
+            }
         } else {
-            alert('空');
+            this.props.login_error();
         }
+
+
+        //if(username.trim() && password.trim()) {
+        //    //console.log(username.value);
+        //    //console.log(password.value);
+        //    let user = {
+        //        author: username.trim(),
+        //        password: password.trim()
+        //    };
+        //
+        //    //console.log('user:',user);
+        //    this.props.login_start(user);
+        //    //console.log('this.props.login:',this.props.login);
+        //
+        //} else {
+        //    alert('空');
+        //}
     }
 
 
@@ -81,6 +106,27 @@ export default class Login extends Component{
                        账号登录
                    </p>
 
+                   <from>
+                       <div className="form-group has-feedback">
+                           <Input  id="login_username" type="text" className="form-control"  placeholder="账号"  onFocus={this._onFocus.bind(this)}  />
+                           <span className="form-control-feedback"> <i className="fa fa-user fa-fw" /></span>
+                       </div>
+                       <div className="form-group has-feedback">
+                           <Input  id="login_password" type="password" className="form-control" placeholder="密码" onFocus={this._onFocus.bind(this)} />
+                           <span className="form-control-feedback"> <i className="fa fa-lock fa-fw" /></span>
+                       </div>
+
+                       <div className="row">
+                           <div className="col-xs-8">
+                           </div>
+                           <div className="col-xs-4">
+                               <Button type="submit"  className=" btn-primary btn-block btn-flat btn" onClick={this._onClick.bind(this)} >登录</Button>
+                           </div>
+                       </div>
+                   </from>
+
+                   <br/>
+
                    {
                        (function (){
                            switch(login.loginStatus) {
@@ -97,30 +143,37 @@ export default class Login extends Component{
                                            密码错误!
                                        </div>
                                    );
+
+                               case user_error:
+                                   return (
+                                       <div className="alert alert-danger" role="alert">
+                                           账号格式错误,必须为16位以内的数字,字母和下划线组成!
+                                       </div>
+                                   );
+
+                               case pass_error:
+                                   return (
+                                       <div className="alert alert-danger" role="alert">
+                                           密码格式错误,必须为16位以内的数字和字母组成!
+                                       </div>
+                                   );
+
+                               case login_error:
+                                   return (
+                                       <div className="alert alert-danger" role="alert">
+                                           请填写完整!
+                                       </div>
+                                   );
+
+
+
                                default:
                                    break;
                            }
                        }())
                    }
 
-                   <from>
-                       <div className="form-group has-feedback">
-                           <Input id="login_username" type="text" className="form-control" placeholder="账号"  />
-                           <span className="form-control-feedback"> <i className="fa fa-user fa-fw" /></span>
-                       </div>
-                       <div className="form-group has-feedback">
-                           <Input  id="login_password" type="password" className="form-control" placeholder="密码" />
-                           <span className="form-control-feedback"> <i className="fa fa-lock fa-fw" /></span>
-                       </div>
 
-                       <div className="row">
-                           <div className="col-xs-8">
-                           </div>
-                           <div className="col-xs-4">
-                               <Button type="submit"  className=" btn-primary btn-block btn-flat btn" onClick={this._onClick.bind(this)} >登录</Button>
-                           </div>
-                       </div>
-                   </from>
                </div>
            </div>
         )

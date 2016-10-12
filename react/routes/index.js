@@ -30,6 +30,10 @@ import { article_init,article_getContent,article_getHomeList } from '../actions/
 import { user_getList } from  '../actions/user';
 
 
+/*constant*/
+import { init } from '../constants/httpType';
+
+
 const routes = (store) => {
 
     //初始化视图
