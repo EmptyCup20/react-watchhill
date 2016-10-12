@@ -24,9 +24,17 @@ app.set('view engine', 'html');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+
 if(app.get('env').trim()==='production'){
+
 	app.use(compression());//开启gzip压缩
+} else {
+	require('./server/inits/user.init');	//开发环境下账号初始化设置
+	require('./server/inits/article.init');	//文章初始化
 }
+
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser('MAGICString')); //开启cookie

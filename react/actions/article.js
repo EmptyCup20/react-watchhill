@@ -1,6 +1,18 @@
 
-import { ARTICLE_REQUEST,ARTICLE_RECEIVE,ARTICLE_HOME_RECEIVE } from '../constants/actionType';
+import { ARTICLE_INIT,ARTICLE_REQUEST,ARTICLE_RECEIVE,ARTICLE_HOME_RECEIVE } from '../constants/actionType';
 import ajax from '../ajax';
+
+
+/**
+ * 视图初始化
+ */
+export function article_init() {
+    return {
+        type: ARTICLE_INIT
+    };
+}
+
+
 
 
 
@@ -22,12 +34,13 @@ export function article_getContent(id) {
 
 /**
  * 获取主页文章列表
+ * @param pageNo -> 需要获取的文章页数
  * @returns {Function}
  */
-export function article_getHomeList() {
+export function article_getHomeList(pageNo) {
     return (dispatch,getState) => {
         if(article_authen(getState())) {
-            return dispatch(article_getHomeList_ajax());          //发起一个http请求
+            return dispatch(article_getHomeList_ajax(pageNo));          //发起一个http请求
         } else {
             return Promise.resolve();                   //告诉thunk无需等待,从而跳过dispatch,进入reducers?
         }
@@ -60,12 +73,13 @@ function article_ajax(id) {
 
 /**
  * 获取主页文章列表的ajax
+ * @param pageNo -> 需要获取的文章页数
  * @returns {Function}
  */
-function article_getHomeList_ajax() {
+function article_getHomeList_ajax(pageNo) {
     return dispatch => {
         dispatch(article_request());                          //挂起登录请求,防止重复请求
-        return ajax().homeArticle()
+        return ajax().homeArticle(pageNo)
             .then(data => dispatch(article_home_reveive(data.data)));   //接受到数据后重新更新state
     };
 }

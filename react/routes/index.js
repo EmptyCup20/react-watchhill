@@ -26,7 +26,7 @@ import { login_init } from '../actions/login';
 import { register_init } from '../actions/register';
 import { modify_init } from '../actions/profile';
 import { addTempArticle } from '../actions/addArticle';
-import { article_getContent,article_getHomeList } from '../actions/article';
+import { article_init,article_getContent,article_getHomeList } from '../actions/article';
 import { user_getList } from  '../actions/user';
 
 
@@ -95,10 +95,10 @@ const routes = (store) => {
 
     //获取主页文章列表
     function getHomeArticleList() {
-        let isListExist = false;
+        store.dispatch(article_init());
         const state = store.getState();
         const list = state.articles.list;
-        store.dispatch(article_getHomeList());
+        store.dispatch(article_getHomeList({pageNo:1}));
     }
 
 

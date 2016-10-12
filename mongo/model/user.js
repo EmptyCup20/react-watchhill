@@ -38,4 +38,9 @@ var userSchema = new Schema({
 });
 
 var user = db.model('User',userSchema);
+
+
+
+
+
 module.exports = user;

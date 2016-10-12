@@ -45,8 +45,8 @@ controller.getArticle = function(req, res, next) {
 controller.homeArticle = function(req, res, next) {
 
     article.getArticleList({
-        pageSize:9,                     //首页只需要获取9篇文章
-        pageNo:1
+        pageSize:9,                     //每次只需要获取9篇文章
+        pageNo:req.body.pageNo
     }).then(
         function(data) {
             if(data.rows) {

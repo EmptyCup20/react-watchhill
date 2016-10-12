@@ -1,4 +1,4 @@
-import { ARTICLE_REQUEST,ARTICLE_RECEIVE,ARTICLE_HOME_RECEIVE } from '../constants/actionType';
+import { ARTICLE_INIT,ARTICLE_REQUEST,ARTICLE_RECEIVE,ARTICLE_HOME_RECEIVE } from '../constants/actionType';
 
 
 /**
@@ -10,20 +10,47 @@ const addContentList = (state,data) => {
     let lists = state.contentList;
     lists.push(data);
     return lists;
-
     //return [...state.contentList,...data]???
 };
 
+/**
+ * 获取文章列表
+ * @param state
+ * @param data
+ */
+const addList = (state,data) => {
+
+    let lists = state.list;
+
+    if(data.length) {
+        return {
+            list:[...lists,...data],
+            listIsDone:false
+        }
+    }
+
+    return {
+        list:lists,
+        listIsDone:true
+    }
+
+};
 
 
 const article = (state = {
    list:[],             //页面显示的文章列表
+   listIsDone:false,    //文章是否已经取完
    contentList:[],      //文章内容组成的列表
    getting:false        //有没有正在获取文章内容标志
 
 }, action) => {
-
     switch(action.type) {
+        case ARTICLE_INIT:
+            return {
+                list:[],
+                listIsDone:false,
+                getting:false
+            };
         case ARTICLE_REQUEST:
             return {
                 ...state,
@@ -41,7 +68,7 @@ const article = (state = {
             return {
                 ...state,
                 getting:false,
-                list:action.data
+                ...(addList(state,action.data))
             };
 
         default:
