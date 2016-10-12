@@ -68,19 +68,19 @@ const login = (state = {
 				logining:false				//有没有正在登录标志
 			};
 
-		case LOGIN_ERROR:
+		case LOGIN_ERROR:		//登录信息未填写完整
 			return {
 				...state,
 				loginStatus:login_error
 			};
 
-		case LOGIN_USER_ERROR:
+		case LOGIN_USER_ERROR:	//用户名格式错误
 			return {
 				...state,
 				loginStatus:user_error
 			};
 
-		case LOGIN_PASS_ERROR:
+		case LOGIN_PASS_ERROR:	//密码格式错误
 			return {
 				...state,
 				loginStatus:pass_error

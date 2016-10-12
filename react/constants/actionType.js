@@ -4,7 +4,7 @@ module.exports = {
 
     //login
     LOGIN_INIT:'LOGIN_INIT',                //登录视图初始化
-    LOGIN_ERROR:'LOGIN_ERROR',              //账号密码未填写完整
+    LOGIN_ERROR:'LOGIN_ERROR',              //登录信息未填写完整
     LOGIN_USER_ERROR:'LOGIN_USER_ERROR',    //用户名格式错误
     LOGIN_PASS_ERROR: 'LOGIN_PASS_ERROR',   //密码格式错误
     LOGIN_REQUEST: 'LOGIN_REQUEST',         //挂起登录请求
@@ -12,6 +12,12 @@ module.exports = {
 
     //register
     REGISTER_INIT: 'REGISTER_INIT',         //注册视图初始化
+    REGISTER_ERROR:'REGISTER_ERROR',        //注册信息未填写完整
+    REGISTER_USER_ERROR:'REGISTER_USER_ERROR',  //账号格式错误
+    REGISTER_PASS_ERROR:'REGISTER_PASS_ERROR',  //密码格式错误
+    REGISTER_PASS_TWICE_ERROR:'REGISTER_PASS_TWICE_ERROR',  //两次密码输入不一致
+    REGISTER_EMAIL_ERROR:'REGISTER_EMAIL_ERROR',//邮箱格式错误
+    REGISTER_TEL_ERROR:'REGISTER_TEL_ERROR',    //电话格式错误
     REGISTER_REQUEST: 'REGISTER_REQUEST',   //挂起注册请求
     REGISTER_RECEIVE: 'REGISTER_RECEIVE',   //接收注册状况处理
 

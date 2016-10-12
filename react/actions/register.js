@@ -1,4 +1,4 @@
-import { REGISTER_REQUEST,REGISTER_RECEIVE,REGISTER_INIT } from '../constants/actionType';
+import { REGISTER_TEL_ERROR,REGISTER_EMAIL_ERROR,REGISTER_USER_ERROR,REGISTER_PASS_ERROR,REGISTER_PASS_TWICE_ERROR,REGISTER_ERROR,REGISTER_REQUEST,REGISTER_RECEIVE,REGISTER_INIT } from '../constants/actionType';
 import ajax  from '../ajax';
 import { user_exist,success } from '../constants/httpType';
 import  { login_reveive } from './login';
@@ -10,6 +10,70 @@ import  { login_reveive } from './login';
 export function register_init() {
     return {
         type: REGISTER_INIT
+    };
+}
+
+
+/**
+ * 没有填写完整
+ * @returns {{type: string}}
+ */
+export function register_error() {
+    return {
+        type: REGISTER_ERROR
+    };
+}
+
+/**
+ * 账号格式错误
+ * @returns {{type: string}}
+ */
+export function register_userError() {
+    return {
+        type: REGISTER_USER_ERROR
+    };
+}
+
+/**
+ * 密码格式错误
+ * @returns {{type: string}}
+ */
+export function register_passError() {
+    return {
+        type: REGISTER_PASS_ERROR
+    };
+}
+
+
+/**
+ * 两次密码输入不一致
+ * @returns {{type: string}}
+ */
+export function register_passTwiceError() {
+    return {
+        type: REGISTER_PASS_TWICE_ERROR
+    };
+}
+
+
+/**
+ * 邮箱格式错误
+ * @returns {{type: string}}
+ */
+export function register_emailError() {
+    return {
+        type: REGISTER_EMAIL_ERROR
+    };
+}
+
+
+/**
+ * 电话格式错误
+ * @returns {{type: string}}
+ */
+export function register_telError() {
+    return {
+        type: REGISTER_TEL_ERROR
     };
 }
 

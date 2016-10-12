@@ -31,7 +31,10 @@ export function login_userError() {
     };
 }
 
-
+/**
+ * 密码格式错误
+ * @returns {{type: string}}
+ */
 export function login_passError() {
     return {
         type: LOGIN_PASS_ERROR

@@ -56,37 +56,21 @@ export default class Login extends Component{
 
         //1.如果账号密码都填写了
         if(username && password) {
-            if(!usernameReg.test(username)) {
+            if(!usernameReg.test(username)) {               //账号格式错误
                 this.props.login_userError();
-            } else if(!passwordReg.test(password)) {
+            } else if(!passwordReg.test(password)) {        //密码格式错误
                 this.props.login_passError();
             } else {
                 let user = {
                     author: username,
                     password: password
                 };
-                this.props.login_start(user);
+                this.props.login_start(user);               //发起登录请求
             }
+        //2.未填写完整
         } else {
-            this.props.login_error();
+            this.props.login_error();                       //未填写完整
         }
-
-
-        //if(username.trim() && password.trim()) {
-        //    //console.log(username.value);
-        //    //console.log(password.value);
-        //    let user = {
-        //        author: username.trim(),
-        //        password: password.trim()
-        //    };
-        //
-        //    //console.log('user:',user);
-        //    this.props.login_start(user);
-        //    //console.log('this.props.login:',this.props.login);
-        //
-        //} else {
-        //    alert('空');
-        //}
     }
 
 
