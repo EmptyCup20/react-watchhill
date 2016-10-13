@@ -129,7 +129,7 @@ export default class EditArticle extends Component{
             success:function(data){
                 var imgs = [];
                 for(var i in data.data){
-                    imgs.push("<img src='"+data.data[i]+"' class='file-preview-image' alt='"+data.data[i]+"' title='"+data.data[i]+"'>");
+                    imgs.push("<img src='"+data.data[i]+"' class='file-preview-image' alt='"+data.data[i]+"' title='Desert'>");
                 }
                 $('#articleFile').fileinput({
                     language: "zh",
