@@ -115,6 +115,13 @@ function ajax() {
                 url: '/article/modfiyArticle',
                 data: data
             });
+        },
+        //获取我们的成员列表
+        about: function() {
+            return req({
+                type: 'GET',
+                url: '/user/getMemberList'
+            });
         }
 
 
