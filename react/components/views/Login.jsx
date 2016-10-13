@@ -131,14 +131,14 @@ export default class Login extends Component{
                                case user_error:
                                    return (
                                        <div className="alert alert-danger" role="alert">
-                                           请填写正确的账号格式,必须为16位以内的数字,字母和下划线组成!
+                                           请填写正确格式的账号,必须为16位以内的数字,字母和下划线组成!
                                        </div>
                                    );
 
                                case pass_error:
                                    return (
                                        <div className="alert alert-danger" role="alert">
-                                           请填写正确的密码格式,必须为16位以内的数字和字母组成!
+                                           请填写正确格式的密码,必须为16位以内的数字和字母组成!
                                        </div>
                                    );
 

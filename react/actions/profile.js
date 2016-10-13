@@ -1,4 +1,4 @@
-import { MODIFY_ERROR,MODIFY_BRIEF_ERROR,MODIFY_EMAIL_ERROR,MODIFY_TEL_ERROR,MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_PASS,MODIFY_EMAIL,MODIFY_BRIEF,MODIFY_TEL,MODIFY_INIT,MODIFY_LOGIN,MODIFY_AVATAR,MODIFY_CODE} from '../constants/actionType';
+import { MODIFY_VERIFY_ERROR,MODIFY_ERROR,MODIFY_BRIEF_ERROR,MODIFY_EMAIL_ERROR,MODIFY_TEL_ERROR,MODIFY_PASS_ERROR,MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_PASS,MODIFY_EMAIL,MODIFY_BRIEF,MODIFY_TEL,MODIFY_INIT,MODIFY_LOGIN,MODIFY_AVATAR,MODIFY_CODE} from '../constants/actionType';
 import ajax  from '../ajax';
 
 
@@ -61,7 +61,26 @@ export function tel_error() {
 
 
 
+/**
+ * 密码格式错误
+ * @returns {{type: string}}
+ */
+export function pass_error() {
+    return {
+        type: MODIFY_PASS_ERROR
+    };
+}
 
+
+/**
+ * 两次输入新密码不一致
+ * @returns {{type: string}}
+ */
+export function verify_error() {
+    return {
+        type: MODIFY_VERIFY_ERROR
+    };
+}
 
 /**
  * 发起修改请求

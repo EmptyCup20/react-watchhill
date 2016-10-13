@@ -16,9 +16,8 @@ module.exports = {
     //register
     register_error:'register_error',    //注册信息未填写完整
     user_exist: 'user_exist',           //用户存在
-    pass_twice_error:'pass_twice_error',    //两次密码输入不一致
 
-    //login || register
+    //login || register || profile
     user_error: 'user_error',           //用户格式错误
     pass_error: 'pass_error',           //用户密码错误
 
@@ -26,12 +25,14 @@ module.exports = {
     //profile
     modify_err:'modify_err',            //输入为空
     brief_err:'brief_err',              //简介过长
+    old_pwd_err: 'old_pwd_err',         //原始密码错误
 
     //register || profile
     email_error:'email_error',          //邮箱格式错误
     tel_error:'tel_error',              //电话格式错误
+    pass_twice_error:'pass_twice_error',    //两次密码输入不一致
 
-    old_pwd_err: 'old_pwd_err',         //原始密码错误
+
 
 
     success:'success',                  //请求成功

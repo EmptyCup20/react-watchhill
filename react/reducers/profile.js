@@ -1,5 +1,5 @@
-import { MODIFY_ERROR,MODIFY_BRIEF_ERROR,MODIFY_EMAIL_ERROR,MODIFY_TEL_ERROR,MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_INIT } from '../constants/actionType';
-import { init,modify_err,brief_err,email_error,tel_error } from '../constants/httpType';
+import { MODIFY_VERIFY_ERROR,MODIFY_PASS_ERROR,MODIFY_ERROR,MODIFY_BRIEF_ERROR,MODIFY_EMAIL_ERROR,MODIFY_TEL_ERROR,MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_INIT } from '../constants/actionType';
+import { pass_twice_error,pass_error,init,modify_err,brief_err,email_error,tel_error } from '../constants/httpType';
 
 const profile = (state = {
     modifying:false,            //正在修改
@@ -38,6 +38,19 @@ const profile = (state = {
             return {
                 ...state,
                 modifyStatus:tel_error
+            };
+
+        case MODIFY_PASS_ERROR:     //修改的密码格式错误
+            return {
+                ...state,
+                modifyStatus:pass_error
+            };
+
+
+        case MODIFY_VERIFY_ERROR:
+            return {
+                ...state,
+                modifyStatus:pass_twice_error
             };
 
 

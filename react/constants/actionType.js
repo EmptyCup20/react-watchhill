@@ -29,7 +29,8 @@ module.exports = {
     MODIFY_BRIEF_ERROR:'BRIEF_ERROR',       //简介字数过长
     MODIFY_EMAIL_ERROR:'MODIFY_EMAIL_ERROR',//修改邮箱格式错误
     MODIFY_TEL_ERROR:'MODIFY_TEL_ERROR',    //修改的电话格式错误
-
+    MODIFY_PASS_ERROR:'MODIFY_PASS_ERROR',  //修改的密码格式错误
+    MODIFY_VERIFY_ERROR:'MODIFY_VERIFY_ERROR',  //两次新密码输入不一致
 
     MODIFY_REQUEST: 'MODIFY_REQUEST',       //挂起修改请求
         MODIFY_PASS: 'MODIFY_PASS',         //修改密码
