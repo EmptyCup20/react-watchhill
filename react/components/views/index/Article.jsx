@@ -58,7 +58,7 @@ export default class Article extends Component{
                             </div>
 
                             <div className="col-lg-8 col-md-8 col-sm-12">
-                                <div className="content-wrapper bg-content">
+                                <div className="content-wrapper bg-content markdown-body">
 
                                         <div dangerouslySetInnerHTML={{__html:showArticle.content }}>
                                         </div>
