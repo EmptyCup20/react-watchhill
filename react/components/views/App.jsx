@@ -4,7 +4,7 @@ import React,{ Component } from 'react'
 export default class App extends Component{
     render() {
         return (
-            <div className="container index-animate" id="particles-js">
+            <div className="index-animate" id="particles-js">
                 <div className="container-link">
                     <Link href="/index" className="animated bounceInDown">
                         <div className="index-header">
@@ -17,8 +17,8 @@ export default class App extends Component{
         )
     }
     componentDidMount(){
+        $('#particles-js').parent().css('height',100);
         particlesJS('particles-js',
-
           {
             "particles": {
               "number": {
