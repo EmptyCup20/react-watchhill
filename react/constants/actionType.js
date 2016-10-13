@@ -25,8 +25,12 @@ module.exports = {
 
     //profile
     MODIFY_INIT:'MODIFY_INIT',              //前端状态初始化(需要注意服务器端数据,刷新时保持一致)
-    BRIEF_ERROR:'BRIEF_ERROR',              //简介字数过长
-
+    MODIFY_ERROR:'BRIEF_ERROR',             //输入不能为空
+    MODIFY_BRIEF_ERROR:'BRIEF_ERROR',       //简介字数过长
+    MODIFY_EMAIL_ERROR:'MODIFY_EMAIL_ERROR',//修改邮箱格式错误
+    MODIFY_TEL_ERROR:'MODIFY_TEL_ERROR',    //修改的电话格式错误
+    MODIFY_PASS_ERROR:'MODIFY_PASS_ERROR',  //修改的密码格式错误
+    MODIFY_VERIFY_ERROR:'MODIFY_VERIFY_ERROR',  //两次新密码输入不一致
 
     MODIFY_REQUEST: 'MODIFY_REQUEST',       //挂起修改请求
         MODIFY_PASS: 'MODIFY_PASS',         //修改密码
