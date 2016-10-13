@@ -140,38 +140,10 @@ export default class Login extends Component{
                     {
                         (function (){
                             switch(register.registerStatus) {
-                                //case user_no_exist:
-                                //    return (
-                                //        <div className="alert alert-danger" role="alert">
-                                //            用户名不存在!
-                                //        </div>
-                                //    );
-                                //
-                                //case password_err:
-                                //    return (
-                                //        <div className="alert alert-danger" role="alert">
-                                //            密码错误!
-                                //        </div>
-                                //    );
-                                //
-                                //case user_error:
-                                //    return (
-                                //        <div className="alert alert-danger" role="alert">
-                                //            账号格式错误,必须为16位以内的数字,字母和下划线组成!
-                                //        </div>
-                                //    );
-                                //
-                                //case pass_error:
-                                //    return (
-                                //        <div className="alert alert-danger" role="alert">
-                                //            密码格式错误,必须为16位以内的数字和字母组成!
-                                //        </div>
-                                //    );
-
                                 case user_exist:
                                     return (
                                         <div className="alert alert-danger" role="alert">
-                                            用户名已经存在!
+                                            注册的用户名已经存在!
                                         </div>
                                     );
 
@@ -179,7 +151,7 @@ export default class Login extends Component{
                                 case user_error:
                                     return (
                                         <div className="alert alert-danger" role="alert">
-                                            账号格式错误,必须为16位以内的数字,字母和下划线组成!
+                                            请填写正确的账号格式,必须为16位以内的数字,字母和下划线组成!
                                         </div>
                                     );
 
@@ -187,7 +159,7 @@ export default class Login extends Component{
                                 case pass_error:
                                     return (
                                         <div className="alert alert-danger" role="alert">
-                                            密码格式错误,必须为16位以内的数字和字母组成!
+                                            请填写正确的密码格式,必须为16位以内的数字和字母组成!
                                         </div>
                                     );
 
@@ -201,14 +173,14 @@ export default class Login extends Component{
                                 case email_error:
                                     return (
                                         <div className="alert alert-danger" role="alert">
-                                            邮箱格式错误!
+                                            请填写正确的邮箱格式!
                                         </div>
                                     );
 
                                 case tel_error:
                                     return (
                                         <div className="alert alert-danger" role="alert">
-                                            电话必须是11位数字的移动电话号码!
+                                            请填写正确的电话格式,电话必须是11位数字的移动电话号码!
                                         </div>
                                     );
 
