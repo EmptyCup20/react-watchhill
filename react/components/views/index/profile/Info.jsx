@@ -1,6 +1,6 @@
 import React,{ Component } from 'react';
 import { MODIFY_EMAIL,MODIFY_BRIEF,MODIFY_TEL } from '../../../../constants/actionType';
-
+import { init,brief_err } from '../../../../constants/httpType';
 
 export default class Info extends Component{
 
@@ -11,9 +11,17 @@ export default class Info extends Component{
 
         switch(e.target.id) {
             case MODIFY_BRIEF:
-                data = {
-                    brief: refs.brief.value
-                };
+
+                let brief = refs.brief.value;
+
+                if(brief.length >= 40) {
+                    console.log('err')
+                } else {
+                    data = {
+                        brief: brief
+                    };
+                }
+
                 break;
 
             case MODIFY_EMAIL:
@@ -32,7 +40,10 @@ export default class Info extends Component{
                 break;
         }
 
-        this.props.modify_start(e.target.id,data);
+        if(data) {
+           this.props.modify_start(e.target.id,data);
+        }
+
 
         //清空
         refs.brief.value = '';
@@ -49,12 +60,16 @@ export default class Info extends Component{
             <div>
                 {
                     (function (){
-                        if(profile.modifyStatus === 'success')  {
-                            return (
-                                <div className="alert alert-success" role="alert">
-                                    修改成功!
-                                </div>
-                            );
+                        switch(profile.modifyStatus) {
+                            case brief_err:
+                                return (
+                                    <div className="alert alert-danger" role="alert">
+                                        简介过长!
+                                    </div>
+                                );
+
+                            default:
+                                break;
                         }
                     }())
                 }

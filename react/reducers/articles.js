@@ -47,6 +47,7 @@ const article = (state = {
     switch(action.type) {
         case ARTICLE_INIT:
             return {
+                ...state,
                 list:[],
                 listIsDone:false,
                 getting:false

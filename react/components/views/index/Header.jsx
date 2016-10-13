@@ -37,12 +37,6 @@ export default class Header extends Component{
                                     <Link to="/index">主页</Link>
                                 </li>
                                 <li>
-                                    <Link to="/web">web前端</Link>
-                                </li>
-                                <li>
-                                    <Link to="/node">Nodejs</Link>
-                                </li>
-                                <li>
                                     <Link to="/about">关于</Link>
                                 </li>
                             </ul>
@@ -66,8 +60,8 @@ export default class Header extends Component{
                                                              <Link to={'/user/'+ login.loginUser._id}>
                                                                  <img src={login.loginUser.avatarUrl} className="img-circle" alt="user image" />
                                                              </Link>
-                                                             <p>
-                                                                 {login.loginUser.brief}
+                                                             <p className="user-info">
+                                                                 <div className="user-info-brief">{login.loginUser.brief}</div>
                                                                  <small>{login.loginUser.tel}</small>
                                                                  <small>{login.loginUser.email}</small>
                                                              </p>

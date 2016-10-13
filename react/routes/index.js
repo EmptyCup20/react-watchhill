@@ -7,8 +7,8 @@ import AppContainer from '../components/containers/AppContainer';           //�
 import IndexContainer from '../components/containers/IndexContainer';       //主页
     import HomeContainer from '../components/containers/HomeContainer';
     import AboutContainer from '../components/containers/AboutContainer';
-    import WebContainer from '../components/containers/WebContainer';
-    import NodeContainer from '../components/containers/NodeContainer';
+    import WebContainer from '../components/containers/WebContainer';       //这个暂时没有
+    import NodeContainer from '../components/containers/NodeContainer';     //这个暂时也没有
     import AddArticleContainer from '../components/containers/AddArticleContainer'
     import ProfileContainer from '../components/containers/ProfileContainer';
         import InfoContainer from '../components/containers/InfoContainer';
@@ -28,6 +28,10 @@ import { modify_init } from '../actions/profile';
 import { addTempArticle } from '../actions/addArticle';
 import { article_init,article_getContent,article_getHomeList } from '../actions/article';
 import { user_getList } from  '../actions/user';
+
+
+/*constant*/
+import { init } from '../constants/httpType';
 
 
 const routes = (store) => {
@@ -109,8 +113,6 @@ const routes = (store) => {
             <Route path="/" component={AppContainer} />
             <Route path="/index" component={IndexContainer}>
                 <IndexRoute onEnter={getHomeArticleList} component={HomeContainer} />
-                <Route path='/web' component={WebContainer}  />
-                <Route path='/node' component={NodeContainer}  />
                 <Route path='/about' component={AboutContainer}  />
                 <Route path='/add_article' component={AddArticleContainer}  />
                 <Route path='/profile' component={ProfileContainer}>

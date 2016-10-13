@@ -73,7 +73,7 @@ export default class Home extends Component{
                     <div className="view row head-response-article">
                     {
                         (function (_this){
-                            if(!(articles.list.length % 9) && (!articles.listIsDone)) {
+                            if((articles.list.length !== 0) && !(articles.list.length % 9) && (!articles.listIsDone)) {
                                 return (
                                     <Button type="button" className="more btn btn-block btn-primary btn-lg" onClick={_this._onClick.bind(_this)}>查看更多</Button>
                                 )

@@ -1,6 +1,6 @@
 
-import { LOGIN_REQUEST,LOGIN_RECEIVE,LOGOUT_RECEIVE,LOGIN_INIT,MODIFY_LOGIN } from '../constants/actionType';
-import { init,user_no_exist,password_err,success } from '../constants/httpType';
+import { LOGIN_ERROR,LOGIN_USER_ERROR,LOGIN_PASS_ERROR,LOGIN_REQUEST,LOGIN_RECEIVE,LOGOUT_RECEIVE,LOGIN_INIT,MODIFY_LOGIN } from '../constants/actionType';
+import { init,login_error,user_error,pass_error,user_no_exist,password_err,success } from '../constants/httpType';
 
 /**
  * 登录状态设置
@@ -64,11 +64,28 @@ const login = (state = {
 		case LOGIN_INIT:		//初始化视图
 			return {
 				...state,
-				logined:false,
 				loginStatus:init,			//登录状态
-				logining:false,				//有没有正在登录标志
-				loginUser:{}
+				logining:false				//有没有正在登录标志
 			};
+
+		case LOGIN_ERROR:		//登录信息未填写完整
+			return {
+				...state,
+				loginStatus:login_error
+			};
+
+		case LOGIN_USER_ERROR:	//用户名格式错误
+			return {
+				...state,
+				loginStatus:user_error
+			};
+
+		case LOGIN_PASS_ERROR:	//密码格式错误
+			return {
+				...state,
+				loginStatus:pass_error
+			};
+
 
 		case LOGIN_REQUEST:		//发起登录请求
 			return {

@@ -1,5 +1,5 @@
-import { MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_INIT } from '../constants/actionType';
-import { init } from '../constants/httpType';
+import { BRIEF_ERROR,MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_INIT } from '../constants/actionType';
+import { init,brief_err } from '../constants/httpType';
 
 const profile = (state = {
     modifying:false,            //正在修改
@@ -12,6 +12,12 @@ const profile = (state = {
             return {
                 ...state,
                 modifyStatus:init
+            };
+
+        case BRIEF_ERROR:
+            return {
+                ...state,
+                modifyStatus:brief_err
             };
 
         case MODIFY_REQUEST:
