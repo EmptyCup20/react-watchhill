@@ -26,6 +26,9 @@ module.exports = {
 
 
     //profile
+    brief_err:'brief_err',              //简介过长
+
+
     old_pwd_err: 'old_pwd_err',         //原始密码错误
 
 

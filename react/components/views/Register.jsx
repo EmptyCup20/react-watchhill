@@ -86,25 +86,6 @@ export default class Login extends Component{
         } else {
             this.props.register_error();                        //未填写完整
         }
-
-
-
-
-
-        ////这里先暂时不检测
-        //if(username && password && email && tel && team) {
-        //    let user = {
-        //        author:username,
-        //        password:password,
-        //        email:email,
-        //        tel:tel,
-        //        team:team
-        //    };
-        //
-        //    this.props.register_start(user);
-        //} else {
-        //    alert('请填写完整!');
-        //}
     }
 
     render() {

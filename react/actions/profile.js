@@ -1,4 +1,4 @@
-import { MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_PASS,MODIFY_EMAIL,MODIFY_BRIEF,MODIFY_TEL,MODIFY_INIT,MODIFY_LOGIN,MODIFY_AVATAR,MODIFY_CODE} from '../constants/actionType';
+import { BRIEF_ERROR,MODIFY_REQUEST,MODIFY_RECEIVE,MODIFY_PASS,MODIFY_EMAIL,MODIFY_BRIEF,MODIFY_TEL,MODIFY_INIT,MODIFY_LOGIN,MODIFY_AVATAR,MODIFY_CODE} from '../constants/actionType';
 import ajax  from '../ajax';
 
 
@@ -14,6 +14,15 @@ export function modify_init() {
 }
 
 
+/**
+ * 简介字数限制
+ * @returns {{type: string}}
+ */
+export function brief_error() {
+    return {
+        type: BRIEF_ERROR
+    };
+}
 
 
 /**

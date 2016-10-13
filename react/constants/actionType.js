@@ -7,6 +7,7 @@ module.exports = {
     LOGIN_ERROR:'LOGIN_ERROR',              //登录信息未填写完整
     LOGIN_USER_ERROR:'LOGIN_USER_ERROR',    //用户名格式错误
     LOGIN_PASS_ERROR: 'LOGIN_PASS_ERROR',   //密码格式错误
+
     LOGIN_REQUEST: 'LOGIN_REQUEST',         //挂起登录请求
     LOGIN_RECEIVE: 'LOGIN_RECEIVE',         //接收登录状况处理
 
@@ -18,11 +19,15 @@ module.exports = {
     REGISTER_PASS_TWICE_ERROR:'REGISTER_PASS_TWICE_ERROR',  //两次密码输入不一致
     REGISTER_EMAIL_ERROR:'REGISTER_EMAIL_ERROR',//邮箱格式错误
     REGISTER_TEL_ERROR:'REGISTER_TEL_ERROR',    //电话格式错误
+
     REGISTER_REQUEST: 'REGISTER_REQUEST',   //挂起注册请求
     REGISTER_RECEIVE: 'REGISTER_RECEIVE',   //接收注册状况处理
 
     //profile
     MODIFY_INIT:'MODIFY_INIT',              //前端状态初始化(需要注意服务器端数据,刷新时保持一致)
+    BRIEF_ERROR:'BRIEF_ERROR',              //简介字数过长
+
+
     MODIFY_REQUEST: 'MODIFY_REQUEST',       //挂起修改请求
         MODIFY_PASS: 'MODIFY_PASS',         //修改密码
         MODIFY_EMAIL: 'MODIFY_EMAIL',       //修改邮箱
