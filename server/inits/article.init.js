@@ -8,10 +8,3 @@ query.exec((err,docs) => {
   }
   console.log('Init article model db data successed!');
 });
-
-
-
-
-
-
-
