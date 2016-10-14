@@ -21,7 +21,7 @@ export default class Header extends Component{
         const { login } = this.props;
 
         return(
-            <header className="main-header skin-header-user">
+            <header className="main-header skin-header-user header-response">
                 <nav className="navbar navbar-static-top">
                     <div className="container">
                         <div className="navbar-header">

@@ -14,7 +14,7 @@ export default class Code extends Component{
     render() {
         const {codeUrl} = this.state;
         return (
-            <div className="box box-primary">
+            <div className="box box-primary code-response">
                 <div className="box-header with-border">
                     <h3 className="box-title">修改二维码</h3>
                 </div>

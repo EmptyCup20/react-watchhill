@@ -15,7 +15,7 @@ export default class Avatar extends Component{
     render() {
         const {avatarUrl} = this.state;
         return (
-            <div className="box box-primary">
+            <div className="box box-primary avatar-response">
                 <div className="box-header with-border">
                     <h3 className="box-title">修改头像</h3>
                 </div>

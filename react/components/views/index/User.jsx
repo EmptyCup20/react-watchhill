@@ -20,7 +20,7 @@ export default class User extends Component{
         }
 
         return (
-            <div className="content-wrapper user_article">
+            <div className="content-wrapper user_article user-response">
                 <br/>
                 {
                     loading
