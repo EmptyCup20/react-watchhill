@@ -110,9 +110,6 @@ const routes = (store) => {
 
     //about - 关于页成员获取
     function getMemberList() {
-
-        let isListExist = false;
-
         const state = store.getState();
         const lists = state.about.memberList;
 

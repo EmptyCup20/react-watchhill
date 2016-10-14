@@ -2,7 +2,11 @@ import React,{ Component } from 'react';
 //import '../../../../public/css/about.less';
 
 export default class About extends Component{
+
     render() {
+
+        let { about } = this.props;
+
         return (
             <div className="content-wrapper skin-about">
                 <div className="jumbotron masthead head head-response">
@@ -28,10 +32,16 @@ export default class About extends Component{
                             </div>
                             <div className="box-body">
                                 <ul className="users-list clearfix">
-                                    <li>
-                                        <img className="member-img" src="/images/default/avatar.jpg" alt="" />
-                                        <a className="users-list-name" href="#">liumeng</a>
-                                    </li>
+                                    {
+                                        about.memberList.map( (member,index,memberList) => {
+                                            return (
+                                                <li>
+                                                    <img className="member-img" src={member.avatarUrl} alt="" />
+                                                    <a className="users-list-name" href="#">{member.author}</a>
+                                                </li>
+                                            )
+                                        })
+                                    }
                                 </ul>
                             </div>
                         </div>
