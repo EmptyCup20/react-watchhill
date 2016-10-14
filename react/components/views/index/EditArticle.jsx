@@ -20,7 +20,8 @@ export default class EditArticle extends Component{
             articleId:this.props.addArticle.articleId,
             title:this.props.addArticle.title,
             describe:this.props.addArticle.describe,
-            content:this.props.addArticle.preview
+            content:this.props.addArticle.preview,
+            image:this.props.addArticle.image
         }
         this.props.save_article(obj);
     }
@@ -101,25 +102,43 @@ export default class EditArticle extends Component{
                 _this.props.addTitle(data.data.title);
                 _this.props.addIntro(data.data.describe);
                 _this.props.addId(data.data);
+                _this.props.addImg(data.data.image);
+
+                var imgConfig = {};
+                var imgurl = '';
+                if(data.data.image != "/images/default/article.jpg"){
+                    imgConfig.caption=data.data.image.split('/').pop();
+                    imgConfig.url = '/article/delete';
+                    imgConfig.width = "200px";
+                    imgurl = data.data.image;
+                }
+
+                $('#imgUrl').fileinput({
+                    language: "zh",
+                    allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+                    uploadAsync: true,
+                    maxFileCount: 1,
+                    uploadUrl: '/article/uploadimg',
+                    initialPreview: imgurl,
+                    initialPreviewConfig: imgConfig,
+                    initialPreviewShowDelete: true,
+                    initialPreviewAsData: true,
+                    initialPreviewFileType: 'image',
+                    overwriteInitial: false,
+                    uploadExtraData : function (previewId, index) {
+                        var obj = {
+                            type:'cover',
+                            articleId:_this.props.addArticle.articleId
+                        };
+                        return obj;
+                    }
+
+                });
             }
         });
 
         //初始化文件插件
-        $('#imgUrl').fileinput({
-            language: "zh",
-            allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
-            uploadAsync: true,
-            maxFileCount: 1,
-            uploadUrl: '/article/uploadimg',
-            uploadExtraData : function (previewId, index) {
-                var obj = {
-                    type:'cover',
-                    articleId:_this.props.addArticle.articleId
-                };
-                return obj;
-            }
 
-        });
         $.ajax({
             url:'/article/getImgUrl',
             type:'GET',
@@ -167,7 +186,8 @@ export default class EditArticle extends Component{
         //文件上传事件
         $('#imgUrl').on('fileuploaded', function(event, data, previewId, index){
             imgUrl.filename = data.filenames[0];
-            imgUrl.url = data.response.data.url;
+            imgUrl.url = data.response.data.imgUrl;
+            _this.props.addImg(data.response.data.imgUrl);
         });
 
         $('#articleFile').on('fileuploaded', function(event, data, previewId, index){

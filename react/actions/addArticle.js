@@ -1,4 +1,4 @@
-import { PREVIEW , ADD_TEMP_ARTICLE , ADD_ARTICLE_TITLE ,ADD_ARTICLE_INTRO,CLEAR_ARTICLE,SAVE_ARTICLE,INIT_ARTICLE} from '../constants/actionType';
+import { PREVIEW , ADD_TEMP_ARTICLE , ADD_ARTICLE_TITLE ,ADD_ARTICLE_INTRO,CLEAR_ARTICLE,SAVE_ARTICLE,INIT_ARTICLE,ADD_ARTICLE_IMG} from '../constants/actionType';
 import ajax from '../ajax';
 export function preview(value){
     return {
@@ -102,5 +102,12 @@ function article_reveive(id,data){
     return {
         type : INIT_ARTICLE,
         value : data
+    }
+}
+
+export function addImg(data){
+    return {
+        type:ADD_ARTICLE_IMG,
+        value:data
     }
 }

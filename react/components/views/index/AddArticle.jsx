@@ -20,7 +20,8 @@ export default class AddArticle extends Component{
             articleId:this.props.addArticle.articleId,
             title:this.props.addArticle.title,
             describe:this.props.addArticle.describe,
-            content:this.props.addArticle.preview
+            content:this.props.addArticle.preview,
+            image:this.props.addArticle.image
         }
         this.props.save_article(obj);
     }
@@ -124,8 +125,7 @@ export default class AddArticle extends Component{
 
         //文件上传事件
         $('#imgUrl').on('fileuploaded', function(event, data, previewId, index){
-            imgUrl.filename = data.filenames[0];
-            imgUrl.url = data.response.data.url;
+            _this.props.addImg(data.response.data.url);
         });
 
         $('#articleFile').on('fileuploaded', function(event, data, previewId, index){
