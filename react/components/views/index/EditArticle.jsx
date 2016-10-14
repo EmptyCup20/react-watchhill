@@ -124,23 +124,34 @@ export default class EditArticle extends Component{
             url:'/article/getImgUrl',
             type:'GET',
             data:{
-                articleId:_this.props.addArticle.articleId
+                articleId:_this.props.params.id
             },
             success:function(data){
                 var imgs = [];
+                var imgConfigs = [];
                 for(var i in data.data){
-                    imgs.push("<img src='"+data.data[i]+"' class='file-preview-image' alt='"+data.data[i]+"' title='Desert'>");
+                    var imgConfig = {};
+                    imgConfig.caption = data.data[i].split('/').pop();
+                    imgConfig.url = '/article/delete';
+                    imgConfig.width = "200px";
+                    imgConfig.key = i;
+                    imgConfigs.push(imgConfig);
+                    imgs.push(data.data[i]);
+
                 }
+                console.log(imgConfigs);
                 $('#articleFile').fileinput({
                     language: "zh",
                     allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
                     uploadAsync: true,
                     maxFileSize:200,
                     uploadUrl: '/article/uploadimg',
-                    initialPreview: [
-                        "<img src='/images/desert.jpg' class='file-preview-image' alt='Desert' title='Desert'>",
-                        "<img src='/images/jellyfish.jpg' class='file-preview-image' alt='Jelly Fish' title='Jelly Fish'>",
-                    ],
+                    initialPreview: imgs,
+                    initialPreviewConfig: imgConfigs,
+                    initialPreviewShowDelete: true,
+                    initialPreviewAsData: true,
+                    initialPreviewFileType: 'image',
+                    overwriteInitial: false,
                     uploadExtraData : function (previewId, index) {
                         var obj = {
                             type:'article',

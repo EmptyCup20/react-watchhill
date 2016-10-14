@@ -17,7 +17,8 @@ export default class App extends Component{
         )
     }
     componentDidMount(){
-        $('#particles-js').parent().css('height',100);
+        $('#particles-js').parent().css('height','100%');
+        $('#particles-js').parent().parent().css('overflow','hidden');
         particlesJS('particles-js',
           {
             "particles": {
