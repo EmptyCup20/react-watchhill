@@ -28,6 +28,7 @@ import { modify_init } from '../actions/profile';
 import { addTempArticle } from '../actions/addArticle';
 import { article_init,article_getContent,article_getHomeList } from '../actions/article';
 import { user_getList } from  '../actions/user';
+import { about_getList } from  '../actions/about';
 
 
 /*constant*/
@@ -36,21 +37,23 @@ import { init } from '../constants/httpType';
 
 const routes = (store) => {
 
-    //初始化视图
+    //login - 初始化视图
     function loginViewStateInit() {
         store.dispatch(login_init());
     }
 
+    //register
     function registerViewStateInit() {
         store.dispatch(register_init());
     }
 
+    //profile
     function profileViewStateInit() {
         store.dispatch(modify_init());
     }
 
 
-    //获取文章内容
+    //article - 获取文章内容
     function getArticleContent(nextState, replaceState) {
         const id = {
             articleId:nextState.params.id
@@ -74,7 +77,7 @@ const routes = (store) => {
     }
 
 
-    //获取个人文章列表
+    //uder - 获取个人文章列表
     function getArticleList(nextState, replaceState) {
         const id = {
             userId:nextState.params.id
@@ -97,7 +100,7 @@ const routes = (store) => {
     }
 
 
-    //获取主页文章列表
+    //home - 获取主页文章列表
     function getHomeArticleList() {
         store.dispatch(article_init());
         const state = store.getState();
@@ -105,6 +108,16 @@ const routes = (store) => {
         store.dispatch(article_getHomeList({pageNo:1}));
     }
 
+    //about - 关于页成员获取
+    function getMemberList() {
+        const state = store.getState();
+        const lists = state.about.memberList;
+
+        if(!lists.length) {     //如果是第一次获取成员列表
+            store.dispatch(about_getList());
+        }
+
+    }
 
 
 
@@ -113,7 +126,7 @@ const routes = (store) => {
             <Route path="/" component={AppContainer} />
             <Route path="/index" component={IndexContainer}>
                 <IndexRoute onEnter={getHomeArticleList} component={HomeContainer} />
-                <Route path='/about' component={AboutContainer}  />
+                <Route path='/about' onEnter={getMemberList} component={AboutContainer}  />
                 <Route path='/add_article' component={AddArticleContainer}  />
                 <Route path='/profile' component={ProfileContainer}>
                     <IndexRoute onEnter={profileViewStateInit} component={InfoContainer}/>

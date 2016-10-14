@@ -63,5 +63,9 @@ module.exports = {
     CLEAR_ARTICLE: 'CLEAR_ARTICLE',             //删除文章
     SAVE_ARTICLE: 'SAVE_ARTICLE',            //保存文章
     INIT_ARTICLE: 'INIT_ARTICLE',
-    ADD_ARTICLE_IMG:'ADD_ARTICLE_IMG'
+    ADD_ARTICLE_IMG:'ADD_ARTICLE_IMG',
+
+    //about
+    ABOUT_REQUEST: 'ABOUT_REQUEST',        //挂起获取成员列表请求
+    ABOUT_RECEIVE: 'ABOUT_RECEIVE'         //获取成员列表
 };

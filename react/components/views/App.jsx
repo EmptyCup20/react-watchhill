@@ -6,7 +6,7 @@ export default class App extends Component{
         return (
             <div className="index-animate" id="particles-js">
                 <div className="container-link">
-                    <Link href="/index" className="animated bounceInDown">
+                    <Link to="/index" className="animated bounceInDown">
                         <div className="index-header">
                             <h1 className="logo hide-text">HIK FED</h1>
                             <h2 className="subtitle">HIK FED (Hikvision The Front-End Development Community) 海康前端开发社区</h2>

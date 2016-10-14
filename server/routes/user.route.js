@@ -22,7 +22,8 @@ router.post('/userImg',uploaderController.userImg);
 //获取个人文章列表
 router.get('/getList', controller.getArticleList);
 
-
+//获取关于页我们的成员列表
+router.get('/getMemberList', controller.getMemberList);
 
 
 module.exports = router;

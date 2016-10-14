@@ -13,6 +13,8 @@ import addArticle from './addArticle'
 import profile from './profile';
 //个人文章列表
 import user from './user';
+//成员列表
+import about from './about';
 
 
 
@@ -22,7 +24,8 @@ const reducer = combineReducers({
 	articles,
 	addArticle,
 	profile,
-	user
+	user,
+	about
 });
 
 export default reducer;

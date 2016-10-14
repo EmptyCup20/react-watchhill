@@ -2,6 +2,7 @@ var User = require('../proxy/user');
 var path = require('path');
 var fs = require('fs');
 var EventProxy = require('eventproxy');
+var user = require('../../mongo/model/user');
 
 var controller = {};
 /**
@@ -152,5 +153,37 @@ controller.getArticleList = function(req, res, next) {
         }
     )
 }
+
+
+/**
+ * 获取About页的成员列表
+ * @param req
+ * @param res
+ * @param next
+ */
+controller.getMemberList = function(req, res, next) {
+    let query = user.find();
+    query.limit(6);   //目前只获取六个成员信息
+    query.exec((err,docs) => {
+        if(docs) {
+            let newDocs = [];
+            for (let doc of docs) {
+                let newDoc = {
+                    author:doc.author,
+                    avatarUrl:doc.avatarUrl //只获取用户名和头像
+                };
+                newDocs.push(newDoc);
+            }
+            res.send({data:newDocs});
+        } else {
+            res.send({data:[]});    //否则返回空
+        }
+    })
+};
+
+
+
+
+
 
 module.exports = controller;
