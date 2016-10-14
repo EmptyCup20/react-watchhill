@@ -8,15 +8,16 @@ export default class About extends Component{
         let { about } = this.props;
 
         return (
-            <div className="content-wrapper skin-about">
-                <div className="jumbotron masthead head head-response">
+            <div className="content-wrapper skin-about about-response">
+                <div className="jumbotron masthead head head-response about-response-header">
                     <div className="container head-title">
                         <h1>HIK FED</h1>
-                        <h2>HIK FED (Hikvision The Front-End Development Community) 海康前端开发社区</h2>
+                        <h2>Hikvision The Front-End Development Community</h2>
+                        <h3>海康前端开发社区</h3>
                     </div>
                 </div>
 
-                <div id="actives" className="container">
+                <div id="actives" className="container about-response-body">
                     <div className="row">
                         <div className="box head-response-first">
                             <div className="box-header">

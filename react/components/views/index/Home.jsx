@@ -26,8 +26,8 @@ export default class Home extends Component{
         const { articles } = this.props;
 
         return (
-            <div className="skin-home content-wrapped blog-list">
-                <div className="info-box head-response">
+            <div className="skin-home content-wrapped blog-list home-response">
+                <div className="info-box head-response home-response-header">
                     <div className="info-box-content">
                         <div className="container">
                             <blockquote>
@@ -39,7 +39,7 @@ export default class Home extends Component{
                     </div>
                 </div>
 
-                <div className="container" id="actives">
+                <div className="container home-response-body" id="actives">
                     <div className="row head-response-article">
                     {
                         articles.list.map( (article,index,articles) => {
@@ -70,12 +70,12 @@ export default class Home extends Component{
                     </div>
 
 
-                    <div className="view row head-response-article">
+                    <div className="view row head-response-article home-response-more">
                     {
                         (function (_this){
                             if((articles.list.length !== 0) && !(articles.list.length % 9) && (!articles.listIsDone)) {
                                 return (
-                                    <Button type="button" className="more btn btn-block btn-primary btn-lg" onClick={_this._onClick.bind(_this)}>查看更多</Button>
+                                    <Button type="button" className="btn btn-block btn-primary btn-lg" onClick={_this._onClick.bind(_this)}>查看更多</Button>
                                 )
                             }
                         }(this))

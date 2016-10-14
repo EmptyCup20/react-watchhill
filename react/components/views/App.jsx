@@ -4,12 +4,13 @@ import React,{ Component } from 'react'
 export default class App extends Component{
     render() {
         return (
-            <div className="index-animate" id="particles-js">
+            <div className="index-animate app-response" id="particles-js">
                 <div className="container-link">
                     <Link to="/index" className="animated bounceInDown">
-                        <div className="index-header">
+                        <div className="index-header app-response-header">
                             <h1 className="logo hide-text">HIK FED</h1>
-                            <h2 className="subtitle">HIK FED (Hikvision The Front-End Development Community) 海康前端开发社区</h2>
+                            <h2 className="subtitle">Hikvision The Front-End Development Community</h2>
+                            <h3>海康前端社区</h3>
                         </div>
                     </Link>
                 </div>
