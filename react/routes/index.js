@@ -48,9 +48,22 @@ const routes = (store) => {
     }
 
     //profile
-    function profileViewStateInit() {
+    function profileViewStateInit(nextState, replaceState) {
         store.dispatch(modify_init());
     }
+
+    ////profile 权限认证
+    //不要这么处理,这么处理react-router仍然阻止不了当前请求的路由的组件的渲染
+    //function profileAuthen(nextState, replaceState) {
+    //    const state = store.getState();
+    //
+    //    if(state.login.logined) {
+    //        store.dispatch(modify_init());
+    //    } else {
+    //        replaceState({ pathname: '/index' });       //没有登录就跳转
+    //    }
+    //}
+
 
 
     //article - 获取文章内容
@@ -83,20 +96,8 @@ const routes = (store) => {
             userId:nextState.params.id
         };
 
-        //let isListExist = false;
-        //const state = store.getState();
-        //const lists = state.user.articleList;
+        store.dispatch(user_getList(id));
 
-        //for(let list of lists) {
-        //    if(list._id === nextState.params.id) {
-        //        isListExist = true;
-        //        break;
-        //    }
-        //}
-
-        //if(!isListExist) {
-            store.dispatch(user_getList(id));
-        //}
     }
 
 
@@ -128,7 +129,7 @@ const routes = (store) => {
                 <IndexRoute onEnter={getHomeArticleList} component={HomeContainer} />
                 <Route path='/about' onEnter={getMemberList} component={AboutContainer}  />
                 <Route path='/add_article' component={AddArticleContainer}  />
-                <Route path='/profile' component={ProfileContainer}>
+                <Route path='/profile' component={ProfileContainer} >
                     <IndexRoute onEnter={profileViewStateInit} component={InfoContainer}/>
                     <Route path="info"  onEnter={profileViewStateInit} component={InfoContainer} />
                     <Route path="pass" onEnter={profileViewStateInit} component={PassContainer} />

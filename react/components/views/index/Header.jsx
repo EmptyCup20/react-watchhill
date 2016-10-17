@@ -3,6 +3,10 @@ import { Link } from 'react-router';
 import React,{ Component,PropTypes } from 'react';
 //import '../../../../public/css/header.less';
 
+//导航
+import history from '../../../history';
+
+
 export default class Header extends Component{
 
     static propTypes = {
@@ -14,6 +18,10 @@ export default class Header extends Component{
         e.preventDefault();
         //alert('111');
         this.props.logout();    //注销
+
+        history.replace({
+            pathname:'/index'
+        });
     }
 
     render() {

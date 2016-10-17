@@ -27,7 +27,6 @@ export default class Login extends Component{
     };
 
 
-    //这里是否可以加static属性,公司测试
     //不能修改属性和状态,在render之前接收到新的props和state进行执行
     componentWillUpdate(nextProps,nextState) {
         //console.log(nextProps.login);

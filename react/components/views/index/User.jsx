@@ -82,7 +82,6 @@ export default class User extends Component{
                                                                     })()
                                                                 }
                                                             </div>
-
                                                         </div>
                                                     </li>
                                                 )

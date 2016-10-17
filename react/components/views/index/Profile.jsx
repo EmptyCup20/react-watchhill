@@ -1,9 +1,11 @@
 import React,{ Component } from 'react';
 import { Link } from 'react-router';
-//import '../../../../public/css/profile.less'
 
+//导航
+import history from '../../../history';
 
 export default class Profile extends Component{
+
     render() {
         const {pathname} = this.props.location;
         const {login} = this.props;

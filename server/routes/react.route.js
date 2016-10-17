@@ -24,7 +24,6 @@ router.get('/*', (req, res,next) => {
      * 获取登录状态
      */
     function getLoginStatus() {
-        console.log(req.session.loginUser);
         if(req.session.loginUser) {
             req.session.stateTree.login = {
                 loginUser:req.session.loginUser,
@@ -37,31 +36,37 @@ router.get('/*', (req, res,next) => {
 
     match({ routes:routes(), location: req.url }, (err, redirect, props) => {
 
+
+        redirect = false;   //默认不能进行重定向
+
+        if(/^\/profile(?:\/(pass|info|avatar|code)|)\/?$/.test(req.url) ||  /^\/add_article\/?$/.test(req.url)) {
+            if(!req.session.loginUser) {     //如果用户未登录,以上页面不允许进入
+                redirect = true;
+            }
+        }
+
+
         if (err) {
             res.status(500).send(err.message)
         } else if (redirect) {
-            res.redirect(redirect.pathname + redirect.search)
+            res.redirect('/index');                             //用户在没有权限的情况下一律跳转到index页面
         } else if (props) {
-                /*1. state tree 获取登录状态*/
-                getLoginStatus();
+
+            getLoginStatus();                                   //state tree 获取登录状态
+            let store = configureStore(req.session.stateTree);  //需要注意与客户端的store统一
+
+            const appHtml = renderToString(
+                <Provider store={store}>
+                    <RouterContext {...props}/>
+                </Provider>
+            );
+
+            res.render('index',{
+                html:appHtml,
+                serverState:JSON.stringify(store.getState())
+            });
 
 
-                let store = configureStore(req.session.stateTree);
-                console.log('node finally store:', store.getState());  //需要注意与客户端的store统一
-
-
-                const appHtml = renderToString(
-                    <Provider store={store}>
-                        <RouterContext {...props}/>
-                    </Provider>
-                );
-
-
-
-                res.render('index',{
-                    html:appHtml,
-                    serverState:JSON.stringify(store.getState())
-                });
         } else {
             //路由匹配不到,这里这个提示页面暂时不做
             res.status(404).send('Not Found')
