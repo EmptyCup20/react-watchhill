@@ -6,7 +6,7 @@ export default class User extends Component{
     render() {
 
         let loading = true;
-        const { user,params } = this.props;
+        const { login,user,params } = this.props;
         const  lists  = user.articleList;
 
         let showList = {};   //显示的文章列表
@@ -72,7 +72,15 @@ export default class User extends Component{
 
                                                             <div className="timeline-footer article-list">
                                                                 <Link to={'/article/' + article._id} className="btn btn-primary btn-md">阅读全文...</Link>
-                                                                <Link to={'/edit_article/' + article._id} className="btn btn-primary btn-md">修改文章</Link>
+                                                                {
+                                                                    (function(){
+                                                                        if(login.logined && login.loginUser.author === showList.author) {
+                                                                            return (
+                                                                                <Link to={'/edit_article/' + article._id} className="btn btn-primary btn-md">修改文章</Link>
+                                                                            )
+                                                                        }
+                                                                    })()
+                                                                }
                                                             </div>
 
                                                         </div>
