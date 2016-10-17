@@ -20,7 +20,7 @@ export default class Article extends Component{
         }
 
         return (
-           <div className="container">
+           <div className="container skin-article article-response">
                <br/>
                {
                     loading
