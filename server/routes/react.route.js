@@ -39,11 +39,12 @@ router.get('/*', (req, res,next) => {
 
         redirect = false;   //默认不能进行重定向
 
-        if(/^\/profile(?:\/(pass|info|avatar|code)|)\/?$/.test(req.url) ||  /^\/add_article\/?$/.test(req.url)) {
-            if(!req.session.loginUser) {     //如果用户未登录,以上页面不允许进入
-                redirect = true;
+        if(!req.session.loginUser) {     //如果用户未登录,以下页面不允许进入
+            if(/^\/profile(?:\/(pass|info|avatar|code)|)\/?$/.test(req.url) ||  /^\/add_article\/?$/.test(req.url)) {
+                    redirect = true;
             }
         }
+
 
 
         if (err) {
