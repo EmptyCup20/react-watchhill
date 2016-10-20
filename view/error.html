@@ -1,3 +1,45 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- bootstrap响应式开关 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- bootstrap响应式可以禁止缩放,暂时不用 -->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <!-- bootstrap css -->
+    <link href="/lib/adminLTE/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/lib/adminLTE/bootstrap/css/font-awesome.css">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="/lib/adminLTE/bootstrap/css/ionicons.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/lib/adminLTE/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+          folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="/lib/adminLTE/css/skins/_all-skins.min.css">
+    <title>watchill-error</title>
+</head>
+<body class="hold-transition skin-blue layout-top-nav">
+    <div id="wrapper">
+        <div class="content-wrapper">
+            <!-- Main content -->
+            <section class="content">
+                <div class="error-page">
+                    <div class="error-content">
+                        <div class="jumbotron">
+                            <div class="container">
+                                <h2><i class="fa fa-warning text-red"></i><%- err %></h2>
+                                <h4>你可以返回<a href="/index">主页</a>继续浏览.</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.error-page -->
+            </section>
+            <!-- /.content -->
+        </div>
+    </div>
+</body>
+</html>

@@ -47,12 +47,20 @@ router.get('/*', (req, res,next) => {
 
 
 
+
+
+
+
         if (err) {
-            res.status(500).send(err.message)
+            //res.status(500).send(err.message)
+            res.status(500).render('error',{         //路由匹配不到时显示error页
+                err:'500 Internal server error!'
+            });
+
         } else if (redirect) {
             res.redirect('/index');                             //用户在没有权限的情况下一律跳转到index页面
-        } else if (props) {
 
+        } else if (props) {
             getLoginStatus();                                   //state tree 获取登录状态
             let store = configureStore(req.session.stateTree);  //需要注意与客户端的store统一
 
@@ -67,10 +75,10 @@ router.get('/*', (req, res,next) => {
                 serverState:JSON.stringify(store.getState())
             });
 
-
         } else {
-            //路由匹配不到,这里这个提示页面暂时不做
-            res.status(404).send('Not Found')
+            res.status(404).render('error',{         //路由匹配不到时显示error页
+                err:'404 Not Found!'
+            });
         }
     })
 });
